@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+    version="1.2">
+
+
+   <managed-bean>
+      <description>UsernName Bean</description>
+      <managed-bean-name>user</managed-bean-name>
+      <managed-bean-class>demo.User</managed-bean-class>
+      <managed-bean-scope>request</managed-bean-scope>
+      <managed-property>
+         <property-name>name</property-name>
+         <property-class>java.lang.String</property-class>
+         <value/>
+      </managed-property>
+ 	</managed-bean>
+
+ 
+   <managed-bean>
+      <description>Generic Backing Bean</description>
+      <managed-bean-name>bean</managed-bean-name>
+      <managed-bean-class>demo.GenericBean</managed-bean-class>
+      <managed-bean-scope>request</managed-bean-scope>
+      <managed-property>
+         <property-name>name</property-name>
+         <property-class>java.lang.String</property-class>
+         <value/>
+      </managed-property>
+      <managed-property>
+         <property-name>toolTipContent</property-name>
+         <property-class>java.lang.String</property-class>
+         <value/>
+      </managed-property>
+ 	</managed-bean>
+
+   <converter>
+      <converter-id>reportMasterConverter</converter-id>
+      <converter-class>org.richfaces.demo.orderingList.ReportMasterConverter</converter-class>
+   </converter>
+
+	<managed-bean>
+		<managed-bean-name>avMasterMaintenanceHandler</managed-bean-name>
+		<managed-bean-class>org.richfaces.demo.ajaxlist.AvMasterMaintenanceHandler</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<!-- From Richfaces-Demo-3.3.3.Final -->  
+	<managed-bean>
+		<managed-bean-name>capitalsBean</managed-bean-name>
+		<managed-bean-class>org.richfaces.demo.capitals.CapitalsBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>extendedTableBean</managed-bean-name>
+		<managed-bean-class>org.richfaces.demo.extendedDataTable.ExtendedTableBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>capitals</property-name>
+			<value>#{capitalsBean.capitals}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>auctionDataModel</managed-bean-name>
+		<managed-bean-class>org.richfaces.demo.extendeddatamodel.AuctionDataModel</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+		 	<property-name>auctionDataModelExpressionString</property-name>
+		 	<property-class>java.lang.String</property-class>
+			<value>auctionDataModel</value>
+	 	</managed-property>
+		<managed-property>
+		 	<property-name>auctionDataProviderExpressionString</property-name>
+		 	<property-class>java.lang.String</property-class>
+			<value>auctionDataProvider</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>sortingBean</managed-bean-name>
+		<managed-bean-class>org.richfaces.datatablescroller.SortingBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>filteringBean</managed-bean-name>
+		<managed-bean-class>org.richfaces.demo.filteringFeature.FilteringBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+</faces-config>

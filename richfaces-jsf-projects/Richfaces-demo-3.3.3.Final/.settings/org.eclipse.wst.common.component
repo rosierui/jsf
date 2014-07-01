@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="Richfaces-demo-3.3.3.Final">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <property name="context-root" value="Richfaces-demo-3.3.3.Final"/>
+        <property name="java-output-path" value="/Richfaces-demo-3.3.3.Final/build/classes"/>
+    </wb-module>
+</project-modules>

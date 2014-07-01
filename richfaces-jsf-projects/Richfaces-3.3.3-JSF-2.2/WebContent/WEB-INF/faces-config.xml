@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+
+
+	<application>
+    	<view-handler>org.ajax4jsf.application.AjaxViewHandler</view-handler>
+	</application>
+
+   <managed-bean>
+      <description>UsernName Bean</description>
+      <managed-bean-name>user</managed-bean-name>
+      <managed-bean-class>demo.User</managed-bean-class>
+      <managed-bean-scope>request</managed-bean-scope>
+      <managed-property>
+         <property-name>name</property-name>
+         <property-class>java.lang.String</property-class>
+         <value/>
+      </managed-property>
+ 	</managed-bean>
+
+   <managed-bean>
+      <description>Generic Backing Bean</description>
+      <managed-bean-name>common_bean</managed-bean-name>
+      <managed-bean-class>demo.GenericBean</managed-bean-class>
+      <managed-bean-scope>request</managed-bean-scope>
+ 	</managed-bean>
+
+	<!-- managed beans from Richfaces-3.3.3 -->
+ 	<managed-bean>
+  		<managed-bean-name>bean</managed-bean-name>
+  		<managed-bean-class>org.richfaces.Bean</managed-bean-class>
+  		<managed-bean-scope>request</managed-bean-scope>
+ 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>ddmenu</managed-bean-name>
+		<managed-bean-class>org.richfaces.demo.ddmenu.Menu</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>dataTableScrollerBean</managed-bean-name>
+		<managed-bean-class>org.richfaces.datatablescroller.DataTableScrollerBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>skinBean</managed-bean-name>
+		<managed-bean-class>org.richfaces.demo.common.SkinBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>skin</property-name>
+			<property-class>java.lang.String</property-class>
+			<value>blueSky</value>
+		</managed-property>
+	</managed-bean>
+
+</faces-config>
