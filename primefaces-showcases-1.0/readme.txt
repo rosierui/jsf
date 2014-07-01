@@ -23,6 +23,6 @@ primefaces-showcase-1.0 debuggable project for Eclipse
     http://localhost:8080/primefaces-showcases-1.0/ui/home.jsf
    			
 4. License
-    Pricefaces is licensed under Apache License Version 2.0, January 2004
+    Primefaces is licensed under Apache License Version 2.0, January 2004
    	See http://www.primefaces.org/license fro details
 
