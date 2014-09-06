@@ -18,10 +18,10 @@ svn co http://primefaces.googlecode.com/svn/examples/trunk/ examples
 copy primefaces/pom.xml to <above-check-out-folder>/primefaces
 copy showcase/pom.xml to <above-check-out-folder>/showcase
 
-build according to the above checkout order
+build projects according to the above checkout order
 
 where 
     examples/showcase builds prime-showcase-1.0.0-SNAPSHOT.war
-
+    showcase builds showcase-5.1-SNAPSHOT.war
 
 
