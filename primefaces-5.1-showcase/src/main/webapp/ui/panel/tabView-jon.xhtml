@@ -1,0 +1,122 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Jon - TabView
+    </ui:define>
+
+    <ui:define name="description">
+        TabView is a tabbed panel component.
+    </ui:define>
+
+    <ui:define name="implementation">
+        
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true" />
+
+
+            <h3>On-Demand Loading</h3>
+            <p:tabView dynamic="true" cache="false" effect="fold">
+                <p:tab title="Godfather Part I">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
+                        <h:outputText value="#{tabbedView.tab1Text}" />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Godfather Part II">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                        <h:outputText value="#{tabbedView.tab2Text}" />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Godfather Part III">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                        <h:outputText value="#{tabbedView.tab3Text}" />
+                    </h:panelGrid>
+                </p:tab>
+            </p:tabView>
+
+            <h3>Jon - Events</h3>
+            <p:tabView binding="#{tabbedView.tabView}" >
+                <p:ajax event="tabChange" listener="#{tabbedView.onTabChange}" update=":form:msgs"/>
+                <p:ajax event="tabClose" listener="#{tabbedView.onTabClose}" update=":form:msgs"/>
+
+                <p:tab id="tab1" title="Godfather Part I">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
+                        <h:outputText value="#{tabbedView.tab1Text}" />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab id="tab2" title="Godfather Part II" closable="true" disabled="true">
+	                <h:selectOneMenu id="Cycles" binding="#{tabbedView.ctrlCycle}"
+	                                 value="#{tabbedView.allocationCycle}"
+	                                 title="Allocation Cycle"
+	                                 required="false" requiredMessage="Allocation Cycle is required">
+	                    <f:selectItem itemValue="" itemLabel="Select One"/>
+	                    <f:selectItems value="#{tabbedView.allocationCycles}"/>
+	                </h:selectOneMenu>
+                </p:tab>
+                <p:tab id="tab3" title="Godfather Part III" closable="true" disabled="true">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                        <h:outputText value="#{tabbedView.tab3Text}" />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab id="tab4" title="Godfather Part IV" closable="true" disabled="true">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                        <h:outputText value="#{tabbedView.tab4Text}" />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab id="tab5" title="Godfather Part V" closable="true" disabled="true">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
+                        <h:outputText value="#{tabbedView.tab5Text}" />
+                    </h:panelGrid>
+                </p:tab>
+            </p:tabView>
+            <div>
+                <h:panelGroup id="saveMC">
+                    <h:commandLink action="#{tabbedView.previousTab}" 
+                                   value="Previous" 
+                                   immediate="true" 
+                                   disabled="#{tabbedView.tabView.activeIndex == 0}"
+                                   />
+
+                    <h:outputText value="     "></h:outputText>
+                    <h:commandLink action="#{tabbedView.nextTab}" 
+                                   value="Next" 
+                                   immediate="false"
+                                   disabled="#{tabbedView.tabView.activeIndex == tabbedView.tabView.childCount - 1}"
+                                   />
+                    
+                </h:panelGroup>
+            </div>
+
+        </h:form>
+
+    </ui:define>
+
+    <ui:define name="source">
+        <p:tabView>
+            <p:tab title="tabView-jon.xhtml">
+                <pre name="code" class="brush:xml">
+                </pre>
+            </p:tab>
+
+            <p:tab title="TabbedView.java">
+                <pre name="code" class="brush:java">
+                </pre>
+            </p:tab>
+            
+            <p:tab title="Documentation" titleStyleClass="tab-doc docslide-453" />
+        </p:tabView>
+
+    </ui:define>
+
+</ui:composition>

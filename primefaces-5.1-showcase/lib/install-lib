@@ -1,0 +1,3 @@
+#Install primefaces library to local maven repository
+
+tar -zxvf primefaces-lib.tar.gz -C ~/.m2/repository

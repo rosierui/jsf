@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>Cars</title>
+                <style type="text/css">
+            .ui-widget {
+                font-size: 90%;
+            }
+        </style>
+    </h:head>
+    
+    <h:body>
+      <h:form>
+        <h:panelGrid columns="2">
+         <h:outputText value="#{dfView.type}" />
+
+         <h:outputText value="#{dfView.message}" />
+
+         <p:commandButton icon="ui-icon-search" value="No" actionListener="#{dfView.noAction}" />
+
+         <p:commandButton icon="ui-icon-search" value="Yes" actionListener="#{dfView.yesAction}" />
+
+        </h:panelGrid>
+      </h:form>
+    </h:body>
+    
+</html>
