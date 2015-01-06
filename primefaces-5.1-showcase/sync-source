@@ -1,7 +1,9 @@
 #!/bin/bash
 
+TOMCAT=/g01/srv/tomcat-8.0.11
+
 while true
 do 
-    rsync -a --delete --exclude=".*"  --exclude="WEB-INF" --exclude="META-INF" /home/oracle/workspace/primefaces-5.1/showcase/src/main/webapp/ /g01/srv/tomcat-7.0.54/webapps/showcase-5.1
-    sleep 2
+    rsync -a --delete --exclude=".*"  --exclude="WEB-INF" --exclude="META-INF" $PWD/src/main/webapp/ $TOMCAT/webapps/showcase-5.1
+    
 done
