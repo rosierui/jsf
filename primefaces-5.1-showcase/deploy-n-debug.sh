@@ -1,5 +1,5 @@
 WORKDIR=`pwd`
-TOMCAT=/g01/srv/tomcat-8.0.11
+TOMCAT=/g01/srv/tomcat-7.0.54
 
 TASK_RUNNING=`ps -eaf | grep "sync-source" | grep -v grep | wc -l`
 if [ $TASK_RUNNING -gt 0 ]; then
@@ -38,7 +38,7 @@ echo ""
 echo "starting up tomcat..."
 echo ""
 cd $TOMCAT/bin
-./debug.sh
+./catalina.sh jpda start
 
 cd $WORKDIR
 
