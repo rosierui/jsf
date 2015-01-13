@@ -42,7 +42,8 @@ cd $TOMCAT/bin
 
 cd $WORKDIR
 
-echo ""
+echo "cd $WORKDIR"
+
 echo "starting up tomcat source sync"
 ./sync-source &
 echo ""
