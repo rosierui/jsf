@@ -4,6 +4,7 @@ TOMCAT=/g01/srv/tomcat-7.0.54
 
 
 SRC_DIR=$PWD/src/main/webapp/
+SRC2_DIR=$PWD/target/showcase-5.1-SNAPSHOT/WEB-INF
 DEST_DIR=$TOMCAT/webapps/showcase-5.1
 
 echo $SRC_DIR
@@ -11,13 +12,13 @@ echo $DEST_DIR
 
 #1/13/15
 #turn off sync-source on ubuntu
-exit 0;
 
 echo "starting sync-source"
 
 while true
 do 
-#    rsync -a --delete --exclude=".*"  --exclude="WEB-INF/" --exclude="META-INF" $SRC_DIR $DEST_DIR
-     rsync -a  $SRC_DIR $DEST_DIR
+#   rsync -a --delete --exclude=".*"  --exclude="WEB-INF/" --exclude="META-INF" $SRC_DIR $DEST_DIR
+    rsync -a  $SRC_DIR  $DEST_DIR
+    rsync -a  $SRC2_DIR $DEST_DIR
     sleep 2    
 done
