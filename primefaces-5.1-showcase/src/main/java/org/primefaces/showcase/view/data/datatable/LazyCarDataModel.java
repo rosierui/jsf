@@ -26,6 +26,7 @@ import org.primefaces.showcase.domain.Car;
 
 /**
  * Dummy implementation of LazyDataModel that uses a list to mimic a real datasource like a database.
+ * http://localhost:8080/showcase-5.1/ui/data/datatable/lazy.xhtml
  */
 public class LazyCarDataModel extends LazyDataModel<Car> {
     
@@ -67,8 +68,8 @@ public class LazyCarDataModel extends LazyDataModel<Car> {
 
                         if(filterValue == null || fieldValue.startsWith(filterValue.toString())) {
                             match = true;
-                    }
-                    else {
+                        }
+                        else {
                             match = false;
                             break;
                         }

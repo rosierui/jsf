@@ -3,7 +3,10 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                template="./template.xhtml">
+                template="./template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!-- http://localhost:8080/showcase-5.1/ui/data/datatable/edit.xhtml -->
     <ui:define name="head">
         <style type="text/css">
             .ui-row-editor .ui-icon-pencil {
@@ -25,75 +28,19 @@
          <h:form id="form">
             <p:growl id="msgs" showDetail="true"/>
 
-            <p:dataTable id="cars1" var="car" value="#{dtEditView.cars1}" editable="true" style="margin-bottom:20px">
-                <f:facet name="header">
-                    Row Editing
-                </f:facet>
-
-                <p:ajax event="rowEdit" listener="#{dtEditView.onRowEdit}" update=":form:msgs" />
-                <p:ajax event="rowEditCancel" listener="#{dtEditView.onRowCancel}" update=":form:msgs" />
-
-                <p:column headerText="Id">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{car.id}" /></f:facet>
-                        <f:facet name="input"><p:inputText id="modelInput" value="#{car.id}" style="width:100%"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
-
-                <p:column headerText="Year">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{car.year}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{car.year}" style="width:100%" label="Year"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
-
-                <p:column headerText="Brand">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{car.brand}" /></f:facet>
-                        <f:facet name="input">
-                            <h:selectOneMenu value="#{car.brand}" style="width:100%">
-                                <f:selectItems value="#{dtEditView.brands}" var="man" itemLabel="#{man}" itemValue="#{man}" />
-                            </h:selectOneMenu>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-
-                <p:column headerText="Color">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{car.color}" /></f:facet>
-                        <f:facet name="input">
-                            <h:selectOneMenu value="#{car.color}" style="width:100%">
-                                <f:selectItems value="#{dtEditView.colors}" var="color" itemLabel="#{color}" itemValue="#{color}" />
-                            </h:selectOneMenu>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-
-                <p:column style="width:32px">
-                    <p:rowEditor />
-                </p:column>
-            </p:dataTable>
-            
-            <p:contextMenu for="cars2" widgetVar="cMenu">   
-                <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellCars').showCellEditor();return false;"/>  
-                <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
-            </p:contextMenu> 
-
             <p:dataTable id="cars2" var="car" value="#{dtEditView.cars2}" editable="true" editMode="cell" widgetVar="cellCars">
                 <f:facet name="header">
-                    Cell Editing with DoubleClick and RightClick
+                    Cell Editing Table
                 </f:facet>
-
-                <p:ajax event="cellEdit" listener="#{dtEditView.onCellEdit}" update=":form:msgs" />
 
                 <p:column headerText="Id">
                        <p:cellEditor>
                            <f:facet name="output"><h:outputText value="#{car.id}" /></f:facet>
                            <f:facet name="input"><p:inputText id="modelInput" value="#{car.id}" style="width:96%"/></f:facet>
                        </p:cellEditor>
-                   </p:column>
+                </p:column>
 
-                   <p:column headerText="Year">
+                <p:column headerText="Year">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{car.year}" /></f:facet>
                         <f:facet name="input"><p:inputText value="#{car.year}" style="width:96%" label="Year"/></f:facet>
@@ -121,6 +68,8 @@
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
+
+                <p:ajax event="cellEdit" listener="#{dtEditView.onCellEdit}" update=":form:msgs" />
             </p:dataTable>
          </h:form>
         
@@ -133,59 +82,6 @@
 &lt;h:form id="form"&gt;
    &lt;p:growl id="msgs" showDetail="true"/&gt;
 
-   &lt;p:dataTable id="cars1" var="car" value="\#{dtEditView.cars1}" editable="true" style="margin-bottom:20px"&gt;
-       &lt;f:facet name="header"&gt;
-           Row Editing
-       &lt;/f:facet&gt;
-
-       &lt;p:ajax event="rowEdit" listener="\#{dtEditView.onRowEdit}" update=":form:msgs" /&gt;
-       &lt;p:ajax event="rowEditCancel" listener="\#{dtEditView.onRowCancel}" update=":form:msgs" /&gt;
-
-       &lt;p:column headerText="Id"&gt;
-           &lt;p:cellEditor&gt;
-               &lt;f:facet name="output"&gt;&lt;h:outputText value="\#{car.id}" /&gt;&lt;/f:facet&gt;
-               &lt;f:facet name="input"&gt;&lt;p:inputText id="modelInput" value="\#{car.id}" style="width:100%"/&gt;&lt;/f:facet&gt;
-           &lt;/p:cellEditor&gt;
-       &lt;/p:column&gt;
-
-       &lt;p:column headerText="Year"&gt;
-           &lt;p:cellEditor&gt;
-               &lt;f:facet name="output"&gt;&lt;h:outputText value="\#{car.year}" /&gt;&lt;/f:facet&gt;
-               &lt;f:facet name="input"&gt;&lt;p:inputText value="\#{car.year}" style="width:100%" label="Year"/&gt;&lt;/f:facet&gt;
-           &lt;/p:cellEditor&gt;
-       &lt;/p:column&gt;
-
-       &lt;p:column headerText="Brand"&gt;
-           &lt;p:cellEditor&gt;
-               &lt;f:facet name="output"&gt;&lt;h:outputText value="\#{car.brand}" /&gt;&lt;/f:facet&gt;
-               &lt;f:facet name="input"&gt;
-                   &lt;h:selectOneMenu value="\#{car.brand}" style="width:100%"&gt;
-                       &lt;f:selectItems value="\#{dtEditView.brands}" var="man" itemLabel="\#{man}" itemValue="\#{man}" /&gt;
-                   &lt;/h:selectOneMenu&gt;
-               &lt;/f:facet&gt;
-           &lt;/p:cellEditor&gt;
-       &lt;/p:column&gt;
-
-       &lt;p:column headerText="Color"&gt;
-           &lt;p:cellEditor&gt;
-               &lt;f:facet name="output"&gt;&lt;h:outputText value="\#{car.color}" /&gt;&lt;/f:facet&gt;
-               &lt;f:facet name="input"&gt;
-                   &lt;h:selectOneMenu value="\#{car.color}" style="width:100%"&gt;
-                       &lt;f:selectItems value="\#{dtEditView.colors}" var="color" itemLabel="\#{color}" itemValue="\#{color}" /&gt;
-                   &lt;/h:selectOneMenu&gt;
-               &lt;/f:facet&gt;
-           &lt;/p:cellEditor&gt;
-       &lt;/p:column&gt;
-
-       &lt;p:column style="width:32px"&gt;
-           &lt;p:rowEditor /&gt;
-       &lt;/p:column&gt;
-   &lt;/p:dataTable&gt;
-
-   &lt;p:contextMenu for="cars2" widgetVar="cMenu"&gt;   
-       &lt;p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellCars').showCellEditor();return false;"/&gt;  
-       &lt;p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/&gt;  
-   &lt;/p:contextMenu&gt; 
 
    &lt;p:dataTable id="cars2" var="car" value="\#{dtEditView.cars2}" editable="true" editMode="cell" widgetVar="cellCars"&gt;
        &lt;f:facet name="header"&gt;

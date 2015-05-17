@@ -26,6 +26,10 @@ public class Car implements Serializable {
     public int price;
     public boolean sold;
 
+    // helper fields for testing
+    public String carline;
+    public String carline1;
+
     public Car() {}
     
     public Car(String id, String brand, int year, String color) {
@@ -107,4 +111,22 @@ public class Car implements Serializable {
         }
         return true;
     }
+
+    // helper methods
+    public String getCarline() {
+        return carline;
+    }
+
+    public void setCarline(String carline) {
+        this.carline = carline;
+    }
+
+    public String getCarline1() {
+        return carline1;
+    }
+
+    public void setCarline1(String carline1) {
+        this.carline1 = carline1;
+    }
+    
 }

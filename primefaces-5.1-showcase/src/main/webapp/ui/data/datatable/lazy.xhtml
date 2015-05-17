@@ -4,7 +4,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 template="./template.xhtml">
-
+    <!-- http://localhost:8080/showcase-5.1/ui/data/datatable/lazy.xhtml -->
     <ui:define name="title">
         DataTable - <span class="subitem">Lazy</span>
     </ui:define>
@@ -20,15 +20,19 @@
         <h:form id="form">
             <p:dataTable var="car" value="#{dtLazyView.lazyModel}" paginator="true" rows="10"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                         rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{dtLazyView.selectedCar}" id="carTable" lazy="true">
+                         rowsPerPageTemplate="5,10,15" 
+                         selectionMode="single"
+                         election="#{dtLazyView.selectedCar}" 
+                         id="carTable" 
+                         lazy="true">
                 <p:ajax event="rowSelect" listener="#{dtLazyView.onRowSelect}" update=":form:carDetail" oncomplete="PF('carDialog').show()" />
                 <p:column headerText="Id" sortBy="#{car.id}" filterBy="#{car.id}">
                     <h:outputText value="#{car.id}" />
                 </p:column>
-                <p:column headerText="Year" sortBy="#{car.year}" filterBy="#{car.year}">
+                <p:column headerText="Year" sortBy="#{year}" filterBy="#{year}">
                     <h:outputText value="#{car.year}" />
                 </p:column>
-                <p:column headerText="Brand" sortBy="#{car.brand}" filterBy="#{car.brand}">
+                <p:column headerText="Brand" sortBy="${year}" filterBy="${brand}">
                     <h:outputText value="#{car.brand}" />
                 </p:column>
                 <p:column headerText="Color" sortBy="#{car.color}" filterBy="#{car.color}">

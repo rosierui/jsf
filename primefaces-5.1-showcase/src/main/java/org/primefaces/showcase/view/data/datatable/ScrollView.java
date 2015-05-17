@@ -24,6 +24,11 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.showcase.domain.Car;
 import org.primefaces.showcase.service.CarService;
 
+/**
+ * http://localhost:8080/showcase-5.1/ui/data/datatable/scroll.xhtml
+ * 
+ * @author oracle
+ */
 @ManagedBean(name="dtScrollView")
 @ViewScoped
 public class ScrollView implements Serializable {

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-TOMCAT=/g01/srv/tomcat-7.0.54
+. ./tomcat-version
+
+TOMCAT=/g01/srv/$tomcat
 
 
 SRC_DIR=$PWD/src/main/webapp/

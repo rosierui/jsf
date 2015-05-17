@@ -1,5 +1,7 @@
-WORKDIR=`pwd`
-TOMCAT=/g01/srv/tomcat-7.0.54
+. ./tomcat-version
+
+WORKDIR=`pwd` #BASEDIR=$PWD
+TOMCAT=/g01/srv/$tomcat
 
 TASK_RUNNING=`ps -eaf | grep "sync-source" | grep -v grep | wc -l`
 if [ $TASK_RUNNING -gt 0 ]; then
