@@ -1,0 +1,15 @@
+WORKDIR=`pwd`
+
+TASK_RUNNING=`ps -eaf | grep "sync-source" | grep -v grep | wc -l`
+if [ $TASK_RUNNING -gt 0 ]; then
+    echo ""
+    echo "sync-source is running, shutdown..."
+    id=`ps -eaf | grep "sync-source" | grep -v grep | awk '{print $2}'`
+    kill $id
+else
+    echo ""
+    echo "sync-source is not running..."
+fi;
+
+
+
