@@ -2,6 +2,9 @@ package org.moonwave.view;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +15,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.io.FileUtils;
 import org.moonwave.email.EmailModel;
 import org.moonwave.email.MailThread;
 import org.moonwave.model.EmailAddress;
 import org.moonwave.util.mail.MailProperties;
 import org.moonwave.util.mail.SimpleMail;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 @ManagedBean
 @SessionScoped
@@ -32,6 +38,7 @@ public class EmailView {
      */
     EmailModel emailModel;
     boolean normalAttachments = false;
+    private UploadedFile file;
 
     @PostConstruct
     public void init() {
@@ -44,7 +51,6 @@ public class EmailView {
         emailModel.setHtmlMail(true);
     }
 
- 
     // ================================================================= Actions
     public String send2() throws IOException {
         if (true)
@@ -56,6 +62,42 @@ public class EmailView {
         performSendMailAction(emailModel);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Message sent"));
         return;
+    }
+
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public void upload() {
+        if(file != null) {
+            FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+
+    public void handleFileUpload(FileUploadEvent event) {
+        FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        // jon
+        file = event.getFile();
+        Path destination = Paths.get("pathToYourFile");
+        try {
+                InputStream initialStream = file.getInputstream();
+                String filename = file.getFileName();
+                String fileType = file.getContentType();
+
+                String test = filename;
+                File targetFile = new File("/tmp/webmail/" + filename);
+
+                FileUtils.copyInputStreamToFile(initialStream, targetFile);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     // ================================================= Public property methods
@@ -145,22 +187,6 @@ public class EmailView {
     private void sendMail(SimpleMail mail,
                           List<String> attachments,
                           List<File> fileList) {
-        // allow ';' in to, cc, and bcc email address
-        // TODO - append to after group mail address
-//        if (mail.getFrom() != null)
-//            mail.setFrom(mail.getFrom().replaceAll(";", ","));
-//        if (mail.getTo() != null)
-//            mail.setTo(mail.getTo().replaceAll(";", ","));
-//        if (mail.getCc() != null)
-//            mail.setCc(mail.getCc().replaceAll(";", ","));
-//        if (mail.getBcc() != null)
-//            mail.setBcc(mail.getBcc().replaceAll(";", ","));
-
-//        if (mail.isAppendPostscript())
-//            mail.setBcc(mail.getBody() + "\n" + mail.getPostscript());
-//        if (mail.isHtmlMail()) { // replacer \n to <br>
-//            mail.setBody(mail.getBody().replaceAll("\n", "<br>"));
-//        }
         MailThread mailThread = new MailThread();
         mailThread.setMailInfo(mail, attachments, fileList);
         mailThread.send();

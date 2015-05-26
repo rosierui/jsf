@@ -12,36 +12,40 @@
     <h:body>
         <br/>
         <p:messages id="messages" showDetail="true" closable="true" />
+        <p:growl id="messages2" showDetail="true" />
         <h:form>  
             <p:panelGrid header="Sign In" columns="2" style="border: none;">
-                <h:outputLabel for="from" value="From: " />
+                <h:outputLabel for="from" value="From:" />
                 <h:outputText id="from" value="${emailView.emailModel.from}"/>
 
-                <h:outputLabel for="to" value="To: " />
+                <h:outputLabel for="to" value="To:" />
                 <p:inputText id="to" value="#{emailView.emailModel.to}" size="80"/>
 
-                <h:outputLabel for="cc" value="Cc: " />
+                <h:outputLabel for="cc" value="Cc:" />
                 <p:inputText id="cc" value="#{emailView.emailModel.cc}" size="80"/>
 
-                <h:outputLabel for="bcc" value="Bcc: " />
+                <h:outputLabel for="bcc" value="Bcc:" />
                 <p:inputText id="bcc" value="#{emailView.emailModel.bcc}" size="80"/>
 
-                <h:outputLabel for="subject" value="Subject: " />
+                <h:outputLabel for="subject" value="Subject:" />
                 <p:inputText id="subject" value="#{emailView.emailModel.subject}" size="80"/>
 
                 <h:outputLabel value="" />
-                
                 <p:editor id="editor" widgetVar="editorWidget" value="#{emailView.emailModel.body}"  
                              width="860" height="400" style="border: solid 1px #000; margin: 0px 30px 20px 0px"
                 />
 
-              </p:panelGrid>
+                <h:outputLabel value="Attachments:" />
+                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false" 
+                              update="messages2" sizeLimit="50000000" fileLimit="5" allowTypes="/(\.|\/)(gif|jpe?g|png|docx|odt|txt|pdf)$/" />
+
+            </p:panelGrid>
 
             <h:panelGrid columns="2" style="margin-top: 10px">
                 <h:panelGroup>
-	                <p:commandButton value="Preview" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
+                    <p:commandButton value="Preview" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
                     <p:commandButton value="Send" actionListener="#{emailView.send}" update="messages" icon="ui-icon-disk" />
-	                <p:commandButton value="Clear Message" type="button" onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
+                    <p:commandButton value="Clear Message" type="button" onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
                 </h:panelGroup>
             </h:panelGrid>
             

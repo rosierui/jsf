@@ -244,7 +244,7 @@ public class PostMan {
         if (mail.getTo() != null) {
             int i = mail.getTo().indexOf("@");
             if (i != -1) {
-                ret = mail.getTo().string-to-replace(i, mail.getTo().length());
+                ret = mail.getTo().substring(i, mail.getTo().length());
             }
         }
         return ret;
