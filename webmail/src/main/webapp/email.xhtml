@@ -3,37 +3,52 @@
     xmlns:f="http://java.sun.com/jsf/core"  
     xmlns:p="http://primefaces.org/ui">  
   
-    <h:head>  
-  
-    </h:head>  
-      
+    <h:head>
+    <style type="text/css">
+        table {border: none;}
+    </style>
+    </h:head>
+
     <h:body>
-    	<br/>  
-    	<h:form>  
-    		<p:panelGrid header="Sign In" columns="2">
-    			<h:outputLabel for="username" value="Username: " />
-        		<p:inputText id="username" value="#{loginController.username}"/>
+        <br/>
+        <p:messages id="messages" showDetail="true" closable="true" />
+        <h:form>  
+            <p:panelGrid header="Sign In" columns="2" style="border: none;">
+                <h:outputLabel for="from" value="From: " />
+                <h:outputText id="from" value="${emailView.emailModel.from}"/>
 
-    			<h:outputLabel for="subject" value="Subject: " />
-        		<p:inputText id="subject" value="#{emailController.subject}" size="80"/>
+                <h:outputLabel for="to" value="To: " />
+                <p:inputText id="to" value="#{emailView.emailModel.to}" size="80"/>
 
-    			<h:outputLabel value="" />
-    			
-			    <p:editor id="editor" widgetVar="editorWidget" value="#{emailController.message}"  
-		   				  width="860" height="400" style="border: solid 1px #000; margin: 0px 30px 20px 0px"
-			    />
+                <h:outputLabel for="cc" value="Cc: " />
+                <p:inputText id="cc" value="#{emailView.emailModel.cc}" size="80"/>
 
-          	</p:panelGrid>
+                <h:outputLabel for="bcc" value="Bcc: " />
+                <p:inputText id="bcc" value="#{emailView.emailModel.bcc}" size="80"/>
 
-		    <h:panelGrid columns="2" style="margin-top: 10px">
-		        <p:commandButton value="Submit" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
-		        <p:commandButton value="Clear" type="button" onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
-		    </h:panelGrid>
-		    
-		    <p:dialog header="Content" widgetVar="dlg" showEffect="fade" hideEffect="fade">
-		        <h:outputText id="display" value="#{emailController.message}" escape="false" />
-		    </p:dialog>
-          	
-    	</h:form>
+                <h:outputLabel for="subject" value="Subject: " />
+                <p:inputText id="subject" value="#{emailView.emailModel.subject}" size="80"/>
+
+                <h:outputLabel value="" />
+                
+                <p:editor id="editor" widgetVar="editorWidget" value="#{emailView.emailModel.body}"  
+                             width="860" height="400" style="border: solid 1px #000; margin: 0px 30px 20px 0px"
+                />
+
+              </p:panelGrid>
+
+            <h:panelGrid columns="2" style="margin-top: 10px">
+                <h:panelGroup>
+	                <p:commandButton value="Preview" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
+                    <p:commandButton value="Send" actionListener="#{emailView.send}" update="messages" icon="ui-icon-disk" />
+	                <p:commandButton value="Clear Message" type="button" onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
+                </h:panelGroup>
+            </h:panelGrid>
+            
+            <p:dialog header="Content" widgetVar="dlg" showEffect="fade" hideEffect="fade">
+                <h:outputText id="display" value="#{emailView.emailModel.body}" escape="false" />
+            </p:dialog>
+              
+        </h:form>
     </h:body>  
 </html>

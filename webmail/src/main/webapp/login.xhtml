@@ -8,17 +8,17 @@
     </h:head>  
       
     <h:body>
-    	<br/>
-    	<br/>  
-    	<h:form>  
-    		<p:panelGrid header="Sign In" columns="2">
-    			<h:outputLabel for="username" value="Username: " />
-        		<p:inputText id="username" value="#{loginController.username}"/>
+        <br/>
+        <br/>  
+        <h:form>  
+            <p:panelGrid header="Sign In" columns="2">
+                <h:outputLabel for="username" value="Username: " />
+                <p:inputText id="username" value="#{loginView.username}"/>
 
-    			<h:outputLabel for="password" value="Password: " />
-        		<p:inputText id="password" value="#{loginController.password}"/>
-          	</p:panelGrid>
-          	<p:commandButton value="Submit"/> 
-    	</h:form>
+                <h:outputLabel for="password" value="Password: " />
+                <p:inputText id="password" value="#{loginView.password}"/>
+              </p:panelGrid>
+              <p:commandButton value="Submit"/> 
+        </h:form>
     </h:body>  
 </html>

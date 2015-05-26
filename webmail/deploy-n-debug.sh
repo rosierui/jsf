@@ -27,13 +27,16 @@ else
     echo ""
 fi;
 
+# remove logs
+rm $TOMCAT/logs/*
+
 rm $TOMCAT/webapps/$app.war
 rm -rf $TOMCAT/webapps/$app
 
 
 echo "rebuild and deploy..."
 echo
-mvn package
+mvn clean package
 cp target/$app_target.war $TOMCAT/webapps/$app.war
 
 echo ""
