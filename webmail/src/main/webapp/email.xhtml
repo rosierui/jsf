@@ -36,8 +36,8 @@
                 />
 
                 <h:outputLabel value="Attachments:" />
-                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false" 
-                              update="messages2" sizeLimit="50000000" fileLimit="5" allowTypes="/(\.|\/)(gif|jpe?g|png|docx|odt|txt|pdf)$/" />
+                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="true" 
+                              multiple="true" update="messages2" sizeLimit="50000000" fileLimit="5" />
 
             </p:panelGrid>
 
@@ -48,7 +48,7 @@
                     <p:commandButton value="Clear Message" type="button" onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
                 </h:panelGroup>
             </h:panelGrid>
-            
+
             <p:dialog header="Content" widgetVar="dlg" showEffect="fade" hideEffect="fade">
                 <h:outputText id="display" value="#{emailView.emailModel.body}" escape="false" />
             </p:dialog>
