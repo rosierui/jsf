@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServlet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.moonwave.util.AppProperties;
 import org.moonwave.util.mail.MailProperties;
 
 
@@ -49,7 +50,7 @@ public class MailInitServlet extends HttpServlet {
             try {
                 // stackoverflow.com/questions/9963373/read-properties-file-in-static-code-of-a-jsf-web-application
                 // InputStream input = EmailController.class.getResourceAsStream("/deploy.properties");
-                InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("deploy.properties");
+                InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("mail.properties");
                 properties.load(input);
 
                 MailProperties mailProperties = MailProperties.getInstance();
@@ -63,6 +64,21 @@ public class MailInitServlet extends HttpServlet {
                 mailProperties.setBodyPrefix(properties.getProperty("bodyPrefix"));
                 mailProperties.setBoySuffix(properties.getProperty("boySuffix"));
                 mailProperties.setPs(properties.getProperty("ps"));
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            log.info("InitServlet initialization succeeded");
+        } catch (Throwable e) {
+            log.fatal("InitServlet initialization error: " + e);
+        }
+
+        try {
+            Properties properties = AppProperties.getInstance().getProperties();
+            try {
+                InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties");
+                properties.load(input);
+
             } catch (Exception e) {
                 System.out.println(e);
             }

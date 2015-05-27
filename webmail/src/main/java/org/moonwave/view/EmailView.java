@@ -3,9 +3,11 @@ package org.moonwave.view;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -13,12 +15,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.mail.Folder;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.io.FileUtils;
 import org.moonwave.email.EmailModel;
 import org.moonwave.email.MailThread;
 import org.moonwave.model.EmailAddress;
+import org.moonwave.util.FileUtil;
 import org.moonwave.util.mail.MailProperties;
 import org.moonwave.util.mail.SimpleMail;
 import org.primefaces.event.FileUploadEvent;
@@ -112,9 +116,9 @@ public class EmailView {
     // ========================================================= Private methods
     private void performSendMailAction(EmailModel model) {
         // send attachments
-        List<String> attachments = new ArrayList<String>();
+        List<String> attachments = new ArrayList<String>(); // list of full path name
         List<File> fileList =new ArrayList<File>();
-/*
+
         List<File> fileList = Arrays.asList(getUploadFolder().listFiles());
 //        long id = loggedInUser.getId();
 //        IschoolUser sender = loggedInUser;
@@ -135,11 +139,11 @@ public class EmailView {
                     sb.append("\">").append(filename).append("</a>");
                     attachments.add(sb.toString());
                 } catch (Exception e) {
-                    log.error(e, e);
+//                    log.error(e, e);
                 }
             }
         }
-*/
+
         // TODO - append to after group mail address
         if (model.getFrom() != null)
             model.setFrom(model.getFrom().replaceAll(";", ","));
@@ -190,4 +194,60 @@ public class EmailView {
         MailThread mailThread = new MailThread();
         mailThread.setMailInfo(mail, attachments, fileList);
         mailThread.send();
-    }}
+    }
+
+    /**
+     * Check whether the file already exists, and if so, try to delete it.
+     *
+     * @param newFile
+     *            the file to check
+     */
+    private void checkFileExists(File newFile)
+    {
+        if (newFile.exists()) {
+            // Try to delete the file
+            if (!Files.remove(newFile)) {
+                throw new IllegalStateException("Unable to overwrite " + newFile.getAbsolutePath());
+            }
+        }
+    }
+
+    private Folder getUploadFolder() {
+        if (uploadFolder == null) {
+            Folder parentFolder = ((IschoolApp)Application.get()).getUploadRootFolder();
+            String subFolder = loggedInUser.getId().toString();
+            uploadFolder = new Folder(parentFolder.getAbsolutePath(), subFolder);
+            uploadFolder.mkdirs();
+        }
+        return uploadFolder;
+    }
+
+    private Folder getOutgoingFolder() {
+        if (outgoingFolder == null) {
+            Folder parentFolder = ((IschoolApp)Application.get()).getOutgoingRootFolder();
+            String subFolder = loggedInUser.getId().toString();
+            outgoingFolder = new Folder(parentFolder.getAbsolutePath(), subFolder);
+            outgoingFolder.mkdirs();
+        }
+        return outgoingFolder;
+    }
+
+    private String getOutgoingSubfolder() {
+        if (outgoingSubfolder == null) {
+            outgoingSubfolder = loggedInUser.getId().toString();
+            outgoingSubfolder = "outgoing/" + outgoingSubfolder;
+        }
+        return outgoingSubfolder;
+    }
+
+    private long calculateTotalUploadFileSize() {
+        long totalSizeKB = 0;
+        File[] files = getUploadFolder().getFiles();
+        for (File file: files) {
+            totalSizeKB += file.length(); // number of bytes
+        }
+        totalSizeKB /= 1024;
+        return totalSizeKB;
+    }
+
+}
