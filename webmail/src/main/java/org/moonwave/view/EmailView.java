@@ -15,15 +15,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.mail.Folder;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.io.FileUtils;
 import org.moonwave.email.EmailModel;
 import org.moonwave.email.MailThread;
 import org.moonwave.model.EmailAddress;
+import org.moonwave.util.AppProperties;
 import org.moonwave.util.FileUtil;
-import org.moonwave.util.mail.MailProperties;
+import org.moonwave.util.MailProperties;
 import org.moonwave.util.mail.SimpleMail;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -41,8 +41,14 @@ public class EmailView {
      * 
      */
     EmailModel emailModel;
-    boolean normalAttachments = false;
     private UploadedFile file;
+
+    // application properties
+    String webServerHome;
+    String userId;
+    File uploadFolder;
+    File outgoingFolder;
+    boolean normalAttachments = false;
 
     @PostConstruct
     public void init() {
@@ -53,6 +59,12 @@ public class EmailView {
         emailModel.setCc(mp.getCc());
         emailModel.setBcc(mp.getBcc());
         emailModel.setHtmlMail(true);
+
+        AppProperties ap = AppProperties.getInstance();
+        webServerHome = ap.getProperty(AppProperties.KEY_WEB_SERVER_HOME);
+        uploadFolder = FileUtil.createDirectory(ap.getProperty(AppProperties.KEY_UPLOAD_FOLDER));
+        outgoingFolder = FileUtil.createDirectory(webServerHome + "/webapps/" + ap.getProperty(AppProperties.KEY_OUTGOING_FOLDER));
+        normalAttachments = ap.getProperty(AppProperties.KEY_NORMAL_ATTACHMENTS).equals("true") ? true : false;
     }
 
     // ================================================================= Actions
@@ -77,27 +89,23 @@ public class EmailView {
         this.file = file;
     }
 
-    public void upload() {
-        if(file != null) {
-            FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-        }
-    }
+//    public void upload() {
+//        if(file != null) {
+//            FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
+//            FacesContext.getCurrentInstance().addMessage(null, message);
+//        }
+//    }
 
     public void handleFileUpload(FileUploadEvent event) {
         FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        // jon
         file = event.getFile();
-        Path destination = Paths.get("pathToYourFile");
         try {
                 InputStream initialStream = file.getInputstream();
                 String filename = file.getFileName();
                 String fileType = file.getContentType();
 
-                String test = filename;
-                File targetFile = new File("/tmp/webmail/" + filename);
-
+                File targetFile = new File(getUploadFolder().getPath() + "/" + filename);
                 FileUtils.copyInputStreamToFile(initialStream, targetFile);
         } catch (Exception e) {
             System.out.println(e);
@@ -117,14 +125,13 @@ public class EmailView {
     private void performSendMailAction(EmailModel model) {
         // send attachments
         List<String> attachments = new ArrayList<String>(); // list of full path name
-        List<File> fileList =new ArrayList<File>();
 
         List<File> fileList = Arrays.asList(getUploadFolder().listFiles());
 //        long id = loggedInUser.getId();
 //        IschoolUser sender = loggedInUser;
         String attachementLink = null;
         for (File file : fileList) {
-            if (normalAttachments)
+            if (normalAttachments) // send as normal attachments
                 attachments.add(file.getPath());
             else { // send attachments inside message body as downloadable link
                 try {
@@ -133,7 +140,7 @@ public class EmailView {
                     filename = filename.replaceAll(" ", "_"); // replace spaces with '_'
                     String toFile = getOutgoingFolder().toString() + "/" + filename;
                     FileUtil.copyfile(fromFile, toFile);
-                    attachementLink = htmlbase + openfolderName + "/" + getOutgoingSubfolder() + "/" + filename;
+                    attachementLink = webServerHome + "/webapps/" + getOutgoingFolder().getName() + "/" + userId + "/" + filename;
                     StringBuilder sb = new StringBuilder(100);
                     sb.append("<a href=\"").append(attachementLink);
                     sb.append("\">").append(filename).append("</a>");
@@ -206,43 +213,43 @@ public class EmailView {
     {
         if (newFile.exists()) {
             // Try to delete the file
-            if (!Files.remove(newFile)) {
+            if (!newFile.delete()) {
                 throw new IllegalStateException("Unable to overwrite " + newFile.getAbsolutePath());
             }
         }
     }
 
-    private Folder getUploadFolder() {
+    private File getUploadFolder() {
         if (uploadFolder == null) {
-            Folder parentFolder = ((IschoolApp)Application.get()).getUploadRootFolder();
-            String subFolder = loggedInUser.getId().toString();
-            uploadFolder = new Folder(parentFolder.getAbsolutePath(), subFolder);
+//            Folder parentFolder = ((IschoolApp)Application.get()).getUploadRootFolder();
+//            String subFolder = loggedInUser.getId().toString();
+//            uploadFolder = new Folder(parentFolder.getAbsolutePath(), subFolder);
             uploadFolder.mkdirs();
         }
         return uploadFolder;
     }
 
-    private Folder getOutgoingFolder() {
+    private File getOutgoingFolder() {
         if (outgoingFolder == null) {
-            Folder parentFolder = ((IschoolApp)Application.get()).getOutgoingRootFolder();
-            String subFolder = loggedInUser.getId().toString();
-            outgoingFolder = new Folder(parentFolder.getAbsolutePath(), subFolder);
+//            Folder parentFolder = ((IschoolApp)Application.get()).getOutgoingRootFolder();
+//            String subFolder = loggedInUser.getId().toString();
+//            outgoingFolder = new Folder(parentFolder.getAbsolutePath(), subFolder);
             outgoingFolder.mkdirs();
         }
         return outgoingFolder;
     }
 
-    private String getOutgoingSubfolder() {
-        if (outgoingSubfolder == null) {
-            outgoingSubfolder = loggedInUser.getId().toString();
-            outgoingSubfolder = "outgoing/" + outgoingSubfolder;
-        }
-        return outgoingSubfolder;
-    }
+//    private String getOutgoingSubfolder() {
+//        if (outgoingSubfolder == null) {
+//            outgoingSubfolder = loggedInUser.getId().toString();
+//            outgoingSubfolder = "outgoing/" + outgoingSubfolder;
+//        }
+//        return outgoingSubfolder;
+//    }
 
     private long calculateTotalUploadFileSize() {
         long totalSizeKB = 0;
-        File[] files = getUploadFolder().getFiles();
+        File[] files = getUploadFolder().listFiles();
         for (File file: files) {
             totalSizeKB += file.length(); // number of bytes
         }

@@ -1,4 +1,4 @@
-package org.moonwave.util.mail;
+package org.moonwave.util;
 
 public class MailProperties {
 

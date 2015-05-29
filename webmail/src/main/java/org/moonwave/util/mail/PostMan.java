@@ -39,8 +39,10 @@ import javax.mail.internet.MimeMessage;
 
 
 import javax.mail.internet.MimeMultipart;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.moonwave.util.MailProperties;
 
 /**
  * Mail delivery agent

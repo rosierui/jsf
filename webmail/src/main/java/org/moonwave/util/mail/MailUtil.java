@@ -22,6 +22,8 @@
  */
 package org.moonwave.util.mail;
 
+import org.moonwave.util.MailProperties;
+
 /**
  * Mail utilities
  *

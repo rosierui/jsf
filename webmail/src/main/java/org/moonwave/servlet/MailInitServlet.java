@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServlet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.moonwave.util.AppProperties;
-import org.moonwave.util.mail.MailProperties;
+import org.moonwave.util.MailProperties;
 
 
 /**
