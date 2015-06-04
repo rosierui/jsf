@@ -23,7 +23,8 @@
 package org.moonwave.util.comparator;
 
 import java.util.Comparator;
-import org.moonwave.model.EmailAddress;
+
+import org.moonwave.jpa.model.pojo.EmailAddress;
 
 /**
  * EmailAddress Comparator

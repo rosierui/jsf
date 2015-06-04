@@ -24,7 +24,8 @@
 package org.moonwave.email;
 
 import java.util.List;
-import org.moonwave.model.EmailAddress;
+
+import org.moonwave.jpa.model.pojo.EmailAddress;
 import org.moonwave.util.mail.SimpleMail;
 
 /**
@@ -36,13 +37,21 @@ public class EmailModel extends SimpleMail implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	boolean groupMail;
 	String sendTo;
     String showCc = "false"; // hidden show CC status
     String showBcc = "false"; // hidden show BCC status
     String showPostscript = "false";
     List<EmailAddress> emailAddressList;
 
-    public String getSendTo() {
+    
+    public boolean isGroupMail() {
+		return groupMail;
+	}
+	public void setGroupMail(boolean groupMail) {
+		this.groupMail = groupMail;
+	}
+	public String getSendTo() {
         return sendTo;
     }
     public void setSendTo(String sendTo) {

@@ -19,8 +19,12 @@
                 <h:outputText id="from" value="${emailView.emailModel.from}"/>
 
                 <h:outputLabel for="to" value="To:" />
-                <p:inputText id="to" value="#{emailView.emailModel.to}" size="80"/>
-
+                <h:panelGroup>
+                    <p:inputText id="to" value="#{emailView.emailModel.to}" size="80"/>
+                    <h:outputText value="Group Mail: " />
+                    <p:selectBooleanCheckbox value="#{emailView.emailModel.groupMail}" />
+                </h:panelGroup>
+                
                 <h:outputLabel for="cc" value="Cc:" />
                 <p:inputText id="cc" value="#{emailView.emailModel.cc}" size="80"/>
 

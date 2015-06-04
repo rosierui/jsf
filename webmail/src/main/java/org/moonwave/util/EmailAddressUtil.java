@@ -29,7 +29,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import org.moonwave.model.EmailAddress;
+
+import org.moonwave.jpa.model.pojo.EmailAddress;
 import org.moonwave.util.comparator.EmailAddressComparator;
 
 /**
@@ -50,7 +51,7 @@ public class EmailAddressUtil implements java.io.Serializable {
         while (it.hasNext()) {
             retList.add(it.next());
         }
-        Collections.sort(retList, new EmailAddressComparator());
+//        Collections.sort(retList, new EmailAddressComparator());
         return retList;
     }
 }

@@ -1,11 +1,31 @@
+/*
+ * ============================================================================
+ * GNU Lesser General Public License
+ * ============================================================================
+ *
+ * Copyright (C) 2015 Jonathan Luo
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA.
+ *
+ */
+
 package org.moonwave.view;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,8 +40,10 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.io.FileUtils;
 import org.moonwave.email.EmailModel;
 import org.moonwave.email.MailThread;
-import org.moonwave.model.EmailAddress;
+import org.moonwave.jpa.model.pojo.EmailAddress;
+import org.moonwave.jpa.query.EmailAddressNativeQuery;
 import org.moonwave.util.AppProperties;
+import org.moonwave.util.EmailAddressUtil;
 import org.moonwave.util.FileUtil;
 import org.moonwave.util.MailProperties;
 import org.moonwave.util.mail.SimpleMail;
@@ -88,13 +110,6 @@ public class EmailView {
     public void setFile(UploadedFile file) {
         this.file = file;
     }
-
-//    public void upload() {
-//        if(file != null) {
-//            FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
-//            FacesContext.getCurrentInstance().addMessage(null, message);
-//        }
-//    }
 
     public void handleFileUpload(FileUploadEvent event) {
         FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
@@ -176,17 +191,87 @@ public class EmailView {
             model.setBody(model.getBody().replaceAll("\r\n", "<br>"));
         }
 
-        if (model.getSendTo() != null) { // handle group mails
-//            String sendTo = model.getSendTo();
-//            List<EmailAddress> list = getGroupEmail(sendTo);
-//            list = EmailAddressUtil.getUniqueEmail(list);
-//            model.setEmailAddressList(list);
-//            sendGroupMails(model, attachments, fileList); // send group mails w/ attachments
+        if (model.isGroupMail()) { // handle group mails
+            List<EmailAddress> list = getGroupEmail();
+            list = EmailAddressUtil.getUniqueEmail(list);
+            model.setEmailAddressList(list);
+            sendGroupMails(model, attachments, fileList); // send group mails w/ attachments
         } else
             sendMail(model, attachments, fileList); // send individual mail w/ attachments
         // log email activity
 //        logEmailActivity(model);
 //        setResponsePage(new StatusPage("<h1>Your email has been sent, thank you!</h1>"));
+    }
+
+    private List<EmailAddress> getGroupEmail() {
+        List<EmailAddress> list = null;
+        EmailAddressNativeQuery test = new EmailAddressNativeQuery();
+        try {
+            test.setUp();
+            list= test.query();
+            test.tearDown();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return (list != null) ? list : new ArrayList<EmailAddress>();
+    }
+
+    private List<SimpleMail> toSimpleMailList(EmailModel model) {
+        List<SimpleMail> list = new ArrayList<SimpleMail>();
+        // convert existing To email addresses first
+        String toAddress = model.getTo();
+        if (toAddress != null) {
+            String[] addressList = toAddress.split(",");
+            for (String address: addressList) {
+                SimpleMail sm = model.toSimpleMail();
+                sm.setTo(address.trim());
+                sm.setCc(null);
+                sm.setBcc(null);
+                list.add(sm);
+            }
+        }
+        String ccAddress = model.getCc();
+        if (ccAddress != null) {
+            String[] addressList = ccAddress.split(",");
+            for (String address: addressList) {
+                SimpleMail sm = model.toSimpleMail();
+                sm.setTo("\"" + model.getSendTo() + "\" <" + address.trim() + ">");
+                sm.setCc(address.trim());
+                sm.setBcc(null);
+                list.add(sm);
+            }
+        }
+        String bccAddress = model.getBcc();
+
+        if (bccAddress != null) {
+            String[] addressList = bccAddress.split(",");
+            for (String address: addressList) {
+                SimpleMail sm = model.toSimpleMail();
+                sm.setTo("\"" + model.getSendTo() + "\" <" + address.trim() + ">");
+                sm.setCc(null);
+                sm.setBcc(address.trim());
+                list.add(sm);
+            }
+        }
+        // breaks emailAddressList to individual To email address
+        List<EmailAddress> emList = model.getEmailAddressList();
+        for (EmailAddress em: emList) {
+            SimpleMail sm = model.toSimpleMail();
+            sm.setTo(em.getEmail());
+            sm.setCc(null);
+            sm.setBcc(null);
+            list.add(sm);
+        }
+        return list;
+    }
+
+    private void sendGroupMails(EmailModel model,
+            List<String> attachments,
+            List<File> fileList) {
+		List<SimpleMail> smList = toSimpleMailList(model);
+		MailThread mailThread = new MailThread();
+		mailThread.setGroupMailInfo(smList, attachments, fileList);
+		mailThread.send();
     }
 
     /**
