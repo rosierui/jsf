@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    <h:head>
+
+    </h:head>  
+      
+    <h:body>
+        <br/>
+        <br/>  
+        <h:form>
+            <p:panelGrid header="Key Generator" columns="4" cellpadding="5">
+                <h:outputLabel for="key" value="Enter Your Key: " style="font-weight:bold"/>
+                <p:inputText id="key" value="#{keyView.key}" />
+
+                <p:commandButton value="Submit" update="display" icon="ui-icon-check" />
+                <h:outputText id="display" value="#{keyView.result}" />
+            </p:panelGrid>
+        </h:form>
+    </h:body>
+</html>

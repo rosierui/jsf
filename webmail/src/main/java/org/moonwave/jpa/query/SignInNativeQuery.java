@@ -30,14 +30,13 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import org.moonwave.jpa.model.pojo.EmailAddress;
+import org.moonwave.util.Md5Util;
 
-public class EmailAddressNativeQuery 
+public class SignInNativeQuery 
 {
-
-    private EntityManager em;
     private EntityManagerFactory emf;
-    
+    private EntityManager em;
+
     public void setUp() throws Exception {
         emf=Persistence.createEntityManagerFactory("jpa-mysql");
         em=emf.createEntityManager();
@@ -49,23 +48,26 @@ public class EmailAddressNativeQuery
     }
 
     @SuppressWarnings("unchecked")
-    public List<EmailAddress> query() {
-        Query query = em.createNativeQuery("select e.id, e.first_name as firstName, e.last_name as lastName," + 
-                "e.email from email e", EmailAddress.class);
-        query.setMaxResults(4);
-        List<EmailAddress> list = (List<EmailAddress>) query.getResultList();
-        return list;
+    public boolean signIn(String userId, String password) throws Exception {
+        setUp();
+        String encryptPassword = Md5Util.encryptPassword(password);
+        Query query = em.createNativeQuery("select count(*) from user where user_id = ? and password = ?");
+        query.setParameter(1, userId);
+        query.setParameter(2, encryptPassword);
+        List<Number> counts = (List<Number>) query.getResultList();
+        long count = 0;
+        if (counts.size() > 0) {
+            count = counts.get(0).longValue();
+        }
+        tearDown();
+        return (count == 1) ? true : false;
     }
 
     public static void main( String[] args ) {
-        EmailAddressNativeQuery test = new EmailAddressNativeQuery();
+        SignInNativeQuery test = new SignInNativeQuery();
         try {
             test.setUp();
-            List<EmailAddress> list = test.query();
-            int i = 0;
-            for (EmailAddress emp : list) {
-                System.out.println(++i + ": " + emp.toString());
-            }
+            boolean ret = test.signIn("phxcnwrd", "hope1");
             test.tearDown();
         } catch (Exception e) {
             System.out.println(e);

@@ -81,6 +81,7 @@ public class EmailView {
         emailModel.setCc(mp.getCc());
         emailModel.setBcc(mp.getBcc());
         emailModel.setHtmlMail(true);
+        emailModel.setGroupMail(true);
 
         AppProperties ap = AppProperties.getInstance();
         webServerHome = ap.getProperty(AppProperties.KEY_WEB_SERVER_HOME);

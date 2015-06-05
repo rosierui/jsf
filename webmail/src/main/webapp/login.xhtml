@@ -9,16 +9,17 @@
       
     <h:body>
         <br/>
-        <br/>  
-        <h:form>  
+        <br/>
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <h:form>
             <p:panelGrid header="Sign In" columns="2">
                 <h:outputLabel for="username" value="Username: " />
                 <p:inputText id="username" value="#{loginView.username}"/>
 
                 <h:outputLabel for="password" value="Password: " />
                 <p:inputText id="password" value="#{loginView.password}"/>
-              </p:panelGrid>
-              <p:commandButton value="Submit"/> 
+            </p:panelGrid>
+            <p:commandButton value="Submit" actionListener="#{loginView.signIn}"/> 
         </h:form>
-    </h:body>  
+    </h:body>
 </html>

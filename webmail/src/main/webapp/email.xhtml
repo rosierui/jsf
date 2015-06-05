@@ -2,13 +2,15 @@
     xmlns:h="http://java.sun.com/jsf/html"  
     xmlns:f="http://java.sun.com/jsf/core"  
     xmlns:p="http://primefaces.org/ui">  
-  
+
+    <f:event type="preRenderView" listener="#{mainMB.forwardToLoginIfNotLoggedIn}" />
+
     <h:head>
     <style type="text/css">
         table {border: none;}
     </style>
     </h:head>
-
+    
     <h:body>
         <br/>
         <p:messages id="messages" showDetail="true" closable="true" />
@@ -19,9 +21,9 @@
                 <h:outputText id="from" value="${emailView.emailModel.from}"/>
 
                 <h:outputLabel for="to" value="To:" />
-                <h:panelGroup>
-                    <p:inputText id="to" value="#{emailView.emailModel.to}" size="80"/>
-                    <h:outputText value="Group Mail: " />
+                <h:panelGroup >
+                    <p:inputText id="to" value="#{emailView.emailModel.to}" size="70"/>
+                    <h:outputText value="Group Mail: " style="padding-left: 1cm;" />
                     <p:selectBooleanCheckbox value="#{emailView.emailModel.groupMail}" />
                 </h:panelGroup>
                 
