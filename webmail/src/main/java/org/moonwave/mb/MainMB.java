@@ -46,4 +46,13 @@ public class MainMB {
              "/login?faces-redirect=true" );
        }
    }
+
+   public void forwardToEmailPage(ComponentSystemEvent cse) {
+       FacesContext fc = FacesContext.getCurrentInstance();
+       String viewId = fc.getViewRoot().getViewId();
+       fc.getApplication().getNavigationHandler().handleNavigation(
+       fc, 
+       null,
+       "/email?faces-redirect=true" );
+   }
 }
