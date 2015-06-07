@@ -52,7 +52,6 @@ public class EmailAddressNativeQuery
     public List<EmailAddress> query() {
         Query query = em.createNativeQuery("select e.id, e.first_name as firstName, e.last_name as lastName," + 
                 "e.email from email e", EmailAddress.class);
-        query.setMaxResults(4);
         List<EmailAddress> list = (List<EmailAddress>) query.getResultList();
         return list;
     }

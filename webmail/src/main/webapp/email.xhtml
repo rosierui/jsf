@@ -18,13 +18,21 @@
         <h:form>  
             <p:panelGrid header="Sign In" columns="2" style="border: none;">
                 <h:outputLabel for="from" value="From:" />
-                <h:outputText id="from" value="${emailView.emailModel.from}"/>
+                <h:panelGroup >
+                    <h:outputText id="from" value="${emailView.emailModel.from}"/>
+                    <h:panelGroup style="float: right;">
+	                    <h:outputText value="Send Postscripts: "  />
+	                    <p:selectBooleanCheckbox value="#{emailView.emailModel.appendPostscript}" />
+	                </h:panelGroup>
+                </h:panelGroup>
 
                 <h:outputLabel for="to" value="To:" />
                 <h:panelGroup >
                     <p:inputText id="to" value="#{emailView.emailModel.to}" size="70"/>
-                    <h:outputText value="Group Mail: " style="padding-left: 1cm;" />
-                    <p:selectBooleanCheckbox value="#{emailView.emailModel.groupMail}" />
+                    <h:panelGroup style="float: right;">
+	                    <h:outputText value="Group Mail: " />
+	                    <p:selectBooleanCheckbox value="#{emailView.emailModel.groupMail}" />
+                    </h:panelGroup>
                 </h:panelGroup>
                 
                 <h:outputLabel for="cc" value="Cc:" />
