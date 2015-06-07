@@ -24,7 +24,6 @@
 package org.moonwave.view;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,6 +63,7 @@ public class EmailView {
      */
     EmailModel emailModel;
     private UploadedFile file;
+    private List<String> attachments = new ArrayList<String>(); // file names for attachment 
 
     // application properties
     String webServerHome;
@@ -91,11 +91,6 @@ public class EmailView {
     }
 
     // ================================================================= Actions
-    public String send2() throws IOException {
-        if (true)
-            return null;
-        return "List";
-    }
 
     public void send(ActionEvent actionEvent) {
         performSendMailAction(emailModel);
@@ -103,6 +98,16 @@ public class EmailView {
         return;
     }
 
+    public void clearAttachments(ActionEvent actionEvent) {
+        for (int i = attachments.size() -1 ; i >= 0 ; i--) {
+            String filename = attachments.get(i);
+            if (FileUtil.deleteFile(getUploadFolder().getPath() + "/" + filename)) {
+                attachments.remove(i);
+                // decrease uploaded file counts
+            }
+        }
+        return;
+    }
 
     public UploadedFile getFile() {
         return file;
@@ -123,6 +128,7 @@ public class EmailView {
 
                 File targetFile = new File(getUploadFolder().getPath() + "/" + filename);
                 FileUtils.copyInputStreamToFile(initialStream, targetFile);
+                attachments.add(filename);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -135,6 +141,14 @@ public class EmailView {
 
     public void setEmailModel(EmailModel emailModel) {
         this.emailModel = emailModel;
+    }
+
+    public List<String> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<String> attachments) {
+        this.attachments = attachments;
     }
 
     // ========================================================= Private methods
@@ -269,10 +283,10 @@ public class EmailView {
     private void sendGroupMails(EmailModel model,
             List<String> attachments,
             List<File> fileList) {
-		List<SimpleMail> smList = toSimpleMailList(model);
-		MailThread mailThread = new MailThread();
-		mailThread.setGroupMailInfo(smList, attachments, fileList);
-		mailThread.send();
+        List<SimpleMail> smList = toSimpleMailList(model);
+        MailThread mailThread = new MailThread();
+        mailThread.setGroupMailInfo(smList, attachments, fileList);
+        mailThread.send();
     }
 
     /**

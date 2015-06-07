@@ -402,5 +402,21 @@ public class FileUtil {
         for (File file : dir.listFiles())
             addFiles(files, file);
         return files;
-    }    
+    }
+
+    /**
+     * Delete a specified file from disk
+     *
+     * @param file full file path
+     * @return
+     */
+    public static boolean deleteFile(String file) {
+        boolean ret = false;
+        try {
+            ret = (new File(file)).delete();
+        } catch (Exception e) {
+            System.out.println("Failecd to delet file "+ file + " ");
+        }
+        return ret;
+    }
 }

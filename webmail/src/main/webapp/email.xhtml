@@ -43,15 +43,23 @@
 
                 <h:outputLabel value="Attachments:" />
                 <p:fileUpload fileUploadListener="#{emailView.handleFileUpload}" mode="advanced" dragDropSupport="true" 
-                              multiple="true" update="messages2" sizeLimit="50000000" fileLimit="5" />
+                              multiple="true" update="messages2 attachments" sizeLimit="50000000" fileLimit="5" />
 
+                <h:outputLabel value="" />
+                <p:dataList id="attachments" value="#{emailView.attachments}" var="file" type="ordered">
+                    <f:facet name="header">
+                        Uploaded Attachments
+                    </f:facet>
+                    #{file}
+                </p:dataList>
             </p:panelGrid>
 
             <h:panelGrid columns="2" style="margin-top: 10px">
                 <h:panelGroup>
                     <p:commandButton value="Preview" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
                     <p:commandButton value="Send" actionListener="#{emailView.send}" update="messages" icon="ui-icon-disk" />
-                    <p:commandButton value="Clear Message" type="button" onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
+                    <p:commandButton value="Clear Message" onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
+                    <p:commandButton value="Clear Attachments" actionListener="#{emailView.clearAttachments}" update="messages attachments" icon="ui-icon-disk" />
                 </h:panelGroup>
             </h:panelGrid>
 
