@@ -106,6 +106,7 @@ public class EmailView {
                 // decrease uploaded file counts
             }
         }
+        attachments.clear();
         return;
     }
 
@@ -338,23 +339,4 @@ public class EmailView {
         }
         return outgoingFolder;
     }
-
-//    private String getOutgoingSubfolder() {
-//        if (outgoingSubfolder == null) {
-//            outgoingSubfolder = loggedInUser.getId().toString();
-//            outgoingSubfolder = "outgoing/" + outgoingSubfolder;
-//        }
-//        return outgoingSubfolder;
-//    }
-
-    private long calculateTotalUploadFileSize() {
-        long totalSizeKB = 0;
-        File[] files = getUploadFolder().listFiles();
-        for (File file: files) {
-            totalSizeKB += file.length(); // number of bytes
-        }
-        totalSizeKB /= 1024;
-        return totalSizeKB;
-    }
-
 }

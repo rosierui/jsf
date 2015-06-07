@@ -43,7 +43,7 @@
 
                 <h:outputLabel value="Attachments:" />
                 <p:fileUpload fileUploadListener="#{emailView.handleFileUpload}" mode="advanced" dragDropSupport="true" 
-                              multiple="true" update="messages2 attachments" sizeLimit="50000000" fileLimit="5" />
+                              multiple="true" update="messages2 attachments" sizeLimit="50000000" />
 
                 <h:outputLabel value="" />
                 <p:dataList id="attachments" value="#{emailView.attachments}" var="file" type="ordered">
