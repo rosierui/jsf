@@ -72,16 +72,21 @@ public class EmailView {
     File outgoingFolder;
     boolean normalAttachments = false;
 
+    // helper fields
+    boolean showCcBcc = true;
+
     @PostConstruct
     public void init() {
         MailProperties mp = MailProperties.getInstance();
         emailModel = new EmailModel();
         emailModel.setFrom(mp.getFrom());
+        emailModel.setReplyTo(mp.getReplyTo());
         emailModel.setTo(mp.getTo());
         emailModel.setCc(mp.getCc());
         emailModel.setBcc(mp.getBcc());
         emailModel.setHtmlMail(true);
         emailModel.setGroupMail(true);
+        emailModel.setPostscript(mp.getPostscript());
         emailModel.setAppendPostscript(true);
 
         AppProperties ap = AppProperties.getInstance();
@@ -94,8 +99,18 @@ public class EmailView {
     // ================================================================= Actions
 
     public void send(ActionEvent actionEvent) {
+        // check subject and message body should not be empty
+        if (emailModel.getSubject() == null || emailModel.getSubject().isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Subject is empty"));
+            return;
+        }
+        if (emailModel.getBody() == null || emailModel.getBody().isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Message is empty"));
+            return;
+        }
         performSendMailAction(emailModel);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Message sent"));
+        attachments.clear();
         return;
     }
 
@@ -108,6 +123,11 @@ public class EmailView {
             }
         }
         attachments.clear();
+        return;
+    }
+
+    public void toggleCcBcc(ActionEvent actionEvent) {
+        showCcBcc = !showCcBcc;
         return;
     }
 
@@ -151,6 +171,14 @@ public class EmailView {
 
     public void setAttachments(List<String> attachments) {
         this.attachments = attachments;
+    }
+
+    public boolean isShowCcBcc() {
+        return showCcBcc;
+    }
+
+    public void setShowCcBcc(boolean showCcBcc) {
+        this.showCcBcc = showCcBcc;
     }
 
     // ========================================================= Private methods

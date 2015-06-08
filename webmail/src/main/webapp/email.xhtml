@@ -21,9 +21,10 @@
                 <h:panelGroup >
                     <h:outputText id="from" value="${emailView.emailModel.from}"/>
                     <h:panelGroup style="float: right;">
-	                    <h:outputText value="Send Postscripts: "  />
-	                    <p:selectBooleanCheckbox value="#{emailView.emailModel.appendPostscript}" />
-	                </h:panelGroup>
+                        <p:commandButton value="Show CC/BCC" actionListener="#{emailView.toggleCcBcc}" update="cc1 cc2 bcc1 bcc2" icon="ui-icon-disk" >
+                            <p:ajax />
+                        </p:commandButton>
+                    </h:panelGroup>
                 </h:panelGroup>
 
                 <h:outputLabel for="to" value="To:" />
@@ -34,13 +35,21 @@
 	                    <p:selectBooleanCheckbox value="#{emailView.emailModel.groupMail}" />
                     </h:panelGroup>
                 </h:panelGroup>
-                
-                <h:outputLabel for="cc" value="Cc:" />
-                <p:inputText id="cc" value="#{emailView.emailModel.cc}" size="80"/>
 
-                <h:outputLabel for="bcc" value="Bcc:" />
-                <p:inputText id="bcc" value="#{emailView.emailModel.bcc}" size="80"/>
-
+                <h:panelGroup id="cc1">
+		            <h:outputLabel for="cc" value="Cc:" rendered="#{emailView.showCcBcc}"/>
+                </h:panelGroup>
+                <h:panelGroup id="cc2">
+		            <p:inputText id="cc" value="#{emailView.emailModel.cc}" size="80" rendered="#{emailView.showCcBcc}"/>
+                </h:panelGroup>
+		
+                <h:panelGroup id="bcc1">
+		            <h:outputLabel for="bcc" value="Bcc:"  rendered="#{emailView.showCcBcc}"/>
+                </h:panelGroup>
+                <h:panelGroup id="bcc2">
+		            <p:inputText id="bcc" value="#{emailView.emailModel.bcc}" size="80" rendered="#{emailView.showCcBcc}"/>
+                </h:panelGroup>
+	
                 <h:outputLabel for="subject" value="Subject:" />
                 <p:inputText id="subject" value="#{emailView.emailModel.subject}" size="80"/>
 
@@ -49,6 +58,13 @@
                              width="860" height="400" style="border: solid 1px #000; margin: 0px 30px 20px 0px"
                 />
 
+                <h:panelGroup style="float: right;">
+                    <h:outputText value="Send"  /><br/>
+                    <h:outputText value="Postscripts: "  />
+                    <p:selectBooleanCheckbox value="#{emailView.emailModel.appendPostscript}" />
+                </h:panelGroup>
+                <p:inputTextarea id="postscript" value="#{emailView.emailModel.postscript}" rows="2" cols="80"/>
+ 
                 <h:outputLabel value="Attachments:" />
                 <p:fileUpload fileUploadListener="#{emailView.handleFileUpload}" mode="advanced" dragDropSupport="true" 
                               multiple="true" update="messages2 attachments" sizeLimit="50000000" />

@@ -44,7 +44,7 @@ public class MailUtil {
         mt.setSubjectSuffix(mp.getSubjectSuffix());
         mt.setBodyPrefix(mp.getBodyPrefix());
         mt.setBodySuffix(mp.getBoySuffix());
-        mt.setBodyPs(mp.getPs());
+        mt.setBodyPs(mp.getPostscript());
         return mt;
     }
 

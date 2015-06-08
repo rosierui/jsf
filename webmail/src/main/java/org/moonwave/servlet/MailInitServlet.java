@@ -63,7 +63,7 @@ public class MailInitServlet extends HttpServlet {
                 mailProperties.setSubjectSuffix(properties.getProperty("subjectSuffix"));
                 mailProperties.setBodyPrefix(properties.getProperty("bodyPrefix"));
                 mailProperties.setBoySuffix(properties.getProperty("boySuffix"));
-                mailProperties.setPs(properties.getProperty("ps"));
+                mailProperties.setPostscript(properties.getProperty("postscript"));
             } catch (Exception e) {
                 System.out.println(e);
             }

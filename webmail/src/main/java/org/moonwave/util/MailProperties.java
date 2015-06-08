@@ -15,7 +15,7 @@ public class MailProperties {
     private String subjectSuffix;
     private String bodyPrefix;
     private String boySuffix;
-    private String ps;
+    private String postscript;
 
     private static MailProperties instance;
     public static MailProperties getInstance() {
@@ -97,11 +97,11 @@ public class MailProperties {
     public void setBoySuffix(String boySuffix) {
         this.boySuffix = boySuffix;
     }
-    public String getPs() {
-        return ps;
+    public String getPostscript() {
+        return postscript;
     }
-    public void setPs(String ps) {
-        this.ps = ps;
+    public void setPostscript(String postscript) {
+        this.postscript = postscript;
     }
 
 }
