@@ -51,7 +51,7 @@ public class EmailAddressNativeQuery
     @SuppressWarnings("unchecked")
     public List<EmailAddress> query() {
         Query query = em.createNativeQuery("select e.id, e.first_name as firstName, e.last_name as lastName," + 
-                "e.email from email e", EmailAddress.class);
+                "e.email from email e where e.active = 1", EmailAddress.class);
         List<EmailAddress> list = (List<EmailAddress>) query.getResultList();
         return list;
     }
