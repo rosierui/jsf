@@ -1,6 +1,7 @@
 jsf
 ===
-Last Update: 6/30/2014
+<pre>
+Last Update: 11/03/2015
 By: Jonathan Luo
 
 primefaces-showcase-1.0 and richfaces debuggable projects for Eclipse
@@ -10,16 +11,18 @@ as well
 
 1. Prerequisite
 	Eclipse 4+ (Kepler)
-	Tomcat 6+, or Tomcat 7+
+	Tomcat 6+
 
 2. Directory stucture
-    README.md
-    primefaces-showcases-1.0        - primefaces-showcases-1.0 project
+    primefaces-5.1-showcases        - primefaces-5.1-showcases project
+    primefaces/5.1                  - primefaces-5.1 projects
     richfaces-jsf-projects
         Facelets-JSF-2.2/           - Facelets-JSF-2.2 project
         Richfaces-3.3.3-JSF-1.2/    - Richfaces-3.3.3-JSF-1.2 project
         Richfaces-3.3.3-JSF-2.2/    - Richfaces-3.3.3-JSF-1.2 project
         Richfaces-demo-3.3.3.Final/ - Richfaces-demo-3.3.3.Final project
+    webmail                         - Webmail project
+    README.md
         
 3. License
     3.1 Primefaces is licensed under Apache License Version 2.0, January 2004
@@ -27,3 +30,4 @@ as well
 
     3.2 The RichFaces project is licensed under the GNU LESSER GENERAL PUBLIC LICENSE
         see https://community.jboss.org/wiki/RichFacesLicensingAndCopyright for details
+</pre>
