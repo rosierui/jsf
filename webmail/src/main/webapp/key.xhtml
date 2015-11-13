@@ -11,11 +11,27 @@
         <br/>  
         <h:form>
             <p:panelGrid header="Key Generator" columns="4" cellpadding="5">
-                <h:outputLabel for="key" value="Enter Your Key: " style="font-weight:bold"/>
-                <p:inputText id="key" value="#{keyView.key}" />
+                <h:outputLabel for="key1" value="Enter Your Key: " style="font-weight:bold"/>
+                <p:inputText id="key1" value="#{keyView.key1}" />
 
-                <p:commandButton value="Submit" update="display" icon="ui-icon-check" />
-                <h:outputText id="display" value="#{keyView.result}" />
+                <p:commandButton value="Md5" update="display1" icon="ui-icon-check" />
+                <h:outputText id="display1" value="#{keyView.result1}" />
+            </p:panelGrid>
+
+            <p:panelGrid header="Key Generator" columns="4" cellpadding="5">
+                <h:outputLabel for="key2" value="Enter Your Key: " style="font-weight:bold"/>
+                <p:inputText id="key2" value="#{keyView.key2}" />
+
+                <p:commandButton value="SHA-1" update="display2" icon="ui-icon-check" />
+                <h:outputText id="display2" value="#{keyView.result2}" />
+            </p:panelGrid>
+
+            <p:panelGrid header="Key Generator" columns="4" cellpadding="5">
+                <h:outputLabel for="key3" value="Enter Your Key: " style="font-weight:bold"/>
+                <p:inputText id="key3" value="#{keyView.key3}" />
+
+                <p:commandButton value="SHA-2" update="display3" icon="ui-icon-check" />
+                <h:outputText id="display3" value="#{keyView.result3}" />
             </p:panelGrid>
         </h:form>
     </h:body>
