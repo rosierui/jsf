@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
+
 <ui:composition
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -10,112 +7,6 @@ and open the template in the editor.
     xmlns:p="http://primefaces.org/ui">
     <h:form id="navForm">
         <div id="nav-menu-global">
-            <p:menubar id="corpNavBar" styleClass="navbar-nav" rendered="#{request.contextPath == '/corp'}">
-                <p:submenu label="#{label.globalDataSetupAndMaintenance}" id="DataSetupMenu" styleClass="navHeader" rendered="#{authorizationController.isUserAuthorized('AG-View') or authorizationController.isUserAuthorized('DE-View')}">
-                    <p:menuitem value="#{label.allocGroupMaint}" url="/allocnGrp/List.xhtml" rendered="#{authorizationController.isUserAuthorized('AG-View')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    <p:menuitem value="#{label.distEntityMaint}" url="/distributionEntity/List.xhtml" rendered="#{authorizationController.isUserAuthorized('DE-View')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    <p:submenu label="#{label.allocParamMaint}" styleClass="navSubmenu" rendered="#{authorizationController.isUserAuthorized('AP-SHP-View') or authorizationController.isUserAuthorized('AP-AUL-NL-View') or authorizationController.isUserAuthorized('AP-AUL-RL-View') or authorizationController.isUserAuthorized('AP-SCVP-View') or authorizationController.isUserAuthorized('AP-DM-View')}" >
-                        <p:menuitem value="#{label.allocSalesHistory}" url="/allocnParamMaint/salesHist/List.xhtml" rendered="#{authorizationController.isUserAuthorized('AP-SHP-View')}"
-                                    onclick="blockUI()" oncomplete="unBlockUI()"/>
-                        <p:menuitem value="#{label.allocUpperLimits}" url="/allocnParamMaint/upperLimit/List.xhtml" rendered="#{(authorizationController.isUserAuthorized('AP-AUL-NL-View') or authorizationController.isUserAuthorized('AP-AUL-RL-View'))}"
-                                    onclick="blockUI()" oncomplete="unBlockUI()"/>
-                        <p:menuitem value="#{label.SetupConsensusVariation}" url="/allocnParamMaint/consensusVariation/List.xhtml" rendered="#{authorizationController.isUserAuthorized('AP-SCVP-View')}"
-                                    onclick="blockUI()" oncomplete="unBlockUI()"/>
-                        <p:menuitem value="#{label.dealersYardsMaintenance}" url="/allocnParamMaint/dealerMaintenance/List.xhtml" rendered="#{authorizationController.isUserAuthorized('AP-DM-View')}"
-                                    onclick="blockUI()" oncomplete="unBlockUI()"/>
-                        <p:menuitem value="#{label.inProgressWeight}" url="/allocnParamMaint/inProgressWeight/AllocationWeightSetup.xhtml" rendered="#{authorizationController.isUserAuthorized('AC-IPW-View')}"
-                                    onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    </p:submenu>
-                    <p:menuitem value="#{label.constraintMaint}" url="/constraint/List.xhtml" rendered="#{authorizationController.isUserAuthorized('MC-C-View')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    <p:submenu label="#{label.orderGeneration}" styleClass="navSubmenu" rendered="#{(authorizationController.isUserAuthorized('OG-PO-ViewExport') or authorizationController.isUserAuthorized('OG-PO-Edit'))}">
-                        <p:menuitem value="#{label.optionSetup}" url="/orderGeneration/Setup.xhtml"
-                                    onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    </p:submenu>
-                    <p:menuitem value="#{label.productMixMang}" url="#"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    <p:submenu label="#{label.salesForecast}" styleClass="navSubmenu" rendered="#{(authorizationController.isUserAuthorized('SF-View') or authorizationController.isUserAuthorized('SF-Upload'))}" >
-                        <p:menuitem value="#{label.loadSalesFcst}" url="/forecast/Create.xhtml" rendered="#{authorizationController.isUserAuthorized('SF-Upload')}"
-                                    onclick="blockUI()" oncomplete="unBlockUI()"/>
-                        <p:menuitem value="#{label.viewSalesFcst}" url="/forecast/View.xhtml" rendered="#{authorizationController.isUserAuthorized('SF-View')}"
-                                    onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    </p:submenu>
-                    <p:menuitem value="#{label.yardMaint}" url="/yardMaint/List.xhtml" rendered="#{authorizationController.isUserAuthorized('YM-View')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                </p:submenu>
-                <p:submenu label="#{label.allocMgr}" styleClass="navHeader">
-                    <p:menuitem value="#{label.allocationCycles}" url="/allocnCycle/List.xhtml" rendered="#{authorizationController.isUserAuthorized('AC-View')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                </p:submenu>
-                <p:submenu label="#{label.trendMix}" styleClass="navHeader">
-                    <p:menuitem value="#{label.trendMixSetup}" url="/trendMix/Setup.xhtml"
-                                onclick="blockUI" oncomplete="unBlockUI()"/>
-                    <p:menuitem value="#{label.trendMixSummary}" url="/trendMix/Summary.xhtml" rendered="#{authorizationController.isUserAuthorized('TM-VIEW')}"
-                                onclick="blockUI" oncomplete="unBlockUI()"/>
-                    <p:menuitem value="#{label.trendMixUpdate}" url="/trendMix/Update.xhtml" rendered="#{authorizationController.isUserAuthorized('SF-Upload')}"
-                                onclick="blockUI" oncomplete="unBlockUI()"/>
-                </p:submenu>
-                <p:submenu label="#{label.reports}" styleClass="navHeader">
-                    <p:submenu label="#{label.allocation}" styleClass="navSubmenu" rendered="#{authorizationController.isUserAuthorized('MC-FEVR-ViewExport') or authorizationController.isUserAuthorized('MC-FEVD-ViewExport')}" >
-                        <p:menuitem value="#{label.finalEarnedVolumesByRegion}" url="/reports/FinalEarnedVolumesRegion.xhtml" rendered="#{authorizationController.isUserAuthorized('MC-FEVR-ViewExport')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                        <p:menuitem value="#{label.finalEarnedVolumesByDealer}" url="/reports/FinalEarnedVolumesDealer.xhtml" rendered="#{authorizationController.isUserAuthorized('MC-FEVD-ViewExport')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                        <p:menuitem value="#{label.allocationReport}" url="/reports/AllocationReport.xhtml" rendered="#{authorizationController.isUserAuthorized('AC-AR-ViewExport')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    </p:submenu>
-                    <p:menuitem value="#{label.trendMix}" url="/reports/TrendMixBase.xhtml" rendered="#{authorizationController.isUserAuthorized('TM-VIEW')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    <p:menuitem value="#{label.varianceResolution}" url="/reports/VarianceResolutionReportBase.xhtml" rendered="#{authorizationController.isUserAuthorized('TM-VIEW')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>                   
-                    <p:submenu label="#{label.preferencing}" styleClass="navSubmenu" > 
-                        <p:menuitem value="#{label.constraintsSnapshot}" url="/reports/ConstraintsSnapshot.xhtml" rendered="#{authorizationController.isUserAuthorized('OG-CS-ViewEdit')}"
-                                    onclick="blockUI()" oncomplete="unBlockUI()"/>
-                        </p:submenu>
-                    <p:menuitem value="#{label.salesRateDaySuppByAG}" url="/reports/SalesRatesDaySupplyAllocationGroup.xhtml"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    <p:menuitem value="#{label.salesRateDaySuppByMdlPgkColor}" url="/reports/SalesRatesDaySupplyModelPackageColor.xhtml"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    <p:menuitem value="#{label.trendMixVersusReConsensusReport}" url="/reports/TrendMixReConsensusBase.xhtml" rendered="#{authorizationController.isUserAuthorized('TM-VS-RECON-View')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    
-                    <p:menuitem value="#{label.allocationVsPreferenced}" url="/reports/AllocationVsPreferenced.xhtml" rendered="#{authorizationController.isUserAuthorized('AC-AR-ViewExport')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                </p:submenu>
-                <p:submenu label="#{label.operations}" styleClass="navHeader" rendered="#{authorizationController.isUserAuthorized('O-CM-View') or authorizationController.isUserAuthorized('AL-View') or authorizationController.isUserAuthorized('Msg-View')}">
-                    <p:menuitem value="#{label.cacheManagement}" url="/common/cacheManagement/cacheManagement.xhtml" rendered="#{authorizationController.isUserAuthorized('O-CM-View')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    <p:menuitem value="#{label.auditTrxHistory}" url="/common/auditLogs/AuditHistory.xhtml" rendered="#{authorizationController.isUserAuthorized('AL-View')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    <p:menuitem value="#{label.fileUploadAndJobStatus}" url="/fileJobStatus/AllocationExecutionRequestList.xhtml"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    <p:menuitem value="#{label.batchJobStatus}" url="/jobStatus/Jobs.xhtml"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                </p:submenu>
-            </p:menubar>
-
-            <p:menubar id="dealerNavBar" styleClass="navbar-nav" rendered="#{request.contextPath == '/dealer'}">
-                <p:submenu label="#{label.trendMix}" id="trendMixMenu" styleClass="navHeader" rendered="true">
-                    <p:menuitem value="#{label.trendMixAdjust}" url="/trendMix/List.xhtml" rendered="#{authorizationController.isUserAuthorized('TM - VIEW')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                </p:submenu>
-                <p:submenu label="#{label.salesConsensusPlanner}" styleClass="navHeader">
-                    <p:menuitem value="#{label.viewAdjustVolumes}" url="/salesConPlan/AllocationGroups.xhtml" rendered="#{authorizationController.isUserAuthorized('C-VIEWSUMMARY')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                </p:submenu>
-                <p:submenu label="#{label.reports}" styleClass="navHeader" rendered="true">
-                    <p:menuitem value="#{label.trendMix}" url="/report/TrendMix.xhtml"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    <p:menuitem value="#{label.salesRateDaySupp}" url="/report/SalesRatesDaySupply.xhtml" rendered="#{authorizationController.isUserAuthorized('SR - EXPORT')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    <p:menuitem value="#{label.salesRateDaySuppByMdlPgkColor}" url="/report/SalesRatesDaySupplyModelPkgColor.xhtml" rendered="#{authorizationController.isUserAuthorized('SR - EXPORT')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                    <p:menuitem value="#{label.allocatedXPreferenced}" url="/report/AllocatedXPreferenced.xhtml" rendered="#{authorizationController.isUserAuthorized('SR - EXPORT')}"
-                                onclick="blockUI()" oncomplete="unBlockUI()"/>
-                </p:submenu>
-            </p:menubar>
         </div>
     </h:form>
 
