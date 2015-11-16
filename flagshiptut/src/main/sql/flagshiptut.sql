@@ -81,12 +81,13 @@ CREATE INDEX system_info_idx1 ON system_info (active DESC, system_info_date);
 -- Create table role
 
 CREATE TABLE role (
-    id                      SMALLINT PRIMARY KEY NOT NULL,
-    alias                   VARCHAR(15),
+    id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    alias                   VARCHAR(15) NOT NULL,
     name                    VARCHAR(50) NOT NULL,
     privileges              VARCHAR(2000), -- object permissions in xml
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
+    create_time             TIMESTAMP,
+    UNIQUE (alias)
 );
 
 --------------------------------------------------------------------------------
@@ -94,11 +95,11 @@ CREATE TABLE role (
 
 CREATE TABLE user (
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    first_name              VARCHAR(18) NOT NULL,
-    last_name               VARCHAR(18) NOT NULL,
-    login_id                VARCHAR(50), -- can use email
-    password                VARCHAR(80),
-    email                   VARCHAR(50),
+    first_name              VARCHAR(18),
+    last_name               VARCHAR(18),
+    login_id                VARCHAR(50) NOT NULL, -- can use email
+    password                VARCHAR(80) NOT NULL,
+    email                   VARCHAR(50) NOT NULL,
     phone                   VARCHAR(20),
     active                  BOOLEAN DEFAULT TRUE, -- true: active, false: inactive; control individual user. If account is inactive, this user is inactive even its own active flag = true    eligible          BOOLEAN DEFAULT FALSE, -- true: eligible for register courses; false: no eligible for registration
     hint                    VARCHAR(50),
@@ -121,13 +122,14 @@ CREATE UNIQUE INDEX teacher_idx1 ON teacher (user_id);
 --------------------------------------------------------------------------------
 -- Create table user_role
 
-CREATE TABLE    user_role (
+CREATE TABLE user_role (
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id                 INTEGER NOT NULL REFERENCES user(id),
     role_id                 SMALLINT REFERENCES role(id),
     privileges              VARCHAR(2000), -- object permissions in xml
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
+    create_time             TIMESTAMP,
+    UNIQUE (user_id, role_id)
 );
 
 --------------------------------------------------------------------------------
@@ -135,21 +137,44 @@ CREATE TABLE    user_role (
 
 CREATE TABLE tutor_group (
     id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    alias                   VARCHAR(15),
-    name                    VARCHAR(50) NOT NULL
+    alias                   VARCHAR(30) NOT NULL,
+    name                    VARCHAR(50) NOT NULL,
+    ordinal                 SMALLINT,
+    UNIQUE (alias)
 );
+
+CREATE TABLE user_tutor_group (
+    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    user_id                 INTEGER NOT NULL REFERENCES user(id),
+    tutor_group_id          SMALLINT REFERENCES tutor_group(id),
+    privileges              VARCHAR(2000), -- object permissions in xml
+    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    create_time             TIMESTAMP,
+    UNIQUE (user_id, tutor_group_id)
+);
+CREATE INDEX user_tutor_group_idx1 ON user_tutor_group (user_id, tutor_group_id);
+CREATE INDEX user_tutor_group_idx2 ON user_tutor_group (tutor_group_id, user_id);
+
 
 CREATE TABLE group_type (
     id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    alias                   VARCHAR(15) UNIQUE NOT NULL,
-    name                    VARCHAR(50) NOT NULL
+    alias                   VARCHAR(15) NOT NULL,
+    name                    VARCHAR(50) NOT NULL,
+    UNIQUE (alias)
 );
+
+--------------------------------------------------------------------------------
+-- Create table semester
 
 CREATE TABLE semester (
     id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    alias                   VARCHAR(15) UNIQUE NOT NULL,
-    name                    VARCHAR(50) NOT NULL
+    alias                   VARCHAR(15) NOT NULL,
+    name                    VARCHAR(50) NOT NULL,
+    UNIQUE (alias)
 );
+
+--------------------------------------------------------------------------------
+-- Create table week
 
 CREATE TABLE week (
     id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
