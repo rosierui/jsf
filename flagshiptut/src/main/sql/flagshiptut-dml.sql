@@ -1,0 +1,21 @@
+INSERT INTO semester (alias, name) values ('2015F', 'Fall 2015');
+INSERT INTO semester (alias, name) values ('2016S', 'Spring 2015');
+INSERT INTO semester (alias, name) values ('2016F', 'Fall 2016');
+
+INSERT INTO week (week) values ('Week 1');
+INSERT INTO week (week) values ('Week 2');
+INSERT INTO week (week) values ('Week 3');
+INSERT INTO week (week) values ('Week 4');
+INSERT INTO week (week) values ('Week 5');
+INSERT INTO week (week) values ('Week 6');
+INSERT INTO week (week) values ('Week 7');
+INSERT INTO week (week) values ('Week 8');
+INSERT INTO week (week) values ('Week 9');
+INSERT INTO week (week) values ('Week 10');
+INSERT INTO week (week) values ('Week 11');
+INSERT INTO week (week) values ('Week 12');
+INSERT INTO week (week) values ('Week 13');
+INSERT INTO week (week) values ('Week 14');
+INSERT INTO week (week) values ('Week 15');
+INSERT INTO week (week) values ('Week 16');
+COMMIT;

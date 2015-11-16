@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+    <h:form id="navForm">
+        <div id="nav-menu-global">
+
+            <p:menubar id="dealerNavBar" styleClass="navbar-nav" rendered="#{userLoginView.isUserLogggedIn()}" width="100%">
+                <p:submenu label="#{label.trendMix}" id="trendMixMenu" styleClass="navHeader" rendered="true">
+                    <p:menuitem value="trendMixAdjust" url="/trendMix/List.xhtml" rendered="true"
+                                onclick="blockUI()" oncomplete="unBlockUI()"/>
+                </p:submenu>
+                <p:submenu label="salesConsensusPlanner" styleClass="navHeader">
+                    <p:menuitem value="viewAdjustVolumes" url="/salesConPlan/AllocationGroups.xhtml" rendered="true"
+                                onclick="blockUI()" oncomplete="unBlockUI()"/>
+                </p:submenu>
+                <p:submenu label="reports" styleClass="navHeader" rendered="true">
+                    <p:menuitem value="trendMix" url="/report/TrendMix.xhtml"
+                                onclick="blockUI()" oncomplete="unBlockUI()"/>
+                    <p:menuitem value="salesRateDaySupp" url="/report/SalesRatesDaySupply.xhtml" rendered="true"
+                                onclick="blockUI()" oncomplete="unBlockUI()"/>
+                    <p:menuitem value="salesRateDaySuppByMdlPgkColor" url="/report/SalesRatesDaySupplyModelPkgColor.xhtml" rendered="true"
+                                onclick="blockUI()" oncomplete="unBlockUI()"/>
+                    <p:menuitem value="allocatedXPreferenced" url="/report/AllocatedXPreferenced.xhtml" rendered="true"
+                                onclick="blockUI()" oncomplete="unBlockUI()"/>
+                </p:submenu>
+            </p:menubar>
+        </div>
+    </h:form>
+
+</ui:composition>
