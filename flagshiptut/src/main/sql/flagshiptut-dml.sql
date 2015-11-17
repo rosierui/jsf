@@ -1,3 +1,8 @@
+-- TINYINT          1 byte      -128 ~ 127, 0 ~ 255
+-- SMALLINT         2 bytes     -32768 ~ 32767, 0 ~ 65536
+-- MEDIUMINT        3 bytes     -8388608 ~ 8388607, 0 ~ 16777215
+-- INT, INTEGER     4 bytes     -2147483648 ~ 2147483647, 0 ~ 4294967295
+-- BIGINT           8 bytes     -9223372036854775808 ~ 9223372036854775807, 0 ~ 18446744073709551615
 
 START TRANSACTION;
 INSERT INTO role (alias, name, create_time) values ('student', 'Student', CURRENT_TIMESTAMP);
@@ -7,11 +12,12 @@ INSERT INTO role (alias, name, create_time) values ('supervisor', 'Supervisor', 
 INSERT INTO role (alias, name, create_time) values ('admin', 'Administrator', CURRENT_TIMESTAMP);
 COMMIT;
 
-
+-- https://students.asu.edu/academic-calendar#spring16
 START TRANSACTION;
-INSERT INTO semester (alias, name) values ('2015F', 'Fall 2015');
-INSERT INTO semester (alias, name) values ('2016S', 'Spring 2015');
-INSERT INTO semester (alias, name) values ('2016F', 'Fall 2016');
+INSERT INTO semester (alias, name, start_date) values ('F2015', 'Fall 2015', '2015-08-17'); -- 08-20
+INSERT INTO semester (alias, name, start_date) values ('S2016', 'Spring 2016', '2016-01-11');
+INSERT INTO semester (alias, name, start_date) values ('M2016', 'Summer 2016', '2016-05-16');
+INSERT INTO semester (alias, name, start_date) values ('F2016', 'Fall 2016', '2016-08-15'); -- 08-18
 COMMIT;
 
 START TRANSACTION;
@@ -31,6 +37,25 @@ INSERT INTO week (week) values ('Week 13');
 INSERT INTO week (week) values ('Week 14');
 INSERT INTO week (week) values ('Week 15');
 INSERT INTO week (week) values ('Week 16');
+COMMIT;
+
+START TRANSACTION;
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 1',  '2015-08-16');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 2',  '2015-08-23');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 3',  '2015-08-30');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 4',  '2015-09-06');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 5',  '2015-09-13');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 6',  '2015-09-20');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 7',  '2015-09-27');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 8',  '2015-10-04');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 9',  '2015-10-11');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 10', '2015-10-18');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 11', '2015-10-25');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 12', '2015-11-01');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 13', '2015-11-08');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 14', '2015-11-15');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 15', '2015-11-22');
+INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 16', '2015-11-29');
 COMMIT;
 
 START TRANSACTION;

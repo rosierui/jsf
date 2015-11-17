@@ -40,10 +40,10 @@ DROP DATABASE flagshiptut;
 
 CREATE DATABASE flagshiptut;
 
-CREATE USER 'flagshiptut'@'localhost' IDENTIFIED BY 'QjzwFd!5'; 
+CREATE USER 'flagshiptut'@'localhost' IDENTIFIED BY ''; 
 GRANT ALL PRIVILEGES ON flagshiptut.* TO 'flagshiptut'@'localhost' WITH GRANT OPTION; 
 
-CREATE USER 'flagshiptut'@'%' IDENTIFIED BY 'QjzwFd!5'; 
+CREATE USER 'flagshiptut'@'%' IDENTIFIED BY ''; 
 GRANT ALL PRIVILEGES ON flagshiptut.* TO 'flagshiptut'@'%' WITH GRANT OPTION;
 
 USE flagshiptut;
@@ -132,6 +132,9 @@ CREATE TABLE user_role (
     UNIQUE (user_id, role_id)
 );
 
+CREATE UNIQUE INDEX user_role_idx1 ON user_role (user_id, role_id);
+CREATE UNIQUE INDEX user_role_idx2 ON user_role (role_id, user_id);
+
 --------------------------------------------------------------------------------
 -- Create table tut_group
 
@@ -142,6 +145,9 @@ CREATE TABLE tutor_group (
     ordinal                 SMALLINT,
     UNIQUE (alias)
 );
+
+--------------------------------------------------------------------------------
+-- Create table user_tutor_group
 
 CREATE TABLE user_tutor_group (
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -170,6 +176,10 @@ CREATE TABLE semester (
     id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     alias                   VARCHAR(15) NOT NULL,
     name                    VARCHAR(50) NOT NULL,
+    start_date              DATE NOT NULL,
+    end_date                DATE,
+    start_weekday           CHAR(3) DEFAULT 'MON', -- SUN, MON, TUE, WED, THU, FRI, SAT
+    number_of_weeks         SMALLINT DEFAULT 16,
     UNIQUE (alias)
 );
 
@@ -182,14 +192,70 @@ CREATE TABLE week (
     UNIQUE (week)
 );
 
+--------------------------------------------------------------------------------
+-- Create table semester_week (This table may not need)
+
+CREATE TABLE semester_week (
+    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    semester                VARCHAR(15) REFERENCES semester(alias),
+    week                    VARCHAR(15) REFERENCES week(week),
+    start_day               DATE,
+    UNIQUE (semester, week)
+);
+CREATE UNIQUE INDEX semester_week_idx1 ON semester_week (semester, start_day);
+
+--------------------------------------------------------------------------------
+-- Create table semester_no_school_day
+
+CREATE TABLE semester_no_school_day (
+    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    semester                VARCHAR(15) REFERENCES semester(alias),
+    no_school_day           DATE NOT NULL,
+    UNIQUE (semester, no_school_day)
+);
+CREATE UNIQUE INDEX semester_no_school_day_idx1 ON semester_no_school_day (semester, no_school_day);
+
+--------------------------------------------------------------------------------
+-- Create table announcement
+
 CREATE TABLE announcement (
-    week                    VARCHAR(15) PRIMARY KEY NOT NULL,
+    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    subject                 VARCHAR(256) NOT NULL,
+    body                    TEXT -- 64K
 );
 
-CREATE TABLE group_post (
-    week                    VARCHAR(15) PRIMARY KEY NOT NULL,
+CREATE TABLE group_post (-- anouncement to all people
+    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    subject                 VARCHAR(255) NOT NULL,
+    body                    TEXT
 );
 
+CREATE TABLE group_post_to_group (
+    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    group_post_id           INTEGER REFERENCES group_post(id),
+    tutor_group_id          SMALLINT REFERENCES tutor_group(id),
+    body                    TEXT
+);
+
+CREATE TABLE calenadr (
+    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    semester                VARCHAR(15) REFERENCES semester(alias),
+    week                    VARCHAR(15) REFERENCES week(week),
+    `date`                  DATE,
+    UNIQUE (semester, week)
+);
+
+CREATE TABLE calendar_event (
+    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    user_id                 INTEGER REFERENCES `user`(user_id),
+    semester                VARCHAR(15) REFERENCES semester(alias),
+    week                    VARCHAR(15) REFERENCES week(week),
+    day                     DATE NOT NULL,
+    start_time              TIME NOT NULL,
+    end_time                TIME NOT NULL,
+    event                   VARCHAR(255)
+    
+);
 
 --------------------------------------------------------------------------------
 -- Create table evaluation_performance
@@ -237,39 +303,14 @@ CREATE TABLE evaluation_objective (
     create_time             TIMESTAMP
 );
 
--- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
--- Create course_type table
--- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-CREATE TABLE    course_type (
-    id                      SMALLINT PRIMARY KEY NOT NULL,
-    name                    VARCHAR(30) NOT NULL,
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
-);
-
-
-CREATE UNIQUE INDEX user_role_idx1 ON user_role (user_id, role_id);
-CREATE UNIQUE INDEX user_role_idx2 ON user_role (role_id, user_id);
 --------------------------------------------------------------------------------
 -- Create table course
 
 CREATE TABLE    course  (
     id                      INTEGER  PRIMARY KEY DEFAULT nextval('course_seq') NOT NULL,
-    school_id               SMALLINT NOT NULL REFERENCES setup(id),
     alias                   VARCHAR(30), -- maps to course_id, it's better no to have space
     name                    VARCHAR(50),
-    cn_name                 VARCHAR(50), -- Chinese name
-    location                VARCHAR(50),
-    teacher_id              INTEGER REFERENCES teacher(id),
-    tid                     VARCHAR(30),
-    taid                    VARCHAR(30),
-    capacity                INTEGER,
-    active                  BOOLEAN, -- true: active, false: inactive
-    start_date              DATE,
-    end_date                DATE,
-    begin_time              TIMESTAMP,
-    end_time                TIMESTAMP,
-    course_type             SMALLINT NULL REFERENCES course_type(id),
+    description             TINYTEXT,
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP
 );
