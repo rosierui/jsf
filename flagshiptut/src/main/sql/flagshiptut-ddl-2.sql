@@ -8,7 +8,7 @@
 --
 -- ----------------- Warning :: Warning :: Warning -----------------------------
 
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 -- The following SQL statements have been executed on MySQL 5.5.46
 
 DROP TABLE IF EXISTS contact_us_category;
@@ -31,377 +31,9 @@ DROP TABLE IF EXISTS dconfig_key CASCADE;
 DROP TABLE IF EXISTS dconfig_datatype CASCADE;
 DROP TABLE IF EXISTS dconfig_attribute CASCADE;
 
---------------------------------------------------------------------------------
---
-DROP USER 'flagshiptut'@'localhost';
-DROP USER 'flagshiptut'@'%';
-DROP DATABASE flagshiptut;
-
-
-CREATE DATABASE flagshiptut;
-
-CREATE USER 'flagshiptut'@'localhost' IDENTIFIED BY ''; 
-GRANT ALL PRIVILEGES ON flagshiptut.* TO 'flagshiptut'@'localhost' WITH GRANT OPTION; 
-
-CREATE USER 'flagshiptut'@'%' IDENTIFIED BY ''; 
-GRANT ALL PRIVILEGES ON flagshiptut.* TO 'flagshiptut'@'%' WITH GRANT OPTION;
-
-USE flagshiptut;
-
---------------------------------------------------------------------------------
--- Create table setup
-
-CREATE TABLE setup (
-    id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    alias                   VARCHAR(30) NOT NULL,
-    name                    VARCHAR(50) NOT NULL,
-    school_start_date       DATE, -- inclusive
-    school_end_date         DATE, -- inclusive
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
-);
-
-CREATE TABLE system_info (
-    id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    system_info_date        DATE NOT NULL, -- the message creation date
-    message                 VARCHAR(1024), -- message to be dispalyed on screen
-    severity                CHAR(1) NOT NULL, -- 'I': info, 'W': warning, 'M': major, 'C': critical. Note: 'I' message can be acknowledged by user
-    msg_kick_in_time        DATETIME, -- system info (message) kick in time
-    msg_kick_out_time       DATETIME, -- system info (message) kick out time
-    functional_locking      BOOLEAN, -- True: lock all functions for all users except super user
-    locking_kick_in_time    DATETIME, -- system info kick in time
-    active                  BOOLEAN, -- true: this message is active, false: this message is inactive. Note: only one message can be active
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
-);
-
-CREATE INDEX system_info_idx1 ON system_info (active DESC, system_info_date);
-
---------------------------------------------------------------------------------
--- Create table role
-
-CREATE TABLE role (
-    id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    alias                   VARCHAR(15) NOT NULL,
-    name                    VARCHAR(50) NOT NULL,
-    privileges              VARCHAR(2000), -- object permissions in xml
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP,
-    UNIQUE (alias)
-);
-
---------------------------------------------------------------------------------
--- Create table user
-
-CREATE TABLE user (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    first_name              VARCHAR(18),
-    last_name               VARCHAR(18),
-    login_id                VARCHAR(50) NOT NULL, -- can use email
-    password                VARCHAR(80) NOT NULL,
-    email                   VARCHAR(50) NOT NULL,
-    phone                   VARCHAR(20),
-    active                  BOOLEAN DEFAULT TRUE, -- true: active, false: inactive; control individual user. If account is inactive, this user is inactive even its own active flag = true    eligible          BOOLEAN DEFAULT FALSE, -- true: eligible for register courses; false: no eligible for registration
-    hint                    VARCHAR(50),
-    answer                  VARCHAR(50),
-    login_attempt           SMALLINT, -- keep the login attept count, if 5 times attempted within 5 minutes, lock this account
-    last_attempt_ts         DATETIME, -- savea the first timestamp for a repeat login attempt
-    last_login_ip           VARCHAR(50),
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP,
-    UNIQUE (login_id),
-    UNIQUE (email)
-);
-
-CREATE INDEX user_idx1 ON user (first_name, last_name);
-CREATE INDEX user_idx2 ON user (last_name, first_name);
-
---CREATE UNIQUE INDEX teacher_idx1 ON teacher (school_id, user_id);
-CREATE UNIQUE INDEX teacher_idx1 ON teacher (user_id);
-
---------------------------------------------------------------------------------
--- Create table user_role
-
-CREATE TABLE user_role (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    user_id                 INTEGER NOT NULL REFERENCES user(id),
-    role_id                 SMALLINT REFERENCES role(id),
-    privileges              VARCHAR(2000), -- object permissions in xml
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP,
-    UNIQUE (user_id, role_id)
-);
-
-CREATE UNIQUE INDEX user_role_idx1 ON user_role (user_id, role_id);
-CREATE UNIQUE INDEX user_role_idx2 ON user_role (role_id, user_id);
-
---------------------------------------------------------------------------------
--- Create table tut_group
-
-CREATE TABLE tutor_group (
-    id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    alias                   VARCHAR(30) NOT NULL,
-    name                    VARCHAR(50) NOT NULL,
-    ordinal                 SMALLINT,
-    UNIQUE (alias)
-);
-
---------------------------------------------------------------------------------
--- Create table user_tutor_group
-
-CREATE TABLE user_tutor_group (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    user_id                 INTEGER NOT NULL REFERENCES user(id),
-    tutor_group_id          SMALLINT REFERENCES tutor_group(id),
-    privileges              VARCHAR(2000), -- object permissions in xml
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP,
-    UNIQUE (user_id, tutor_group_id)
-);
-CREATE INDEX user_tutor_group_idx1 ON user_tutor_group (user_id, tutor_group_id);
-CREATE INDEX user_tutor_group_idx2 ON user_tutor_group (tutor_group_id, user_id);
-
-
-CREATE TABLE group_type (
-    id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    alias                   VARCHAR(15) NOT NULL,
-    name                    VARCHAR(50) NOT NULL,
-    UNIQUE (alias)
-);
-
---------------------------------------------------------------------------------
--- Create table semester
-
-CREATE TABLE semester (
-    id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    alias                   VARCHAR(15) NOT NULL,
-    name                    VARCHAR(50) NOT NULL,
-    start_date              DATE NOT NULL,
-    end_date                DATE,
-    start_weekday           CHAR(3) DEFAULT 'MON', -- SUN, MON, TUE, WED, THU, FRI, SAT
-    number_of_weeks         SMALLINT DEFAULT 16,
-    UNIQUE (alias)
-);
-
---------------------------------------------------------------------------------
--- Create table week
-
-CREATE TABLE week (
-    id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    week                    VARCHAR(15) NOT NULL,
-    UNIQUE (week)
-);
-
---------------------------------------------------------------------------------
--- Create table semester_week (This table may not need)
-
-CREATE TABLE semester_week (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    semester                VARCHAR(15) REFERENCES semester(alias),
-    week                    VARCHAR(15) REFERENCES week(week),
-    start_day               DATE,
-    UNIQUE (semester, week)
-);
-CREATE UNIQUE INDEX semester_week_idx1 ON semester_week (semester, start_day);
-
---------------------------------------------------------------------------------
--- Create table semester_no_school_day
-
-CREATE TABLE semester_no_school_day (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    semester                VARCHAR(15) REFERENCES semester(alias),
-    no_school_day           DATE NOT NULL,
-    UNIQUE (semester, no_school_day)
-);
-CREATE UNIQUE INDEX semester_no_school_day_idx1 ON semester_no_school_day (semester, no_school_day);
-
---------------------------------------------------------------------------------
--- Create table announcement
-
-CREATE TABLE announcement (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    subject                 VARCHAR(256) NOT NULL,
-    body                    TEXT -- 64K
-);
-
-CREATE TABLE group_post (-- anouncement to all people
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    subject                 VARCHAR(255) NOT NULL,
-    body                    TEXT
-);
-
-CREATE TABLE group_post_to_group (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    group_post_id           INTEGER REFERENCES group_post(id),
-    tutor_group_id          SMALLINT REFERENCES tutor_group(id),
-    body                    TEXT
-);
-
-CREATE TABLE calenadr (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    semester                VARCHAR(15) REFERENCES semester(alias),
-    week                    VARCHAR(15) REFERENCES week(week),
-    `date`                  DATE,
-    UNIQUE (semester, week)
-);
-
-CREATE TABLE calendar_event (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    user_id                 INTEGER REFERENCES `user`(user_id),
-    semester                VARCHAR(15) REFERENCES semester(alias),
-    week                    VARCHAR(15) REFERENCES week(week),
-    day                     DATE NOT NULL,
-    start_time              TIME NOT NULL,
-    end_time                TIME NOT NULL,
-    event                   VARCHAR(255)
-    
-);
-
---------------------------------------------------------------------------------
--- Create table evaluation_performance
-
-CREATE TABLE evaluation_performance (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    user_id                 INTEGER REFERENCES `user`(user_id),
-    semester                VARCHAR(15) REFERENCES semester(alias),
-    week                    VARCHAR(15) REFERENCES week(week),
-    attendance              SMALLINT,
-    participation           SMALLINT,
-    performance             SMALLINT,
-    toatl                   SMALLINT,
-    note                    VARCHAR(255),
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
-);
-
---------------------------------------------------------------------------------
--- Create table evaluation_objective
-
-CREATE TABLE evaluation_objective (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    user_id                 INTEGER REFERENCES `user`(user_id),
-    semester                VARCHAR(15) REFERENCES semester(alias),
-    week                    VARCHAR(15) REFERENCES week(week),
-    -- Part I Interpretive Listening Mode
-    eval_part1_1            BOOLEAN, -- I can understand the general idea chronologically
-    eval_part1_2            BOOLEAN, -- I can understand key words / phrases in the materials that I am listening or reading
-    eval_part1_3            BOOLEAN, -- I can understand the main idea of the text
-    eval_part1_comments     VARCHAR(255), -- Other comments
-    -- Part I Presentational Mode
-    eval_part2_1            BOOLEAN, -- I can present / write my opinion in a correct order
-    eval_part2_2            BOOLEAN, -- I can apply the words and phrases to present or to write I have learned or just learned
-    eval_part2_3            BOOLEAN, -- I can use connected series of sentenses to present my opinion in presentation or writing
-    eval_part2_comments     VARCHAR(255), -- Other comments
-    -- Part III Interpretive Communication Mode
-    eval_part3_1            BOOLEAN, -- I can apply what I have learned to communicate with tutor
-    eval_part3_2            BOOLEAN, -- I can express myself logically
-    eval_part3_3            BOOLEAN, -- I can interact with tutor with correct forms
-    eval_part3_comments     VARCHAR(255), -- Other comments
-
-    student_evaluation      BOOLEAN, -- true student evaluation, false tutor evaluation
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
-);
-
---------------------------------------------------------------------------------
--- Create table course
-
-CREATE TABLE    course  (
-    id                      INTEGER  PRIMARY KEY DEFAULT nextval('course_seq') NOT NULL,
-    alias                   VARCHAR(30), -- maps to course_id, it's better no to have space
-    name                    VARCHAR(50),
-    description             TINYTEXT,
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
-);
-
---ALTER TABLE course DROP CONSTRAINT course_alias_key;
-CREATE        INDEX course_idx1 ON course (school_id, active);
-CREATE UNIQUE INDEX course_idx2 ON course (school_id, alias);
-
---------------------------------------------------------------------------------
--- Create table course_reg
-
-CREATE TABLE course_reg (
-    id                      INTEGER PRIMARY KEY DEFAULT nextval('course_reg_seq') NOT NULL,
-    student_id              INTEGER REFERENCES user(id),
-    course_id               INTEGER REFERENCES course(id),
-    reg_date                TIMESTAMP,
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
-);
-
-CREATE UNIQUE INDEX course_reg_idx1 ON course_reg (student_id, course_id);
-
---------------------------------------------------------------------------------
--- Create table calendar
-
-CREATE TABLE calendar (
-    id                      INTEGER PRIMARY KEY DEFAULT nextval('calendar_seq') NOT NULL,
-    school_id               SMALLINT NOT NULL REFERENCES setup(id),
-    calendar_date           DATE,
-    subject                 VARCHAR(1000),
-    no_school_day           BOOLEAN DEFAULT FALSE,
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
-);
-
-
--- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
--- Generic page
--- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
---------------------------------------------
--- Create table generic_page
-
-CREATE TABLE generic_page (
-    id                      SMALLINT PRIMARY KEY DEFAULT nextval('generic_page_seq') NOT NULL,
-    page_key                VARCHAR(30) NOT NULL, -- sample keys: homepage, administration, about.us, contact.us
-    publish_date            DATE  NOT NULL,
-    subject                 VARCHAR(255),
-    show_subject            BOOLEAN, -- true: show subject at the center, false: do not show the subject
-    content                 TEXT,
-    active                  BOOLEAN, -- true: this page is active, false: this page is inactive. Note: only one generic page for one key can be active
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
-);
-
-CREATE INDEX generic_page_idx1 ON generic_page (page_key, active DESC);
-
---------------------------------------------------------------------------------
--- Create table contact_us_category
-
-CREATE TABLE contact_us_category (
-    id                      SMALLINT PRIMARY KEY DEFAULT nextval('contact_us_category_seq') NOT NULL,
-    category                VARCHAR(30),
-    email                   VARCHAR(250) NOT NULL,
-    ordinal                 SMALLINT,
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
-);
-CREATE INDEX category_idx1 ON contact_us_category (ordinal);
-
---------------------------------------------------------------------------------
--- Create table menu
-
-CREATE TABLE menu (
-    id                      INTEGER PRIMARY KEY DEFAULT nextval('menu_seq') NOT NULL,
-    menu_group              VARCHAR(50) NOT NULL, -- latestLinks, account, etc.
-    menu_item               VARCHAR(50) NOT NULL, -- menu description
-    parent_menu             VARCHAR(50) NOT NULL,
-    menu_location           CHAR(1) NOT NULL, -- 'L' - left, 'T' - top, 'R' - right
-    target_class            VARCHAR(200) NOT NULL, -- target page class name or target page id
-    panel_name              VARCHAR(30), -- subpage id   
-    ordinal                 SMALLINT,
-    access_role             VARCHAR(200), -- comma separated role alias list, if null the menu can be accessed by anyone 
-    active                  BOOLEAN DEFAULT true, -- true: active, false: inactive
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
-);
-CREATE INDEX menu_idx1 ON menu (menu_group, parent_menu, ordinal);
-
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 --                      dml.sql
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 START TRANSACTION;
 INSERT INTO menu (menu_group, menu_item, parent_menu, menu_location, target_class, panel_name, ordinal, access_role) VALUES ('latestLinks', 'News 学校最新动态', '', 'T', 'org.moonwave.ischool.wicket.page.GenericPublicPage', 'news', 1, null);
 INSERT INTO menu (menu_group, menu_item, parent_menu, menu_location, target_class, panel_name, ordinal, access_role) VALUES ('latestLinks', 'Newsletter 学校简讯', '', 'T', 'org.moonwave.ischool.wicket.page.GenericPublicPage', 'newsletter', 2, null);
@@ -518,9 +150,9 @@ COMMIT;
 
 --hope: '8C728E685DDDE9F7FBBC452155E29639'
 --hope1^: 'A0A7CAFDF64B1970759719646DFDB69A'
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 --                      dconfig-1.2.sql
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 
 -- ============================================================================
 -- GNU Lesser General Public License
@@ -545,9 +177,9 @@ COMMIT;
 --
 --
 
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 -- The scripts below has been executed on PostgresSQL v.7.4.13, v.8.1.5
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 -- Sign on as a user with create table, sequence, etc. privileges
 -- For example, postgres
 
@@ -559,7 +191,7 @@ drop table if exists dconfig_datatype;
 drop SEQUENCE if exists dconfig_key_seq;
 drop SEQUENCE if exists dconfig_attribute_seq;
 
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 -- 1. Create table dconfig_datatype (Required)
 
 CREATE TABLE dconfig_datatype (
@@ -568,7 +200,7 @@ CREATE TABLE dconfig_datatype (
     PRIMARY KEY  (alias)
 );
 
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 -- 2. Create table dconfig_key (Required)
 
 CREATE TABLE     dconfig_key      (
@@ -580,7 +212,7 @@ CREATE TABLE     dconfig_key      (
     UNIQUE  ( key_name )
 );
 
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 -- 3. Create table dconfig_attribute (Required)
 
 CREATE TABLE dconfig_attribute (
@@ -596,7 +228,7 @@ CREATE TABLE dconfig_attribute (
     UNIQUE (key_id,attribute_name)
 );
 
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 -- 4. Create table dconfig_system (Required)
 CREATE TABLE     dconfig_system      (
     system_name VARCHAR(100) NOT NULL,
@@ -608,7 +240,7 @@ CREATE TABLE     dconfig_system      (
     PRIMARY KEY  (system_name)
 );
 
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 -- 5. Create data type data (Required)
 
 START TRANSACTION;
@@ -633,7 +265,7 @@ COMMIT;
 insert into dconfig_system (system_name, data_type_alias, system_value, comments) values ('db.schema.version', 'str', '1.2', 'current db schema version');
 insert into dconfig_system (system_name, data_type_alias, system_value, comments) values ('db.datachange.timestamp', 'dt', '2007-01-01 00:00:00', 'a new time stamp should be updated if any data changes (insert, update, delete) occurred in dconfig_key, dconfig_attribute tables');
 
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 -- 7. Create a user account 'dcfg' (Optional)
 -- You can use existing user account, replace dcfg with the actual user account.
 -- and GRANT proper permissions to this account
@@ -646,23 +278,23 @@ insert into dconfig_system (system_name, data_type_alias, system_value, comments
 
 -- Note:
 
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 --                      dconfig-1.3.sql
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 
 -- Update db.schema.version value
 update dconfig_system set system_value = '1.3' where system_name = 'db.schema.version';
 
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 -- Add new action types to dconfig_datatype
 insert into dconfig_datatype (alias, data_type_name) values ('op', 'Operation');
 insert into dconfig_datatype (alias, data_type_name) values ('opgrp', 'Operation Group');
 
 
 
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 --                      dconfig-1.3-ischool.sql
---------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 START TRANSACTION;
 insert into dconfig_key (key_name) values ('config.setup');
 insert into dconfig_key (key_name) values ('config.application');
