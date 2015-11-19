@@ -178,6 +178,32 @@ CREATE TABLE semester_week (
 CREATE UNIQUE INDEX semester_week_idx1 ON semester_week (semester, start_day);
 
 -- -----------------------------------------------------------------------------
+-- Create table calendar
+
+CREATE TABLE calendar (
+    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    semester                VARCHAR(15) REFERENCES semester(alias),
+    week                    VARCHAR(15) REFERENCES week(week),
+    `date`                  DATE,
+    UNIQUE (semester, week)
+);
+
+-- -----------------------------------------------------------------------------
+-- Create table calendar_event
+
+CREATE TABLE calendar_event (
+    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    user_id                 INTEGER REFERENCES `user`(user_id),
+    semester                VARCHAR(15) REFERENCES semester(alias),
+    week                    VARCHAR(15) REFERENCES week(week),
+    day                     DATE NOT NULL,
+    start_time              TIME NOT NULL,
+    end_time                TIME NOT NULL,
+    event                   VARCHAR(255)
+    
+);
+
+-- -----------------------------------------------------------------------------
 -- Create table semester_no_school_day
 
 CREATE TABLE semester_no_school_day (
@@ -197,36 +223,22 @@ CREATE TABLE announcement ( -- anouncement to all people
     body                    TEXT -- 64K
 );
 
+-- -----------------------------------------------------------------------------
+-- Create table group_post
+
 CREATE TABLE group_post (-- base group post
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     subject                 VARCHAR(255) NOT NULL,
     body                    TEXT
 );
 
+-- -----------------------------------------------------------------------------
+-- Create table group_post_to_group
+
 CREATE TABLE group_post_to_group ( -- can be viewed by multiple groups
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     group_post_id           INTEGER REFERENCES group_post(id),
     tutor_group_id          SMALLINT REFERENCES tutor_group(id)
-);
-
-CREATE TABLE calenadr (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    semester                VARCHAR(15) REFERENCES semester(alias),
-    week                    VARCHAR(15) REFERENCES week(week),
-    `date`                  DATE,
-    UNIQUE (semester, week)
-);
-
-CREATE TABLE calendar_event (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    user_id                 INTEGER REFERENCES `user`(user_id),
-    semester                VARCHAR(15) REFERENCES semester(alias),
-    week                    VARCHAR(15) REFERENCES week(week),
-    day                     DATE NOT NULL,
-    start_time              TIME NOT NULL,
-    end_time                TIME NOT NULL,
-    event                   VARCHAR(255)
-    
 );
 
 -- -----------------------------------------------------------------------------
@@ -302,20 +314,6 @@ CREATE TABLE course_reg (
 );
 
 CREATE UNIQUE INDEX course_reg_idx1 ON course_reg (student_id, course_id);
-
--- -----------------------------------------------------------------------------
--- Create table calendar
-
-CREATE TABLE calendar (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    school_id               SMALLINT NOT NULL REFERENCES setup(id),
-    calendar_date           DATE,
-    subject                 VARCHAR(1000),
-    no_school_day           BOOLEAN DEFAULT FALSE,
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
-);
-
 
 -- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 -- Generic page
