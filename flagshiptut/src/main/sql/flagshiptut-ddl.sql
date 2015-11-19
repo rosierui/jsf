@@ -12,7 +12,7 @@
 
 DROP USER 'flagshiptut'@'localhost';
 DROP USER 'flagshiptut'@'%';
-DROP DATABASE flagshiptut;
+DROP DATABASE IF EXISTS flagshiptut;
 
 
 CREATE DATABASE flagshiptut;
