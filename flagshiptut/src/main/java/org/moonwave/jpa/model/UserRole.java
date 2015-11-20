@@ -29,9 +29,6 @@ public class UserRole implements Serializable {
 	@Column(name="update_time")
 	private Timestamp updateTime;
 
-	@Column(name="user_id")
-	private int userId;
-
 	public UserRole() {
 	}
 
@@ -73,14 +70,6 @@ public class UserRole implements Serializable {
 
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
-	}
-
-	public int getUserId() {
-		return this.userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
 	}
 
 }

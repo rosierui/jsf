@@ -95,7 +95,8 @@ CREATE INDEX user_idx2 ON user (last_name, first_name);
 
 -- -----------------------------------------------------------------------------
 -- Create table user_role
-
+-- One user can have multiple roles, one role can have multiple users
+-- user * <==> * role
 CREATE TABLE user_role (
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id                 INTEGER NOT NULL REFERENCES user(id),
@@ -122,25 +123,18 @@ CREATE TABLE tutor_group (
 
 -- -----------------------------------------------------------------------------
 -- Create table user_tutor_group
-
+-- One user ==> many tutor_group, one tutor_group ==> many users
+-- user * <==> * tutor_group 
 CREATE TABLE user_tutor_group (
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id                 INTEGER NOT NULL REFERENCES user(id),
     tutor_group_id          SMALLINT REFERENCES tutor_group(id),
-    privileges              VARCHAR(2000), -- object permissions in xml
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP,
     UNIQUE (user_id, tutor_group_id)
 );
 CREATE INDEX user_tutor_group_idx1 ON user_tutor_group (user_id, tutor_group_id);
 CREATE INDEX user_tutor_group_idx2 ON user_tutor_group (tutor_group_id, user_id);
-
-CREATE TABLE group_type (
-    id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    alias                   VARCHAR(15) NOT NULL,
-    name                    VARCHAR(50) NOT NULL,
-    UNIQUE (alias)
-);
 
 -- -----------------------------------------------------------------------------
 -- Create table semester
@@ -167,7 +161,7 @@ CREATE TABLE week (
 
 -- -----------------------------------------------------------------------------
 -- Create table semester_week (This table may not need)
-
+-- semener * <==> * week
 CREATE TABLE semester_week (
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     semester                VARCHAR(15) REFERENCES semester(alias),
@@ -176,6 +170,17 @@ CREATE TABLE semester_week (
     UNIQUE (semester, week)
 );
 CREATE UNIQUE INDEX semester_week_idx1 ON semester_week (semester, start_day);
+
+-- -----------------------------------------------------------------------------
+-- Create table semester_no_school_day
+
+CREATE TABLE semester_no_school_day (
+    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    semester                VARCHAR(15) REFERENCES semester(alias),
+    no_school_day           DATE NOT NULL,
+    UNIQUE (semester, no_school_day)
+);
+CREATE UNIQUE INDEX semester_no_school_day_idx1 ON semester_no_school_day (semester, no_school_day);
 
 -- -----------------------------------------------------------------------------
 -- Create table calendar
@@ -199,20 +204,11 @@ CREATE TABLE calendar_event (
     day                     DATE NOT NULL,
     start_time              TIME NOT NULL,
     end_time                TIME NOT NULL,
-    event                   VARCHAR(255)
-    
+    event                   VARCHAR(255),
+    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    create_time             TIMESTAMP
 );
 
--- -----------------------------------------------------------------------------
--- Create table semester_no_school_day
-
-CREATE TABLE semester_no_school_day (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    semester                VARCHAR(15) REFERENCES semester(alias),
-    no_school_day           DATE NOT NULL,
-    UNIQUE (semester, no_school_day)
-);
-CREATE UNIQUE INDEX semester_no_school_day_idx1 ON semester_no_school_day (semester, no_school_day);
 
 -- -----------------------------------------------------------------------------
 -- Create table announcement
@@ -220,7 +216,10 @@ CREATE UNIQUE INDEX semester_no_school_day_idx1 ON semester_no_school_day (semes
 CREATE TABLE announcement ( -- anouncement to all people
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     subject                 VARCHAR(256) NOT NULL,
-    body                    TEXT -- 64K
+    body                    TEXT, -- 64K
+    published               BOOLEAN,
+    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    create_time             TIMESTAMP
 );
 
 -- -----------------------------------------------------------------------------
@@ -229,16 +228,20 @@ CREATE TABLE announcement ( -- anouncement to all people
 CREATE TABLE group_post (-- base group post
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     subject                 VARCHAR(255) NOT NULL,
-    body                    TEXT
+    body                    TEXT,
+    published               BOOLEAN,
+    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    create_time             TIMESTAMP
 );
 
 -- -----------------------------------------------------------------------------
 -- Create table group_post_to_group
-
-CREATE TABLE group_post_to_group ( -- can be viewed by multiple groups
+-- group_post 1 <==> * tutor_group
+CREATE TABLE group_post_to_group (
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     group_post_id           INTEGER REFERENCES group_post(id),
-    tutor_group_id          SMALLINT REFERENCES tutor_group(id)
+    tutor_group_id          SMALLINT REFERENCES tutor_group(id),
+    UNIQUE (group_post_id, tutor_group_id)
 );
 
 -- -----------------------------------------------------------------------------

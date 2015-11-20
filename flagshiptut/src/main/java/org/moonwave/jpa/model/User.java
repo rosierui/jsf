@@ -2,8 +2,9 @@ package org.moonwave.jpa.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
+import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -55,6 +56,19 @@ public class User implements Serializable {
 
 	@Column(name="update_time")
 	private Timestamp updateTime;
+
+	//bi-directional many-to-many association to Role
+	@ManyToMany
+	@JoinTable(
+		name="user_role"
+		, joinColumns={
+			@JoinColumn(name="user_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="role_id")
+			}
+		)
+	private List<Role> roles;
 
 	public User() {
 	}
@@ -177,6 +191,14 @@ public class User implements Serializable {
 
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public List<Role> getRoles() {
+		return this.roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 }

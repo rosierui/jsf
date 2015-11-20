@@ -2,6 +2,7 @@ package org.moonwave.jpa.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 
 /**
@@ -20,7 +21,15 @@ public class Announcement implements Serializable {
 	@Lob
 	private String body;
 
+	@Column(name="create_time")
+	private Timestamp createTime;
+
+	private byte published;
+
 	private String subject;
+
+	@Column(name="update_time")
+	private Timestamp updateTime;
 
 	public Announcement() {
 	}
@@ -41,12 +50,36 @@ public class Announcement implements Serializable {
 		this.body = body;
 	}
 
+	public Timestamp getCreateTime() {
+		return this.createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+
+	public byte getPublished() {
+		return this.published;
+	}
+
+	public void setPublished(byte published) {
+		this.published = published;
+	}
+
 	public String getSubject() {
 		return this.subject;
 	}
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public Timestamp getUpdateTime() {
+		return this.updateTime;
+	}
+
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
 }

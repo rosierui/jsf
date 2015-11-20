@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -19,6 +20,9 @@ public class CalendarEvent implements Serializable {
 	@Id
 	private int id;
 
+	@Column(name="create_time")
+	private Timestamp createTime;
+
 	@Temporal(TemporalType.DATE)
 	private Date day;
 
@@ -31,6 +35,9 @@ public class CalendarEvent implements Serializable {
 
 	@Column(name="start_time")
 	private Time startTime;
+
+	@Column(name="update_time")
+	private Timestamp updateTime;
 
 	@Column(name="user_id")
 	private int userId;
@@ -46,6 +53,14 @@ public class CalendarEvent implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Timestamp getCreateTime() {
+		return this.createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
 	}
 
 	public Date getDay() {
@@ -86,6 +101,14 @@ public class CalendarEvent implements Serializable {
 
 	public void setStartTime(Time startTime) {
 		this.startTime = startTime;
+	}
+
+	public Timestamp getUpdateTime() {
+		return this.updateTime;
+	}
+
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public int getUserId() {

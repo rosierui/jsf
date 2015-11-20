@@ -17,11 +17,13 @@ public class GroupPostToGroup implements Serializable {
 	@Id
 	private int id;
 
-	@Column(name="group_post_id")
-	private int groupPostId;
-
 	@Column(name="tutor_group_id")
 	private short tutorGroupId;
+
+	//bi-directional many-to-one association to GroupPost
+	@ManyToOne
+	@JoinColumn(name="group_post_id")
+	private GroupPost groupPost;
 
 	public GroupPostToGroup() {
 	}
@@ -34,20 +36,20 @@ public class GroupPostToGroup implements Serializable {
 		this.id = id;
 	}
 
-	public int getGroupPostId() {
-		return this.groupPostId;
-	}
-
-	public void setGroupPostId(int groupPostId) {
-		this.groupPostId = groupPostId;
-	}
-
 	public short getTutorGroupId() {
 		return this.tutorGroupId;
 	}
 
 	public void setTutorGroupId(short tutorGroupId) {
 		this.tutorGroupId = tutorGroupId;
+	}
+
+	public GroupPost getGroupPost() {
+		return this.groupPost;
+	}
+
+	public void setGroupPost(GroupPost groupPost) {
+		this.groupPost = groupPost;
 	}
 
 }

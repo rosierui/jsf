@@ -72,3 +72,4 @@ INSERT INTO tutor_group (alias, name, ordinal) values ('Practice', 'Practice Tut
 COMMIT;
 
 
+

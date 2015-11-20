@@ -16,6 +16,9 @@ public class UpdateTest {
 
    public static void main( String[ ] args ) {
    
+	 java.sql.Date date;
+	 java.time.LocalDate date1;
+
       EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "jpa-mysql" );
       EntityManager em = emfactory.createEntityManager();
       System.out.println("");
