@@ -20,7 +20,7 @@ public class User implements Serializable {
 	@Id
 	private int id;
 
-	private byte active;
+	private Boolean active;
 
 	private String answer;
 
@@ -81,11 +81,11 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
-	public byte getActive() {
+	public Boolean getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Boolean active) {
 		this.active = active;
 	}
 

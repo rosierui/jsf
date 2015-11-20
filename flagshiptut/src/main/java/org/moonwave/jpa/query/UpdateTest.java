@@ -35,9 +35,11 @@ public class UpdateTest {
       for(TutorGroup e:list) {
          System.out.println("Tutor Group: "+ e.getAlias() + ", " + e.getName());
       }
+
       System.out.println("");
       if (!list.isEmpty()) {
           TutorGroup item = list.get(0);
+          // update data
           em.getTransaction().begin();
           item.setName("HSK-" + RandomUtil.nextPositiveInt());
           em.getTransaction().commit();
@@ -52,34 +54,6 @@ public class UpdateTest {
          System.out.println("Tutor Group: "+ e.getAlias() + ", " + e.getName());
       }
       System.out.println("");
-
-      /*
-      // Semester
-      query = em.createQuery("Select e from Semester e");
-      List<Semester> semesters = query.getResultList();
-
-      for(Semester e: semesters) {
-         System.out.println("Semester: "+ e.getAlias() + ", " + e.getName());
-      }
-      System.out.println("");
-
-      // Role
-      query = em.createQuery("Select e from Role e");
-      List<Role> roles = query.getResultList();
-
-      for(Role e: roles) {
-         System.out.println("Role: "+ e.getAlias() + ", " + e.getName());
-      }
-      System.out.println("");
-
-      // SemesterWeek
-      query = em.createQuery("Select e from SemesterWeek e");
-      List<SemesterWeek> semesterWeeks = query.getResultList();
-
-      for(SemesterWeek e: semesterWeeks) {
-         System.out.println("SemesterWeek: "+ e.getSemester() + ", " + e.getWeek());
-      }
-      */
 
    }
 }

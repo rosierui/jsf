@@ -25,7 +25,7 @@ public class GroupPost implements Serializable {
 	@Column(name="create_time")
 	private Timestamp createTime;
 
-	private byte published;
+	private Boolean published;
 
 	private String subject;
 
@@ -63,11 +63,11 @@ public class GroupPost implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public byte getPublished() {
+	public Boolean getPublished() {
 		return this.published;
 	}
 
-	public void setPublished(byte published) {
+	public void setPublished(Boolean published) {
 		this.published = published;
 	}
 

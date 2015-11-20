@@ -22,37 +22,37 @@ public class EvaluationObjective implements Serializable {
 	private Timestamp createTime;
 
 	@Column(name="eval_part1_1")
-	private byte evalPart11;
+	private Boolean evalPart11;
 
 	@Column(name="eval_part1_2")
-	private byte evalPart12;
+	private Boolean evalPart12;
 
 	@Column(name="eval_part1_3")
-	private byte evalPart13;
+	private Boolean evalPart13;
 
 	@Column(name="eval_part1_comments")
 	private String evalPart1Comments;
 
 	@Column(name="eval_part2_1")
-	private byte evalPart21;
+	private Boolean evalPart21;
 
 	@Column(name="eval_part2_2")
-	private byte evalPart22;
+	private Boolean evalPart22;
 
 	@Column(name="eval_part2_3")
-	private byte evalPart23;
+	private Boolean evalPart23;
 
 	@Column(name="eval_part2_comments")
 	private String evalPart2Comments;
 
 	@Column(name="eval_part3_1")
-	private byte evalPart31;
+	private Boolean evalPart31;
 
 	@Column(name="eval_part3_2")
-	private byte evalPart32;
+	private Boolean evalPart32;
 
 	@Column(name="eval_part3_3")
-	private byte evalPart33;
+	private Boolean evalPart33;
 
 	@Column(name="eval_part3_comments")
 	private String evalPart3Comments;
@@ -60,7 +60,7 @@ public class EvaluationObjective implements Serializable {
 	private String semester;
 
 	@Column(name="student_evaluation")
-	private byte studentEvaluation;
+	private Boolean studentEvaluation;
 
 	@Column(name="update_time")
 	private Timestamp updateTime;
@@ -89,27 +89,27 @@ public class EvaluationObjective implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public byte getEvalPart11() {
+	public Boolean getEvalPart11() {
 		return this.evalPart11;
 	}
 
-	public void setEvalPart11(byte evalPart11) {
+	public void setEvalPart11(Boolean evalPart11) {
 		this.evalPart11 = evalPart11;
 	}
 
-	public byte getEvalPart12() {
+	public Boolean getEvalPart12() {
 		return this.evalPart12;
 	}
 
-	public void setEvalPart12(byte evalPart12) {
+	public void setEvalPart12(Boolean evalPart12) {
 		this.evalPart12 = evalPart12;
 	}
 
-	public byte getEvalPart13() {
+	public Boolean getEvalPart13() {
 		return this.evalPart13;
 	}
 
-	public void setEvalPart13(byte evalPart13) {
+	public void setEvalPart13(Boolean evalPart13) {
 		this.evalPart13 = evalPart13;
 	}
 
@@ -121,27 +121,27 @@ public class EvaluationObjective implements Serializable {
 		this.evalPart1Comments = evalPart1Comments;
 	}
 
-	public byte getEvalPart21() {
+	public Boolean getEvalPart21() {
 		return this.evalPart21;
 	}
 
-	public void setEvalPart21(byte evalPart21) {
+	public void setEvalPart21(Boolean evalPart21) {
 		this.evalPart21 = evalPart21;
 	}
 
-	public byte getEvalPart22() {
+	public Boolean getEvalPart22() {
 		return this.evalPart22;
 	}
 
-	public void setEvalPart22(byte evalPart22) {
+	public void setEvalPart22(Boolean evalPart22) {
 		this.evalPart22 = evalPart22;
 	}
 
-	public byte getEvalPart23() {
+	public Boolean getEvalPart23() {
 		return this.evalPart23;
 	}
 
-	public void setEvalPart23(byte evalPart23) {
+	public void setEvalPart23(Boolean evalPart23) {
 		this.evalPart23 = evalPart23;
 	}
 
@@ -153,27 +153,27 @@ public class EvaluationObjective implements Serializable {
 		this.evalPart2Comments = evalPart2Comments;
 	}
 
-	public byte getEvalPart31() {
+	public Boolean getEvalPart31() {
 		return this.evalPart31;
 	}
 
-	public void setEvalPart31(byte evalPart31) {
+	public void setEvalPart31(Boolean evalPart31) {
 		this.evalPart31 = evalPart31;
 	}
 
-	public byte getEvalPart32() {
+	public Boolean getEvalPart32() {
 		return this.evalPart32;
 	}
 
-	public void setEvalPart32(byte evalPart32) {
+	public void setEvalPart32(Boolean evalPart32) {
 		this.evalPart32 = evalPart32;
 	}
 
-	public byte getEvalPart33() {
+	public Boolean getEvalPart33() {
 		return this.evalPart33;
 	}
 
-	public void setEvalPart33(byte evalPart33) {
+	public void setEvalPart33(Boolean evalPart33) {
 		this.evalPart33 = evalPart33;
 	}
 
@@ -193,11 +193,11 @@ public class EvaluationObjective implements Serializable {
 		this.semester = semester;
 	}
 
-	public byte getStudentEvaluation() {
+	public Boolean getStudentEvaluation() {
 		return this.studentEvaluation;
 	}
 
-	public void setStudentEvaluation(byte studentEvaluation) {
+	public void setStudentEvaluation(Boolean studentEvaluation) {
 		this.studentEvaluation = studentEvaluation;
 	}
 
