@@ -43,6 +43,9 @@
 
     <ui:define name="description">
         Schedule provides an Outlook, iCal like JSF component to manage events. Schedule is highly customizable featuring various views (month, day, week), built-in I18N, drag-drop, resize, customizable event dialog, ajax listeners for every user interaction and more.
+        timeZone="GMT+2"
+        timeZone="UTC-7"
+        timeZone="America/Phoenix"
     </ui:define>
 
     <ui:define name="body">
@@ -52,7 +55,7 @@
      
             <h:panelGrid columnClasses="value">
                 <h3 style="margin-top: 0">Editable Schedule</h3>
-                <p:schedule id="schedule" value="#{scheduleView.eventModel}" widgetVar="myschedule" timeZone="GMT+2">
+                <p:schedule id="schedule" value="#{scheduleView.eventModel}" widgetVar="myschedule" timeZone="America/Phoenix">
 
                     <p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                     <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
@@ -80,10 +83,10 @@
                     <p:inputText id="event" value="#{scheduleView.event.title}" required="true" />
 
                     <p:outputLabel for="from" value="From:" />
-                    <p:calendar id="from" value="#{scheduleView.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+                    <p:calendar id="from" value="#{scheduleView.event.startDate}" timeZone="America/Phoenix" pattern="dd/MM/yyyy HH:mm"/>
 
                     <p:outputLabel for="to" value="To:" />
-                    <p:calendar id="to" value="#{scheduleView.event.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+                    <p:calendar id="to" value="#{scheduleView.event.endDate}" timeZone="America/Phoenix" pattern="dd/MM/yyyy HH:mm"/>
 
                     <p:outputLabel for="allDay" value="All Day:" />
                     <h:selectBooleanCheckbox id="allDay" value="#{scheduleView.event.allDay}" />
