@@ -21,6 +21,7 @@
                     <f:selectItems value="#{userroleView.cities}" />
                 </p:selectCheckboxMenu>
                 <p:commandButton value="Submit" update="display panel1 jsfForm" actionListener="#{userroleView.save}" />
+                <p:commandButton value="Submit 1 - Save2" update="display panel1 jsfForm" actionListener="#{userroleView.save2}" />
             </h:panelGrid>
 
             <!-- Since both buttons are Submit, only one works -->
@@ -31,6 +32,7 @@
                     <f:selectItems value="#{userroleView.cities}" />
                 </p:selectCheckboxMenu>
                 <p:commandLink value="Submit 2" update="display panel2" actionListener="#{userroleView.save}" />
+                <p:commandLink value="Submit 3 - Save2" update="display panel2" actionListener="#{userroleView.save2}" />
             </h:panelGrid>
 
             <p:outputPanel id="display" style="width:250px;padding-left:5px;margin-top:10px">

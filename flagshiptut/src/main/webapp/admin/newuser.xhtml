@@ -16,9 +16,9 @@
 
             <h:panelGrid columns="2" cellpadding="5" id="panel2">
                 <h:outputLabel value="Firstname:" />
-                <p:inputText value="#{newuserView.user.firstname}" />
+                <p:inputText value="#{newuserView.user.firstName}" />
                 <h:outputLabel value="Lastname:" />
-                <p:inputText value="#{newuserView.user.lastname}" />
+                <p:inputText value="#{newuserView.user.lastName}" />
                 <h:outputLabel value="Login Id:" />
                 <p:inputText value="#{newuserView.user.loginId}" />
                 <h:outputLabel value="Password:" />
@@ -34,13 +34,14 @@
                 <h:outputLabel value="Timezone:" />
                 <p:selectOneMenu id="menu" value="#{newuserView.user.timezone}" label="Timezone"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                    <f:selectItems value="#{newuserView.cities}" />
+                    <f:selectItems value="#{newuserView.timezones}" />
                 </p:selectOneMenu>
 
-            </h:panelGrid>
-
-            <h:panelGrid columns="2" cellpadding="5" id="panel1">
+                <h:outputLabel value="" />
+                <h:outputLabel value="" />
+                <h:outputLabel value="" />
                 <p:commandButton value="Submit" update="" actionListener="#{newuserView.save}" />
+
             </h:panelGrid>
 
         </h:form>
