@@ -14,15 +14,15 @@ public class Test {
 		Calendar calendar = Calendar.getInstance();
 		TimeZone timeZone = calendar.getTimeZone();
 
-		System.out.println(timeZone);
-		System.out.println(timeZone.getID());
-		System.out.println(timeZone.getDisplayName());
-		System.out.println(timeZone.getDSTSavings());
 		String[] availableTZs = timeZone.getAvailableIDs();
 		List<String> tzs = Arrays.asList(availableTZs);
 		Collections.sort(tzs);
+		int maxlen = 0;
 		for (String tz : tzs) {
+			maxlen = Math.max(tz.length(), maxlen);
 			System.out.println(tz);
 		}
+		System.out.println("");
+		System.out.println(maxlen);//==>32 varchar(40)
 	}
 }

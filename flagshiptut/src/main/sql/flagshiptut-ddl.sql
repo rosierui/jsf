@@ -81,6 +81,7 @@ CREATE TABLE user (
     active                  BOOLEAN DEFAULT TRUE, -- true: active, false: inactive; control individual user. If account is inactive, this user is inactive even its own active flag = true    eligible          BOOLEAN DEFAULT FALSE, -- true: eligible for register courses; false: no eligible for registration
     hint                    VARCHAR(50),
     answer                  VARCHAR(50),
+    timezone                VARCHAR(50) DEFAULT 'America/Phoenix',
     login_attempt           SMALLINT, -- keep the login attept count, if 5 times attempted within 5 minutes, lock this account
     last_attempt_ts         DATETIME, -- savea the first timestamp for a repeat login attempt
     last_login_ip           VARCHAR(50),

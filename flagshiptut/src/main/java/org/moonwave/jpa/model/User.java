@@ -34,6 +34,8 @@ public class User implements Serializable {
 
 	private String hint;
 
+	private String timezone;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="last_attempt_ts")
 	private Date lastAttemptTs;
@@ -127,6 +129,14 @@ public class User implements Serializable {
 
 	public void setHint(String hint) {
 		this.hint = hint;
+	}
+
+	public String getTimezone() {
+		return timezone;
+	}
+
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
 	}
 
 	public Date getLastAttemptTs() {
