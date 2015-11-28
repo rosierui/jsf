@@ -12,25 +12,40 @@
         New User
     </ui:define>
     <ui:define name="body">
-        <h:form id="jsfForm">
+        <p:tooltip />
+        <h:panelGroup id="msgPanel">
+            <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
+        </h:panelGroup>
 
-            <h:panelGrid columns="2" cellpadding="5" id="panel2">
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="5" id="panel">
                 <h:outputLabel value="Firstname:" />
                 <p:inputText value="#{newuserView.user.firstName}" />
+
                 <h:outputLabel value="Lastname:" />
                 <p:inputText value="#{newuserView.user.lastName}" />
-                <h:outputLabel value="Login Id:" />
-                <p:inputText value="#{newuserView.user.loginId}" />
+
+                <h:outputLabel for="loginId" value="Login Id:" />
+                <p:inputText id="loginId" value="#{newuserView.user.loginId}" required="true" />
+         
                 <h:outputLabel value="Password:" />
-                <p:inputText value="#{newuserView.user.password}" />
+                <p:password id="password" value="#{newuserView.user.password}" required="true" />
+
+                <h:outputLabel value="Password (repeat):" />
+                <p:password id="password2" value="#{newuserView.password2}" required="true" />
+
                 <h:outputLabel value="Email:" />
                 <p:inputText value="#{newuserView.user.email}" />
+
                 <h:outputLabel value="Phone:" />
                 <p:inputMask value="#{newuserView.user.phone}" mask="(999) 999-9999"/>
+
                 <h:outputLabel value="Password Hint:" />
                 <p:inputText value="#{newuserView.user.hint}" />
+
                 <h:outputLabel value="Answer:" />
                 <p:inputText value="#{newuserView.user.answer}" />
+
                 <h:outputLabel value="Timezone:" />
                 <p:selectOneMenu id="menu" value="#{newuserView.user.timezone}" label="Timezone"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
@@ -40,10 +55,9 @@
                 <h:outputLabel value="" />
                 <h:outputLabel value="" />
                 <h:outputLabel value="" />
-                <p:commandButton value="Submit" update="" actionListener="#{newuserView.save}" />
+                <p:commandButton value="Submit" update=":msgPanel" actionListener="#{newuserView.save}" />
 
             </h:panelGrid>
-
         </h:form>
     </ui:define>
 </ui:composition>

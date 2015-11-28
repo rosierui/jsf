@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 
 import org.moonwave.jpa.model.User;
+import org.moonwave.util.RandomUtil;
+import org.moonwave.util.SHAUtil;
+import org.moonwave.view.BaseView;
 
 /**
  * NewuserView
@@ -19,11 +20,11 @@ import org.moonwave.jpa.model.User;
  *
  */
 @ManagedBean
-public class NewuserView {
-    
-    private List<String> timezones;
+public class NewuserView extends BaseView {
 
     User user;
+    String password2;
+    List<String> timezones;
 
     @PostConstruct
     public void init() {
@@ -40,16 +41,20 @@ public class NewuserView {
         user.setTimezone("America/Phoenix"); // get from properties
     }
 
-    public List<String> getCities() {
-        return timezones;
-    }
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
     }
 
     public List<String> getTimezones() {
@@ -61,15 +66,17 @@ public class NewuserView {
     }
 
     public String save() {
-        FacesMessage msg;
-//        if(city != null && country != null)
-            msg = new FacesMessage("Selected", "save() called");
-//        else
-//            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid", "City is not selected."); 
-        // save data to database
         StringBuffer sb = new StringBuffer();
-        msg = new FacesMessage("Selected", "");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        if ((user.getPassword() != null) && !user.getPassword().equals(this.password2)) {
+            super.error("Password not equal.");
+            return "";
+        }
+
+        super.getEntityManager().getTransaction().begin();
+        user.setPassword(SHAUtil.encryptPassword(user.getPassword()));
+        user.setCreateTime(super.getSqlTimestamp());
+        super.getEntityManager().getTransaction().commit();
+
         return "";
     }
 }

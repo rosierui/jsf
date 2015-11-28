@@ -15,7 +15,6 @@
 
     <ui:define name="implementation">
         
-        <p:tooltip />
         
         <h:form>   
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
@@ -37,6 +36,10 @@
                 <p:outputLabel for="txt" value="Text:" />
                 <p:inputText id="txt" required="true" />
                 <p:message for="txt" display="text" />
+
+                <p:outputLabel for="txt11" value="Text11:" />
+                <p:inputText id="txt11" required="true" />
+                <p:message for="txt11" display="text" />
 
                 <p:outputLabel for="icon" value="Icon:" />
                 <p:inputText id="icon" required="true" />
