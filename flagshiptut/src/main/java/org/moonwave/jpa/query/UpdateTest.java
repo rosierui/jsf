@@ -40,8 +40,9 @@ public class UpdateTest {
       if (!list.isEmpty()) {
           TutorGroup item = list.get(0);
           // update data
-          em.getTransaction().begin();
           item.setName("HSK-" + RandomUtil.nextPositiveInt());
+          em.getTransaction().begin();
+          em.persist(item);
           em.getTransaction().commit();
       }
       System.out.println("== Search again==");

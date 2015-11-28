@@ -72,11 +72,14 @@ public class NewuserView extends BaseView {
             return "";
         }
 
-        super.getEntityManager().getTransaction().begin();
-        user.setPassword(SHAUtil.encryptPassword(user.getPassword()));
-        user.setCreateTime(super.getSqlTimestamp());
-        super.getEntityManager().getTransaction().commit();
-
+        try {
+            user.setPassword(SHAUtil.encryptPassword(user.getPassword()));
+            user.setCreateTime(super.getSqlTimestamp());
+            super.getBasebo().persist(user);
+            super.info("Succesfully created new record");
+        } catch (Exception e) {
+            
+        }
         return "";
     }
 }
