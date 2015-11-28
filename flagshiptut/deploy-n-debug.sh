@@ -35,6 +35,9 @@ echo "rebuild and deploy..."
 echo
 mvn clean package
 cp target/$app_target.war $TOMCAT/webapps/$app.war
+rm $TOMCAT/logs/*.log
+rm $TOMCAT/logs/*.txt
+rm $TOMCAT/logs/*.out
 
 echo ""
 echo "starting up tomcat..."

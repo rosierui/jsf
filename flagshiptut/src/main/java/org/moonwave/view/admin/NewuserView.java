@@ -10,9 +10,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
 import org.moonwave.jpa.model.User;
-import org.moonwave.util.RandomUtil;
 import org.moonwave.util.SHAUtil;
 import org.moonwave.view.BaseView;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * NewuserView
@@ -21,6 +23,8 @@ import org.moonwave.view.BaseView;
  */
 @ManagedBean
 public class NewuserView extends BaseView {
+
+	static final Logger LOG = LoggerFactory.getLogger(NewuserView.class);
 
     User user;
     String password2;
@@ -66,9 +70,8 @@ public class NewuserView extends BaseView {
     }
 
     public String save() {
-        StringBuffer sb = new StringBuffer();
         if ((user.getPassword() != null) && !user.getPassword().equals(this.password2)) {
-            super.error("Password not equal.");
+            super.error("Password not equal");
             return "";
         }
 
@@ -76,9 +79,11 @@ public class NewuserView extends BaseView {
             user.setPassword(SHAUtil.encryptPassword(user.getPassword()));
             user.setCreateTime(super.getSqlTimestamp());
             super.getBasebo().persist(user);
-            super.info("Succesfully created new record");
+            super.info("New record was succesfully created");
+            LOG.info("New record was succesfully created");
         } catch (Exception e) {
-            
+            LOG.error(e.getLocalizedMessage());
+            super.error("An error occurred while saving data");
         }
         return "";
     }
