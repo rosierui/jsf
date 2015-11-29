@@ -3,6 +3,7 @@ package org.moonwave.view;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -11,6 +12,7 @@ import org.moonwave.jpa.model.User;
 import org.moonwave.util.SHAUtil;
 
 @ManagedBean
+@SessionScoped
 public class UserLoginView extends BaseView {
 
     private String username;

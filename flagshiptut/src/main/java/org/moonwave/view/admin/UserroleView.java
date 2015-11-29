@@ -17,21 +17,70 @@ package org.moonwave.view.admin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
+import org.moonwave.domain.Car;
+import org.moonwave.jpa.bo.UserBO;
+import org.moonwave.jpa.model.User;
+import org.moonwave.service.CarService;
+import org.moonwave.view.BaseView;
 /**
  * checkboxView
  * @author moonwave
  *
  */
 @ManagedBean
-public class UserroleView {
-    
-    private String[] selectedConsoles;  
-    private String[] selectedCities; 
+@ViewScoped
+public class UserroleView extends BaseView {
+
+    private static final long serialVersionUID = 1L;
+
+    private String[] selectedConsoles;
+    private String[] selectedCities;
     private List<String> cities;
+
+    private List<Car> cars;
+    private List<User> users;
+    private User current;
+    private String role;
+
+    @ManagedProperty("#{carService}")
+    private CarService service;
+ 
+    public List<Car> getCars() {
+        return cars;
+    }
+ 
+    public void setService(CarService service) {
+        this.service = service;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public User getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(User current) {
+        this.current = current;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     @PostConstruct
     public void init() {
@@ -45,6 +94,19 @@ public class UserroleView {
         cities.add("Rome");
         cities.add("Sao Paulo");
         cities.add("Amsterdam");
+
+        cars = service.createCars(10);
+
+        Map<String, String> rqm = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        StringBuilder sb = new StringBuilder();
+        sb.append("&projectId=").append(rqm.get("projectId"));
+
+        if (FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("setup") != null
+                && FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("setup").equals("true")) {
+            boolean volumesSetup = true;
+        }
+        // get a list of users
+        users = new UserBO().getAllUsers();
     }
 
     public String[] getSelectedConsoles() {
@@ -76,13 +138,13 @@ public class UserroleView {
         // save data to database
         StringBuffer sb = new StringBuffer();
         for (String item : selectedCities) {
-        	sb.append(item).append(", ");
+            sb.append(item).append(", ");
         }
         String temp = sb.toString();
         msg = new FacesMessage("Selected", temp);
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
+
     public String save2() {
         FacesMessage msg;
 //        if(city != null && country != null)
@@ -92,11 +154,11 @@ public class UserroleView {
         // save data to database
         StringBuffer sb = new StringBuffer();
         for (String item : selectedCities) {
-        	sb.append(item).append(", ");
+            sb.append(item).append(", ");
         }
         String temp = sb.toString();
         msg = new FacesMessage("Selected", temp);
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         return "";
     }
 }

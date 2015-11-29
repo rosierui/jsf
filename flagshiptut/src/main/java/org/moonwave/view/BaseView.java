@@ -1,5 +1,6 @@
 package org.moonwave.view;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.faces.application.FacesMessage;
@@ -15,12 +16,13 @@ import org.moonwave.jpa.bo.BaseBO;
  *
  */
 @ManagedBean
-public class BaseView {
+public class BaseView implements Serializable {
 
     // load message and labels by locale
 
-    BaseBO basebo = new BaseBO();
+    private static final long serialVersionUID = 5631028692861147930L;
 
+    BaseBO basebo = new BaseBO();
 
     public BaseBO getBasebo() {
         return basebo;

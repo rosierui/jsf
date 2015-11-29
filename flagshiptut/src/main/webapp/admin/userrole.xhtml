@@ -40,6 +40,45 @@
                     #{city}
                 </p:dataList>
             </p:outputPanel>
+
+            <p:dataTable var="user" value="#{userroleView.users}">
+                <p:column headerText="${label.firstName}">
+                    <h:outputText value="#{user.firstName}" />
+                </p:column>
+                <p:column headerText="${label.lastName}">
+                    <h:outputText value="#{user.lastName}" />
+                </p:column>
+                <p:column headerText="${label.loginId}">
+                    <p:commandLink
+                        id="viewfirstname"
+                        ajax="true"
+                        action="#{userroleView.save2}"
+                        value="#{label.view}"
+                        title="#{label.view}"
+                        update="@([id$=panel1])"
+                        rendered="true"
+                        disabled="false">
+                        <f:param name="editCycle" value="true"/>
+                        <f:param name="faces-redirect" value="false"/>
+
+                        <f:setPropertyActionListener target="#{userroleView.role}" value="test" />
+                        <f:setPropertyActionListener target="#{userroleView.current}" value="#{user}" />
+                    </p:commandLink>
+                    <h:link
+                        id="setupfirstname"
+                        outcome="/admin/newuser.xhtml?createadmin=true"
+                        target="_parent"
+                        value="#{label.edit}"
+                        title="#{label.edit}"
+                        includeViewParams="true"
+                        rendered="true"
+                        disabled="false">
+                        <f:param name="editCycle" value="true"/>
+                        <f:param name="faces-redirect" value="false"/>
+                    </h:link>
+                </p:column>
+            </p:dataTable>
+
         </h:form>
     </ui:define>
 </ui:composition>

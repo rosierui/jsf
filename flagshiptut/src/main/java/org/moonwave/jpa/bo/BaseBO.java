@@ -24,6 +24,16 @@ public class BaseBO {
         return em;
     }
 
+    public void release() {
+        if (em != null) {
+            if (em.isOpen()) {
+                em.clear();
+                em.close();
+            }
+            em = null;
+        }
+    }
+
     /**
      * Make an instance managed and persistent.
      * @param entity  entity instance
