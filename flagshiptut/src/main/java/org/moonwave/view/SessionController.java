@@ -1,4 +1,4 @@
-package org.moonwave.ft;
+package org.moonwave.view;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;

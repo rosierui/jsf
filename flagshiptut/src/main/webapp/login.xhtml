@@ -21,7 +21,7 @@
     </ui:define>
 
     <ui:define name="title">
-        Dialog - <span class="subitem">Login</span>
+        <span class="subitem">Login</span>
     </ui:define>
 
     <ui:define name="description">
@@ -29,12 +29,34 @@
     </ui:define>
 
     <ui:define name="body">
-
         <h:form>
+            <p:menubar id="navBar" styleClass="navbar-nav" rendered="true" width="100%">
+                <p:submenu label="#{label.dashboard}" id="dashboard" styleClass="navHeader" rendered="true">
+                    <p:menuitem value="#{label.dashboard}" url="/dashboard/List.xhtml" rendered="true"
+                                onclick="blockUI()" oncomplete="unBlockUI()"/>
+                </p:submenu>
+                <p:submenu label="#{label.calendar}" styleClass="navHeader">
+                    <p:menuitem value="#{label.calendar}" url="/calendar/calendar.xhtml" rendered="true"
+                                onclick="blockUI()" oncomplete="unBlockUI()"/>
+                </p:submenu>
+                <p:menuitem value="#{label.uploads}" url="/uploads.xhtml" rendered="true"
+                            onclick="blockUI()" oncomplete="unBlockUI()"/>
+                <p:submenu label="#{label.reports}" styleClass="navHeader" rendered="true">
+                    <p:menuitem value="#{label.users}" url="/report/TrendMix.xhtml"
+                                onclick="blockUI()" oncomplete="unBlockUI()"/>
+                    <p:menuitem value="#{label.statistics}" url="/report/statistics.xhtml" rendered="true"
+                                onclick="blockUI()" oncomplete="unBlockUI()"/>
+                </p:submenu>
+                <p:menuitem value="#{label.login}" url="/login.xhtml" rendered="true"
+                            onclick="blockUI();" oncomplete="unBlockUI()">
+                </p:menuitem>
+            </p:menubar>
+
             <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
-                <p:graphicImage name="/demo/images/login.png" />
+                <h:outputLabel value="#{label.login}" />
+                <p:graphicImage name="/images/login.png" />
             </h:outputLink>
-            
+
             <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
             
             <p:dialog header="Login" widgetVar="dlg" resizable="false">
@@ -46,8 +68,8 @@
                     <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
                     
                     <f:facet name="footer">
-                        <p:commandButton value="Login" update="growl" actionListener="#{userLoginView.login}" 
-                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+                        <p:commandButton value="Login" update="growl" action="#{userLoginView.login}" 
+                         />
                     </f:facet>  
                 </h:panelGrid>
             </p:dialog>    
