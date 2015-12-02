@@ -4,10 +4,11 @@ import java.util.Properties;
 
 public class AppProperties {
 
-    public static String KEY_WEB_SERVER_HOME    = "web_server_home";
-    public static String KEY_UPLOAD_FOLDER = "upload_folder";
-    public static String KEY_OUTGOING_FOLDER    = "outgoing_folder";
-    public static String KEY_NORMAL_ATTACHMENTS = "normalAttachments";
+    public static String KEY_web_server_home    = "web_server_home";
+    public static String KEY_outgoing_folder    = "outgoing_folder";
+    public static String KEY_upload_folder      = "upload_folder";
+    public static String KEY_normal_attachments = "normal_attachments";
+    public static String KEY_default_timezone   = "default_timezone";
 
     Properties properties = new Properties();
     private static AppProperties instance;

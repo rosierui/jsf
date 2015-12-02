@@ -49,6 +49,12 @@
                     <h:outputText value="#{user.lastName}" />
                 </p:column>
                 <p:column headerText="${label.loginId}">
+                    <h:outputText value="#{user.loginId}" />
+                </p:column>
+                <p:column headerText="${label.email}">
+                    <h:outputText value="#{user.email}" />
+                </p:column>
+                <p:column headerText="${label.action}">
                     <p:commandLink
                         id="viewfirstname"
                         ajax="true"

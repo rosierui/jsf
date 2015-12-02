@@ -26,7 +26,6 @@ public class InitServlet extends HttpServlet {
      */
     public InitServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -56,9 +55,9 @@ public class InitServlet extends HttpServlet {
                 System.out.println(e);
             }
 
-            LOG.info("InitServlet initialization succeeded");
+            LOG.info("mail.properties initialization succeeded");
         } catch (Throwable e) {
-            LOG.error("InitServlet initialization error: " + e);
+            LOG.error("mail.properties initialization error: " + e);
         }
 
         try {
@@ -71,9 +70,9 @@ public class InitServlet extends HttpServlet {
                 System.out.println(e);
             }
 
-            LOG.info("InitServlet initialization succeeded");
+            LOG.info("application.properties initialization succeeded");
         } catch (Throwable e) {
-            LOG.error("InitServlet initialization error: " + e);
+            LOG.error("application.properties initialization error: " + e);
         }
     }
 
