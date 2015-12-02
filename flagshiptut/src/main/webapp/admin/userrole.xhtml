@@ -12,34 +12,27 @@
         User Role Administration
     </ui:define>
     <ui:define name="body">
+        <h:panelGroup id="msgPanel">
+            <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
+        </h:panelGroup>
         <h:form id="jsfForm">
 
             <h:panelGrid columns="3" cellpadding="5" id="panel2">
-                <h:outputLabel for="menu2" value="Location:" />
-                <p:selectCheckboxMenu id="menu2" value="#{userroleView.selectedCities}" label="Cities"
-                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+                <h:outputLabel for="role" value="${label.role}:" />
+                <p:selectOneMenu id="role" value="#{userroleView.selectedCity}" style="width:125px">
                     <f:selectItems value="#{userroleView.cities}" />
-                </p:selectCheckboxMenu>
-                <p:commandButton value="Submit" update="display panel1 jsfForm" actionListener="#{userroleView.save}" />
-                <p:commandButton value="Submit 1 - Save2" update="display panel1 jsfForm" actionListener="#{userroleView.save2}" />
+                </p:selectOneMenu>
             </h:panelGrid>
 
             <!-- Since both buttons are Submit, only one works -->
             <h:panelGrid columns="3" cellpadding="5" id="panel1">
-                <h:outputLabel for="menu" value="Location:" />
-                <p:selectCheckboxMenu id="menu" value="#{userroleView.selectedCities}" label="Cities"
+                <h:outputLabel for="user" value="${label.user}:" />
+                <p:selectOneMenu id="user" value="#{userroleView.selectedCity}" label="Cities"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
                     <f:selectItems value="#{userroleView.cities}" />
-                </p:selectCheckboxMenu>
-                <p:commandLink value="Submit 2" update="display panel2" actionListener="#{userroleView.save}" />
-                <p:commandLink value="Submit 3 - Save2" update="display panel2" actionListener="#{userroleView.save2}" />
+                </p:selectOneMenu>
+                <p:commandLink value="${label.removeFromSelectedRole}" update=":msgPanel" actionListener="#{userroleView.save2}" />
             </h:panelGrid>
-
-            <p:outputPanel id="display" style="width:250px;padding-left:5px;margin-top:10px">
-                <p:dataList value="#{userroleView.selectedCities}" var="city" emptyMessage="No cities selected">
-                    #{city}
-                </p:dataList>
-            </p:outputPanel>
 
             <p:dataTable var="user" value="#{userroleView.users}">
                 <p:column headerText="${label.firstName}">
@@ -59,9 +52,9 @@
                         id="viewfirstname"
                         ajax="true"
                         action="#{userroleView.save2}"
-                        value="#{label.view}"
-                        title="#{label.view}"
-                        update="@([id$=panel1])"
+                        value="#{label.addToSelectedRole}"
+                        title="#{label.addToSelectedRole}"
+                        update="@([id$=panel1]) @([id$=msgPanel] @([id$=panel2]))"
                         rendered="true"
                         disabled="false">
                         <f:param name="editCycle" value="true"/>

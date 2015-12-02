@@ -43,8 +43,8 @@ public class UserroleView extends BaseView {
     private static final long serialVersionUID = 1L;
 
     private String[] selectedConsoles;
-    private String[] selectedCities;
-    private List<String> cities;
+    private String selectedCity;
+    private List<String> roles;
 
     private List<Car> cars;
     private List<User> users;
@@ -84,16 +84,16 @@ public class UserroleView extends BaseView {
 
     @PostConstruct
     public void init() {
-        cities = new ArrayList<String>();
-        cities.add("San Francisco");
-        cities.add("London");
-        cities.add("Paris");
-        cities.add("Istanbul");
-        cities.add("Berlin");
-        cities.add("Barcelona");
-        cities.add("Rome");
-        cities.add("Sao Paulo");
-        cities.add("Amsterdam");
+        roles = new ArrayList<String>();
+        roles.add("San Francisco");
+        roles.add("London");
+        roles.add("Paris");
+        roles.add("Istanbul");
+        roles.add("Berlin");
+        roles.add("Barcelona");
+        roles.add("Rome");
+        roles.add("Sao Paulo");
+        roles.add("Amsterdam");
 
         cars = service.createCars(10);
 
@@ -117,16 +117,16 @@ public class UserroleView extends BaseView {
         this.selectedConsoles = selectedConsoles;
     }
 
-    public String[] getSelectedCities() {
-        return selectedCities;
+    public String getSelectedCity() {
+        return selectedCity;
     }
 
-    public void setSelectedCities(String[] selectedCities) {
-        this.selectedCities = selectedCities;
+    public void setSelectedCity(String selectedCity) {
+        this.selectedCity = selectedCity;
     }
 
     public List<String> getCities() {
-        return cities;
+        return roles;
     }
 
     public void save() {
@@ -137,9 +137,9 @@ public class UserroleView extends BaseView {
 //            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid", "City is not selected."); 
         // save data to database
         StringBuffer sb = new StringBuffer();
-        for (String item : selectedCities) {
-            sb.append(item).append(", ");
-        }
+//        for (String item : selectedCity) {
+//            sb.append(item).append(", ");
+//        }
         String temp = sb.toString();
         msg = new FacesMessage("Selected", temp);
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -153,9 +153,9 @@ public class UserroleView extends BaseView {
 //            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid", "City is not selected."); 
         // save data to database
         StringBuffer sb = new StringBuffer();
-        for (String item : selectedCities) {
-            sb.append(item).append(", ");
-        }
+//        for (String item : selectedCity) {
+//            sb.append(item).append(", ");
+//        }
         String temp = sb.toString();
         msg = new FacesMessage("Selected", temp);
         FacesContext.getCurrentInstance().addMessage(null, msg);
