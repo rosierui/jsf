@@ -17,19 +17,20 @@
         </h:panelGroup>
         <h:form id="jsfForm">
 
-            <h:panelGrid columns="3" cellpadding="5" id="panel2">
+            <h:panelGrid columns="3" cellpadding="5" id="divRole">
                 <h:outputLabel for="role" value="${label.role}:" />
-                <p:selectOneMenu id="role" value="#{userroleView.selectedCity}" style="width:125px">
-                    <f:selectItems value="#{userroleView.cities}" />
+                <p:selectOneMenu id="role" value="#{userroleView.selectedRoleId}" style="width:200px">
+                    <f:selectItems value="#{userroleView.roles}" var="role" itemLabel="#{role.name}" itemValue="#{role.alias}" />
+                    <p:ajax event="change" update="divUser" partialSubmit="true" process="@this" listener="#{userroleView.changeRole}" />
                 </p:selectOneMenu>
             </h:panelGrid>
 
             <!-- Since both buttons are Submit, only one works -->
-            <h:panelGrid columns="3" cellpadding="5" id="panel1">
+            <h:panelGrid columns="3" cellpadding="5" id="divUser">
                 <h:outputLabel for="user" value="${label.user}:" />
-                <p:selectOneMenu id="user" value="#{userroleView.selectedCity}" label="Cities"
+                <p:selectOneMenu id="user" value="#{userroleView.selectedRoleId}" label="Cities"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                    <f:selectItems value="#{userroleView.cities}" />
+                    <f:selectItems value="#{userroleView.roles}" var="role" itemLabel="#{role.alias}" itemValue="#{role.name}" />
                 </p:selectOneMenu>
                 <p:commandLink value="${label.removeFromSelectedRole}" update=":msgPanel" actionListener="#{userroleView.save2}" />
             </h:panelGrid>

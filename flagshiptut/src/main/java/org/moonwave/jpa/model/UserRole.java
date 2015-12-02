@@ -11,65 +11,81 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="user_role")
-@NamedQuery(name="UserRole.findAll", query="SELECT u FROM UserRole u")
+
+@NamedQueries({
+    @NamedQuery(name="UserRole.findAll", query="SELECT u FROM UserRole u"),
+    @NamedQuery(name="UserRole.findByRole", query = "SELECT u FROM UserRole u WHERE u.roleId = :roleId")
+})
+
 public class UserRole implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	private int id;
+    @Id
+    private int id;
 
-	@Column(name="create_time")
-	private Timestamp createTime;
+    @Column(name="create_time")
+    private Timestamp createTime;
 
-	private String privileges;
+    private String privileges;
 
-	@Column(name="role_id")
-	private short roleId;
+    @Column(name="user_id")
+    private int userId;
 
-	@Column(name="update_time")
-	private Timestamp updateTime;
+    @Column(name="role_id")
+    private short roleId;
 
-	public UserRole() {
-	}
+    @Column(name="update_time")
+    private Timestamp updateTime;
 
-	public int getId() {
-		return this.id;
-	}
+    public UserRole() {
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return this.id;
+    }
 
-	public Timestamp getCreateTime() {
-		return this.createTime;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setCreateTime(Timestamp createTime) {
-		this.createTime = createTime;
-	}
+    public Timestamp getCreateTime() {
+        return this.createTime;
+    }
 
-	public String getPrivileges() {
-		return this.privileges;
-	}
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
 
-	public void setPrivileges(String privileges) {
-		this.privileges = privileges;
-	}
+    public String getPrivileges() {
+        return this.privileges;
+    }
 
-	public short getRoleId() {
-		return this.roleId;
-	}
+    public void setPrivileges(String privileges) {
+        this.privileges = privileges;
+    }
 
-	public void setRoleId(short roleId) {
-		this.roleId = roleId;
-	}
+    public int getUserId() {
+        return userId;
+    }
 
-	public Timestamp getUpdateTime() {
-		return this.updateTime;
-	}
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
-	public void setUpdateTime(Timestamp updateTime) {
-		this.updateTime = updateTime;
-	}
+    public short getRoleId() {
+        return this.roleId;
+    }
+
+    public void setRoleId(short roleId) {
+        this.roleId = roleId;
+    }
+
+    public Timestamp getUpdateTime() {
+        return this.updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
 
 }

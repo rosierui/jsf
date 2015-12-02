@@ -15,7 +15,6 @@
  */
 package org.moonwave.view.admin;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,14 +24,18 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import org.moonwave.domain.Car;
+import org.moonwave.jpa.bo.RoleBO;
 import org.moonwave.jpa.bo.UserBO;
+import org.moonwave.jpa.model.Role;
 import org.moonwave.jpa.model.User;
 import org.moonwave.service.CarService;
 import org.moonwave.view.BaseView;
 /**
- * checkboxView
+ * UserroleView
+ *
  * @author moonwave
  *
  */
@@ -42,9 +45,8 @@ public class UserroleView extends BaseView {
 
     private static final long serialVersionUID = 1L;
 
-    private String[] selectedConsoles;
-    private String selectedCity;
-    private List<String> roles;
+    private String selectedRoleId;
+    private List<Role> roles;
 
     private List<Car> cars;
     private List<User> users;
@@ -84,16 +86,16 @@ public class UserroleView extends BaseView {
 
     @PostConstruct
     public void init() {
-        roles = new ArrayList<String>();
-        roles.add("San Francisco");
-        roles.add("London");
-        roles.add("Paris");
-        roles.add("Istanbul");
-        roles.add("Berlin");
-        roles.add("Barcelona");
-        roles.add("Rome");
-        roles.add("Sao Paulo");
-        roles.add("Amsterdam");
+//        roles = new ArrayList<String>();
+//        roles.add("San Francisco");
+//        roles.add("London");
+//        roles.add("Paris");
+//        roles.add("Istanbul");
+//        roles.add("Berlin");
+//        roles.add("Barcelona");
+//        roles.add("Rome");
+//        roles.add("Sao Paulo");
+//        roles.add("Amsterdam");
 
         cars = service.createCars(10);
 
@@ -105,28 +107,32 @@ public class UserroleView extends BaseView {
                 && FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("setup").equals("true")) {
             boolean volumesSetup = true;
         }
+        // get a list of roles
+        roles = new RoleBO().getAllRoles();
         // get a list of users
         users = new UserBO().getAllUsers();
     }
 
-    public String[] getSelectedConsoles() {
-        return selectedConsoles;
+    public String getSelectedRoleId() {
+        return selectedRoleId;
     }
 
-    public void setSelectedConsoles(String[] selectedConsoles) {
-        this.selectedConsoles = selectedConsoles;
+    public void setSelectedRoleId(String selectedRoleId) {
+        this.selectedRoleId = selectedRoleId;
     }
 
-    public String getSelectedCity() {
-        return selectedCity;
-    }
-
-    public void setSelectedCity(String selectedCity) {
-        this.selectedCity = selectedCity;
-    }
-
-    public List<String> getCities() {
+	public List<Role> getRoles() {
         return roles;
+    }
+
+	/**
+	 * Handle role change event
+	 * Search userrole table by using role
+	 *
+	 * @param event
+	 */
+    public void changeRole(AjaxBehaviorEvent event) {
+    	Object obj = event.getSource();
     }
 
     public void save() {
