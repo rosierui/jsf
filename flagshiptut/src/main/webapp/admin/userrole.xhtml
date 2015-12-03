@@ -49,21 +49,20 @@
                     <h:outputText value="#{user.email}" />
                 </p:column>
                 <p:column headerText="${label.action}">
-                    <p:commandLink
-                        id="viewfirstname"
+                    <p:commandButton
+                        id="addUserToRole"
                         ajax="true"
-                        action="#{userroleView.save2}"
+                        action="#{userroleView.addUserToRole}"
                         value="#{label.addToSelectedRole}"
                         title="#{label.addToSelectedRole}"
-                        update="@([id$=panel1]) @([id$=msgPanel] @([id$=panel2]))"
+                        update="@([id$=divUser]) @([id$=msgPanel])"
                         rendered="true"
                         disabled="false">
                         <f:param name="editCycle" value="true"/>
                         <f:param name="faces-redirect" value="false"/>
 
-                        <f:setPropertyActionListener target="#{userroleView.role}" value="test" />
-                        <f:setPropertyActionListener target="#{userroleView.current}" value="#{user}" />
-                    </p:commandLink>
+                        <f:setPropertyActionListener target="#{userroleView.current}" value="#{user.id}" />
+                    </p:commandButton>
                     <h:link
                         id="setupfirstname"
                         outcome="/admin/newuser.xhtml?createadmin=true"

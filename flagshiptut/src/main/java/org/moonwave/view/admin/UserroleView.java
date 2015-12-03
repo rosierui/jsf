@@ -56,7 +56,7 @@ public class UserroleView extends BaseView {
 
     private List<Car> cars;
     private List<User> users;
-    private User current;
+    private String current; // current user id
     private String role;
 
     @ManagedProperty("#{carService}")
@@ -74,11 +74,11 @@ public class UserroleView extends BaseView {
         return users;
     }
 
-    public User getCurrent() {
+    public String getCurrent() {
         return current;
     }
 
-    public void setCurrent(User current) {
+    public void setCurrent(String current) {
         this.current = current;
     }
 
@@ -127,22 +127,7 @@ public class UserroleView extends BaseView {
      * @param event
      */
     public void changeRole(AjaxBehaviorEvent event) {
-        Object obj = event.getSource();
-        try {
-            List<UserRole> useroles = new UserRoleBO().findByRole(Integer.parseInt(selectedRoleId));
-            List<Integer> userIds = new ArrayList<>();
-            for (UserRole ur : useroles) {
-                userIds.add(ur.getUserId());
-            }
-            if (!userIds.isEmpty()) {
-                users = new UserBO().findInIds(userIds);
-            } else {
-                users = new ArrayList<>();
-            }
-        }
-        catch (Exception e) {
-            LOG.error(e.getMessage());
-        }
+        getUsersByRoleId(selectedRoleId);
     }
 
     public void save() {
@@ -161,20 +146,44 @@ public class UserroleView extends BaseView {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
-    public String save2() {
-        FacesMessage msg;
-//        if(city != null && country != null)
-            msg = new FacesMessage("Selected", "save() called");
-//        else
-//            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid", "City is not selected."); 
-        // save data to database
+    /**
+     * Handle adding user to selected role
+     * @return
+     */
+    public String addUserToRole() {
+    	UserRole userRole = new UserRole();
+    	userRole.setUserId(Integer.parseInt(current));
+    	userRole.setRoleId(Short.parseShort(selectedRoleId));
+    	userRole.setCreateTime(super.getSqlTimestamp());
+    	super.getBasebo().persist(userRole);
+    	
+    	getUsersByRoleId(selectedRoleId);
+    	
+    	FacesMessage msg;
+        msg = new FacesMessage("Selected", "save() called");
         StringBuffer sb = new StringBuffer();
-//        for (String item : selectedCity) {
-//            sb.append(item).append(", ");
-//        }
         String temp = sb.toString();
         msg = new FacesMessage("Selected", temp);
         FacesContext.getCurrentInstance().addMessage(null, msg);
         return "";
+    }
+
+    private void getUsersByRoleId(String selectedRoleId) {
+        try {
+            List<UserRole> useroles = new UserRoleBO().findByRole(Integer.parseInt(selectedRoleId));
+            List<Integer> userIds = new ArrayList<>();
+            for (UserRole ur : useroles) {
+                userIds.add(ur.getUserId());
+            }
+            if (!userIds.isEmpty()) {
+                users = new UserBO().findInIds(userIds);
+            } else {
+                users = new ArrayList<>();
+            }
+        }
+        catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
+    	
     }
 }
