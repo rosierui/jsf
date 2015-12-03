@@ -1,6 +1,7 @@
 
 package org.moonwave.service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,9 +12,11 @@ import org.moonwave.domain.Car;
 
 @ManagedBean(name = "carService")
 @ApplicationScoped
-public class CarService {
+public class CarService implements Serializable {
     
-    private final static String[] colors;
+	private static final long serialVersionUID = 1L;
+
+	private final static String[] colors;
 	
 	private final static String[] brands;
     

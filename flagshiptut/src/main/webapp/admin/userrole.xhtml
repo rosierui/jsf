@@ -28,11 +28,12 @@
             <!-- Since both buttons are Submit, only one works -->
             <h:panelGrid columns="3" cellpadding="5" id="divUser">
                 <h:outputLabel for="user" value="${label.user}:" />
-                <p:selectOneMenu id="user" value="#{userroleView.selectedRoleId}"
+                <p:selectOneMenu id="user" value="#{userroleView.selectedUserId}"
                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
                     <f:selectItems value="#{userroleView.users}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
+                    <p:ajax event="change" partialSubmit="true" process="@this" />
                 </p:selectOneMenu>
-                <p:commandLink value="${label.removeFromSelectedRole}" update=":msgPanel" actionListener="#{userroleView.save2}" />
+                <p:commandButton value="${label.removeFromSelectedRole}" update=":msgPanel" actionListener="#{userroleView.removeUserFromRole}" />
             </h:panelGrid>
 
             <p:dataTable var="user" value="#{userroleView.users}">
@@ -61,20 +62,8 @@
                         <f:param name="editCycle" value="true"/>
                         <f:param name="faces-redirect" value="false"/>
 
-                        <f:setPropertyActionListener target="#{userroleView.current}" value="#{user.id}" />
+                        <f:setPropertyActionListener target="#{userroleView.selectedUserId}" value="#{user.id}" />
                     </p:commandButton>
-                    <h:link
-                        id="setupfirstname"
-                        outcome="/admin/newuser.xhtml?createadmin=true"
-                        target="_parent"
-                        value="#{label.edit}"
-                        title="#{label.edit}"
-                        includeViewParams="true"
-                        rendered="true"
-                        disabled="false">
-                        <f:param name="editCycle" value="true"/>
-                        <f:param name="faces-redirect" value="false"/>
-                    </h:link>
                 </p:column>
             </p:dataTable>
 

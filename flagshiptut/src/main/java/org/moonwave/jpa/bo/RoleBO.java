@@ -14,6 +14,8 @@ import org.moonwave.jpa.model.Role;
  */
 public class RoleBO extends BaseBO {
 
+    private static final long serialVersionUID = 1L;
+
     public List<Role> getAllRoles() {
         Query query = super.getEntityManager().createNamedQuery("Role.findAll", Role.class);
         @SuppressWarnings("unchecked")

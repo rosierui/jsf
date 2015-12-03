@@ -14,6 +14,8 @@ import org.moonwave.jpa.model.User;
  */
 public class UserBO extends BaseBO {
 
+    private static final long serialVersionUID = 1L;
+
     @SuppressWarnings("unchecked")
     public List<User> getAllUsers() {
         Query query = super.getEntityManager().createNamedQuery("User.findAll", User.class);
@@ -32,8 +34,8 @@ public class UserBO extends BaseBO {
 
     @SuppressWarnings("unchecked")
     public List<User> findInIds(List<Integer> userIds) {
-    	String q1 = "SELECT u FROM User u WHERE u.id in (";
-    	String q2 = ")";
+        String q1 = "SELECT u FROM User u WHERE u.id in (";
+        String q2 = ")";
         StringBuilder sb = new StringBuilder();
         sb.append(q1);
         for (int i = 0; i < userIds.size(); i++) {

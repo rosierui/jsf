@@ -1,5 +1,6 @@
 package org.moonwave.jpa.bo;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.EntityManager;
@@ -12,7 +13,9 @@ import javax.persistence.Persistence;
  * @author moonwave
  *
  */
-public class BaseBO {
+public class BaseBO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     EntityManager em;
 
