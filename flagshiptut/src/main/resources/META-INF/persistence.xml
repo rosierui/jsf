@@ -5,14 +5,14 @@
      -->
     <persistence-unit name="jpa-mysql" transaction-type="RESOURCE_LOCAL">
 
-    	<class>org.moonwave.jpa.model.Role</class>
-    	<class>org.moonwave.jpa.model.User</class>
-    	<class>org.moonwave.jpa.model.UserRole</class>
-    	<class>org.moonwave.jpa.model.Semester</class>
-    	<class>org.moonwave.jpa.model.SemesterNoSchoolDay</class>
-    	<class>org.moonwave.jpa.model.Week</class>
-    	<class>org.moonwave.jpa.model.SemesterWeek</class>
-    	<class>org.moonwave.jpa.model.TutorGroup</class>
+        <class>org.moonwave.jpa.model.Role</class>
+        <class>org.moonwave.jpa.model.User</class>
+        <class>org.moonwave.jpa.model.UserRole</class>
+        <class>org.moonwave.jpa.model.Semester</class>
+        <class>org.moonwave.jpa.model.SemesterNoSchoolDay</class>
+        <class>org.moonwave.jpa.model.Week</class>
+        <class>org.moonwave.jpa.model.SemesterWeek</class>
+        <class>org.moonwave.jpa.model.TutorGroup</class>
         <class>org.moonwave.jpa.model.UserTutorGroup</class>
         <class>org.moonwave.jpa.model.Announcement</class>
         <class>org.moonwave.jpa.model.GroupPost</class>
@@ -27,10 +27,13 @@
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
 
         <properties>
-             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/flagshiptut"/>
-             <property name="javax.persistence.jdbc.user" value="flagshiptut"/>
-             <property name="javax.persistence.jdbc.password" value="QjzwFd!5"/>
-             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/flagshiptut"/>
+            <property name="javax.persistence.jdbc.user" value="flagshiptut"/>
+            <property name="javax.persistence.jdbc.password" value="QjzwFd!5"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+
+            <property name="eclipselink.query-results-cache" value="false"/>
+            <property name="eclipselink.cache.shared.default" value="false"/>
 
             <!-- EclipseLink should create the database schema automatically -->
             <!--

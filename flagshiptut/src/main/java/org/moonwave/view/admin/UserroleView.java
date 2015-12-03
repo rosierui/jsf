@@ -15,6 +15,7 @@
  */
 package org.moonwave.view.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,10 +30,14 @@ import javax.faces.event.AjaxBehaviorEvent;
 import org.moonwave.domain.Car;
 import org.moonwave.jpa.bo.RoleBO;
 import org.moonwave.jpa.bo.UserBO;
+import org.moonwave.jpa.bo.UserRoleBO;
 import org.moonwave.jpa.model.Role;
 import org.moonwave.jpa.model.User;
+import org.moonwave.jpa.model.UserRole;
 import org.moonwave.service.CarService;
 import org.moonwave.view.BaseView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * UserroleView
  *
@@ -44,6 +49,7 @@ import org.moonwave.view.BaseView;
 public class UserroleView extends BaseView {
 
     private static final long serialVersionUID = 1L;
+    static final Logger LOG = LoggerFactory.getLogger(NewuserView.class);
 
     private String selectedRoleId;
     private List<Role> roles;
@@ -86,17 +92,6 @@ public class UserroleView extends BaseView {
 
     @PostConstruct
     public void init() {
-//        roles = new ArrayList<String>();
-//        roles.add("San Francisco");
-//        roles.add("London");
-//        roles.add("Paris");
-//        roles.add("Istanbul");
-//        roles.add("Berlin");
-//        roles.add("Barcelona");
-//        roles.add("Rome");
-//        roles.add("Sao Paulo");
-//        roles.add("Amsterdam");
-
         cars = service.createCars(10);
 
         Map<String, String> rqm = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -121,18 +116,33 @@ public class UserroleView extends BaseView {
         this.selectedRoleId = selectedRoleId;
     }
 
-	public List<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-	/**
-	 * Handle role change event
-	 * Search userrole table by using role
-	 *
-	 * @param event
-	 */
+    /**
+     * Handle role change event
+     * Search userrole table by using role
+     *
+     * @param event
+     */
     public void changeRole(AjaxBehaviorEvent event) {
-    	Object obj = event.getSource();
+        Object obj = event.getSource();
+        try {
+            List<UserRole> useroles = new UserRoleBO().findByRole(Integer.parseInt(selectedRoleId));
+            List<Integer> userIds = new ArrayList<>();
+            for (UserRole ur : useroles) {
+                userIds.add(ur.getUserId());
+            }
+            if (!userIds.isEmpty()) {
+                users = new UserBO().findInIds(userIds);
+            } else {
+                users = new ArrayList<>();
+            }
+        }
+        catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
     }
 
     public void save() {

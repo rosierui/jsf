@@ -13,202 +13,218 @@ import java.util.List;
  */
 @Entity
 @Table(name="user")
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+
+@NamedQueries({
+    @NamedQuery(name="User.findAll",   query="SELECT u FROM User u"),
+    @NamedQuery(name="User.findById",  query="SELECT u FROM User u WHERE u.id = :id"),
+    @NamedQuery(name="User.findInIds", query="SELECT u FROM User u WHERE u.id in (:ids)")
+})
+
 public class User implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	private int id;
+    @Id
+    private int id;
 
-	private Boolean active;
+    private Boolean active;
 
-	private String answer;
+    private String answer;
 
-	@Column(name="create_time")
-	private Timestamp createTime;
+    @Column(name="create_time")
+    private Timestamp createTime;
 
-	private String email;
+    private String email;
 
-	@Column(name="first_name")
-	private String firstName;
+    @Column(name="first_name")
+    private String firstName;
 
-	private String hint;
+    private String hint;
 
-	private String timezone;
+    private String timezone;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="last_attempt_ts")
-	private Date lastAttemptTs;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="last_attempt_ts")
+    private Date lastAttemptTs;
 
-	@Column(name="last_login_ip")
-	private String lastLoginIp;
+    @Column(name="last_login_ip")
+    private String lastLoginIp;
 
-	@Column(name="last_name")
-	private String lastName;
+    @Column(name="last_name")
+    private String lastName;
 
-	@Column(name="login_attempt")
-	private short loginAttempt;
+    @Column(name="login_attempt")
+    private short loginAttempt;
 
-	@Column(name="login_id")
-	private String loginId;
+    @Column(name="login_id")
+    private String loginId;
 
-	private String password;
+    private String password;
 
-	private String phone;
+    private String phone;
 
-	@Column(name="update_time")
-	private Timestamp updateTime;
+    @Column(name="update_time")
+    private Timestamp updateTime;
 
-	//bi-directional many-to-many association to Role
-	@ManyToMany
-	@JoinTable(
-		name="user_role"
-		, joinColumns={
-			@JoinColumn(name="user_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="role_id")
-			}
-		)
-	private List<Role> roles;
+    //bi-directional many-to-many association to Role
+    @ManyToMany
+    @JoinTable(
+        name="user_role"
+        , joinColumns={
+            @JoinColumn(name="user_id")
+            }
+        , inverseJoinColumns={
+            @JoinColumn(name="role_id")
+            }
+        )
+    private List<Role> roles;
 
-	public User() {
-	}
+    public User() {
+    }
 
-	public int getId() {
-		return this.id;
-	}
+    public int getId() {
+        return this.id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public Boolean getActive() {
-		return this.active;
-	}
+    public Boolean getActive() {
+        return this.active;
+    }
 
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
-	public String getAnswer() {
-		return this.answer;
-	}
+    public String getAnswer() {
+        return this.answer;
+    }
 
-	public void setAnswer(String answer) {
-		this.answer = answer;
-	}
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 
-	public Timestamp getCreateTime() {
-		return this.createTime;
-	}
+    public Timestamp getCreateTime() {
+        return this.createTime;
+    }
 
-	public void setCreateTime(Timestamp createTime) {
-		this.createTime = createTime;
-	}
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
 
-	public String getEmail() {
-		return this.email;
-	}
+    public String getEmail() {
+        return this.email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getFirstName() {
-		return this.firstName;
-	}
+    public String getFirstName() {
+        return this.firstName;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public String getHint() {
-		return this.hint;
-	}
+    public String getHint() {
+        return this.hint;
+    }
 
-	public void setHint(String hint) {
-		this.hint = hint;
-	}
+    public void setHint(String hint) {
+        this.hint = hint;
+    }
 
-	public String getTimezone() {
-		return timezone;
-	}
+    public String getTimezone() {
+        return timezone;
+    }
 
-	public void setTimezone(String timezone) {
-		this.timezone = timezone;
-	}
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
+    }
 
-	public Date getLastAttemptTs() {
-		return this.lastAttemptTs;
-	}
+    public Date getLastAttemptTs() {
+        return this.lastAttemptTs;
+    }
 
-	public void setLastAttemptTs(Date lastAttemptTs) {
-		this.lastAttemptTs = lastAttemptTs;
-	}
+    public void setLastAttemptTs(Date lastAttemptTs) {
+        this.lastAttemptTs = lastAttemptTs;
+    }
 
-	public String getLastLoginIp() {
-		return this.lastLoginIp;
-	}
+    public String getLastLoginIp() {
+        return this.lastLoginIp;
+    }
 
-	public void setLastLoginIp(String lastLoginIp) {
-		this.lastLoginIp = lastLoginIp;
-	}
+    public void setLastLoginIp(String lastLoginIp) {
+        this.lastLoginIp = lastLoginIp;
+    }
 
-	public String getLastName() {
-		return this.lastName;
-	}
+    public String getLastName() {
+        return this.lastName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public short getLoginAttempt() {
-		return this.loginAttempt;
-	}
+    public short getLoginAttempt() {
+        return this.loginAttempt;
+    }
 
-	public void setLoginAttempt(short loginAttempt) {
-		this.loginAttempt = loginAttempt;
-	}
+    public void setLoginAttempt(short loginAttempt) {
+        this.loginAttempt = loginAttempt;
+    }
 
-	public String getLoginId() {
-		return this.loginId;
-	}
+    public String getLoginId() {
+        return this.loginId;
+    }
 
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
-	}
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
 
-	public String getPassword() {
-		return this.password;
-	}
+    public String getPassword() {
+        return this.password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getPhone() {
-		return this.phone;
-	}
+    public String getPhone() {
+        return this.phone;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public Timestamp getUpdateTime() {
-		return this.updateTime;
-	}
+    public Timestamp getUpdateTime() {
+        return this.updateTime;
+    }
 
-	public void setUpdateTime(Timestamp updateTime) {
-		this.updateTime = updateTime;
-	}
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
 
-	public List<Role> getRoles() {
-		return this.roles;
-	}
+    public List<Role> getRoles() {
+        return this.roles;
+    }
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("id= ").append(id);
+        sb.append(",firstname= ").append(firstName);
+        sb.append(",lastname= ").append(lastName);
+        sb.append(",loginid= ").append(loginId);
+        sb.append(",timezone= ").append(timezone);
+        return sb.toString();
+    }
 }

@@ -1,15 +1,18 @@
 package org.moonwave.jpa.query;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.moonwave.jpa.bo.UserBO;
 import org.moonwave.jpa.model.Role;
 import org.moonwave.jpa.model.Semester;
 import org.moonwave.jpa.model.SemesterWeek;
 import org.moonwave.jpa.model.TutorGroup;
+import org.moonwave.jpa.model.User;
 
 public class QueryTest {
 
@@ -17,6 +20,28 @@ public class QueryTest {
    
       EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "jpa-mysql" );
       EntityManager em = emfactory.createEntityManager();
+      System.out.println("");
+
+      User user = new UserBO().findById(3);
+      System.out.println(user);
+      System.out.println("");
+
+      List<Integer> userIds = new ArrayList<>();
+      userIds.add(3);
+      userIds.add(4);
+      userIds.add(5);
+      List<User> users = new UserBO().findInIds(userIds);
+      for (User u : users) {
+          System.out.println(u);
+      }
+      System.out.println("");
+
+      userIds = new ArrayList<>();
+      userIds.add(5);
+      users = new UserBO().findInIds(userIds);
+      for (User u : users) {
+          System.out.println(u);
+      }
       System.out.println("");
 
       // TutorGroup

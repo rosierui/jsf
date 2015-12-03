@@ -23,7 +23,7 @@ public class UserRoleBO extends BaseBO {
     }
 
     @SuppressWarnings("unchecked")
-    public List<UserRole> findByRole(int roleId) {
+    public List<UserRole> findByRole(Integer roleId) {
         Query query = super.getEntityManager().createNamedQuery("UserRole.findByRole", UserRole.class);
         query.setParameter("roleId", roleId);
         List<UserRole> list = query.getResultList();
