@@ -78,6 +78,19 @@ public class User implements Serializable {
         )
     private List<Role> roles;
 
+    //bi-directional many-to-many association to Role
+    @ManyToMany
+    @JoinTable(
+        name="user_tutor_group"
+        , joinColumns={
+            @JoinColumn(name="user_id")
+            }
+        , inverseJoinColumns={
+            @JoinColumn(name="tutor_group_id")
+            }
+        )
+    private List<Role> tutorGroups;
+
     public User() {
     }
 

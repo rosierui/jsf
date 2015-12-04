@@ -1,6 +1,8 @@
 package org.moonwave.jpa.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -22,6 +24,10 @@ public class TutorGroup implements Serializable {
 	private String name;
 
 	private short ordinal;
+
+	//bi-directional many-to-many association to User
+	@ManyToMany(mappedBy="tutorGroups")
+	private List<User> users;
 
 	public TutorGroup() {
 	}
