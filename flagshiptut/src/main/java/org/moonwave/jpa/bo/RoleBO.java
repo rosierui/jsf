@@ -23,4 +23,12 @@ public class RoleBO extends BaseBO {
         super.release();
         return list;
     }
+
+    public Role findById(Short roleId) {
+        Query query = super.getEntityManager().createNamedQuery("Role.findById", Role.class);
+        query.setParameter("id", roleId);
+        Role list = (Role) query.getSingleResult();
+        super.release();
+        return list;
+    }
 }

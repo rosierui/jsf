@@ -69,4 +69,12 @@ public class TutorGroup implements Serializable {
         this.ordinal = ordinal;
     }
 
+    public List<User> getUsers() {
+        return this.users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
 }

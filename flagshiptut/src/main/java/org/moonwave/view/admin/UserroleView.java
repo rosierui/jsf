@@ -1,8 +1,5 @@
 package org.moonwave.view.admin;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -160,29 +157,8 @@ public class UserroleView extends BaseView {
      */
     private void getUsersByRoleId(String selectedRoleId) {
         try {
-            List<UserRole> useroles = new UserRoleBO().findByRole(Integer.parseInt(selectedRoleId));
-            List<Integer> userIds = new ArrayList<>();
-            for (UserRole ur : useroles) {
-                userIds.add(ur.getUserId());
-            }
-            if (!userIds.isEmpty()) {
-                usersInRole = new UserBO().findInIds(userIds);
-            } else {
-                usersInRole = new ArrayList<>();
-            }
-            // sort by name
-            if (usersInRole.size() > 1) {
-                Collections.sort(usersInRole, new Comparator<User>() {
-                    @Override
-                    public int compare(User o1, User o2) {
-                        int ret = o1.getFirstName().toLowerCase().compareTo(o2.getFirstName().toLowerCase());
-                        if (ret == 0) {
-                            ret = o1.getLastName().toLowerCase().compareTo(o2.getLastName().toLowerCase());
-                        }
-                        return ret;
-                    }
-                });
-            }
+            Role role = new RoleBO().findById(Short.parseShort(selectedRoleId));
+            usersInRole = role.getUsers();
         } catch (Exception e) {
             LOG.error(e.getMessage());
         }

@@ -2,6 +2,7 @@ package org.moonwave.jpa.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 import java.sql.Timestamp;
 import java.util.List;
@@ -78,7 +79,7 @@ public class User implements Serializable {
         )
     private List<Role> roles;
 
-    //bi-directional many-to-many association to Role
+    //bi-directional many-to-many association to TutorGroup
     @ManyToMany
     @JoinTable(
         name="user_tutor_group"
@@ -89,7 +90,7 @@ public class User implements Serializable {
             @JoinColumn(name="tutor_group_id")
             }
         )
-    private List<Role> tutorGroups;
+    private List<TutorGroup> tutorGroups;
 
     public User() {
     }
@@ -228,6 +229,14 @@ public class User implements Serializable {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<TutorGroup> getTutorGroups() {
+        return this.tutorGroups;
+    }
+
+    public void setTutorGroups(List<TutorGroup> tutorGroups) {
+        this.tutorGroups = tutorGroups;
     }
 
     @Override
