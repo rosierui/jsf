@@ -17,7 +17,7 @@ public class BaseBO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    EntityManager em;
+    transient EntityManager em;
 
     public EntityManager getEntityManager() {
         if (em == null) {
@@ -71,9 +71,7 @@ public class BaseBO implements Serializable {
      */
     public <T> T merge(T entity) {
         em = getEntityManager();
-        em.getTransaction().begin();
         entity = em.merge(entity);
-        em.getTransaction().commit();
         return entity;
     }
 
@@ -90,7 +88,8 @@ public class BaseBO implements Serializable {
     public void remove(Object entity) {
         em = getEntityManager();
         em.getTransaction().begin();
-        em.remove(entity);
+        Object entityToRemove = merge(entity);
+        em.remove(entityToRemove);
         em.getTransaction().commit();
     }
 

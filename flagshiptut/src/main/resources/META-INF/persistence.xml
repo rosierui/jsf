@@ -34,6 +34,7 @@
 
             <property name="eclipselink.query-results-cache" value="false"/>
             <property name="eclipselink.cache.shared.default" value="false"/>
+            <property name="eclipselink.allow-zero-id" value="true"/>
 
             <!-- EclipseLink should create the database schema automatically -->
             <!--

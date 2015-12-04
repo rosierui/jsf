@@ -14,7 +14,8 @@ import java.sql.Timestamp;
 
 @NamedQueries({
     @NamedQuery(name="UserRole.findAll", query="SELECT u FROM UserRole u"),
-    @NamedQuery(name="UserRole.findByRole", query = "SELECT u FROM UserRole u WHERE u.roleId = :roleId")
+    @NamedQuery(name="UserRole.findByRole", query = "SELECT u FROM UserRole u WHERE u.roleId = :roleId"),
+    @NamedQuery(name="UserRole.findByRoleUser", query = "SELECT u FROM UserRole u WHERE u.roleId = :roleId AND u.userId = :userId")
 })
 
 public class UserRole implements Serializable {

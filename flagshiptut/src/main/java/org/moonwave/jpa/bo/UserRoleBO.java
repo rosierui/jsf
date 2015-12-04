@@ -32,4 +32,17 @@ public class UserRoleBO extends BaseBO {
         super.release();
         return list;
     }
+
+    public UserRole findByRoleUser(Short roleId, Integer userId) {
+        Query query = super.getEntityManager().createNamedQuery("UserRole.findByRoleUser", UserRole.class);
+        query.setParameter("roleId", roleId);
+        query.setParameter("userId", userId);
+        UserRole userrole = null;
+        try {
+            userrole = (UserRole) query.getSingleResult();
+        } catch (javax.persistence.NoResultException e) {
+        }
+        super.release();
+        return userrole;
+    }
 }

@@ -1,6 +1,8 @@
 package org.moonwave.view.admin;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +40,28 @@ public class UserroleView extends BaseView {
 
     private String selectedUserId;
     private List<User> users;
+    private List<User> usersInRole;
+
+    @PostConstruct
+    public void init() {
+
+        Map<String, String> rqm = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        StringBuilder sb = new StringBuilder();
+        sb.append("&projectId=").append(rqm.get("projectId"));
+
+        if (FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("setup") != null
+                && FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("setup").equals("true")) {
+            boolean setup = true;
+        }
+        // get a list of roles
+        roles = new RoleBO().getAllRoles();
+        // get a list of all users
+        users = new UserBO().getAllUsers();
+        // get a list of users for the first role
+        if (!roles.isEmpty()) {
+            getUsersByRoleId(String.valueOf(roles.get(0).getId()));
+        }
+    }
 
     public List<User> getUsers() {
         return users;
@@ -51,23 +75,6 @@ public class UserroleView extends BaseView {
         this.selectedUserId = selectedUserId;
     }
 
-    @PostConstruct
-    public void init() {
-
-        Map<String, String> rqm = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        StringBuilder sb = new StringBuilder();
-        sb.append("&projectId=").append(rqm.get("projectId"));
-
-        if (FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("setup") != null
-                && FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("setup").equals("true")) {
-            boolean volumesSetup = true;
-        }
-        // get a list of roles
-        roles = new RoleBO().getAllRoles();
-        // get a list of users
-        users = new UserBO().getAllUsers();
-    }
-
     public String getSelectedRoleId() {
         return selectedRoleId;
     }
@@ -78,6 +85,10 @@ public class UserroleView extends BaseView {
 
     public List<Role> getRoles() {
         return roles;
+    }
+
+    public List<User> getUsersInRole() {
+        return usersInRole;
     }
 
     /**
@@ -98,13 +109,10 @@ public class UserroleView extends BaseView {
      */
     public void removeUserFromRole() {
         try {
-            // TODO - check duplicates in the same role
-        	selectedUserId = null;
-            UserRole userRole = new UserRole();
-            userRole.setUserId(Integer.parseInt(selectedUserId));
-            userRole.setRoleId(Short.parseShort(selectedRoleId));
-            userRole.setCreateTime(super.getSqlTimestamp());
-            super.getBasebo().persist(userRole);
+            UserRole userRole = new UserRoleBO().findByRoleUser(Short.parseShort(selectedRoleId), Integer.parseInt(selectedUserId));
+            if (userRole != null) {
+                super.getBasebo().remove(userRole);
+            }
 
             getUsersByRoleId(selectedRoleId);
         } catch (Exception e) {
@@ -122,8 +130,13 @@ public class UserroleView extends BaseView {
     public String addUserToRole() {
         try {
             // TODO - check duplicates in the same role
-        	selectedUserId = null;
-            UserRole userRole = new UserRole();
+            UserRole userRole = new UserRoleBO().findByRoleUser(Short.parseShort(selectedRoleId), Integer.parseInt(selectedUserId));
+            if (userRole != null) {
+                super.info("User is already in selected role");
+                return null;
+            }
+
+            userRole = new UserRole();
             userRole.setUserId(Integer.parseInt(selectedUserId));
             userRole.setRoleId(Short.parseShort(selectedRoleId));
             userRole.setCreateTime(super.getSqlTimestamp());
@@ -152,9 +165,22 @@ public class UserroleView extends BaseView {
                 userIds.add(ur.getUserId());
             }
             if (!userIds.isEmpty()) {
-                users = new UserBO().findInIds(userIds);
+                usersInRole = new UserBO().findInIds(userIds);
             } else {
-                users = new ArrayList<>();
+                usersInRole = new ArrayList<>();
+            }
+            // sort by name
+            if (usersInRole.size() > 1) {
+                Collections.sort(usersInRole, new Comparator<User>() {
+                    @Override
+                    public int compare(User o1, User o2) {
+                        int ret = o1.getFirstName().toLowerCase().compareTo(o2.getFirstName().toLowerCase());
+                        if (ret == 0) {
+                            ret = o1.getLastName().toLowerCase().compareTo(o2.getLastName().toLowerCase());
+                        }
+                        return ret;
+                    }
+                });
             }
         } catch (Exception e) {
             LOG.error(e.getMessage());
