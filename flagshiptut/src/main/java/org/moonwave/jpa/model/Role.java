@@ -26,15 +26,9 @@ public class Role implements Serializable {
 
     private String alias;
 
-    @Column(name="create_time")
-    private Timestamp createTime;
-
     private String name;
 
     private String privileges;
-
-    @Column(name="update_time")
-    private Timestamp updateTime;
 
     //bi-directional many-to-many association to User
     @ManyToMany(mappedBy="roles")
@@ -59,14 +53,6 @@ public class Role implements Serializable {
         this.alias = alias;
     }
 
-    public Timestamp getCreateTime() {
-        return this.createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
     public String getName() {
         return this.name;
     }
@@ -83,14 +69,6 @@ public class Role implements Serializable {
         this.privileges = privileges;
     }
 
-    public Timestamp getUpdateTime() {
-        return this.updateTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
-
     public List<User> getUsers() {
         return this.users;
     }
@@ -99,4 +77,12 @@ public class Role implements Serializable {
         this.users = users;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("id= ").append(id);
+        sb.append(",alias= ").append(alias);
+        sb.append(",name= ").append(name);
+        return sb.toString();
+    }
 }

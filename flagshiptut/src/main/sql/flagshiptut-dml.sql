@@ -5,11 +5,11 @@
 -- BIGINT           8 bytes     -9223372036854775808 ~ 9223372036854775807, 0 ~ 18446744073709551615
 
 START TRANSACTION;
-INSERT INTO role (alias, name, create_time) values ('student', 'Student', CURRENT_TIMESTAMP);
-INSERT INTO role (alias, name, create_time) values ('tutor', 'Tutor', CURRENT_TIMESTAMP);
-INSERT INTO role (alias, name, create_time) values ('teacher', 'Teacher', CURRENT_TIMESTAMP);
-INSERT INTO role (alias, name, create_time) values ('supervisor', 'Supervisor', CURRENT_TIMESTAMP);
-INSERT INTO role (alias, name, create_time) values ('admin', 'Administrator', CURRENT_TIMESTAMP);
+INSERT INTO role (alias, name) values ('student', 'Student');
+INSERT INTO role (alias, name) values ('tutor', 'Tutor');
+INSERT INTO role (alias, name) values ('teacher', 'Teacher');
+INSERT INTO role (alias, name) values ('supervisor', 'Supervisor');
+INSERT INTO role (alias, name) values ('admin', 'Administrator');
 COMMIT;
 
 -- https://students.asu.edu/academic-calendar#spring16

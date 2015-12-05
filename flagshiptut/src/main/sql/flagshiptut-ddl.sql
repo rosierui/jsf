@@ -62,8 +62,6 @@ CREATE TABLE role (
     alias                   VARCHAR(15) NOT NULL,
     name                    VARCHAR(50) NOT NULL,
     privileges              VARCHAR(2000), -- object permissions in xml
-    update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP,
     UNIQUE (alias)
 );
 
@@ -78,7 +76,8 @@ CREATE TABLE user (
     password                VARCHAR(80) NOT NULL,
     email                   VARCHAR(50) NOT NULL,
     phone                   VARCHAR(20),
-    active                  BOOLEAN DEFAULT TRUE, -- true: active, false: inactive; control individual user. If account is inactive, this user is inactive even its own active flag = true    eligible          BOOLEAN DEFAULT FALSE, -- true: eligible for register courses; false: no eligible for registration
+    active                  BOOLEAN DEFAULT TRUE, -- true: active, false: inactive; control individual user
+    generic_user            BOOLEAN DEFAULT TRUE, -- true: generic user, false: not participate normal activities 
     hint                    VARCHAR(50),
     answer                  VARCHAR(50),
     timezone                VARCHAR(50) DEFAULT 'America/Phoenix',
@@ -102,7 +101,6 @@ CREATE TABLE user_role (
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id                 INTEGER NOT NULL REFERENCES user(id),
     role_id                 SMALLINT REFERENCES role(id),
-    privileges              VARCHAR(2000), -- object permissions in xml
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP,
     UNIQUE (user_id, role_id)

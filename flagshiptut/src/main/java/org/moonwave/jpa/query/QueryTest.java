@@ -22,7 +22,11 @@ public class QueryTest {
       EntityManager em = emfactory.createEntityManager();
       System.out.println("");
 
-      User user = new UserBO().findById(3);
+      User user = new UserBO().findByLoginId("jliu");
+      System.out.println(user);
+      System.out.println("");
+
+      user = new UserBO().findById(3);
       System.out.println(user);
       System.out.println("");
 

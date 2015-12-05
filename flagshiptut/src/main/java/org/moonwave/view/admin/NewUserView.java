@@ -9,6 +9,7 @@ import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
+import org.moonwave.jpa.bo.UserBO;
 import org.moonwave.jpa.model.User;
 import org.moonwave.util.SHAUtil;
 import org.moonwave.view.BaseView;
@@ -22,9 +23,9 @@ import org.slf4j.LoggerFactory;
  *
  */
 @ManagedBean
-public class NewuserView extends BaseView {
+public class NewUserView extends BaseView {
 
-	static final Logger LOG = LoggerFactory.getLogger(NewuserView.class);
+    static final Logger LOG = LoggerFactory.getLogger(NewUserView.class);
 
     User user;
     String password2;
@@ -74,17 +75,44 @@ public class NewuserView extends BaseView {
             super.error("Password not equal");
             return "";
         }
-
+        if (user.getPassword().length() < 4) {
+            super.error("Password must be at least 4 characters long");
+            return "";
+        }
+        if (user.getLoginId().length() < 4) {
+            super.error("Login id must be at least 4 characters long");
+            return "";
+        }
+        if (nullOrEmpty(user.getFirstName()) || nullOrEmpty(user.getLastName()) || nullOrEmpty(user.getEmail())) {
+            super.error("First name, last name or email is empty");
+            return "";
+        }
+        if ((new UserBO().findByLoginId(user.getLoginId())) != null) {
+            super.error("Login id already exists");
+            return "";
+        }
+        if ((new UserBO().findByEmail(user.getEmail())) != null) {
+            super.error("Email already exists");
+            return "";
+        }
         try {
             user.setPassword(SHAUtil.encryptPassword(user.getPassword()));
             user.setCreateTime(super.getSqlTimestamp());
+            user.setGenericUser(true);
             super.getBasebo().persist(user);
             super.info("New record was succesfully created");
             LOG.info("New record was succesfully created");
+
+            user = new User();
+            this.password2 = null;
         } catch (Exception e) {
             LOG.error(e.getLocalizedMessage());
             super.error("An error occurred while saving data");
         }
         return "";
+    }
+
+    private boolean nullOrEmpty(String str) {
+        return (str == null) || (str.isEmpty());
     }
 }

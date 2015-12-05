@@ -20,42 +20,42 @@
         <h:form>
             <h:panelGrid columns="2" cellpadding="5" id="panel">
                 <h:outputLabel value="Firstname:" />
-                <p:inputText value="#{newuserView.user.firstName}" />
+                <p:inputText value="#{newUserView.user.firstName}" />
 
                 <h:outputLabel value="Lastname:" />
-                <p:inputText value="#{newuserView.user.lastName}" />
+                <p:inputText value="#{newUserView.user.lastName}" />
 
                 <h:outputLabel for="loginId" value="Login Id:" />
-                <p:inputText id="loginId" value="#{newuserView.user.loginId}" required="true" />
+                <p:inputText id="loginId" value="#{newUserView.user.loginId}" required="true" />
          
                 <h:outputLabel value="Password:" />
-                <p:password id="password" value="#{newuserView.user.password}" required="true" />
+                <p:password id="password" value="#{newUserView.user.password}" required="true" />
 
                 <h:outputLabel value="Password (repeat):" />
-                <p:password id="password2" value="#{newuserView.password2}" required="true" />
+                <p:password id="password2" value="#{newUserView.password2}" required="true" />
 
                 <h:outputLabel value="Email:" />
-                <p:inputText value="#{newuserView.user.email}" />
+                <p:inputText value="#{newUserView.user.email}" />
 
                 <h:outputLabel value="Phone:" />
-                <p:inputMask value="#{newuserView.user.phone}" mask="(999) 999-9999"/>
+                <p:inputMask value="#{newUserView.user.phone}" mask="(999) 999-9999"/>
 
                 <h:outputLabel value="Password Hint:" />
-                <p:inputText value="#{newuserView.user.hint}" />
+                <p:inputText value="#{newUserView.user.hint}" />
 
                 <h:outputLabel value="Answer:" />
-                <p:inputText value="#{newuserView.user.answer}" />
+                <p:inputText value="#{newUserView.user.answer}" />
 
                 <h:outputLabel value="Timezone:" />
-                <p:selectOneMenu id="menu" value="#{newuserView.user.timezone}" label="Timezone"
+                <p:selectOneMenu id="menu" value="#{newUserView.user.timezone}" label="Timezone"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                    <f:selectItems value="#{newuserView.timezones}" />
+                    <f:selectItems value="#{newUserView.timezones}" />
                 </p:selectOneMenu>
 
                 <h:outputLabel value="" />
                 <h:outputLabel value="" />
                 <h:outputLabel value="" />
-                <p:commandButton value="Submit" update=":msgPanel" action="#{newuserView.save}" />
+                <p:commandButton value="Submit" update=":msgPanel" action="#{newUserView.save}" />
 
             </h:panelGrid>
         </h:form>

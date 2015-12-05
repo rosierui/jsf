@@ -2,9 +2,12 @@ package org.moonwave.jpa.bo;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.moonwave.jpa.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * UserBO
@@ -15,23 +18,78 @@ import org.moonwave.jpa.model.User;
 public class UserBO extends BaseBO {
 
     private static final long serialVersionUID = 1L;
+    static final Logger LOG = LoggerFactory.getLogger(UserBO.class);
 
     @SuppressWarnings("unchecked")
-    public List<User> getAllUsers() {
+    public List<User> findAllUsers() {
         Query query = super.getEntityManager().createNamedQuery("User.findAll", User.class);
         List<User> list = query.getResultList();
         super.release();
         return list;
     }
 
-    public User findById(Integer userId) {
-        Query query = super.getEntityManager().createNamedQuery("User.findById", User.class);
-        query.setParameter("id", userId);
-        User list = (User) query.getSingleResult();
+    @SuppressWarnings("unchecked")
+    public List<User> findAllGenericUsers() {
+        Query query = super.getEntityManager().createNamedQuery("User.findAllGenericUsers", User.class);
+        List<User> list = query.getResultList();
         super.release();
         return list;
     }
 
+    public User findById(Integer id) {
+        Query query = super.getEntityManager().createNamedQuery("User.findById", User.class);
+        query.setParameter("id", id);
+        User ret = null;
+        try {
+            ret = (User) query.getSingleResult();
+        } catch (NoResultException e) {
+
+        } catch (Exception e) {
+            LOG.error("", e);
+        } finally {
+            super.release();
+        }
+        return ret;
+    }
+
+    public User findByLoginId(String loginId) {
+        Query query = super.getEntityManager().createNamedQuery("User.findByLoginId", User.class);
+        query.setParameter("loginId", loginId);
+        User ret = null;
+        try {
+            ret = (User) query.getSingleResult();
+        } catch (NoResultException e) {
+
+        } catch (Exception e) {
+            LOG.error("", e);
+        } finally {
+            super.release();
+        }
+        return ret;
+    }
+
+    public User findByEmail(String email) {
+        Query query = super.getEntityManager().createNamedQuery("User.findByEmail", User.class);
+        query.setParameter("email", email);
+        User ret = null;
+        try {
+            ret = (User) query.getSingleResult();
+        } catch (NoResultException e) {
+
+        } catch (Exception e) {
+            LOG.error("", e);
+        } finally {
+            super.release();
+        }
+        return ret;
+    }
+
+    /**
+     * The method is not being used
+     * TODO - remove
+     * @param userIds
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public List<User> findInIds(List<Integer> userIds) {
         String q1 = "SELECT u FROM User u WHERE u.id in (";
@@ -46,8 +104,6 @@ public class UserBO extends BaseBO {
         }
         sb.append(q2);
         Query query = super.getEntityManager().createQuery(sb.toString(), User.class);
-//        query.setParameter("ids", sb.toString());
-//        query.setParameter("ids", userIds);
         List<User> list = query.getResultList();
         super.release();
         return list;

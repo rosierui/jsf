@@ -17,7 +17,10 @@ import java.util.List;
 
 @NamedQueries({
     @NamedQuery(name="User.findAll",   query="SELECT u FROM User u"),
+    @NamedQuery(name="User.findAllGenericUsers", query="SELECT u FROM User u where u.genericUser = true"),
     @NamedQuery(name="User.findById",  query="SELECT u FROM User u WHERE u.id = :id"),
+    @NamedQuery(name="User.findByLoginId",  query="SELECT u FROM User u WHERE u.loginId = :loginId"),
+    @NamedQuery(name="User.findByEmail",  query="SELECT u FROM User u WHERE u.email = :email"),
     @NamedQuery(name="User.findInIds", query="SELECT u FROM User u WHERE u.id in (:ids)")
 })
 
@@ -62,6 +65,9 @@ public class User implements Serializable {
     private String password;
 
     private String phone;
+
+    @Column(name="generic_user")
+    private Boolean genericUser;
 
     @Column(name="update_time")
     private Timestamp updateTime;
@@ -215,6 +221,14 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
+    public Boolean isGenericUser() {
+        return genericUser;
+    }
+
+    public void setGenericUser(Boolean genericUser) {
+        this.genericUser = genericUser;
+    }
+
     public Timestamp getUpdateTime() {
         return this.updateTime;
     }
@@ -249,4 +263,15 @@ public class User implements Serializable {
         sb.append(",timezone= ").append(timezone);
         return sb.toString();
     }
+
+    // ========================================================== Helper methods
+
+    public void clearFields() {
+        this.firstName = null;
+        this.lastName = null;
+        this.loginId = null;
+        this.password = null;
+        this.hint = null;
+    }
+
 }

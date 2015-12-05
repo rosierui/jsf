@@ -77,4 +77,13 @@ public class TutorGroup implements Serializable {
         this.users = users;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("id= ").append(id);
+        sb.append(",alias= ").append(alias);
+        sb.append(",name= ").append(name);
+        sb.append(",ordinal= ").append(ordinal);
+        return sb.toString();
+    }
 }

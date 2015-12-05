@@ -27,10 +27,10 @@ import org.slf4j.LoggerFactory;
  */
 @ManagedBean
 @ViewScoped
-public class UserroleView extends BaseView {
+public class UserRoleView extends BaseView {
 
     private static final long serialVersionUID = 1L;
-    static final Logger LOG = LoggerFactory.getLogger(UserroleView.class);
+    static final Logger LOG = LoggerFactory.getLogger(UserRoleView.class);
 
     private String selectedRoleId;
     private List<Role> roles;
@@ -53,7 +53,7 @@ public class UserroleView extends BaseView {
         // get a list of roles
         roles = new RoleBO().getAllRoles();
         // get a list of all users
-        users = new UserBO().getAllUsers();
+        users = new UserBO().findAllUsers();
         // get a list of users for the first role
         if (!roles.isEmpty()) {
             selectedRoleId = String.valueOf(roles.get(0).getId());

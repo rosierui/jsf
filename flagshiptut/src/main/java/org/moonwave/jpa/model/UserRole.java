@@ -27,8 +27,6 @@ public class UserRole implements Serializable {
     @Column(name="create_time")
     private Timestamp createTime;
 
-    private String privileges;
-
     @Column(name="user_id")
     private int userId;
 
@@ -55,14 +53,6 @@ public class UserRole implements Serializable {
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
-    }
-
-    public String getPrivileges() {
-        return this.privileges;
-    }
-
-    public void setPrivileges(String privileges) {
-        this.privileges = privileges;
     }
 
     public int getUserId() {
