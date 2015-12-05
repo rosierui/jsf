@@ -59,7 +59,7 @@ INSERT INTO semester_week (semester, week, start_day) values ('F2015', 'Week 16'
 COMMIT;
 
 START TRANSACTION;
-INSERT INTO tutor_group (alias, name, ordinal) values ('Listening & Oral 1', 'Listening & Oral 2 Tutoring Group', 1);
+INSERT INTO tutor_group (alias, name, ordinal) values ('Listening & Oral 1', 'Listening & Oral 1 Tutoring Group', 1);
 INSERT INTO tutor_group (alias, name, ordinal) values ('Listening & Oral 2', 'Listening & Oral 2 Tutoring Group', 5);
 INSERT INTO tutor_group (alias, name, ordinal) values ('Grammar', 'Grammar Tutoring Group', 10);
 INSERT INTO tutor_group (alias, name, ordinal) values ('HSK', 'HSK Tutoring Group', 15);

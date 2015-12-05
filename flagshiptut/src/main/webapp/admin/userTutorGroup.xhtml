@@ -9,7 +9,7 @@
     template="../template/ui.xhtml">
 
     <ui:define name="title">
-        User Role Administration
+        User - Tutor Group Administration
     </ui:define>
     <ui:define name="body">
         <h:panelGroup id="msgPanel">
@@ -18,10 +18,10 @@
         <h:form id="jsfForm">
 
             <h:panelGrid columns="3" cellpadding="5" id="divTutorGroup">
-                <h:outputLabel for="role" value="${label.role}:" />
-                <p:selectOneMenu id="role" value="#{userTutorGroupView.selectedRoleId}" style="width:200px">
-                    <f:selectItems value="#{userTutorGroupView.roles}" var="role" itemLabel="#{role.name}" itemValue="#{role.id}" />
-                    <p:ajax event="change" update="divUser" partialSubmit="true" process="@this" listener="#{userTutorGroupView.changeRole}" />
+                <h:outputLabel for="role" value="${label.tutorGroup}:" />
+                <p:selectOneMenu id="role" value="#{userTutorGroupView.selectedTutorGroupId}" style="width:260px">
+                    <f:selectItems value="#{userTutorGroupView.tutorGroups}" var="tutorGrp" itemLabel="#{tutorGrp.alias}" itemValue="#{tutorGrp.id}" />
+                    <p:ajax event="change" update="divUser" partialSubmit="true" process="@this" listener="#{userTutorGroupView.changeTutorGroup}" />
                 </p:selectOneMenu>
             </h:panelGrid>
 
@@ -30,10 +30,10 @@
                 <h:outputLabel for="user" value="${label.user}:" />
                 <p:selectOneMenu id="user" value="#{userTutorGroupView.selectedUserId}"
                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                    <f:selectItems value="#{userTutorGroupView.usersInRole}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
+                    <f:selectItems value="#{userTutorGroupView.usersInTutorGroup}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
                     <p:ajax event="change" partialSubmit="true" process="@this" />
                 </p:selectOneMenu>
-                <p:commandButton value="${label.removeFromSelectedRole}" update="divUser :msgPanel" actionListener="#{userTutorGroupView.removeUserFromRole}" />
+                <p:commandButton value="${label.removeFromSelectedTutorGroup}" update="divUser :msgPanel" actionListener="#{userTutorGroupView.removeUserFromTutorGroup}" />
             </h:panelGrid>
 
             <p:dataTable var="user" value="#{userTutorGroupView.users}">
@@ -54,8 +54,8 @@
                         id="addUserToRole"
                         ajax="true"
                         action="#{userTutorGroupView.addUserToRole}"
-                        value="#{label.addToSelectedRole}"
-                        title="#{label.addToSelectedRole}"
+                        value="#{label.addToSelectedTutorGroup}"
+                        title="#{label.addToSelectedTutorGroup}"
                         update="@([id$=divUser]) @([id$=msgPanel])"
                         rendered="true"
                         disabled="false">
