@@ -31,7 +31,7 @@ public class TutorGroup implements Serializable {
     private short ordinal;
 
     //bi-directional many-to-many association to User
-    @ManyToMany(mappedBy="tutorGroups")
+    @ManyToMany(mappedBy="tutorGroups", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<User> users;
 
     public TutorGroup() {
@@ -75,6 +75,26 @@ public class TutorGroup implements Serializable {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public int hashCode() {
+        return ((Short)id).hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if ((o == null) || !(o instanceof TutorGroup)) {
+            return false;
+        }
+        TutorGroup other = (TutorGroup) o;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (! this.alias.equals(other.alias)) {
+            return false;
+        }
+        return true;
     }
 
     @Override

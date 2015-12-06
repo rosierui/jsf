@@ -86,7 +86,8 @@ public class User implements Serializable {
     private List<Role> roles;
 
     //bi-directional many-to-many association to TutorGroup
-    @ManyToMany
+//    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name="user_tutor_group"
         , joinColumns={
