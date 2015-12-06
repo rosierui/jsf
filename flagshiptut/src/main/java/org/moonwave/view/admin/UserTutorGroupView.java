@@ -1,5 +1,6 @@
 package org.moonwave.view.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -114,18 +115,19 @@ public class UserTutorGroupView extends BaseView {
     public String addUserToTutorGroup() {
         try {
             // TODO - check duplicates in the same role
-//            UserRole userRole = new UserRoleBO().findByRoleUser(Short.parseShort(selectedTutorGroupId), Integer.parseInt(selectedUserId));
-//            if (userRole != null) {
-//                super.info("User is already in selected role");
-//                return null;
-//            }
-//
-//            userRole = new UserRole();
-//            userRole.setUserId(Integer.parseInt(selectedUserId));
-//            userRole.setRoleId(Short.parseShort(selectedTutorGroupId));
-//            userRole.setCreateTime(super.getSqlTimestamp());
-//            super.getBasebo().persist(userRole);
-
+            TutorGroup tg = new TutorGroupBO().findById(Short.parseShort(selectedTutorGroupId));
+            List<User> users = (tg.getUsers() != null) ? tg.getUsers() : new ArrayList<User>();
+            for (User user : users) {
+                if (user.getId() == Integer.parseInt(selectedUserId)) {
+                  super.info("User is already in selected role");
+                  return null;
+                }
+            }
+//          userRole = new UserRole();
+//          userRole.setUserId(Integer.parseInt(selectedUserId));
+//          userRole.setRoleId(Short.parseShort(selectedTutorGroupId));
+//          userRole.setCreateTime(super.getSqlTimestamp());
+//          super.getBasebo().persist(userRole);
             getUsersByTutorGroupId(selectedTutorGroupId);
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");
@@ -137,13 +139,13 @@ public class UserTutorGroupView extends BaseView {
     // --------------------------------------------------------- Private Methods
 
     /**
-     * Find a list of users by selected role id
+     * Find a list of users by selected tutor group id
      *
-     * @param selectedRoleId
+     * @param selectedTutorGroupId
      */
-    private void getUsersByTutorGroupId(String selectedRoleId) {
+    private void getUsersByTutorGroupId(String selectedTutorGroupId) {
         try {
-            TutorGroup role = new TutorGroupBO().findById(Short.parseShort(selectedRoleId));
+            TutorGroup role = new TutorGroupBO().findById(Short.parseShort(selectedTutorGroupId));
             usersInTutorGroup = role.getUsers();
         } catch (Exception e) {
             LOG.error(e.getMessage());
