@@ -58,6 +58,14 @@ public class BaseBO implements Serializable {
         em.getTransaction().commit();
     }
 
+    public void update(Object entity) {
+        em = getEntityManager();
+        em.getTransaction().begin();
+        Object entityToRemove = merge(entity);
+        em.persist(entityToRemove);
+        em.getTransaction().commit();
+    }
+
     /**
      * Merge the state of the given entity into the
      * current persistence context.

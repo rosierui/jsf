@@ -87,17 +87,26 @@ public class UserTutorGroupView extends BaseView {
     }
 
     /**
-     * Handle removing user from a selected role
+     * Handle removing user from a selected tutor group
      * or
-     * public String removeUserFromRole()
+     * public String removeUserFromTutorGroup()
      * @return
      */
     public void removeUserFromTutorGroup() {
         try {
-//            UserRole userRole = new UserRoleBO().findByRoleUser(Short.parseShort(selectedTutorGroupId), Integer.parseInt(selectedUserId));
-//            if (userRole != null) {
-//                super.getBasebo().remove(userRole);
-//            }
+            TutorGroup tg = new TutorGroupBO().findById(Short.parseShort(selectedTutorGroupId));
+            User user = new UserBO().findById(Integer.parseInt(selectedUserId));
+            List<User> users = (tg.getUsers() != null) ? tg.getUsers() : new ArrayList<User>();
+            for (User u : users) {
+                if (u.getId() == user.getId()) {
+                    users.remove(u);
+                    super.getBasebo().update(tg);
+                    List<TutorGroup> tutorGroups = (user.getTutorGroups() != null) ? user.getTutorGroups() : new ArrayList<TutorGroup>();
+                    tutorGroups.remove(tg);
+                    super.getBasebo().update(user);
+                    break;
+                }
+            }
 
             getUsersByTutorGroupId(selectedTutorGroupId);
         } catch (Exception e) {
@@ -107,14 +116,13 @@ public class UserTutorGroupView extends BaseView {
     }
 
     /**
-     * Handle adding user to a selected role
+     * Handle adding user to a selected tutor group
      * or
-     * public void addUserToRole()
+     * public void addUserToTutorGroup()
      * @return
      */
     public String addUserToTutorGroup() {
         try {
-            // TODO - check duplicates in the same role
             TutorGroup tg = new TutorGroupBO().findById(Short.parseShort(selectedTutorGroupId));
             List<User> users = (tg.getUsers() != null) ? tg.getUsers() : new ArrayList<User>();
             for (User user : users) {
@@ -123,11 +131,13 @@ public class UserTutorGroupView extends BaseView {
                   return null;
                 }
             }
-//          userRole = new UserRole();
-//          userRole.setUserId(Integer.parseInt(selectedUserId));
-//          userRole.setRoleId(Short.parseShort(selectedTutorGroupId));
-//          userRole.setCreateTime(super.getSqlTimestamp());
-//          super.getBasebo().persist(userRole);
+            User user = new UserBO().findById(Integer.parseInt(selectedUserId));
+            users.add(user);
+            super.getBasebo().update(tg);
+            List<TutorGroup> tutorGroups = (user.getTutorGroups() != null) ? user.getTutorGroups() : new ArrayList<TutorGroup>();  
+            tutorGroups.add(tg);
+            super.getBasebo().update(user);
+
             getUsersByTutorGroupId(selectedTutorGroupId);
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");
