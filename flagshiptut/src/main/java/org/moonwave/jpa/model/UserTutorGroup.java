@@ -7,7 +7,8 @@ import java.sql.Timestamp;
 
 /**
  * The persistent class for the user_tutor_group database table.
- * 
+ * This class retired
+ * TODO - remove 
  */
 @Entity
 @Table(name="user_tutor_group")
@@ -17,11 +18,6 @@ public class UserTutorGroup implements Serializable {
 
 	@Id
 	private int id;
-
-	@Column(name="create_time")
-	private Timestamp createTime;
-
-	private String privileges;
 
 	@Column(name="tutor_group_id")
 	private short tutorGroupId;
@@ -41,22 +37,6 @@ public class UserTutorGroup implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Timestamp getCreateTime() {
-		return this.createTime;
-	}
-
-	public void setCreateTime(Timestamp createTime) {
-		this.createTime = createTime;
-	}
-
-	public String getPrivileges() {
-		return this.privileges;
-	}
-
-	public void setPrivileges(String privileges) {
-		this.privileges = privileges;
 	}
 
 	public short getTutorGroupId() {

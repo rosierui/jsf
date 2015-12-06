@@ -91,9 +91,6 @@ public class TutorGroup implements Serializable {
         if (this.id != other.id) {
             return false;
         }
-        if (! this.alias.equals(other.alias)) {
-            return false;
-        }
         return true;
     }
 

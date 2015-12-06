@@ -2,7 +2,6 @@ package org.moonwave.jpa.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -75,6 +74,23 @@ public class Role implements Serializable {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public int hashCode() {
+        return ((Short)id).hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if ((o == null) || !(o instanceof Role)) {
+            return false;
+        }
+        Role other = (Role) o;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
     }
 
     @Override

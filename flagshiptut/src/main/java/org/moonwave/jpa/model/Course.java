@@ -13,63 +13,87 @@ import java.sql.Timestamp;
 @Table(name="course")
 @NamedQuery(name="Course.findAll", query="SELECT c FROM Course c")
 public class Course implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	private short id;
+    @Id
+    private short id;
 
-	@Column(name="create_time")
-	private Timestamp createTime;
+    @Column(name="create_time")
+    private Timestamp createTime;
 
-	@Lob
-	private String description;
+    @Lob
+    private String description;
 
-	private String name;
+    private String name;
 
-	@Column(name="update_time")
-	private Timestamp updateTime;
+    @Column(name="update_time")
+    private Timestamp updateTime;
 
-	public Course() {
-	}
+    public Course() {
+    }
 
-	public short getId() {
-		return this.id;
-	}
+    public short getId() {
+        return this.id;
+    }
 
-	public void setId(short id) {
-		this.id = id;
-	}
+    public void setId(short id) {
+        this.id = id;
+    }
 
-	public Timestamp getCreateTime() {
-		return this.createTime;
-	}
+    public Timestamp getCreateTime() {
+        return this.createTime;
+    }
 
-	public void setCreateTime(Timestamp createTime) {
-		this.createTime = createTime;
-	}
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
 
-	public String getDescription() {
-		return this.description;
-	}
+    public String getDescription() {
+        return this.description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Timestamp getUpdateTime() {
-		return this.updateTime;
-	}
+    public Timestamp getUpdateTime() {
+        return this.updateTime;
+    }
 
-	public void setUpdateTime(Timestamp updateTime) {
-		this.updateTime = updateTime;
-	}
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
 
+    @Override
+    public int hashCode() {
+        return ((Short)id).hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if ((o == null) || !(o instanceof Course)) {
+            return false;
+        }
+        Course other = (Course) o;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("id= ").append(id);
+        sb.append(",name= ").append(name);
+        return sb.toString();
+    }
 }

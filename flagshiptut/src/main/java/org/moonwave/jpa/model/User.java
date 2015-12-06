@@ -73,7 +73,7 @@ public class User implements Serializable {
     private Timestamp updateTime;
 
     //bi-directional many-to-many association to Role
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name="user_role"
         , joinColumns={
@@ -252,6 +252,23 @@ public class User implements Serializable {
 
     public void setTutorGroups(List<TutorGroup> tutorGroups) {
         this.tutorGroups = tutorGroups;
+    }
+
+    @Override
+    public int hashCode() {
+        return ((Integer)id).hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if ((o == null) || !(o instanceof User)) {
+            return false;
+        }
+        User other = (User) o;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
     }
 
     @Override

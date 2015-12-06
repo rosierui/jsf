@@ -7,6 +7,8 @@ import java.sql.Timestamp;
 
 /**
  * The persistent class for the user_role database table.
+ * This class retired
+ * TODO - remove 
  * 
  */
 @Entity
@@ -23,9 +25,6 @@ public class UserRole implements Serializable {
 
     @Id
     private int id;
-
-    @Column(name="create_time")
-    private Timestamp createTime;
 
     @Column(name="user_id")
     private int userId;
@@ -45,14 +44,6 @@ public class UserRole implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Timestamp getCreateTime() {
-        return this.createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
     }
 
     public int getUserId() {

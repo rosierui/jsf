@@ -102,7 +102,6 @@ CREATE TABLE user_role (
     user_id                 INTEGER NOT NULL REFERENCES user(id),
     role_id                 SMALLINT REFERENCES role(id),
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP,
     UNIQUE (user_id, role_id)
 );
 
@@ -129,7 +128,6 @@ CREATE TABLE user_tutor_group (
     user_id                 INTEGER NOT NULL REFERENCES user(id),
     tutor_group_id          SMALLINT REFERENCES tutor_group(id),
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP,
     UNIQUE (user_id, tutor_group_id)
 );
 CREATE INDEX user_tutor_group_idx1 ON user_tutor_group (user_id, tutor_group_id);
