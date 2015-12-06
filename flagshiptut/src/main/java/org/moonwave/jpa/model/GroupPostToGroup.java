@@ -12,44 +12,68 @@ import javax.persistence.*;
 @Table(name="group_post_to_group")
 @NamedQuery(name="GroupPostToGroup.findAll", query="SELECT g FROM GroupPostToGroup g")
 public class GroupPostToGroup implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	private int id;
+    @Id
+    private int id;
 
-	@Column(name="tutor_group_id")
-	private short tutorGroupId;
+    @Column(name="tutor_group_id")
+    private short tutorGroupId;
 
-	//bi-directional many-to-one association to GroupPost
-	@ManyToOne
-	@JoinColumn(name="group_post_id")
-	private GroupPost groupPost;
+    //bi-directional many-to-one association to GroupPost
+    @ManyToOne
+    @JoinColumn(name="group_post_id")
+    private GroupPost groupPost;
 
-	public GroupPostToGroup() {
-	}
+    public GroupPostToGroup() {
+    }
 
-	public int getId() {
-		return this.id;
-	}
+    public int getId() {
+        return this.id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public short getTutorGroupId() {
-		return this.tutorGroupId;
-	}
+    public short getTutorGroupId() {
+        return this.tutorGroupId;
+    }
 
-	public void setTutorGroupId(short tutorGroupId) {
-		this.tutorGroupId = tutorGroupId;
-	}
+    public void setTutorGroupId(short tutorGroupId) {
+        this.tutorGroupId = tutorGroupId;
+    }
 
-	public GroupPost getGroupPost() {
-		return this.groupPost;
-	}
+    public GroupPost getGroupPost() {
+        return this.groupPost;
+    }
 
-	public void setGroupPost(GroupPost groupPost) {
-		this.groupPost = groupPost;
-	}
+    public void setGroupPost(GroupPost groupPost) {
+        this.groupPost = groupPost;
+    }
 
+    @Override
+    public int hashCode() {
+        return ((Integer)id).hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if ((o == null) || !(o instanceof GroupPostToGroup)) {
+            return false;
+        }
+        GroupPostToGroup other = (GroupPostToGroup) o;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("id= ").append(id);
+        sb.append(",tutorGroupId= ").append(tutorGroupId);
+        return sb.toString();
+    }
 }

@@ -252,7 +252,7 @@ CREATE TABLE evaluation_performance (
     attendance              SMALLINT,
     participation           SMALLINT,
     performance             SMALLINT,
-    toatl                   SMALLINT,
+    total                   SMALLINT,
     note                    VARCHAR(255),
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP
