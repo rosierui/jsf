@@ -13,51 +13,77 @@ import java.util.Date;
 @Table(name="calendar")
 @NamedQuery(name="Calendar.findAll", query="SELECT c FROM Calendar c")
 public class Calendar implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	private int id;
+    @Id
+    private int id;
 
-	@Temporal(TemporalType.DATE)
-	private Date date;
+    @Temporal(TemporalType.DATE)
+    private Date date;
 
-	private String semester;
+    private String semester;
 
-	private String week;
+    private String week;
 
-	public Calendar() {
-	}
+    public Calendar() {
+    }
 
-	public int getId() {
-		return this.id;
-	}
+    public int getId() {
+        return this.id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public Date getDate() {
-		return this.date;
-	}
+    public Date getDate() {
+        return this.date;
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-	public String getSemester() {
-		return this.semester;
-	}
+    public String getSemester() {
+        return this.semester;
+    }
 
-	public void setSemester(String semester) {
-		this.semester = semester;
-	}
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
 
-	public String getWeek() {
-		return this.week;
-	}
+    public String getWeek() {
+        return this.week;
+    }
 
-	public void setWeek(String week) {
-		this.week = week;
-	}
+    public void setWeek(String week) {
+        this.week = week;
+    }
 
+    @Override
+    public int hashCode() {
+        return ((Integer)id).hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if ((o == null) || !(o instanceof Calendar)) {
+            return false;
+        }
+        Calendar other = (Calendar) o;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("id= ").append(id);
+        sb.append(",date= ").append(date);
+        sb.append(",semester= ").append(semester);
+        sb.append(",week= ").append(week);
+        return sb.toString();
+    }
 }

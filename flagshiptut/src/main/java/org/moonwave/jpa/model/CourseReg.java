@@ -7,83 +7,107 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the course_reg database table.
+ * The persistent class for the CourseReg_reg database table.
  * 
  */
 @Entity
-@Table(name="course_reg")
-@NamedQuery(name="CourseReg.findAll", query="SELECT c FROM CourseReg c")
+@Table(name="CourseReg_reg")
+@NamedQuery(name="CourseRegReg.findAll", query="SELECT c FROM CourseRegReg c")
 public class CourseReg implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	private int id;
+    @Id
+    private int id;
 
-	@Column(name="course_id")
-	private short courseId;
+    @Column(name="CourseReg_id")
+    private short CourseRegId;
 
-	@Column(name="create_time")
-	private Timestamp createTime;
+    @Column(name="create_time")
+    private Timestamp createTime;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="reg_date")
-	private Date regDate;
+    @Temporal(TemporalType.DATE)
+    @Column(name="reg_date")
+    private Date regDate;
 
-	@Column(name="student_id")
-	private int studentId;
+    @Column(name="student_id")
+    private int studentId;
 
-	@Column(name="update_time")
-	private Timestamp updateTime;
+    @Column(name="update_time")
+    private Timestamp updateTime;
 
-	public CourseReg() {
-	}
+    public CourseReg() {
+    }
 
-	public int getId() {
-		return this.id;
-	}
+    public int getId() {
+        return this.id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public short getCourseId() {
-		return this.courseId;
-	}
+    public short getCourseRegId() {
+        return this.CourseRegId;
+    }
 
-	public void setCourseId(short courseId) {
-		this.courseId = courseId;
-	}
+    public void setCourseRegId(short CourseRegId) {
+        this.CourseRegId = CourseRegId;
+    }
 
-	public Timestamp getCreateTime() {
-		return this.createTime;
-	}
+    public Timestamp getCreateTime() {
+        return this.createTime;
+    }
 
-	public void setCreateTime(Timestamp createTime) {
-		this.createTime = createTime;
-	}
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
 
-	public Date getRegDate() {
-		return this.regDate;
-	}
+    public Date getRegDate() {
+        return this.regDate;
+    }
 
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
-	}
+    public void setRegDate(Date regDate) {
+        this.regDate = regDate;
+    }
 
-	public int getStudentId() {
-		return this.studentId;
-	}
+    public int getStudentId() {
+        return this.studentId;
+    }
 
-	public void setStudentId(int studentId) {
-		this.studentId = studentId;
-	}
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
 
-	public Timestamp getUpdateTime() {
-		return this.updateTime;
-	}
+    public Timestamp getUpdateTime() {
+        return this.updateTime;
+    }
 
-	public void setUpdateTime(Timestamp updateTime) {
-		this.updateTime = updateTime;
-	}
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
 
+    @Override
+    public int hashCode() {
+        return ((Integer)id).hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if ((o == null) || !(o instanceof CourseReg)) {
+            return false;
+        }
+        CourseReg other = (CourseReg) o;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("id= ").append(id);
+        sb.append(",CourseRegId= ").append(CourseRegId);
+        return sb.toString();
+    }
 }
