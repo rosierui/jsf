@@ -9,6 +9,7 @@ import javax.faces.bean.ViewScoped;
 import org.moonwave.jpa.bo.TutorGroupBO;
 import org.moonwave.jpa.model.GroupPost;
 import org.moonwave.jpa.model.TutorGroup;
+import org.moonwave.util.StringUtil;
 import org.moonwave.view.BaseView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +76,10 @@ public class GroupPostView extends BaseView {
     }
 
     public void save() {
-        // validation
+        if (StringUtil.nullOrEmpty(subject)) {
+            super.error("Subject is empty");
+            return;
+        }
         try {
             GroupPost gp = new GroupPost();
             gp.setSubject(subject);

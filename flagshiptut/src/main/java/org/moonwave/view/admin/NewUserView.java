@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import org.moonwave.jpa.bo.UserBO;
 import org.moonwave.jpa.model.User;
 import org.moonwave.util.SHAUtil;
+import org.moonwave.util.StringUtil;
 import org.moonwave.view.BaseView;
 
 import org.slf4j.Logger;
@@ -83,7 +84,9 @@ public class NewUserView extends BaseView {
             super.error("Login id must be at least 4 characters long");
             return "";
         }
-        if (nullOrEmpty(user.getFirstName()) || nullOrEmpty(user.getLastName()) || nullOrEmpty(user.getEmail())) {
+        if (StringUtil.nullOrEmpty(user.getFirstName()) || 
+            StringUtil.nullOrEmpty(user.getLastName()) ||
+            StringUtil.nullOrEmpty(user.getEmail())) {
             super.error("First name, last name or email is empty");
             return "";
         }
@@ -110,9 +113,5 @@ public class NewUserView extends BaseView {
             super.error("An error occurred while saving data");
         }
         return "";
-    }
-
-    private boolean nullOrEmpty(String str) {
-        return (str == null) || (str.isEmpty());
     }
 }

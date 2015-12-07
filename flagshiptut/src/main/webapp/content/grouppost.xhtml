@@ -13,7 +13,7 @@
     </ui:define>
     <ui:define name="body">
         <h:form id="jsfForm">
-            <p:messages id="messages" autoUpdate="false" />
+            <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
             <h:panelGrid columns="2">
                 <h:outputLabel value="${label.visibleTo}" />
                 <p:selectCheckboxMenu id="menu2" value="#{groupPostView.selectedTutorGroups}" label="Tutor Groups" style="margin-left:20px"
@@ -33,7 +33,7 @@
                 <p:selectBooleanCheckbox value="#{groupPostView.published}" style="margin-left:10px" />
             </h:panelGrid>
             <br/>
-            <p:commandButton value="Submit" update="" actionListener="#{groupPostView.save}" />
+            <p:commandButton value="Submit" update="messages" actionListener="#{groupPostView.save}" />
 
         </h:form>
     </ui:define>
