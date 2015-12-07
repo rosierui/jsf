@@ -1,5 +1,6 @@
 package org.moonwave.view.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,10 +12,8 @@ import javax.faces.event.AjaxBehaviorEvent;
 
 import org.moonwave.jpa.bo.RoleBO;
 import org.moonwave.jpa.bo.UserBO;
-import org.moonwave.jpa.bo.UserRoleBO;
 import org.moonwave.jpa.model.Role;
 import org.moonwave.jpa.model.User;
-import org.moonwave.jpa.model.UserRole;
 import org.moonwave.view.BaseView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,9 +106,18 @@ public class UserRoleView extends BaseView {
      */
     public void removeUserFromRole() {
         try {
-            UserRole userRole = new UserRoleBO().findByRoleUser(Short.parseShort(selectedRoleId), Integer.parseInt(selectedUserId));
-            if (userRole != null) {
-                super.getBasebo().remove(userRole);
+            Role role = new RoleBO().findById(Short.parseShort(selectedRoleId));
+            User user = new UserBO().findById(Integer.parseInt(selectedUserId));
+            List<User> users = (role.getUsers() != null) ? role.getUsers() : new ArrayList<User>();
+            for (User u : users) {
+                if (u.getId() == user.getId()) {
+                    // work on master object in a many-to-many relationship
+                    List<Role> roles = (user.getRoles() != null) ? user.getRoles() : new ArrayList<Role>();
+                    roles.remove(role);
+                    user.setRoles(roles);
+                    super.getBasebo().update(user);
+                    break;
+                }
             }
 
             getUsersByRoleId(selectedRoleId);
@@ -127,17 +135,20 @@ public class UserRoleView extends BaseView {
      */
     public String addUserToRole() {
         try {
-            // TODO - check duplicates in the same role
-            UserRole userRole = new UserRoleBO().findByRoleUser(Short.parseShort(selectedRoleId), Integer.parseInt(selectedUserId));
-            if (userRole != null) {
-                super.info("User is already in selected role");
-                return null;
+            Role role = new RoleBO().findById(Short.parseShort(selectedRoleId));
+            List<User> users = (role.getUsers() != null) ? role.getUsers() : new ArrayList<User>();
+            for (User user : users) {
+                if (user.getId() == Integer.parseInt(selectedUserId)) {
+                  super.info("User is already in selected role");
+                  return null;
+                }
             }
-
-            userRole = new UserRole();
-            userRole.setUserId(Integer.parseInt(selectedUserId));
-            userRole.setRoleId(Short.parseShort(selectedRoleId));
-            super.getBasebo().persist(userRole);
+            // work on master object in a many-to-many relationship
+            User user = new UserBO().findById(Integer.parseInt(selectedUserId));
+            List<Role> roles = (user.getRoles() != null) ? user.getRoles() : new ArrayList<Role>();  
+            roles.add(role);
+            user.setRoles(roles);
+            super.getBasebo().update(user);
 
             getUsersByRoleId(selectedRoleId);
         } catch (Exception e) {

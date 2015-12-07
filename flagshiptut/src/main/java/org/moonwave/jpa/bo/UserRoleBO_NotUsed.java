@@ -10,9 +10,10 @@ import org.moonwave.jpa.model.UserRole;
  * UserRoleBO
  *
  * @author moonwave
+ * TODO - remove
  *
  */
-public class UserRoleBO extends BaseBO {
+public class UserRoleBO_NotUsed extends BaseBO {
 
     private static final long serialVersionUID = 1L;
 

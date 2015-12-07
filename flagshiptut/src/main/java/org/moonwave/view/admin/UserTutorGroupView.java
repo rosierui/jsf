@@ -99,12 +99,6 @@ public class UserTutorGroupView extends BaseView {
             List<User> users = (tg.getUsers() != null) ? tg.getUsers() : new ArrayList<User>();
             for (User u : users) {
                 if (u.getId() == user.getId()) {
-                    // A and B working
-                    // A only not working
-//                    users.remove(u);
-//                    tg.setUsers(users);
-//                    super.getBasebo().update(tg);
-                    // B only working
                     List<TutorGroup> tutorGroups = (user.getTutorGroups() != null) ? user.getTutorGroups() : new ArrayList<TutorGroup>();
                     tutorGroups.remove(tg);
                     user.setTutorGroups(tutorGroups);
@@ -132,16 +126,11 @@ public class UserTutorGroupView extends BaseView {
             List<User> users = (tg.getUsers() != null) ? tg.getUsers() : new ArrayList<User>();
             for (User user : users) {
                 if (user.getId() == Integer.parseInt(selectedUserId)) {
-                  super.info("User is already in selected role");
+                  super.info("User is already in selected Tutor Group");
                   return null;
                 }
             }
             User user = new UserBO().findById(Integer.parseInt(selectedUserId));
-            // A & B together working
-            // A only not working
-//            users.add(user);
-//            super.getBasebo().update(tg);// not working
-            // B only working
             List<TutorGroup> tutorGroups = (user.getTutorGroups() != null) ? user.getTutorGroups() : new ArrayList<TutorGroup>();  
             tutorGroups.add(tg);
             user.setTutorGroups(tutorGroups);
