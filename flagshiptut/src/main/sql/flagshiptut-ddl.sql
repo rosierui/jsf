@@ -233,7 +233,7 @@ CREATE TABLE group_post (-- base group post
 
 -- -----------------------------------------------------------------------------
 -- Create table group_post_to_group
--- group_post 1 <==> * tutor_group
+-- group_post * <==> * tutor_group
 CREATE TABLE group_post_to_group (
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     group_post_id           INTEGER REFERENCES group_post(id),

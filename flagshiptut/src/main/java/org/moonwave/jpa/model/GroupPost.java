@@ -32,9 +32,18 @@ public class GroupPost implements Serializable {
     @Column(name="update_time")
     private Timestamp updateTime;
 
-    //bi-directional many-to-one association to GroupPostToGroup
-    @OneToMany(mappedBy="groupPost")
-    private List<GroupPostToGroup> groupPostToGroups;
+    //bi-directional many-to-many association to TutorGroup
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name="group_post_to_group"
+        , joinColumns={
+            @JoinColumn(name="group_post_id")
+            }
+        , inverseJoinColumns={
+            @JoinColumn(name="tutor_group_id")
+            }
+        )
+    private List<TutorGroup> tutorGroups;
 
     public GroupPost() {
     }
@@ -87,26 +96,12 @@ public class GroupPost implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public List<GroupPostToGroup> getGroupPostToGroups() {
-        return this.groupPostToGroups;
+    public List<TutorGroup> getTutorGroups() {
+        return this.tutorGroups;
     }
 
-    public void setGroupPostToGroups(List<GroupPostToGroup> groupPostToGroups) {
-        this.groupPostToGroups = groupPostToGroups;
-    }
-
-    public GroupPostToGroup addGroupPostToGroup(GroupPostToGroup groupPostToGroup) {
-        getGroupPostToGroups().add(groupPostToGroup);
-        groupPostToGroup.setGroupPost(this);
-
-        return groupPostToGroup;
-    }
-
-    public GroupPostToGroup removeGroupPostToGroup(GroupPostToGroup groupPostToGroup) {
-        getGroupPostToGroups().remove(groupPostToGroup);
-        groupPostToGroup.setGroupPost(null);
-
-        return groupPostToGroup;
+    public void setTutorGroups(List<TutorGroup> tutorGroups) {
+        this.tutorGroups = tutorGroups;
     }
 
     @Override

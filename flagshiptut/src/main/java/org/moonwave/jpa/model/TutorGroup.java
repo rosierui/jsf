@@ -1,9 +1,8 @@
 package org.moonwave.jpa.model;
 
 import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -33,6 +32,10 @@ public class TutorGroup implements Serializable {
     //bi-directional many-to-many association to User
     @ManyToMany(mappedBy="tutorGroups", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<User> users;
+
+    //bi-directional many-to-many association to GroupPost
+    @ManyToMany(mappedBy="tutorGroups")
+    private List<GroupPost> groupPosts;
 
     public TutorGroup() {
     }
@@ -75,6 +78,14 @@ public class TutorGroup implements Serializable {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public List<GroupPost> getGroupPosts() {
+        return this.groupPosts;
+    }
+
+    public void setGroupPosts(List<GroupPost> groupPosts) {
+        this.groupPosts = groupPosts;
     }
 
     @Override
