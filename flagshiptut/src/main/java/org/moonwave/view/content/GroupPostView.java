@@ -81,14 +81,21 @@ public class GroupPostView extends BaseView {
             gp.setSubject(subject);
             gp.setBody(body);
             gp.setPublished(published);
+            super.getBasebo().persist(gp);
+
+            // save many-to-many relationship
             gp.setTutorGroups(new ArrayList<TutorGroup>());
             List<TutorGroup> tgs = gp.getTutorGroups();
             for (String tgid : selectedTutorGroups) {
                 Short id = Short.parseShort(tgid);
                 TutorGroup tg = new TutorGroupBO().findById(id);
+                List<GroupPost> gps = new ArrayList<GroupPost>();
+                gps.add(gp);
+                tg.setGroupPosts(gps);
                 tgs.add(tg);
             }
             super.getBasebo().update(gp);
+
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");
             LOG.error("", e);

@@ -55,6 +55,7 @@ public class BaseBO implements Serializable {
         em = getEntityManager();
         em.getTransaction().begin();
         em.persist(entity);
+        em.flush();
         em.getTransaction().commit();
     }
 
