@@ -61,8 +61,8 @@ public class BaseBO implements Serializable {
     public void update(Object entity) {
         em = getEntityManager();
         em.getTransaction().begin();
-        Object entityToRemove = merge(entity);
-        em.persist(entityToRemove);
+        Object entityToPersist = merge(entity);
+        em.persist(entityToPersist);
         em.getTransaction().commit();
     }
 

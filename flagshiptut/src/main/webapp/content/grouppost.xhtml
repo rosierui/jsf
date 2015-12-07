@@ -16,27 +16,24 @@
             <p:messages id="messages" autoUpdate="false" />
             <h:panelGrid columns="2">
                 <h:outputLabel value="${label.visibleTo}" />
-                <p:selectCheckboxMenu id="menu2" value="#{grouppostView.selectedCities}" label="Cities" style="margin-left:20px"
+                <p:selectCheckboxMenu id="menu2" value="#{groupPostView.selectedTutorGroups}" label="Tutor Groups" style="margin-left:20px"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                    <f:selectItems value="#{userroleView.cities}" />
+                    <f:selectItems value="#{groupPostView.tutorGroups}" var="tutorGrp" itemLabel="#{tutorGrp.alias}" itemValue="#{tutorGrp.id}" />
                 </p:selectCheckboxMenu>
             </h:panelGrid>
             <br/>
             <h:panelGrid columns="2">
                 <h:outputLabel value="${label.subject}" />
-                <p:inputText id="subject" style="margin-left:20px"/>
-            </h:panelGrid>
-            <h:panelGrid columns="1">
-                <p:inputTextarea id="body" rows="6" cols="55" />
+                <p:inputText id="subject" value="#{groupPostView.subject}" style="margin-left:20px" size="50"/>
             </h:panelGrid>
             <br/>
-            <p:editor id="editor" widgetVar="editorWidget" value="#{grouppostView.body}" width="600" />
+            <p:editor id="editor" widgetVar="editorWidget" value="#{groupPostView.body}" width="600" />
             <h:panelGrid columns="2">
                 <h:outputText value="${label.publish}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart1_1t}" style="margin-left:10px" />
+                <p:selectBooleanCheckbox value="#{groupPostView.published}" style="margin-left:10px" />
             </h:panelGrid>
             <br/>
-            <p:commandButton value="Submit" update="" actionListener="#{grouppostView.save}" />
+            <p:commandButton value="Submit" update="" actionListener="#{groupPostView.save}" />
 
         </h:form>
     </ui:define>
