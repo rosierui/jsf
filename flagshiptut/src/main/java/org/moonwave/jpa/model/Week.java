@@ -15,6 +15,7 @@ public class Week implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private short id;
 
     private String week;

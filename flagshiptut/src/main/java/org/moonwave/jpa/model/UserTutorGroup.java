@@ -17,6 +17,7 @@ public class UserTutorGroup implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
 	@Column(name="tutor_group_id")
