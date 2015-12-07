@@ -101,9 +101,9 @@ public class UserTutorGroupView extends BaseView {
                 if (u.getId() == user.getId()) {
                     // A and B working
                     // A only not working
-                    users.remove(u);
-                    tg.setUsers(users);
-                    super.getBasebo().update(tg);
+//                    users.remove(u);
+//                    tg.setUsers(users);
+//                    super.getBasebo().update(tg);
                     // B only working
                     List<TutorGroup> tutorGroups = (user.getTutorGroups() != null) ? user.getTutorGroups() : new ArrayList<TutorGroup>();
                     tutorGroups.remove(tg);
@@ -144,6 +144,7 @@ public class UserTutorGroupView extends BaseView {
             // B only working
             List<TutorGroup> tutorGroups = (user.getTutorGroups() != null) ? user.getTutorGroups() : new ArrayList<TutorGroup>();  
             tutorGroups.add(tg);
+            user.setTutorGroups(tutorGroups);
             super.getBasebo().update(user);
 
             getUsersByTutorGroupId(selectedTutorGroupId);
