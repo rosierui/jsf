@@ -11,8 +11,8 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="CourseReg_reg")
-@NamedQuery(name="CourseRegReg.findAll", query="SELECT c FROM CourseRegReg c")
+@Table(name="Course_reg")
+@NamedQuery(name="CourseRegReg.findAll", query="SELECT c FROM CourseReg c")
 public class CourseReg implements Serializable {
     private static final long serialVersionUID = 1L;
 

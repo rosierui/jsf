@@ -137,7 +137,6 @@ public class UserRoleView extends BaseView {
             userRole = new UserRole();
             userRole.setUserId(Integer.parseInt(selectedUserId));
             userRole.setRoleId(Short.parseShort(selectedRoleId));
-            userRole.setCreateTime(super.getSqlTimestamp());
             super.getBasebo().persist(userRole);
 
             getUsersByRoleId(selectedRoleId);
