@@ -9,35 +9,77 @@
     template="../template/ui.xhtml">
 
     <ui:define name="title">
-        <h:outputLabel value="${label.grouppost}" />
+        Group Post
     </ui:define>
     <ui:define name="body">
+        <h:panelGroup id="msgPanel">
+            <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
+        </h:panelGroup>
         <h:form id="jsfForm">
-            <p:messages id="messages" autoUpdate="false" />
-            <h:panelGrid columns="2">
-                <h:outputLabel value="${label.visibleTo}" />
-                <p:selectCheckboxMenu id="menu2" value="#{groupPostView.selectedCities}" label="Cities" style="margin-left:20px"
-                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                    <f:selectItems value="#{userroleView.cities}" />
-                </p:selectCheckboxMenu>
-            </h:panelGrid>
-            <br/>
-            <h:panelGrid columns="2">
-                <h:outputLabel value="${label.subject}" />
-                <p:inputText id="subject" style="margin-left:20px"/>
-            </h:panelGrid>
-            <h:panelGrid columns="1">
-                <p:inputTextarea id="body" rows="6" cols="55" />
-            </h:panelGrid>
-            <br/>
-            <p:editor id="editor" widgetVar="editorWidget" value="#{groupPostView.body}" width="600" />
-            <h:panelGrid columns="2">
-                <h:outputText value="${label.publish}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart1_1t}" style="margin-left:10px" />
-            </h:panelGrid>
-            <br/>
-            <p:commandButton value="Submit" update="" actionListener="#{groupPostView.save}" />
 
+            <h:panelGrid columns="3" cellpadding="5" id="divRole">
+                <h:outputLabel for="role" value="${label.role}:" />
+                <p:selectOneMenu id="role" value="#{groupPostListView.selectedRoleId}" style="width:200px">
+                    <f:selectItems value="#{groupPostListView.roles}" var="role" itemLabel="#{role.name}" itemValue="#{role.id}" />
+                    <p:ajax event="change" update="divUser" partialSubmit="true" process="@this" listener="#{groupPostListView.changeRole}" />
+                </p:selectOneMenu>
+            </h:panelGrid>
+
+            <!-- Since both buttons are Submit, only one works -->
+            <h:panelGrid columns="3" cellpadding="5" id="divUser">
+                <h:outputLabel for="user" value="${label.user}:" />
+                <p:selectOneMenu id="user" value="#{groupPostListView.selectedPostId}"
+                                 filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+                    <f:selectItems value="#{groupPostListView.usersInRole}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
+                    <p:ajax event="change" partialSubmit="true" process="@this" />
+                </p:selectOneMenu>
+                <p:commandButton value="${label.removeFromSelectedRole}" update="divUser :msgPanel" actionListener="#{groupPostListView.removeUserFromRole}" />
+            </h:panelGrid>
+
+            <p:dataTable var="post" value="#{groupPostListView.groupposts}">
+                <p:column headerText="${label.subject}">
+                    <h:outputText value="#{post.subject}" />
+                </p:column>
+                <p:column headerText="${label.body}">
+                    <h:outputText value="#{post.bodyFirst60}" />
+                </p:column>
+                <p:column headerText="${label.date}">
+                    <h:outputText value="#{post.createTime}" />
+                </p:column>
+                <p:column headerText="${label.published}">
+                    <h:outputText value="#{post.published}" />
+                </p:column>
+                <p:column headerText="${label.action}">
+                    <p:commandButton
+                        id="addUserToRole"
+                        ajax="true"
+                        action="#{groupPostListView.addUserToRole}"
+                        value="#{label.addToSelectedRole}"
+                        title="#{label.addToSelectedRole}"
+                        update="@([id$=divUser]) @([id$=msgPanel])"
+                        rendered="true"
+                        disabled="false">
+                        <f:param name="editCycle" value="true"/>
+                        <f:param name="faces-redirect" value="false"/>
+
+                        <f:setPropertyActionListener target="#{groupPostListView.selectedPostId}" value="#{post.id}" />
+                    </p:commandButton>
+                    <p:commandButton value="View Details" type="button" ajax="true" onclick="PF('dlgDetails').show();" > 
+                        <f:setPropertyActionListener target="#{groupPostListView.selectedPostId}" value="#{post.id}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+
+            <p:dialog header="Group Post Details" widgetVar="dlgDetails" modal="true"
+                      position="center" closable="true" closeOnEscape="true" resizable="true"
+                      showEffect="explode" hideEffect="fade" width="600" height="400">
+                <h:panelGrid columns="2" cellpadding="5" id="divPost">
+                    <h:outputLabel value="${label.subject}:" />
+                    <h:outputText value="#{groupPostListView.current.subject}" />
+                    <h:outputLabel value="${label.date}:" />
+                    <h:outputText value="#{groupPostListView.current.createTime}" />
+                </h:panelGrid>
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

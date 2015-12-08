@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name="group_post")
 
 @NamedQueries({
-    @NamedQuery(name="GroupPost.findAll", query="SELECT g FROM GroupPost g"),
+    @NamedQuery(name="GroupPost.findAll", query="SELECT g FROM GroupPost g order by g.createTime desc"),
     @NamedQuery(name="GroupPost.findById", query="SELECT g FROM GroupPost g WHERE g.id = :id")
 })
 
@@ -68,6 +68,17 @@ public class GroupPost implements Serializable {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public String getBodyFirst60() {
+        String bodyFirst60 = null;
+        if (this.body != null) {
+            bodyFirst60 = this.body.substring(0, 60);
+            if (this.body.length() > 60) {
+                bodyFirst60 += "...";
+            }
+        }
+        return bodyFirst60;
     }
 
     public Timestamp getCreateTime() {

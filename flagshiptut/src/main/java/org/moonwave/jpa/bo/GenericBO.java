@@ -46,6 +46,24 @@ public class GenericBO<T> extends BaseBO {
         return list;
     }
 
+    @SuppressWarnings("unchecked")
+	public T findById(Integer id) {
+        Query query = super.getEntityManager().createNamedQuery(clazz.getSimpleName() + ".findById");
+        query.setParameter("id", id);
+        T ret = null;
+        try {
+            ret = (T) query.getSingleResult();
+        } catch (NoResultException e) {
+
+        } catch (Exception e) {
+            LOG.error("", e);
+        } finally {
+            super.release();
+        }
+        return ret;
+    }
+
+    @SuppressWarnings("unchecked")
     public T findById(Short id) {
         Query query = super.getEntityManager().createNamedQuery(clazz.getSimpleName() + ".findById");
         query.setParameter("id", id);
