@@ -42,9 +42,6 @@ public class EvaluationPerformance implements Serializable {
     @Column(name="update_time")
     private Timestamp updateTime;
 
-    @Column(name="EvaluationPerformance_id")
-    private int EvaluationPerformanceId;
-
     private String week;
 
     public EvaluationPerformance() {
@@ -106,11 +103,11 @@ public class EvaluationPerformance implements Serializable {
         this.semester = semester;
     }
 
-    public short getToatl() {
+    public short getTotal() {
         return this.total;
     }
 
-    public void setToatl(short toatl) {
+    public void setTotal(short toatl) {
         this.total = toatl;
     }
 
@@ -120,14 +117,6 @@ public class EvaluationPerformance implements Serializable {
 
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public int getEvaluationPerformanceId() {
-        return this.EvaluationPerformanceId;
-    }
-
-    public void setEvaluationPerformanceId(int EvaluationPerformanceId) {
-        this.EvaluationPerformanceId = EvaluationPerformanceId;
     }
 
     public String getWeek() {

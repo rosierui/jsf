@@ -13,39 +13,40 @@
     </ui:define>
     <ui:define name="body">
         <h:form id="jsfForm">
-            <p:messages id="messages" autoUpdate="false" />
+            <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
             <h:panelGrid columns="4" cellpadding="5" >
                 <h:outputLabel value="Student Name:" />
                 <h:outputText value="John" />
-                <h:outputLabel value="Week:" style="margin-left:150px"/>
-                <p:selectOneMenu id="week" value="#{userroleView.selectedCities}" label="Cities"
+                <h:outputLabel value="Semester:" style="margin-left:150px"/>
+                <p:selectOneMenu id="Semester" value="#{performanceView.evaluation.semester}" label="Semesters"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" >
-                    <f:selectItems value="#{userroleView.cities}" />
+                    <f:selectItems value="#{performanceView.semesters}" var="s" itemLabel="#{s.name}" itemValue="#{s.alias}" />
                 </p:selectOneMenu>
+
                 <h:outputLabel value="Tutor Name:" />
                 <h:outputText value="Yong" />
+                <h:outputLabel value="Week:" style="margin-left:150px"/>
+                <p:selectOneMenu id="week" value="#{performanceView.evaluation.week}" label="Weeks"
+                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px" >
+                    <f:selectItems value="#{performanceView.weeks}" var="w" itemLabel="#{w.week}" itemValue="#{w.week}" />
+                </p:selectOneMenu>
             </h:panelGrid>
             <p:panelGrid columns="4" cellpadding="5" id="panel1">
                 <h:outputLabel for="attendance" value="Attendance (4)" />
                 <h:outputLabel for="participation" value="Prticipation (3)" />
                 <h:outputLabel for="performance" value="Performance (3)" />
                 <h:outputLabel for="total" value="Total (10)" />
-                <p:inputText id="attendance" size="5" />
-                <p:inputText id="participation" size="5" />
-                <p:inputText id="performance" size="5" />
-                <p:inputText id="total" size="5" />
+                <p:inputText id="attendance" value="#{performanceView.evaluation.attendance}" size="5" />
+                <p:inputText id="participation" value="#{performanceView.evaluation.participation}" size="5" />
+                <p:inputText id="performance" value="#{performanceView.evaluation.performance}" size="5" />
+                <p:inputText id="total" value="#{performanceView.evaluation.total}" size="5" />
             </p:panelGrid>
             <h:panelGrid columns="1" cellpadding="5" id="panel2">
                 <h:outputLabel for="note" value="Note" />
-                <p:inputTextarea id="note" rows="6" cols="55" />
+                <p:inputTextarea id="note" value="#{performanceView.evaluation.note}" rows="6" cols="55" />
             </h:panelGrid>
-            <p:commandButton value="Submit" update="display jsfForm" actionListener="#{userroleView.save}" />
+            <p:commandButton value="Submit" update="messages" actionListener="#{performanceView.save}" />
 
-            <p:outputPanel id="display" style="width:250px;padding-left:5px;margin-top:10px">
-                <p:dataList value="#{userroleView.selectedCities}" var="city" emptyMessage="No cities selected">
-                    #{city}
-                </p:dataList>
-            </p:outputPanel>
         </h:form>
     </ui:define>
 </ui:composition>

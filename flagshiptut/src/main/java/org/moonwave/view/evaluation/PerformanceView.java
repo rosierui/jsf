@@ -8,10 +8,10 @@ import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.bo.GenericBO;
 import org.moonwave.jpa.model.EvaluationObjective;
+import org.moonwave.jpa.model.EvaluationPerformance;
 import org.moonwave.jpa.model.Semester;
 import org.moonwave.jpa.model.Week;
 import org.moonwave.view.BaseView;
-import org.moonwave.view.content.GroupPostView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,18 +23,18 @@ import org.slf4j.LoggerFactory;
  */
 @ManagedBean
 @ViewScoped
-public class SelfEvaluationView extends BaseView {
+public class PerformanceView extends BaseView {
 
     private static final long serialVersionUID = 1L;
-    static final Logger LOG = LoggerFactory.getLogger(SelfEvaluationView.class);
+    static final Logger LOG = LoggerFactory.getLogger(PerformanceView.class);
 
-    EvaluationObjective evaluation;
+    EvaluationPerformance evaluation;
     List<Semester> semesters;
     List<Week> weeks;
 
     @PostConstruct
     public void init() {
-        evaluation =  new EvaluationObjective();
+        evaluation =  new EvaluationPerformance();
         GenericBO<Semester> bo = new GenericBO<>(Semester.class);
         semesters = bo.findAll();
 
@@ -42,11 +42,11 @@ public class SelfEvaluationView extends BaseView {
         weeks = weekbo.findAll();
     }
 
-    public EvaluationObjective getEvaluation() {
+    public EvaluationPerformance getEvaluation() {
         return evaluation;
     }
 
-    public void setEvaluation(EvaluationObjective evaluation) {
+    public void setEvaluation(EvaluationPerformance evaluation) {
         this.evaluation = evaluation;
     }
 
