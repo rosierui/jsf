@@ -14,8 +14,8 @@ import java.sql.Timestamp;
 @Table(name="Course_reg")
 
 @NamedQueries({
-    @NamedQuery(name="CourseRegReg.findAll", query="SELECT c FROM CourseReg c"),
-    @NamedQuery(name="CourseRegReg.findById", query="SELECT c FROM CourseRegReg c WHERE c.id = :id")
+    @NamedQuery(name="CourseReg.findAll", query="SELECT c FROM CourseReg c"),
+    @NamedQuery(name="CourseReg.findById", query="SELECT c FROM CourseReg c WHERE c.id = :id")
 })
 
 public class CourseReg implements Serializable {

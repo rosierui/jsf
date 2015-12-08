@@ -13,7 +13,7 @@ import java.util.Date;
 @Table(name="semester")
 
 @NamedQueries({
-    @NamedQuery(name="Semester.findAll",  query="SELECT s FROM Semester s"),
+    @NamedQuery(name="Semester.findAll",  query="SELECT s FROM Semester s order by s.id"),
     @NamedQuery(name="Semester.findById", query="SELECT s FROM Semester s WHERE s.id = :id")
 })
 

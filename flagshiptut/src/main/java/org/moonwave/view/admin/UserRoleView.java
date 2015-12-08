@@ -50,7 +50,7 @@ public class UserRoleView extends BaseView {
             boolean setup = true;
         }
         // get a list of roles
-        roles = new RoleBO().getAllRoles();
+        roles = new RoleBO().findAllRoles();
         // get a list of all users
         users = new UserBO().findAllUsers();
         // get a list of users for the first role

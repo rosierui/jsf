@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name="week")
 
 @NamedQueries({
-    @NamedQuery(name="Week.findAll",  query="SELECT w FROM Week w"),
+    @NamedQuery(name="Week.findAll",  query="SELECT w FROM Week w order by w.id"),
     @NamedQuery(name="Week.findById", query="SELECT w FROM Week w WHERE w.id = :id")
 })
 

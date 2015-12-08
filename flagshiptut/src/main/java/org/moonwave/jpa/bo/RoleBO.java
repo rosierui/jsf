@@ -20,7 +20,7 @@ public class RoleBO extends BaseBO {
     private static final long serialVersionUID = 1L;
     static final Logger LOG = LoggerFactory.getLogger(RoleBO.class);
 
-    public List<Role> getAllRoles() {
+    public List<Role> findAllRoles() {
         Query query = super.getEntityManager().createNamedQuery("Role.findAll", Role.class);
         @SuppressWarnings("unchecked")
         List<Role> list = query.getResultList();

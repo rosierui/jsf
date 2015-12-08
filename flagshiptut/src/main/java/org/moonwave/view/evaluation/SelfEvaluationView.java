@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.moonwave.jpa.bo.GenericBO;
 import org.moonwave.jpa.model.EvaluationObjective;
 import org.moonwave.jpa.model.Semester;
 import org.moonwave.jpa.model.Week;
@@ -29,12 +30,16 @@ public class SelfEvaluationView extends BaseView {
 
     EvaluationObjective evaluation;
     List<Semester> semesters;
-    List<Week> week;
+    List<Week> weeks;
 
     @PostConstruct
     public void init() {
         evaluation =  new EvaluationObjective();
-//        semesters = 
+        GenericBO<Semester> bo = new GenericBO<>(Semester.class);
+        semesters = bo.findAll();
+
+        GenericBO<Week> weekbo = new GenericBO<>(Week.class);
+        weeks = weekbo.findAll();
     }
 
     public EvaluationObjective getEvaluation() {
@@ -45,8 +50,24 @@ public class SelfEvaluationView extends BaseView {
         this.evaluation = evaluation;
     }
 
+    public List<Semester> getSemesters() {
+        return semesters;
+    }
+
+    public void setSemesters(List<Semester> semesters) {
+        this.semesters = semesters;
+    }
+
+    public List<Week> getWeeks() {
+        return weeks;
+    }
+
+    public void setWeeks(List<Week> weeks) {
+        this.weeks = weeks;
+    }
+
     public String save() {
-    	// validation
+        // validation
 //        if (StringUtil.nullOrEmpty(subject)) {
 //            super.error("Subject is empty");
 //            return null;

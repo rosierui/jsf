@@ -17,13 +17,19 @@
             <h:panelGrid columns="4" cellpadding="5" >
                 <h:outputLabel value="Student Name:" />
                 <h:outputText value="John" />
-                <h:outputLabel value="Week:" style="margin-left:150px"/>
-                <p:selectOneMenu id="week" value="#{userroleView.selectedCities}" label="Cities"
+                <h:outputLabel value="Semester:" style="margin-left:150px"/>
+                <p:selectOneMenu id="Semester" value="#{selfEvaluationView.evaluation.semester}" label="Semesters"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" >
-                    <f:selectItems value="#{userroleView.cities}" />
+                    <f:selectItems value="#{selfEvaluationView.semesters}" var="s" itemLabel="#{s.name}" itemValue="#{s.alias}" />
                 </p:selectOneMenu>
+
                 <h:outputLabel value="Tutor Name:" />
                 <h:outputText value="Yong" />
+                <h:outputLabel value="Week:" style="margin-left:150px"/>
+                <p:selectOneMenu id="week" value="#{selfEvaluationView.evaluation.week}" label="Weeks"
+                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px" >
+                    <f:selectItems value="#{selfEvaluationView.weeks}" var="w" itemLabel="#{w.week}" itemValue="#{w.week}" />
+                </p:selectOneMenu>
             </h:panelGrid>
 
             <h:outputLabel value="${message.eval_part1}" />
@@ -41,7 +47,7 @@
                 <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart13}" />
                 <h:panelGroup>
                     <h:outputText value="${message.other_comments}" /><br/>
-                    <p:inputTextarea value="" rows="6" cols="60"/>
+                    <p:inputTextarea value="#{selfEvaluationView.evaluation.evalPart1Comments}" rows="6" cols="60"/>
                 </h:panelGroup>
                 <h:outputText value="" />
                 <h:outputText value="" />
@@ -63,7 +69,7 @@
                 <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart23}" />
                 <h:panelGroup>
                     <h:outputText value="${message.other_comments}" /><br/>
-                    <p:inputTextarea value="" rows="6" cols="60"/>
+                    <p:inputTextarea value="#{selfEvaluationView.evaluation.evalPart2Comments}" rows="6" cols="60"/>
                 </h:panelGroup>
                 <h:outputText value="" />
                 <h:outputText value="" />
@@ -85,7 +91,7 @@
                 <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart33}" />
                 <h:panelGroup>
                     <h:outputText value="${message.other_comments}" /><br/>
-                    <p:inputTextarea value="" rows="6" cols="60"/>
+                    <p:inputTextarea value="#{selfEvaluationView.evaluation.evalPart3Comments}" rows="6" cols="60"/>
                 </h:panelGroup>
                 <h:outputText value="" />
                 <h:outputText value="" />
