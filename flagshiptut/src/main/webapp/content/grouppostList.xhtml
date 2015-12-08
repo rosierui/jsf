@@ -50,34 +50,24 @@
                     <h:outputText value="#{post.published}" />
                 </p:column>
                 <p:column headerText="${label.action}">
-                    <p:commandButton
-                        id="addUserToRole"
-                        ajax="true"
-                        action="#{groupPostListView.addUserToRole}"
-                        value="#{label.addToSelectedRole}"
-                        title="#{label.addToSelectedRole}"
-                        update="@([id$=divUser]) @([id$=msgPanel])"
-                        rendered="true"
-                        disabled="false">
-                        <f:param name="editCycle" value="true"/>
-                        <f:param name="faces-redirect" value="false"/>
-
-                        <f:setPropertyActionListener target="#{groupPostListView.selectedPostId}" value="#{post.id}" />
-                    </p:commandButton>
-                    <p:commandButton value="View Details" type="button" ajax="true" onclick="PF('dlgDetails').show();" > 
+                    <p:commandButton value="View Details" ajax="true" update="@([id$=dlgDetails])" oncomplete="PF('dlgDetails').show();" > 
                         <f:setPropertyActionListener target="#{groupPostListView.selectedPostId}" value="#{post.id}" />
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
 
-            <p:dialog header="Group Post Details" widgetVar="dlgDetails" modal="true"
+            <p:dialog header="Group Post Details" id="dlgDetails" widgetVar="dlgDetails" modal="true"
                       position="center" closable="true" closeOnEscape="true" resizable="true"
                       showEffect="explode" hideEffect="fade" width="600" height="400">
                 <h:panelGrid columns="2" cellpadding="5" id="divPost">
-                    <h:outputLabel value="${label.subject}:" />
-                    <h:outputText value="#{groupPostListView.current.subject}" />
                     <h:outputLabel value="${label.date}:" />
                     <h:outputText value="#{groupPostListView.current.createTime}" />
+                    <h:outputLabel value="${label.published}:" />
+                    <h:outputText value="#{groupPostListView.current.published}" />
+                    <h:outputLabel value="${label.subject}:" />
+                    <h:outputText value="#{groupPostListView.current.subject}" />
+                    <h:outputLabel value="" />
+                    <h:outputText value="#{groupPostListView.current.body}" escape="false"/>
                 </h:panelGrid>
             </p:dialog>
         </h:form>
