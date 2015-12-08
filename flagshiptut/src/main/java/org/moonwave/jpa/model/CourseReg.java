@@ -12,7 +12,12 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="Course_reg")
-@NamedQuery(name="CourseRegReg.findAll", query="SELECT c FROM CourseReg c")
+
+@NamedQueries({
+    @NamedQuery(name="CourseRegReg.findAll", query="SELECT c FROM CourseReg c"),
+    @NamedQuery(name="CourseRegReg.findById", query="SELECT c FROM CourseRegReg c WHERE c.id = :id")
+})
+
 public class CourseReg implements Serializable {
     private static final long serialVersionUID = 1L;
 

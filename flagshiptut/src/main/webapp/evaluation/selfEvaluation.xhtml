@@ -13,7 +13,7 @@
     </ui:define>
     <ui:define name="body">
         <h:form id="jsfForm">
-            <p:messages id="messages" autoUpdate="false" />
+            <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
             <h:panelGrid columns="4" cellpadding="5" >
                 <h:outputLabel value="Student Name:" />
                 <h:outputText value="John" />
@@ -27,25 +27,21 @@
             </h:panelGrid>
 
             <h:outputLabel value="${message.eval_part1}" />
-            <p:panelGrid columns="3" cellpadding="5" id="panel1">
+            <p:panelGrid columns="2" cellpadding="5" id="panel1">
                 <h:outputLabel value="Evaluation" />
-                <h:outputLabel value="Student" />
-                <h:outputLabel value="Tutor" />
+                <h:outputLabel value="Student/Tutor" />
 
                 <h:outputText value="${message.eval_part1_1}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart1_1s}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart1_1t}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart11}" />
 
                 <h:outputText value="${message.eval_part1_2}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart1_2s}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart1_2t}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart12}" />
 
                 <h:outputText value="${message.eval_part1_3}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart1_3s}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart1_3t}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart13}" />
                 <h:panelGroup>
                     <h:outputText value="${message.other_comments}" /><br/>
-                    <p:inputTextarea value="#{selfEvaluationView.evalPart1_comments}" rows="6" cols="60"/>
+                    <p:inputTextarea value="" rows="6" cols="60"/>
                 </h:panelGroup>
                 <h:outputText value="" />
                 <h:outputText value="" />
@@ -53,25 +49,21 @@
 
             <br/>
             <h:outputLabel value="${message.eval_part2}" />
-            <p:panelGrid columns="3" cellpadding="5" id="panel2">
+            <p:panelGrid columns="2" cellpadding="5" id="panel2">
                 <h:outputLabel value="Evaluation" />
-                <h:outputLabel value="Student" />
-                <h:outputLabel value="Tutor" />
+                <h:outputLabel value="Student/Tutor" />
 
                 <h:outputText value="${message.eval_part2_1}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart2_1s}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart2_1t}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart21}" />
 
                 <h:outputText value="${message.eval_part2_2}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart2_2s}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart2_2t}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart22}" />
 
                 <h:outputText value="${message.eval_part2_3}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart2_3s}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart2_3t}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart23}" />
                 <h:panelGroup>
                     <h:outputText value="${message.other_comments}" /><br/>
-                    <p:inputTextarea value="#{selfEvaluationView.evalPart2_comments}" rows="6" cols="60"/>
+                    <p:inputTextarea value="" rows="6" cols="60"/>
                 </h:panelGroup>
                 <h:outputText value="" />
                 <h:outputText value="" />
@@ -79,37 +71,28 @@
 
             <br/>
             <h:outputLabel value="${message.eval_part3}" />
-            <p:panelGrid columns="3" cellpadding="5" id="panel3">
+            <p:panelGrid columns="2" cellpadding="5" id="panel3">
                 <h:outputLabel value="Evaluation" />
-                <h:outputLabel value="Student" />
-                <h:outputLabel value="Tutor" />
+                <h:outputLabel value="Student/Tutor" />
 
                 <h:outputText value="${message.eval_part3_1}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart3_1s}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart3_1t}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart31}" />
 
                 <h:outputText value="${message.eval_part3_2}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart3_2s}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart3_2t}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart32}" />
 
                 <h:outputText value="${message.eval_part3_3}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart3_3s}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evalPart3_3t}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart33}" />
                 <h:panelGroup>
                     <h:outputText value="${message.other_comments}" /><br/>
-                    <p:inputTextarea value="#{selfEvaluationView.evalPart3_comments}" rows="6" cols="60"/>
+                    <p:inputTextarea value="" rows="6" cols="60"/>
                 </h:panelGroup>
                 <h:outputText value="" />
                 <h:outputText value="" />
             </p:panelGrid>
 
-            <p:commandButton value="Submit" update="display jsfForm" actionListener="#{userroleView.save}" />
+            <p:commandButton value="Submit" update="messages" actionListener="#{selfEvaluationView.save}" />
 
-            <p:outputPanel id="display" style="width:250px;padding-left:5px;margin-top:10px">
-                <p:dataList value="#{userroleView.selectedCities}" var="city" emptyMessage="No cities selected">
-                    #{city}
-                </p:dataList>
-            </p:outputPanel>
         </h:form>
     </ui:define>
 </ui:composition>

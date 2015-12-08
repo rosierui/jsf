@@ -11,7 +11,12 @@ import java.util.Date;
  */
 @Entity
 @Table(name="semester_no_school_day")
-@NamedQuery(name="SemesterNoSchoolDay.findAll", query="SELECT s FROM SemesterNoSchoolDay s")
+
+@NamedQueries({
+    @NamedQuery(name="SemesterNoSchoolDay.findAll",  query="SELECT s FROM SemesterNoSchoolDay s"),
+    @NamedQuery(name="SemesterNoSchoolDay.findById", query="SELECT w FROM SemesterNoSchoolDay w WHERE w.id = :id")
+})
+
 public class SemesterNoSchoolDay implements Serializable {
     private static final long serialVersionUID = 1L;
 

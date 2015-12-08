@@ -12,7 +12,12 @@ import java.util.List;
  */
 @Entity
 @Table(name="group_post")
-@NamedQuery(name="GroupPost.findAll", query="SELECT g FROM GroupPost g")
+
+@NamedQueries({
+    @NamedQuery(name="GroupPost.findAll", query="SELECT g FROM GroupPost g"),
+    @NamedQuery(name="GroupPost.findById", query="SELECT g FROM GroupPost g WHERE g.id = :id")
+})
+
 public class GroupPost implements Serializable {
     private static final long serialVersionUID = 1L;
 

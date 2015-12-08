@@ -10,7 +10,12 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="week")
-@NamedQuery(name="Week.findAll", query="SELECT w FROM Week w")
+
+@NamedQueries({
+    @NamedQuery(name="Week.findAll",  query="SELECT w FROM Week w"),
+    @NamedQuery(name="Week.findById", query="SELECT w FROM Week w WHERE w.id = :id")
+})
+
 public class Week implements Serializable {
     private static final long serialVersionUID = 1L;
 

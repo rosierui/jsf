@@ -1,0 +1,64 @@
+package org.moonwave.view.evaluation;
+
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
+import org.moonwave.jpa.model.EvaluationObjective;
+import org.moonwave.jpa.model.Semester;
+import org.moonwave.jpa.model.Week;
+import org.moonwave.view.BaseView;
+import org.moonwave.view.content.GroupPostView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * SelfEvaluation View
+ *
+ * @author moonwave
+ *
+ */
+@ManagedBean
+@ViewScoped
+public class SelfEvaluationView extends BaseView {
+
+    private static final long serialVersionUID = 1L;
+    static final Logger LOG = LoggerFactory.getLogger(GroupPostView.class);
+
+    EvaluationObjective evaluation;
+    List<Semester> semesters;
+    List<Week> week;
+
+    @PostConstruct
+    public void init() {
+        evaluation =  new EvaluationObjective();
+//        semesters = 
+    }
+
+    public EvaluationObjective getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(EvaluationObjective evaluation) {
+        this.evaluation = evaluation;
+    }
+
+    public String save() {
+    	// validation
+//        if (StringUtil.nullOrEmpty(subject)) {
+//            super.error("Subject is empty");
+//            return null;
+//        }
+        try {
+            super.getBasebo().persist(evaluation);
+
+        } catch (Exception e) {
+            super.error("Sorry, an error occurred, please contact your administrator");
+            LOG.error("", e);
+        }
+        return null;
+    }
+
+}

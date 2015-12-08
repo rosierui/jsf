@@ -10,7 +10,12 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="group_post_to_group")
-@NamedQuery(name="GroupPostToGroup.findAll", query="SELECT g FROM GroupPostToGroup g")
+
+@NamedQueries({
+    @NamedQuery(name="GroupPostToGroup.findAll",  query="SELECT g FROM GroupPostToGroup g"),
+    @NamedQuery(name="GroupPostToGroup.findById", query="SELECT g FROM GroupPostToGroup g WHERE g.id = :id")
+})
+
 public class GroupPostToGroup implements Serializable {
     private static final long serialVersionUID = 1L;
 

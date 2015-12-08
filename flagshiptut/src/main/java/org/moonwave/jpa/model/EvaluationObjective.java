@@ -11,7 +11,12 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="evaluation_objective")
-@NamedQuery(name="EvaluationObjective.findAll", query="SELECT e FROM EvaluationObjective e")
+
+@NamedQueries({
+    @NamedQuery(name="EvaluationObjective.findAll",  query="SELECT e FROM EvaluationObjective e"),
+    @NamedQuery(name="EvaluationObjective.findById", query="SELECT e FROM EvaluationObjective e WHERE e.id = :id")
+})
+
 public class EvaluationObjective implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -13,7 +13,12 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="calendar_event")
-@NamedQuery(name="CalendarEvent.findAll", query="SELECT c FROM CalendarEvent c")
+
+@NamedQueries({
+    @NamedQuery(name="CalendarEvent.findAll",  query="SELECT c FROM CalendarEvent c"),
+    @NamedQuery(name="CalendarEvent.findById", query="SELECT c FROM CalendarEvent c WHERE c.id = :id")
+})
+
 public class CalendarEvent implements Serializable {
     private static final long serialVersionUID = 1L;
 

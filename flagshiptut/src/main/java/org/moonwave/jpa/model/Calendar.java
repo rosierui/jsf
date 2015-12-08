@@ -11,7 +11,12 @@ import java.util.Date;
  */
 @Entity
 @Table(name="calendar")
-@NamedQuery(name="Calendar.findAll", query="SELECT c FROM Calendar c")
+
+@NamedQueries({
+    @NamedQuery(name="Calendar.findAll",  query="SELECT c FROM Calendar c"),
+    @NamedQuery(name="Calendar.findById", query="SELECT c FROM Calendar c WHERE c.id = :id")
+})
+
 public class Calendar implements Serializable {
     private static final long serialVersionUID = 1L;
 
