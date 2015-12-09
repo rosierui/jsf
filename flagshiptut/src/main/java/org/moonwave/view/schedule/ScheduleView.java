@@ -192,6 +192,7 @@ public class ScheduleView extends BaseView {
     }
 
     public void onDateSelect(SelectEvent selectEvent) {
+    	Date date = (Date) selectEvent.getObject();
         event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
     }
 
