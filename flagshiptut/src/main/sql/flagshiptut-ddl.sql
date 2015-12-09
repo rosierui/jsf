@@ -180,32 +180,24 @@ CREATE TABLE semester_no_school_day (
 CREATE UNIQUE INDEX semester_no_school_day_idx1 ON semester_no_school_day (semester, no_school_day);
 
 -- -----------------------------------------------------------------------------
--- Create table calendar
+-- Create table schedule
 
-CREATE TABLE calendar (
+CREATE TABLE schedule (
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    semester                VARCHAR(15) REFERENCES semester(alias),
-    week                    VARCHAR(15) REFERENCES week(week),
-    `date`                  DATE,
-    UNIQUE (semester, week)
-);
-
--- -----------------------------------------------------------------------------
--- Create table calendar_event
-
-CREATE TABLE calendar_event (
-    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    user_id                 INTEGER REFERENCES `user`(user_id),
-    semester                VARCHAR(15) REFERENCES semester(alias),
-    week                    VARCHAR(15) REFERENCES week(week),
-    day                     DATE NOT NULL,
-    start_time              TIME NOT NULL,
-    end_time                TIME NOT NULL,
+    user_id                 INTEGER REFERENCES `user` (user_id),
+    tutor_id                INTEGER REFERENCES `user` (user_id),
     event                   VARCHAR(255),
+    start_time              DATETIME NOT NULL,
+    end_time                DATETIME NOT NULL,
+    all_day_event           BOOLEAN, -- True: all day event
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    create_time             TIMESTAMP
+    create_time             TIMESTAMP,
+    UNIQUE (user_id, tutor_id, start_time)
 );
 
+CREATE INDEX schedule_idx1 ON schedule (user_id, start_time, end_time);
+CREATE INDEX schedule_idx2 ON schedule (tutor_id, start_time, end_time);
+CREATE INDEX schedule_idx3 ON schedule (user_id, tutor_id, start_time, end_time);
 
 -- -----------------------------------------------------------------------------
 -- Create table announcement

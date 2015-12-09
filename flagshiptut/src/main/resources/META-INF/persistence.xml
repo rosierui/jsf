@@ -17,12 +17,12 @@
         <class>org.moonwave.jpa.model.Announcement</class>
         <class>org.moonwave.jpa.model.GroupPost</class>
         <class>org.moonwave.jpa.model.GroupPostToGroup</class>
-        <class>org.moonwave.jpa.model.Calendar</class>
-        <class>org.moonwave.jpa.model.CalendarEvent</class>
+        <class>org.moonwave.jpa.model.Schedule</class>
         <class>org.moonwave.jpa.model.EvaluationObjective</class>
         <class>org.moonwave.jpa.model.EvaluationPerformance</class>
         <class>org.moonwave.jpa.model.Course</class>
         <class>org.moonwave.jpa.model.CourseReg</class>
+        <class>model.Schedule</class>
 
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
 
