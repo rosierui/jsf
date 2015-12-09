@@ -58,7 +58,7 @@
 
             <p:dialog header="Group Post Details" id="dlgDetails" widgetVar="dlgDetails" modal="true"
                       position="center" closable="true" closeOnEscape="true" resizable="true"
-                      showEffect="explode" hideEffect="fade" width="600" height="400">
+                      showEffect="clip" hideEffect="clip" width="600" height="400">
                 <h:panelGrid columns="2" cellpadding="5" id="divPost">
                     <h:outputLabel value="${label.date}:" />
                     <h:outputText value="#{groupPostListView.current.createTime}" />
