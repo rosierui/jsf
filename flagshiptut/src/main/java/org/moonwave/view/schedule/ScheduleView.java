@@ -178,24 +178,6 @@ public class ScheduleView extends BaseView {
         this.event = event;
     }
 
-    public void addEvent(ActionEvent actionEvent) {
-        if(event.getId() == null)
-            eventModel.addEvent(event);
-        else
-            eventModel.updateEvent(event);
-
-        event = new DefaultScheduleEvent();
-    }
-
-    public void onEventSelect(SelectEvent selectEvent) {
-        event = (ScheduleEvent) selectEvent.getObject();
-    }
-
-    public void onDateSelect(SelectEvent selectEvent) {
-    	Date date = (Date) selectEvent.getObject();
-        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
-    }
-
     public void onEventMove(ScheduleEntryMoveEvent event) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event moved", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
         addMessage(message);
@@ -209,4 +191,51 @@ public class ScheduleView extends BaseView {
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+
+    /**
+     * Select an existing event
+     *
+     * @param selectEvent
+     */
+    public void onEventSelect(SelectEvent selectEvent) {
+        event = (ScheduleEvent) selectEvent.getObject();
+    }
+
+    /**
+     * Select a date that does not have an event associated with it.
+     * This allows a user to create a new event
+     * 
+     * @param selectEvent
+     */
+    public void onDateSelect(SelectEvent selectEvent) {
+    	Date date = (Date) selectEvent.getObject();
+        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+    }
+
+    public void onViewChange(SelectEvent selectEvent) {
+    	Object obj = selectEvent.getObject();
+    	Object tt = obj;
+        String viewName = selectEvent.getObject().toString();
+    }
+
+    public void onTodaySelect(SelectEvent selectEvent) {
+    	Object obj = selectEvent.getObject();
+    	Object tt = obj;
+    }
+
+    /**
+     * Add a new event or update existing event
+     *
+     * @param actionEvent
+     */
+    public void saveEvent(ActionEvent actionEvent) {
+    	String sid = event.getId();
+        if (event.getId() == null)
+            eventModel.addEvent(event);
+        else
+            eventModel.updateEvent(event);
+
+        event = new DefaultScheduleEvent();
+    }
+
 }

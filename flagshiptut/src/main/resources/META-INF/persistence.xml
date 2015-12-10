@@ -22,7 +22,6 @@
         <class>org.moonwave.jpa.model.EvaluationPerformance</class>
         <class>org.moonwave.jpa.model.Course</class>
         <class>org.moonwave.jpa.model.CourseReg</class>
-        <class>model.Schedule</class>
 
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
 
