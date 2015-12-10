@@ -9,6 +9,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import org.moonwave.jpa.model.Schedule;
 import org.moonwave.view.BaseView;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
@@ -208,19 +209,19 @@ public class ScheduleView extends BaseView {
      * @param selectEvent
      */
     public void onDateSelect(SelectEvent selectEvent) {
-    	Date date = (Date) selectEvent.getObject();
+        Date date = (Date) selectEvent.getObject();
         event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
     }
 
     public void onViewChange(SelectEvent selectEvent) {
-    	Object obj = selectEvent.getObject();
-    	Object tt = obj;
+        Object obj = selectEvent.getObject();
+        Object tt = obj;
         String viewName = selectEvent.getObject().toString();
     }
 
     public void onTodaySelect(SelectEvent selectEvent) {
-    	Object obj = selectEvent.getObject();
-    	Object tt = obj;
+        Object obj = selectEvent.getObject();
+        Object tt = obj;
     }
 
     /**
@@ -229,13 +230,24 @@ public class ScheduleView extends BaseView {
      * @param actionEvent
      */
     public void saveEvent(ActionEvent actionEvent) {
-    	String sid = event.getId();
-        if (event.getId() == null)
+        String sid = event.getId();
+        if (event.getId() == null) {
             eventModel.addEvent(event);
+            Schedule s = this.packageData(event);
+        }
         else
             eventModel.updateEvent(event);
 
         event = new DefaultScheduleEvent();
     }
 
+    private Schedule packageData(ScheduleEvent event) {
+        Schedule s = new Schedule();
+        s.setAllDayEvent(event.isAllDay());
+        s.setCreateTime(new java.sql.Timestamp(event.getStartDate().getTime()));
+        s.setStartTime(new java.sql.Timestamp(event.getStartDate().getTime()));
+        s.setEndTime(new java.sql.Timestamp(event.getEndDate().getTime()));
+        s.setEvent(event.getTitle());
+        return s;
+    }
 }

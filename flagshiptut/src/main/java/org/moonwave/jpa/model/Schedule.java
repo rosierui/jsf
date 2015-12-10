@@ -43,7 +43,7 @@ public class Schedule implements Serializable {
     private Date endTime;
 
     @Column(name="all_day_event")
-    private byte allDayEvent;
+    private Boolean allDayEvent;
 
     @Column(name="update_time")
     private Timestamp updateTime;
@@ -102,11 +102,11 @@ public class Schedule implements Serializable {
         this.endTime = endTime;
     }
 
-    public byte getAllDayEvent() {
+    public Boolean getAllDayEvent() {
         return allDayEvent;
     }
 
-    public void setAllDayEvent(byte allDayEvent) {
+    public void setAllDayEvent(Boolean allDayEvent) {
         this.allDayEvent = allDayEvent;
     }
 
