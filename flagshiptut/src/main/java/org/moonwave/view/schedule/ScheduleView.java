@@ -2,6 +2,8 @@ package org.moonwave.view.schedule;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -9,7 +11,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import org.moonwave.jpa.bo.UserBO;
 import org.moonwave.jpa.model.Schedule;
+import org.moonwave.jpa.model.User;
 import org.moonwave.view.BaseView;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
@@ -35,19 +39,20 @@ public class ScheduleView extends BaseView {
 
     private ScheduleEvent event = new DefaultScheduleEvent();
 
-    private String tutor;
-
-    private String student;
+    private List<User> students;
+    private List<User> tutors;
+    private String tutorId;
+    private String studentId;
 
     @PostConstruct
     public void init() {
-        tutor = "Jerry Gao";
-        student = "Lawrence Smith";
+        tutors = new UserBO().findAllTutors();
+        students = new UserBO().findAllStudents();
 
         eventModel = new DefaultScheduleModel();
-        eventModel.addEvent(new DefaultScheduleEvent("Champions League Match", previousDay8Pm(), previousDay11Pm()));
-        eventModel.addEvent(new DefaultScheduleEvent("Birthday Party", today1Pm(), today6Pm()));
-        eventModel.addEvent(new DefaultScheduleEvent("Breakfast at Tiffanys", nextDay9Am(), nextDay11Am()));
+        eventModel.addEvent(new DefaultScheduleEvent("Champions - today", previousDay8Pm(), previousDay11Pm(), "fc-foday"));
+        eventModel.addEvent(new DefaultScheduleEvent("Birthday - filled", today1Pm(), today6Pm(), "filled"));
+        eventModel.addEvent(new DefaultScheduleEvent("Breakfast - available", nextDay9Am(), nextDay11Am(), "available"));
         eventModel.addEvent(new DefaultScheduleEvent("Plant the new garden stuff", theDayAfter3Pm(), fourDaysLater3pm()));
 
         lazyEventModel = new LazyScheduleModel() {
@@ -63,20 +68,36 @@ public class ScheduleView extends BaseView {
         };
     }
 
-    public String getTutor() {
-        return tutor;
+    public String getTutorId() {
+        return tutorId;
     }
 
-    public void setTutor(String tutor) {
-        this.tutor = tutor;
+    public void setTutorId(String tutor) {
+        this.tutorId = tutor;
     }
 
-    public String getStudent() {
-        return student;
+    public String getStudentId() {
+        return studentId;
     }
 
-    public void setStudent(String student) {
-        this.student = student;
+    public void setStudentId(String student) {
+        this.studentId = student;
+    }
+
+    public List<User> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<User> students) {
+        this.students = students;
+    }
+
+    public List<User> getTutors() {
+        return tutors;
+    }
+
+    public void setTutors(List<User> tutors) {
+        this.tutors = tutors;
     }
 
     public Date getRandomDate(Date base) {

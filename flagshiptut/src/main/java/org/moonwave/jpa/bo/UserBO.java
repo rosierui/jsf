@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import org.moonwave.jpa.model.Role;
 import org.moonwave.jpa.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,4 +109,23 @@ public class UserBO extends BaseBO {
         super.release();
         return list;
     }
+
+    @SuppressWarnings("unchecked")
+    public List<User> findAllStudents() {
+        Query query = super.getEntityManager().createNamedQuery("Role.findStudents", Role.class);
+        List<Role> roles = query.getResultList();
+        List<User> list = roles.get(0).getUsers();
+        super.release();
+        return list;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<User> findAllTutors() {
+        Query query = super.getEntityManager().createNamedQuery("Role.findTutors", Role.class);
+        List<Role> roles = query.getResultList();
+        List<User> list = roles.get(0).getUsers();
+        super.release();
+        return list;
+    }
+
 }

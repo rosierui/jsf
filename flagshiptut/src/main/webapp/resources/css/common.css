@@ -1,0 +1,27 @@
+.fc-today  /* today */
+{
+    background-image: linear-gradient(to bottom, #44565F, #0077b3) !important;
+}
+
+/*
+   http://stackoverflow.com/questions/12001181/change-the-color-of-primefaces-scheduler-event
+*/
+
+.filled .fc-event-inner {
+    background: red;
+}
+.available .fc-event-inner {
+   background: green;
+ }
+
+
+/*
+The following not good
+ .emp1 .fc-event-skin {
+    background: red;
+}
+.emp2 .fc-event-skin {
+   background: green;
+ }
+*/
+

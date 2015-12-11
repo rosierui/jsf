@@ -14,7 +14,9 @@ import java.util.List;
 
 @NamedQueries({
     @NamedQuery(name="Role.findAll",  query="SELECT r FROM Role r"),
-    @NamedQuery(name="Role.findById", query="SELECT r FROM Role r WHERE r.id = :id")
+    @NamedQuery(name="Role.findById", query="SELECT r FROM Role r WHERE r.id = :id"),
+    @NamedQuery(name="Role.findStudents", query="SELECT r FROM Role r WHERE r.alias = 'student'"),
+    @NamedQuery(name="Role.findTutors", query="SELECT r FROM Role r WHERE r.alias = 'tutor'")
 })
 
 public class Role implements Serializable {
