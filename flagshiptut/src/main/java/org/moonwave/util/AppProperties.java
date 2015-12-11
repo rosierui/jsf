@@ -9,6 +9,8 @@ public class AppProperties {
     public static String KEY_upload_folder      = "upload_folder";
     public static String KEY_normal_attachments = "normal_attachments";
     public static String KEY_default_timezone   = "default_timezone";
+    public static String KEY_all_day_start      = "all_day_start";
+    public static String KEY_all_day_end        = "all_day_end";
 
     Properties properties = new Properties();
     private static AppProperties instance;

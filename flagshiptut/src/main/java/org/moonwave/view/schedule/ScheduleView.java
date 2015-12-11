@@ -14,6 +14,7 @@ import javax.faces.event.ActionEvent;
 import org.moonwave.jpa.bo.UserBO;
 import org.moonwave.jpa.model.Schedule;
 import org.moonwave.jpa.model.User;
+import org.moonwave.util.StringUtil;
 import org.moonwave.view.BaseView;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
@@ -251,6 +252,9 @@ public class ScheduleView extends BaseView {
      * @param actionEvent
      */
     public void saveEvent(ActionEvent actionEvent) {
+        if (!validate(event)) {
+            return;
+        }
         String sid = event.getId();
         if (event.getId() == null) {
             eventModel.addEvent(event);
@@ -261,6 +265,15 @@ public class ScheduleView extends BaseView {
             eventModel.updateEvent(event);
 
         event = new DefaultScheduleEvent();
+    }
+
+    private boolean validate(ScheduleEvent event) {
+        boolean ret = true;
+        if (StringUtil.nullOrEmpty(tutorId)) {
+            super.error("Tutor is empty");
+            ret = false;
+        }
+        return ret;
     }
 
     private Schedule packageData(ScheduleEvent event) {
