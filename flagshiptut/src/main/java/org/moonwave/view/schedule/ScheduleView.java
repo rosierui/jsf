@@ -255,6 +255,7 @@ public class ScheduleView extends BaseView {
         if (event.getId() == null) {
             eventModel.addEvent(event);
             Schedule s = this.packageData(event);
+            super.getBasebo().persist(s);
         }
         else
             eventModel.updateEvent(event);
@@ -264,11 +265,13 @@ public class ScheduleView extends BaseView {
 
     private Schedule packageData(ScheduleEvent event) {
         Schedule s = new Schedule();
+        s.setTutorId(Integer.parseInt(tutorId));
+        s.setUserId(Integer.parseInt(studentId));
+        s.setEvent(event.getTitle());
         s.setAllDayEvent(event.isAllDay());
-        s.setCreateTime(new java.sql.Timestamp(event.getStartDate().getTime()));
         s.setStartTime(new java.sql.Timestamp(event.getStartDate().getTime()));
         s.setEndTime(new java.sql.Timestamp(event.getEndDate().getTime()));
-        s.setEvent(event.getTitle());
+        s.setCreateTime(super.getSqlTimestamp());
         return s;
     }
 }
