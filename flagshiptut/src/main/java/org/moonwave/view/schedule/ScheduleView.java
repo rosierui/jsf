@@ -3,6 +3,7 @@ package org.moonwave.view.schedule;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -41,9 +42,15 @@ public class ScheduleView extends BaseView {
     private List<User> tutors;
     private String tutorId;
     private String studentId;
+    private boolean tutorSetup = false;
 
     @PostConstruct
     public void init() {
+        Map<String, String> rqm = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        if (rqm.get("tutorSetup") != null && rqm.get("tutorSetup").equals("true")) {
+            tutorSetup = true;
+        }
+
         tutors = new UserBO().findAllTutors();
         students = new UserBO().findAllStudents();
 
@@ -92,19 +99,6 @@ public class ScheduleView extends BaseView {
         this.tutors = tutors;
     }
 
-    public Date getRandomDate(Date base) {
-        Calendar date = Calendar.getInstance();
-        date.setTime(base);
-        date.add(Calendar.DATE, ((int) (Math.random()*30)) + 1);    //set random day of month
-        return date.getTime();
-    }
-
-    public Date getInitialDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);
-        return calendar.getTime();
-    }
-
     public ScheduleModel getEventModel() {
         return eventModel;
     }
@@ -115,6 +109,14 @@ public class ScheduleView extends BaseView {
 
     public void setEvent(ScheduleEvent event) {
         this.event = event;
+    }
+
+    public boolean isTutorSetup() {
+        return tutorSetup;
+    }
+
+    public void setTutorSetup(boolean tutorSetup) {
+        this.tutorSetup = tutorSetup;
     }
 
     public void onEventMove(ScheduleEntryMoveEvent event) {
