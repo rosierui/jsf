@@ -19,7 +19,7 @@
 
         <h:form>
             <p:growl id="messages" showDetail="true" />
-     
+
             <h:panelGrid columnClasses="value">
                 <h3 style="margin-top: 0">Tutoring Schedule</h3>
                 <p:schedule id="schedule" value="#{scheduleView.eventModel}" widgetVar="myschedule" timeZone="America/Phoenix">
@@ -67,13 +67,14 @@
                     <p:outputLabel value="" />
                     <h:panelGroup>
 	                    <p:commandButton type="reset" value="Reset" />
-	                    <p:commandButton id="saveButton" value="Save" actionListener="#{scheduleView.saveEvent}" 
+	                    <p:commandButton id="saveButton" value="Save" ajax="false" actionListener="#{scheduleView.saveEvent}"
+	                       update="messages"
 	                       oncomplete="PF('myschedule').update();" disabled="#{!scheduleView.edit}" />
                     </h:panelGroup>
                     <p:outputLabel value="" />
                     <h:panelGroup>
                         <p:commandButton id="removeButton" value="Remove" actionListener="#{scheduleView.removeEvent}" 
-                            oncomplete="PF('myschedule').update();PF('eventDialog').hide();" disabled="#{!scheduleView.edit}" />
+                            oncomplete="PF('myschedule').update();PF('eventDialog').hide();" disabled="#{!scheduleView.edit and scheduleView.remove}" />
                         <p:commandButton id="closeButton" value="Close" onclick="PF('eventDialog').hide();return false;" />
                     </h:panelGroup>
                 </h:panelGrid>

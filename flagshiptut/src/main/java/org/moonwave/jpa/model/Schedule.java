@@ -27,10 +27,10 @@ public class Schedule implements Serializable {
     private int id;
 
     @Column(name="user_id")
-    private int userId;
+    private Integer userId;
 
     @Column(name="tutor_id")
-    private int tutorId;
+    private Integer tutorId;
 
     private String event;
 
@@ -62,19 +62,19 @@ public class Schedule implements Serializable {
         this.id = id;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getTutorId() {
+    public Integer getTutorId() {
         return tutorId;
     }
 
-    public void setTutorId(int tutorId) {
+    public void setTutorId(Integer tutorId) {
         this.tutorId = tutorId;
     }
 

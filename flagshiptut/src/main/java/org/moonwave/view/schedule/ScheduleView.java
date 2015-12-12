@@ -43,6 +43,7 @@ public class ScheduleView extends BaseView {
     private String studentId;
     private boolean tutorSetup = false;
     private boolean edit = false;
+    private boolean remove = false;
 
     @PostConstruct
     public void init() {
@@ -126,6 +127,14 @@ public class ScheduleView extends BaseView {
         this.edit = edit;
     }
 
+    public boolean isRemove() {
+        return remove;
+    }
+
+    public void setRemove(boolean remove) {
+        this.remove = remove;
+    }
+
     public void onEventMove(ScheduleEntryMoveEvent event) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event moved", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
         addMessage(message);
@@ -141,12 +150,17 @@ public class ScheduleView extends BaseView {
     }
 
     /**
-     * Select an existing event
+     * Select an existing schedule event
      *
      * @param selectEvent
      */
     public void onEventSelect(SelectEvent selectEvent) {
+        LOG.info("onEventSelect called");
         event = (ScheduleEvent) selectEvent.getObject();
+        Schedule data = (Schedule)((DefaultScheduleEvent)event).getData();
+        this.studentId = String.valueOf(data.getUserId());
+        this.tutorId = String.valueOf(data.getTutorId());
+        this.remove = true;
     }
 
     /**
@@ -156,17 +170,19 @@ public class ScheduleView extends BaseView {
      * @param selectEvent
      */
     public void onDateSelect(SelectEvent selectEvent) {
-        Date date = (Date) selectEvent.getObject();
+        LOG.info("onDateSelect called, " + (Date) selectEvent.getObject());
+        resetFields();
         event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
     }
 
     public void onViewChange(SelectEvent selectEvent) {
+        LOG.info("onViewChange called");
         Object obj = selectEvent.getObject();
     }
 
     public void onTodaySelect(SelectEvent selectEvent) {
+        LOG.info("onTodaySelect called");
         Object obj = selectEvent.getObject();
-        Object tt = obj;
     }
 
     /**
@@ -178,18 +194,53 @@ public class ScheduleView extends BaseView {
         if (!validate(event)) {
             return;
         }
-        String sid = event.getId();
         if (event.getId() == null) {
+            // date range validation
             eventModel.addEvent(event);
-            Schedule s = this.packageData(event);
+            Schedule s = this.packageData(null, event);
             super.getBasebo().persist(s);
+            super.info("Data saved successfully");
         }
-        else
+        else {
+            // date range validation
             eventModel.updateEvent(event);
-
+            Object data = ((DefaultScheduleEvent)event).getData();
+            Schedule s = this.packageData((Schedule) data, event);
+            super.getBasebo().update(s);
+            super.info("Data saved successfully");
+        }
         event = new DefaultScheduleEvent();
     }
 
+    /**
+     * Remove an existing event
+     *
+     * @param actionEvent
+     */
+    public void removeEvent(ActionEvent actionEvent) {
+        if (!validate(event)) {
+            return;
+        }
+        if (event.getId() == null) {
+            // date range validation
+            eventModel.addEvent(event);
+            Schedule s = this.packageData(null, event);
+            super.getBasebo().persist(s);
+            super.info("Data saved successfully");
+            resetFields();
+        } else {
+            // date range validation
+            eventModel.updateEvent(event);
+            Object data = ((DefaultScheduleEvent)event).getData();
+            Schedule s = this.packageData((Schedule) data, event);
+            super.getBasebo().update(s);
+            super.info("Data saved successfully");
+            resetFields();
+        }
+        event = new DefaultScheduleEvent();
+    }
+
+    // ========================================================= Private methods
     private boolean validate(ScheduleEvent event) {
         boolean ret = true;
         if (StringUtil.nullOrEmpty(tutorId)) {
@@ -199,26 +250,37 @@ public class ScheduleView extends BaseView {
         return ret;
     }
 
-    private Schedule packageData(ScheduleEvent event) {
-        Schedule s = new Schedule();
-        s.setTutorId(Integer.parseInt(tutorId));
-        s.setUserId(Integer.parseInt(studentId));
+    private Schedule packageData(Schedule s, ScheduleEvent event) {
+        if (s == null) {
+            s = new Schedule();
+            s.setCreateTime(super.getSqlTimestamp());
+        }
+        s.setTutorId(StringUtil.nullOrEmpty(tutorId) ? null : Integer.parseInt(tutorId));
+        s.setUserId(StringUtil.nullOrEmpty(studentId) ? null : Integer.parseInt(studentId));
         s.setEvent(event.getTitle());
         s.setAllDayEvent(event.isAllDay());
         s.setStartTime(event.getStartDate());
         s.setEndTime(event.getEndDate());
-        s.setCreateTime(super.getSqlTimestamp());
         return s;
     }
 
     private ScheduleEvent scheduleToEvent(Schedule s) {
         DefaultScheduleEvent e = new DefaultScheduleEvent();
+        e.setData(s);
         e.setAllDay(s.getAllDayEvent());
         e.setEditable(false);
         e.setTitle(s.getEvent());
         e.setStartDate(s.getStartTime());
         e.setEndDate(s.getEndTime());
-        e.setStyleClass("filled");
+        if ((s.getUserId() != null) && (s.getTutorId() != null)) {
+            e.setStyleClass("filled");
+        }
         return e;
+    }
+
+    private void resetFields() {
+        this.studentId = null;
+        this.tutorId = null;
+        this.remove = false;
     }
 }
