@@ -67,12 +67,14 @@
                     <p:outputLabel value="" />
                     <h:panelGroup>
 	                    <p:commandButton type="reset" value="Reset" />
-	                    <p:commandButton id="saveButton" value="Save" actionListener="#{scheduleView.saveEvent}" oncomplete="PF('myschedule').update();" />
+	                    <p:commandButton id="saveButton" value="Save" actionListener="#{scheduleView.saveEvent}" 
+	                       oncomplete="PF('myschedule').update();" disabled="#{!scheduleView.edit}" />
                     </h:panelGroup>
                     <p:outputLabel value="" />
                     <h:panelGroup>
-                        <p:commandButton id="removeButton" value="Remove" actionListener="#{scheduleView.removeEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
-                        <p:commandButton id="closeButton" value="Close" onclick="PF('eventDialog').hide();" />
+                        <p:commandButton id="removeButton" value="Remove" actionListener="#{scheduleView.removeEvent}" 
+                            oncomplete="PF('myschedule').update();PF('eventDialog').hide();" disabled="#{!scheduleView.edit}" />
+                        <p:commandButton id="closeButton" value="Close" onclick="PF('eventDialog').hide();return false;" />
                     </h:panelGroup>
                 </h:panelGrid>
             </p:dialog>

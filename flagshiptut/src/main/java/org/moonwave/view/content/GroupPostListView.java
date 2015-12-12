@@ -44,17 +44,8 @@ public class GroupPostListView extends BaseView {
     @PostConstruct
     public void init() {
 
-//        Map<String, String> rqm = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("&projectId=").append(rqm.get("projectId"));
-//
-//        if (FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("setup") != null
-//                && FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("setup").equals("true")) {
-//            boolean setup = true;
-//        }
         // get a list of group posts
-//        groupposts = new GenericBO();
-        GenericBO bo = new GenericBO(GroupPost.class);
+        GenericBO<GroupPost> bo = new GenericBO<>(GroupPost.class);
         groupposts = bo.findAll();
 
         // get a list of roles

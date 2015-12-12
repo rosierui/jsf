@@ -2,12 +2,10 @@ package org.moonwave.view.admin;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import org.moonwave.jpa.bo.RoleBO;
@@ -40,15 +38,6 @@ public class UserRoleView extends BaseView {
 
     @PostConstruct
     public void init() {
-
-        Map<String, String> rqm = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        StringBuilder sb = new StringBuilder();
-        sb.append("&projectId=").append(rqm.get("projectId"));
-
-        if (FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("setup") != null
-                && FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("setup").equals("true")) {
-            boolean setup = true;
-        }
         // get a list of roles
         roles = new RoleBO().findAllRoles();
         // get a list of all users

@@ -42,13 +42,13 @@ public class ScheduleView extends BaseView {
     private String tutorId;
     private String studentId;
     private boolean tutorSetup = false;
+    private boolean edit = false;
 
     @PostConstruct
     public void init() {
         Map<String, String> rqm = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        if (rqm.get("tutorSetup") != null && rqm.get("tutorSetup").equals("true")) {
-            tutorSetup = true;
-        }
+        tutorSetup = (rqm.get("tutorSetup") != null && rqm.get("tutorSetup").equals("true"));
+        edit = (rqm.get("edit") != null && rqm.get("edit").equals("true"));
 
         tutors = new UserBO().findAllTutors();
         students = new UserBO().findAllStudents();
@@ -116,6 +116,14 @@ public class ScheduleView extends BaseView {
 
     public void setTutorSetup(boolean tutorSetup) {
         this.tutorSetup = tutorSetup;
+    }
+
+    public boolean isEdit() {
+        return edit;
+    }
+
+    public void setEdit(boolean edit) {
+        this.edit = edit;
     }
 
     public void onEventMove(ScheduleEntryMoveEvent event) {
