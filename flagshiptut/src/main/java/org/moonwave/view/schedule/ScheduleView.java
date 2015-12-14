@@ -1,5 +1,6 @@
 package org.moonwave.view.schedule;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.moonwave.jpa.bo.ScheduleBO;
 import org.moonwave.jpa.bo.UserBO;
 import org.moonwave.jpa.model.Schedule;
 import org.moonwave.jpa.model.User;
+import org.moonwave.util.DateUtil;
 import org.moonwave.util.StringUtil;
 import org.moonwave.view.BaseView;
 import org.primefaces.event.ScheduleEntryMoveEvent;
@@ -172,7 +174,9 @@ public class ScheduleView extends BaseView {
     public void onDateSelect(SelectEvent selectEvent) {
         LOG.info("onDateSelect called, " + (Date) selectEvent.getObject());
         resetFields();
-        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+        Calendar calendar = DateUtil.dateToCalendar((Date) selectEvent.getObject());
+        calendar.add(Calendar.HOUR, 1);
+        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), calendar.getTime());
     }
 
     public void onViewChange(SelectEvent selectEvent) {

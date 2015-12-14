@@ -22,6 +22,9 @@ public class QueryTest {
       EntityManager em = emfactory.createEntityManager();
       System.out.println("");
 
+      List<User> users = new UserBO().findActiveUsers();
+      users = new UserBO().findActiveGenericUsers();
+
       User user = new UserBO().findByLoginId("jliu");
       System.out.println(user);
       System.out.println("");
@@ -34,7 +37,7 @@ public class QueryTest {
       userIds.add(3);
       userIds.add(4);
       userIds.add(5);
-      List<User> users = new UserBO().findInIds(userIds);
+      users = new UserBO().findInIds(userIds);
       for (User u : users) {
           System.out.println(u);
       }

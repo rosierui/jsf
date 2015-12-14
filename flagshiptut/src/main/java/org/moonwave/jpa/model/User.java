@@ -16,8 +16,9 @@ import java.util.List;
 @Table(name="user")
 
 @NamedQueries({
-    @NamedQuery(name="User.findAll",   query="SELECT u FROM User u"),
-    @NamedQuery(name="User.findAllGenericUsers", query="SELECT u FROM User u where u.genericUser = true"),
+    @NamedQuery(name="User.findAll", query="SELECT u FROM User u"),
+    @NamedQuery(name="User.findActiveUsers", query="SELECT u FROM User u where u.active = true"),
+    @NamedQuery(name="User.findActiveGenericUsers", query="SELECT u FROM User u where u.genericUser = true AND u.active = true"),
     @NamedQuery(name="User.findById",  query="SELECT u FROM User u WHERE u.id = :id"),
     @NamedQuery(name="User.findByLoginId",  query="SELECT u FROM User u WHERE u.loginId = :loginId"),
     @NamedQuery(name="User.findByEmail",  query="SELECT u FROM User u WHERE u.email = :email"),

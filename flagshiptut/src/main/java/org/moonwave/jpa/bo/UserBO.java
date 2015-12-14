@@ -30,8 +30,16 @@ public class UserBO extends BaseBO {
     }
 
     @SuppressWarnings("unchecked")
-    public List<User> findAllGenericUsers() {
-        Query query = super.getEntityManager().createNamedQuery("User.findAllGenericUsers", User.class);
+    public List<User> findActiveUsers() {
+        Query query = super.getEntityManager().createNamedQuery("User.findActiveUsers", User.class);
+        List<User> list = query.getResultList();
+        super.release();
+        return list;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<User> findActiveGenericUsers() {
+        Query query = super.getEntityManager().createNamedQuery("User.findActiveGenericUsers", User.class);
         List<User> list = query.getResultList();
         super.release();
         return list;

@@ -40,7 +40,7 @@ public class UserTutorGroupView extends BaseView {
     public void init() {
 
         tutorGroups = new TutorGroupBO().getAllGroups();
-        users = new UserBO().findAllGenericUsers();
+        users = new UserBO().findActiveGenericUsers();
         // get a list of users for the first role
         if (!tutorGroups.isEmpty()) {
             selectedTutorGroupId = String.valueOf(tutorGroups.get(0).getId());

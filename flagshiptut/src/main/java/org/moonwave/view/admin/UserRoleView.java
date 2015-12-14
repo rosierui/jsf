@@ -41,7 +41,7 @@ public class UserRoleView extends BaseView {
         // get a list of roles
         roles = new RoleBO().findAllRoles();
         // get a list of all users
-        users = new UserBO().findAllUsers();
+        users = new UserBO().findActiveUsers();
         // get a list of users for the first role
         if (!roles.isEmpty()) {
             selectedRoleId = String.valueOf(roles.get(0).getId());

@@ -18,4 +18,13 @@ public class DateUtil {
         return date;
     }
 
+    public static java.util.Calendar dateToCalendar(java.util.Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
+
+    public static java.util.Date calendarToDate(java.util.Calendar calendar) {
+        return calendar.getTime();
+    }
 }
