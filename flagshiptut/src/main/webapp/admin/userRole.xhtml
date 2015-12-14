@@ -11,7 +11,7 @@
     <ui:define name="title">
         User Role Administration
     </ui:define>
-    <ui:define name="body">
+    <ui:define name="implementation">
         <h:panelGroup id="msgPanel">
             <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         </h:panelGroup>
@@ -42,6 +42,9 @@
                 </p:column>
                 <p:column headerText="${label.lastName}">
                     <h:outputText value="#{user.lastName}" />
+                </p:column>
+                <p:column headerText="${label.chineseName}">
+                    <h:outputText value="#{user.chineseName}" />
                 </p:column>
                 <p:column headerText="${label.loginId}">
                     <h:outputText value="#{user.loginId}" />
