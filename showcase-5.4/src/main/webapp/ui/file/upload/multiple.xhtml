@@ -10,16 +10,17 @@
     </ui:define>
 
     <ui:define name="description">
-        Multiple mode allows multiple files to be selected from the native file dialog. Note that legacy browsers do not support multiple selection.
+        Multiple mode allows multiple files to be selected from the native file dialog. Note that legacy browsers do not support multiple selection.<br/>
+        sizeLimit="100000" (bytes) ==> 100K
     </ui:define>
 
     <ui:define name="implementation">
 
-        <h:form>          
+        <h:form>
             <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false" 
-                          multiple="true" update="messages" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                          multiple="true" update="messages" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
 
-            <p:growl id="messages" showDetail="true" />           
+            <p:growl id="messages" showDetail="true" />
         </h:form>
         
     </ui:define>
