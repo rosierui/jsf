@@ -15,7 +15,7 @@ function stop() {
     PF('statusDialog').hide();
 }
             //]]>
-        </script>    
+        </script>
     </ui:define>
 
     <ui:define name="title">
@@ -33,12 +33,27 @@ function stop() {
             <p:graphicImage name="/demo/images/ajaxloadingbar.gif" />
         </p:dialog>
        
-        <h:form>   
+        <h:form>
             <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
                 <p:fileDownload value="#{fileDownloadView.file}" />
-            </p:commandButton>      
+            </p:commandButton>
+            <br/>
+            <p:commandButton value="Download 2 - Static" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                <p:fileDownload value="#{fileDownloadView.file2}" />
+            </p:commandButton>
+            <br/>
+            <p:commandButton value="Download 3 - Dynamic" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                <f:setPropertyActionListener value="/home/moonwave/Pictures/icon-1.png" target="#{fileDownloadView.filepath}" />
+                <p:fileDownload value="#{fileDownloadView.file3}" />
+            </p:commandButton>
+            <br/>
+            <p:commandButton value="Download 4 - Dynamic -Ajax - not working" ajax="true" 
+                    oncomplete="PrimeFaces.monitorDownload(start, stop);" 
+                    icon="ui-icon-arrowthick-1-s">
+                <f:setPropertyActionListener value="/home/moonwave/Pictures/icon-2.png" target="#{fileDownloadView.filepath}" />
+                <p:fileDownload value="#{fileDownloadView.file3}" />
+            </p:commandButton>
         </h:form>
-        
     </ui:define>
 
     <ui:define name="source">

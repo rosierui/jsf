@@ -19,6 +19,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -55,6 +56,7 @@ public class FileUploadView {
         } catch (Exception e) {
             System.out.println(e);
         }
+//        RequestContext.getCurrentInstance().execute("PF('uploadJs').start()");
         System.out.println(event.getFile().getFileName());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
