@@ -22,7 +22,7 @@ public class EvaluationPerformance implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private short attendance;
 
@@ -47,11 +47,11 @@ public class EvaluationPerformance implements Serializable {
     public EvaluationPerformance() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -129,7 +129,7 @@ public class EvaluationPerformance implements Serializable {
 
     @Override
     public int hashCode() {
-        return ((Integer)id).hashCode();
+        return id.hashCode();
     }
 
     @Override

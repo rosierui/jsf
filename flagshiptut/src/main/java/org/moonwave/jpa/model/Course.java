@@ -22,7 +22,7 @@ public class Course implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private short id;
+    private Short id;
 
     @Column(name="create_time")
     private Timestamp createTime;
@@ -38,11 +38,11 @@ public class Course implements Serializable {
     public Course() {
     }
 
-    public short getId() {
+    public Short getId() {
         return this.id;
     }
 
-    public void setId(short id) {
+    public void setId(Short id) {
         this.id = id;
     }
 
@@ -80,7 +80,7 @@ public class Course implements Serializable {
 
     @Override
     public int hashCode() {
-        return ((Short)id).hashCode();
+        return id.hashCode();
     }
 
     @Override

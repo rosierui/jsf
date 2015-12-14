@@ -22,7 +22,7 @@ public class Announcement implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Lob
     private String body;
@@ -40,11 +40,11 @@ public class Announcement implements Serializable {
     public Announcement() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

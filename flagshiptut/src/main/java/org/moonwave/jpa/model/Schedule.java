@@ -24,7 +24,7 @@ public class Schedule implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private int id;
+    private Integer id;
 
     @Column(name="user_id")
     private Integer userId;
@@ -54,11 +54,11 @@ public class Schedule implements Serializable {
     public Schedule() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -128,7 +128,7 @@ public class Schedule implements Serializable {
 
     @Override
     public int hashCode() {
-        return ((Integer)id).hashCode();
+        return id.hashCode();
     }
 
     @Override

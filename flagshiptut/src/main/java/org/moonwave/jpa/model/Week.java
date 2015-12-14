@@ -21,18 +21,18 @@ public class Week implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private short id;
+    private Short id;
 
     private String week;
 
     public Week() {
     }
 
-    public short getId() {
+    public Short getId() {
         return this.id;
     }
 
-    public void setId(short id) {
+    public void setId(Short id) {
         this.id = id;
     }
 
@@ -46,7 +46,7 @@ public class Week implements Serializable {
 
     @Override
     public int hashCode() {
-        return ((Short)id).hashCode();
+        return id.hashCode();
     }
 
     @Override

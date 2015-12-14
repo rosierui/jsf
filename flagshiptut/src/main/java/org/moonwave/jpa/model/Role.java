@@ -24,7 +24,7 @@ public class Role implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private short id;
+    private Short id;
 
     private String alias;
 
@@ -39,11 +39,11 @@ public class Role implements Serializable {
     public Role() {
     }
 
-    public short getId() {
+    public Short getId() {
         return this.id;
     }
 
-    public void setId(short id) {
+    public void setId(Short id) {
         this.id = id;
     }
 
@@ -81,7 +81,7 @@ public class Role implements Serializable {
 
     @Override
     public int hashCode() {
-        return ((Short)id).hashCode();
+        return id.hashCode();
     }
 
     @Override

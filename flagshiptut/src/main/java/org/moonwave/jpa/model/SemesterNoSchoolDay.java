@@ -22,7 +22,7 @@ public class SemesterNoSchoolDay implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Temporal(TemporalType.DATE)
     @Column(name="no_school_day")
@@ -33,11 +33,11 @@ public class SemesterNoSchoolDay implements Serializable {
     public SemesterNoSchoolDay() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -59,7 +59,7 @@ public class SemesterNoSchoolDay implements Serializable {
 
     @Override
     public int hashCode() {
-        return ((Integer)id).hashCode();
+        return id.hashCode();
     }
 
     @Override

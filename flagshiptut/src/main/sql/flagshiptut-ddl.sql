@@ -235,6 +235,23 @@ CREATE TABLE group_post_to_group (
 );
 
 -- -----------------------------------------------------------------------------
+-- 
+CREATE TABLE upload (
+    id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    user_id                 INTEGER NOT NULL REFERENCES user(id),
+    tutor_group_id          SMALLINT REFERENCES tutor_group(id),
+    announcement_id         INTEGER REFERENCES announcement(id),
+    group_post_id           INTEGER REFERENCES group_post(id),
+    description             VARCHAR(255),
+    filetype                VARCHAR(50),
+    filepath                VARCHAR(255), -- filepath after upload folder
+    create_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE INDEX upload_idx1 ON upload (user_id, tutor_group_id, announcement_id, group_post_id);
+CREATE INDEX upload_idx2 ON upload (create_time);
+
+-- -----------------------------------------------------------------------------
 -- Create table evaluation_performance
 
 CREATE TABLE evaluation_performance (

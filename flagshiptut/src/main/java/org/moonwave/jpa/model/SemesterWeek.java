@@ -22,7 +22,7 @@ public class SemesterWeek implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String semester;
 
@@ -35,11 +35,11 @@ public class SemesterWeek implements Serializable {
     public SemesterWeek() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -69,7 +69,7 @@ public class SemesterWeek implements Serializable {
 
     @Override
     public int hashCode() {
-        return ((Integer)id).hashCode();
+        return id.hashCode();
     }
 
     @Override

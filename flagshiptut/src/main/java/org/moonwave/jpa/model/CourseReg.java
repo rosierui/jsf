@@ -23,7 +23,7 @@ public class CourseReg implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name="CourseReg_id")
     private short CourseRegId;
@@ -44,11 +44,11 @@ public class CourseReg implements Serializable {
     public CourseReg() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -94,7 +94,7 @@ public class CourseReg implements Serializable {
 
     @Override
     public int hashCode() {
-        return ((Integer)id).hashCode();
+        return id.hashCode();
     }
 
     @Override

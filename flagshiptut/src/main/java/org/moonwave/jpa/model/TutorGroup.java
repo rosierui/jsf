@@ -22,7 +22,7 @@ public class TutorGroup implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private short id;
+    private Short id;
 
     private String alias;
 
@@ -41,11 +41,11 @@ public class TutorGroup implements Serializable {
     public TutorGroup() {
     }
 
-    public short getId() {
+    public Short getId() {
         return this.id;
     }
 
-    public void setId(short id) {
+    public void setId(Short id) {
         this.id = id;
     }
 
@@ -91,7 +91,7 @@ public class TutorGroup implements Serializable {
 
     @Override
     public int hashCode() {
-        return ((Short)id).hashCode();
+        return id.hashCode();
     }
 
     @Override

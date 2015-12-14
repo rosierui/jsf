@@ -21,7 +21,7 @@ public class GroupPostToGroup implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name="tutor_group_id")
     private short tutorGroupId;
@@ -34,11 +34,11 @@ public class GroupPostToGroup implements Serializable {
     public GroupPostToGroup() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -60,7 +60,7 @@ public class GroupPostToGroup implements Serializable {
 
     @Override
     public int hashCode() {
-        return ((Integer)id).hashCode();
+        return id.hashCode();
     }
 
     @Override

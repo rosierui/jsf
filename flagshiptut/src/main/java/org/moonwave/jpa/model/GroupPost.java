@@ -23,7 +23,7 @@ public class GroupPost implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Lob
     private String body;
@@ -54,11 +54,11 @@ public class GroupPost implements Serializable {
     public GroupPost() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -123,7 +123,7 @@ public class GroupPost implements Serializable {
 
     @Override
     public int hashCode() {
-        return ((Integer)id).hashCode();
+        return id.hashCode();
     }
 
     @Override
