@@ -218,23 +218,11 @@ public class ScheduleView extends BaseView {
      * @param actionEvent
      */
     public void removeEvent(ActionEvent actionEvent) {
-        if (!validate(event)) {
-            return;
-        }
-        if (event.getId() == null) {
-            // date range validation
-            eventModel.addEvent(event);
-            Schedule s = this.packageData(null, event);
-            super.getBasebo().persist(s);
-            super.info("Data saved successfully");
-            resetFields();
-        } else {
-            // date range validation
-            eventModel.updateEvent(event);
+        if (event.getId() != null) {
             Object data = ((DefaultScheduleEvent)event).getData();
-            Schedule s = this.packageData((Schedule) data, event);
-            super.getBasebo().update(s);
-            super.info("Data saved successfully");
+            super.getBasebo().remove((Schedule) data);
+            eventModel.deleteEvent(event);
+            super.info("Data remove successfully");
             resetFields();
         }
         event = new DefaultScheduleEvent();
