@@ -29,23 +29,34 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
-
-    private Boolean active;
-
-    private String answer;
-
-    @Column(name="create_time")
-    private Timestamp createTime;
-
-    private String email;
+    private Integer id;
 
     @Column(name="first_name")
     private String firstName;
 
-    private String hint;
+    @Column(name="last_name")
+    private String lastName;
 
+    @Column(name="chinese_name")
+    private String chineseName;
+
+    @Column(name="login_id")
+    private String loginId;
+
+    private String password;
+    private String email;
+    private String phone;
+    private Boolean active;
+
+    @Column(name="generic_user")
+    private Boolean genericUser;
+
+    private String hint;
+    private String answer;
     private String timezone;
+
+    @Column(name="login_attempt")
+    private short loginAttempt;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="last_attempt_ts")
@@ -54,24 +65,11 @@ public class User implements Serializable {
     @Column(name="last_login_ip")
     private String lastLoginIp;
 
-    @Column(name="last_name")
-    private String lastName;
-
-    @Column(name="login_attempt")
-    private short loginAttempt;
-
-    @Column(name="login_id")
-    private String loginId;
-
-    private String password;
-
-    private String phone;
-
-    @Column(name="generic_user")
-    private Boolean genericUser;
-
     @Column(name="update_time")
     private Timestamp updateTime;
+
+    @Column(name="create_time")
+    private Timestamp createTime;
 
     //bi-directional many-to-many association to Role
     @ManyToMany(fetch = FetchType.EAGER)
@@ -103,60 +101,100 @@ public class User implements Serializable {
     public User() {
     }
 
-    public int getId() {
-        return this.id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Boolean getActive() {
-        return this.active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public String getAnswer() {
-        return this.answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public Timestamp getCreateTime() {
-        return this.createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getFirstName() {
-        return this.firstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getChineseName() {
+        return chineseName;
+    }
+
+    public void setChineseName(String chineseName) {
+        this.chineseName = chineseName;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Boolean getGenericUser() {
+        return genericUser;
+    }
+
+    public void setGenericUser(Boolean genericUser) {
+        this.genericUser = genericUser;
+    }
+
     public String getHint() {
-        return this.hint;
+        return hint;
     }
 
     public void setHint(String hint) {
         this.hint = hint;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     public String getTimezone() {
@@ -167,8 +205,16 @@ public class User implements Serializable {
         this.timezone = timezone;
     }
 
+    public short getLoginAttempt() {
+        return loginAttempt;
+    }
+
+    public void setLoginAttempt(short loginAttempt) {
+        this.loginAttempt = loginAttempt;
+    }
+
     public Date getLastAttemptTs() {
-        return this.lastAttemptTs;
+        return lastAttemptTs;
     }
 
     public void setLastAttemptTs(Date lastAttemptTs) {
@@ -176,67 +222,27 @@ public class User implements Serializable {
     }
 
     public String getLastLoginIp() {
-        return this.lastLoginIp;
+        return lastLoginIp;
     }
 
     public void setLastLoginIp(String lastLoginIp) {
         this.lastLoginIp = lastLoginIp;
     }
 
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public short getLoginAttempt() {
-        return this.loginAttempt;
-    }
-
-    public void setLoginAttempt(short loginAttempt) {
-        this.loginAttempt = loginAttempt;
-    }
-
-    public String getLoginId() {
-        return this.loginId;
-    }
-
-    public void setLoginId(String loginId) {
-        this.loginId = loginId;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhone() {
-        return this.phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Boolean isGenericUser() {
-        return genericUser;
-    }
-
-    public void setGenericUser(Boolean genericUser) {
-        this.genericUser = genericUser;
-    }
-
     public Timestamp getUpdateTime() {
-        return this.updateTime;
+        return updateTime;
     }
 
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
     }
 
     public List<Role> getRoles() {
@@ -257,7 +263,7 @@ public class User implements Serializable {
 
     @Override
     public int hashCode() {
-        return ((Integer)id).hashCode();
+        return id.hashCode();
     }
 
     @Override

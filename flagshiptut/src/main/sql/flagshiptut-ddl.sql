@@ -72,6 +72,7 @@ CREATE TABLE user (
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     first_name              VARCHAR(18) NOT NULL,
     last_name               VARCHAR(18) NOT NULL,
+    chinese_name            VARCHAR(18) CHARACTER SET utf8,
     login_id                VARCHAR(50) NOT NULL, -- can use email
     password                VARCHAR(80) NOT NULL,
     email                   VARCHAR(50) NOT NULL,
@@ -186,7 +187,7 @@ CREATE TABLE schedule (
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id                 INTEGER REFERENCES `user` (user_id),
     tutor_id                INTEGER REFERENCES `user` (user_id),
-    event                   VARCHAR(255),
+    event                   VARCHAR(255) CHARACTER SET utf8,
     start_time              DATETIME NOT NULL,
     end_time                DATETIME NOT NULL,
     all_day_event           BOOLEAN, -- True: all day event
@@ -204,8 +205,8 @@ CREATE INDEX schedule_idx3 ON schedule (user_id, tutor_id, start_time, end_time)
 
 CREATE TABLE announcement ( -- anouncement to all people
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    subject                 VARCHAR(256) NOT NULL,
-    body                    TEXT, -- 64K
+    subject                 VARCHAR(255) CHARACTER SET utf8 NOT NULL,
+    body                    TEXT CHARACTER SET utf8, -- 64K
     published               BOOLEAN,
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP
@@ -216,8 +217,8 @@ CREATE TABLE announcement ( -- anouncement to all people
 
 CREATE TABLE group_post (-- base group post
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    subject                 VARCHAR(255) NOT NULL,
-    body                    TEXT,
+    subject                 VARCHAR(255) CHARACTER SET utf8 NOT NULL,
+    body                    TEXT CHARACTER SET utf8, -- 64K
     published               BOOLEAN,
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP
@@ -245,7 +246,7 @@ CREATE TABLE evaluation_performance (
     participation           SMALLINT,
     performance             SMALLINT,
     total                   SMALLINT,
-    note                    VARCHAR(255),
+    note                    VARCHAR(255) CHARACTER SET utf8,
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP
 );
@@ -262,17 +263,17 @@ CREATE TABLE evaluation_objective (
     eval_part1_1            BOOLEAN, -- I can understand the general idea chronologically
     eval_part1_2            BOOLEAN, -- I can understand key words / phrases in the materials that I am listening or reading
     eval_part1_3            BOOLEAN, -- I can understand the main idea of the text
-    eval_part1_comments     VARCHAR(255), -- Other comments
+    eval_part1_comments     VARCHAR(255) CHARACTER SET utf8, -- Other comments
     -- Part I Presentational Mode
     eval_part2_1            BOOLEAN, -- I can present / write my opinion in a correct order
     eval_part2_2            BOOLEAN, -- I can apply the words and phrases to present or to write I have learned or just learned
     eval_part2_3            BOOLEAN, -- I can use connected series of sentenses to present my opinion in presentation or writing
-    eval_part2_comments     VARCHAR(255), -- Other comments
+    eval_part2_comments     VARCHAR(255) CHARACTER SET utf8, -- Other comments
     -- Part III Interpretive Communication Mode
     eval_part3_1            BOOLEAN, -- I can apply what I have learned to communicate with tutor
     eval_part3_2            BOOLEAN, -- I can express myself logically
     eval_part3_3            BOOLEAN, -- I can interact with tutor with correct forms
-    eval_part3_comments     VARCHAR(255), -- Other comments
+    eval_part3_comments     VARCHAR(255) CHARACTER SET utf8, -- Other comments
 
     student_evaluation      BOOLEAN, -- true student evaluation, false tutor evaluation
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -285,7 +286,7 @@ CREATE TABLE evaluation_objective (
 CREATE TABLE course  (
     id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     name                    VARCHAR(50),
-    description             TINYTEXT,
+    description             TEXT CHARACTER SET utf8, -- 64K
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP
 );
@@ -332,9 +333,9 @@ CREATE TABLE generic_page (
     id                      SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     page_key                VARCHAR(30) NOT NULL, -- sample keys: homepage, administration, about.us, contact.us
     publish_date            DATE  NOT NULL,
-    subject                 VARCHAR(255),
+    subject                 VARCHAR(255) CHARACTER SET utf8,
     show_subject            BOOLEAN, -- true: show subject at the center, false: do not show the subject
-    content                 TEXT,
+    content                 TEXT CHARACTER SET utf8,
     active                  BOOLEAN, -- true: this page is active, false: this page is inactive. Note: only one generic page for one key can be active
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP
