@@ -27,17 +27,17 @@
                 <p:selectBooleanCheckbox value="#{announcementView.published}" style="margin-left:10px" />
             </h:panelGrid>
             <br/>
-            <p:commandButton value="Submit" update="messages" action="#{announcementView.save}" />
+            <p:commandButton value="#{label.submit}" update="messages" action="#{announcementView.save}" />
 
         </h:form>
 
         <h:form enctype="multipart/form-data">
-            <h:panelGrid columns="5">
+            <h:panelGrid columns="5" style="border-collapse: separate;border-spacing: 5px;">
             <h:outputLabel value="#{label.upload}: " />
-            <p:fileUpload value="#{announcementView.fileUploadView.file}" mode="simple" skinSimple="true"/>
+            <p:fileUpload value="#{fileUploadView.file}" mode="simple" skinSimple="true"/>
             <h:outputLabel value="#{label.description}: " />
-            <p:inputText value="#{announcementView.fileUploadView.description}" />
-            <p:commandButton value="Submit" ajax="false" actionListener="#{announcementView.fileUploadView.upload}" disabled="false" />
+            <p:inputText value="#{fileUploadView.description}" />
+            <p:commandButton value="#{label.upload}" ajax="false" actionListener="#{fileUploadView.upload}" disabled="false" />
             </h:panelGrid>
         </h:form>
 

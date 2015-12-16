@@ -1,5 +1,6 @@
 package org.moonwave.view.file;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -25,7 +26,7 @@ public class FileUploadView extends BaseView {
 
     private String description;
     private UploadedFile file;
-    private List<Upload> uploads;
+    private List<Upload> uploads = new ArrayList<>();
 
     private boolean readyToSave;
 
@@ -53,8 +54,15 @@ public class FileUploadView extends BaseView {
         if(file != null) {
             String uploadFolder = AppProperties.getInstance().getProperty(AppProperties.KEY_upload_folder);
             try {
-                file.write(uploadFolder + "/" + file.getFileName());
+                String filepath = uploadFolder + "/" + file.getFileName(); // + user-login-id + generated-mda5-userid
+                file.write(filepath);
                 super.info("Succesful", file.getFileName() + " is uploaded.");
+
+                Upload upload = new Upload();
+                upload.setDescription(description);
+                upload.setFilepath(filepath);
+                this.description = null;
+                uploads.add(upload);
                 // update ui and ready for save in db
             } catch (Exception e) {
                 System.out.println(e);
