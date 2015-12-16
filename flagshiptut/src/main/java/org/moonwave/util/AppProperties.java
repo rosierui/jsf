@@ -11,7 +11,6 @@ public class AppProperties {
     public static String KEY_default_timezone   = "default_timezone";
     public static String KEY_all_day_start      = "all_day_start";
     public static String KEY_all_day_end        = "all_day_end";
-    public static String KEY_file_folder        = "file_folder"; // with ending "/"
 
     Properties properties = new Properties();
     private static AppProperties instance;

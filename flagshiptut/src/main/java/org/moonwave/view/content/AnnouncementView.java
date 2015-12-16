@@ -2,11 +2,13 @@ package org.moonwave.view.content;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.model.Announcement;
 import org.moonwave.util.StringUtil;
 import org.moonwave.view.BaseView;
+import org.moonwave.view.file.FileUploadView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,9 @@ public class AnnouncementView extends BaseView {
     private String subject;
     private String body;
     private Boolean published;
+
+    @ManagedProperty("#{fileUploadView}")
+    private FileUploadView fileUploadView;
 
     @PostConstruct
     public void init() {
@@ -53,6 +58,14 @@ public class AnnouncementView extends BaseView {
 
     public void setPublished(Boolean published) {
         this.published = published;
+    }
+
+    public FileUploadView getFileUploadView() {
+        return fileUploadView;
+    }
+
+    public void setFileUploadView(FileUploadView fileUploadView) {
+        this.fileUploadView = fileUploadView;
     }
 
     public String save() {

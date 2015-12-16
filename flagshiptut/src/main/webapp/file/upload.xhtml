@@ -16,11 +16,26 @@
     </ui:define>
 
     <ui:define name="implementation">
+        <p:growl id="messages" showDetail="true" />
+
+        <h:form enctype="multipart/form-data">
+            <h:panelGrid columns="5">
+            <h:outputLabel value="#{label.upload}: " />
+            <p:fileUpload value="#{fileUploadView.file}" mode="simple" skinSimple="true"/>
+            <h:outputLabel value="#{label.description}: " />
+            <p:inputText value="#{fileUploadView.description}" />
+            <p:commandButton value="Submit" ajax="false" actionListener="#{fileUploadView.upload}" disabled="false" />
+            </h:panelGrid>
+        </h:form>
+
+        <br /> <br />
+        <hr/>
+        <p>
+        Advanced upload
+        </p>
         <h:form>
             <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false" 
                           multiple="true" update="messages" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-
-            <p:growl id="messages" showDetail="true" />
         </h:form>
 
     </ui:define>

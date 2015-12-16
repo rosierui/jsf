@@ -12,11 +12,14 @@
         <h:outputLabel value="${label.announcement}" />
     </ui:define>
     <ui:define name="implementation">
+        <p:growl id="messages" showDetail="true" />
         <h:form id="jsfForm">
+        <!-- 
             <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
+        -->
             <h:panelGrid columns="1">
                 <h:outputLabel value="${label.subject}" />
-                <p:inputText id="subject" value="#{announcementView.subject}" style="margin-left:20px" size="50"/>
+                <p:inputText id="subject" value="#{announcementView.subject}" style="margin-left:0px" size="50"/>
             </h:panelGrid>
             <p:editor id="editor" widgetVar="editorWidget" value="#{announcementView.body}" width="600" />
             <h:panelGrid columns="2">
@@ -27,5 +30,16 @@
             <p:commandButton value="Submit" update="messages" action="#{announcementView.save}" />
 
         </h:form>
+
+        <h:form enctype="multipart/form-data">
+            <h:panelGrid columns="5">
+            <h:outputLabel value="#{label.upload}: " />
+            <p:fileUpload value="#{fileUploadView.file}" mode="simple" skinSimple="true"/>
+            <h:outputLabel value="#{label.description}: " />
+            <p:inputText value="#{fileUploadView.description}" />
+            <p:commandButton value="Submit" ajax="false" actionListener="#{fileUploadView.upload}" disabled="false" />
+            </h:panelGrid>
+        </h:form>
+
     </ui:define>
 </ui:composition>

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-
 /**
  * The persistent class for the uploads database table.
  * 
@@ -38,6 +37,9 @@ public class Upload implements Serializable {
 
     @Column(name="create_time")
     private Timestamp createTime;
+
+    @Transient
+    private String tag;
 
     public Upload() {
     }
@@ -113,6 +115,15 @@ public class Upload implements Serializable {
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
     @Override
     public int hashCode() {
         return id.hashCode();

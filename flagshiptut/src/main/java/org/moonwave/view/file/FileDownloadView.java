@@ -5,20 +5,23 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
+import org.moonwave.view.BaseView;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ManagedBean
-public class FileDownloadView {
+public class FileDownloadView extends BaseView {
     
+    private static final long serialVersionUID = -455047573887351955L;
+    static final Logger LOG = LoggerFactory.getLogger(FileDownloadView.class);
     private StreamedContent file;
     
     public FileDownloadView() {
@@ -90,10 +93,10 @@ public class FileDownloadView {
      * @return
      */
     public String getFilename(String path) {
-    	if (path == null) {
-    		return null;
-    	}
-    	String strPath = path.substring(path.lastIndexOf("/") + 1, path.length());
-    	return strPath;
+        if (path == null) {
+            return null;
+        }
+        String strPath = path.substring(path.lastIndexOf("/") + 1, path.length());
+        return strPath;
     }
 }

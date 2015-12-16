@@ -26,6 +26,8 @@ import org.slf4j.LoggerFactory;
 @ManagedBean
 public class NewUserView extends BaseView {
 
+    private static final long serialVersionUID = 1722453859565219537L;
+
     static final Logger LOG = LoggerFactory.getLogger(NewUserView.class);
 
     User user;
