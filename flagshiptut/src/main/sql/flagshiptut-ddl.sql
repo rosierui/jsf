@@ -82,6 +82,7 @@ CREATE TABLE user (
     hint                    VARCHAR(50),
     answer                  VARCHAR(50),
     timezone                VARCHAR(50) DEFAULT 'America/Phoenix',
+    tag                     CHAR(32),
     login_attempt           SMALLINT, -- keep the login attept count, if 5 times attempted within 5 minutes, lock this account
     last_attempt_ts         DATETIME, -- savea the first timestamp for a repeat login attempt
     last_login_ip           VARCHAR(50),

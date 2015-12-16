@@ -55,6 +55,7 @@ public class User implements Serializable {
     private String hint;
     private String answer;
     private String timezone;
+    private String tag;
 
     @Column(name="login_attempt")
     private short loginAttempt;
@@ -204,6 +205,14 @@ public class User implements Serializable {
 
     public void setTimezone(String timezone) {
         this.timezone = timezone;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public short getLoginAttempt() {

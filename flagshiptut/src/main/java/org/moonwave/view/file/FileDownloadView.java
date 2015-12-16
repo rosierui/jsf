@@ -86,7 +86,7 @@ public class FileDownloadView extends BaseView {
       // TODO
       RequestContext.getCurrentInstance().execute("PrimeFaces.monitorDownload(start, stop);");
     }
-    
+
     /**
      * Get filename from a full path
      * @param path

@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 
 import org.moonwave.jpa.model.Upload;
 import org.moonwave.util.AppProperties;
+import org.moonwave.util.FileUtil;
 import org.moonwave.view.BaseView;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -25,6 +26,7 @@ public class FileUploadView extends BaseView {
     static final Logger LOG = LoggerFactory.getLogger(FileUploadView.class);
 
     private String description;
+    private String selectedTag;
     private UploadedFile file;
     private List<Upload> uploads = new ArrayList<>();
 
@@ -38,6 +40,14 @@ public class FileUploadView extends BaseView {
         this.description = description;
     }
 
+    public String getSelectedTag() {
+        return selectedTag;
+    }
+
+    public void setSelectedTag(String selectedTag) {
+        this.selectedTag = selectedTag;
+    }
+
     public UploadedFile getFile() {
         return file;
     }
@@ -46,12 +56,20 @@ public class FileUploadView extends BaseView {
         this.file = file;
     }
 
+    public List<Upload> getUploads() {
+        return uploads;
+    }
+
+    public void setUploads(List<Upload> uploads) {
+        this.uploads = uploads;
+    }
+
     /**
      * Handle basic single file upload
      * 
      */
     public void upload() {
-        if(file != null) {
+        if (file != null) {
             String uploadFolder = AppProperties.getInstance().getProperty(AppProperties.KEY_upload_folder);
             try {
                 String filepath = uploadFolder + "/" + file.getFileName(); // + user-login-id + generated-mda5-userid
@@ -88,6 +106,24 @@ public class FileUploadView extends BaseView {
     }
 
     /**
+     * Handle uploaded file deletion
+     * 
+     */
+    public void delete() {
+        if (this.selectedTag != null) {
+            Upload upload = null;
+            for (Upload ul: uploads) {
+                if (this.selectedTag.equals(ul.getTag())) {
+                    upload = ul;
+                    break;
+                }
+            }
+            FileUtil.deleteFile(upload.getFilepath());
+            uploads.remove(upload);
+        }
+    }
+
+    /**
      * Update upload objects with additional info prior to save
      *
      * @param userId
@@ -96,11 +132,11 @@ public class FileUploadView extends BaseView {
      * @param groupPostId
      */
     public void update(Integer userId, Short tutorGroupId, Integer announcementId, Integer groupPostId) {
-        for (Upload upload: uploads) {
-            upload.setUserId(userId);
-            upload.setTutorGroupId(tutorGroupId);
-            upload.setAnnouncementId(announcementId);
-            upload.setGroupPostId(groupPostId);
+        for (Upload ul: uploads) {
+            ul.setUserId(userId);
+            ul.setTutorGroupId(tutorGroupId);
+            ul.setAnnouncementId(announcementId);
+            ul.setGroupPostId(groupPostId);
         }
         readyToSave = true;
     }
