@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import org.moonwave.jpa.model.Upload;
 import org.moonwave.util.AppProperties;
 import org.moonwave.util.FileUtil;
+import org.moonwave.util.Md5Util;
 import org.moonwave.view.BaseView;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -73,12 +74,14 @@ public class FileUploadView extends BaseView {
             String uploadFolder = AppProperties.getInstance().getProperty(AppProperties.KEY_upload_folder);
             try {
                 String filepath = uploadFolder + "/" + file.getFileName(); // + user-login-id + generated-mda5-userid
+                // upload folder + user tag + "/" + date + "/" + filename
                 file.write(filepath);
                 super.info("Succesful", file.getFileName() + " is uploaded.");
 
                 Upload upload = new Upload();
                 upload.setDescription(description);
                 upload.setFilepath(filepath);
+                upload.setTag(Md5Util.getMd5Sum(filepath));
                 this.description = null;
                 uploads.add(upload);
                 // update ui and ready for save in db
@@ -118,8 +121,10 @@ public class FileUploadView extends BaseView {
                     break;
                 }
             }
-            FileUtil.deleteFile(upload.getFilepath());
-            uploads.remove(upload);
+            if (upload != null) {
+                FileUtil.deleteFile(upload.getFilepath());
+                uploads.remove(upload);
+            }
         }
     }
 
