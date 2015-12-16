@@ -1,7 +1,7 @@
 package org.moonwave.jpa.bo;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -59,11 +59,31 @@ public class BaseBO implements Serializable {
         em.getTransaction().commit();
     }
 
+    public void persist(List<?> entities) {
+        em = getEntityManager();
+        em.getTransaction().begin();
+        for (Object entity : entities) {
+            em.persist(entity);
+        }
+        em.flush();
+        em.getTransaction().commit();
+    }
+
     public void update(Object entity) {
         em = getEntityManager();
         em.getTransaction().begin();
         Object entityToPersist = merge(entity);
         em.persist(entityToPersist);
+        em.getTransaction().commit();
+    }
+
+    public void update(List<?> entities) {
+        em = getEntityManager();
+        em.getTransaction().begin();
+        for (Object entity : entities) {
+            Object entityToPersist = merge(entity);
+            em.persist(entityToPersist);
+        }
         em.getTransaction().commit();
     }
 
@@ -102,8 +122,13 @@ public class BaseBO implements Serializable {
         em.getTransaction().commit();
     }
 
-    public java.sql.Timestamp getSqlTimestamp() {
-        return new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+    public void remove(List<?> entities) {
+        em = getEntityManager();
+        em.getTransaction().begin();
+        for (Object entity : entities) {
+            Object entityToRemove = merge(entity);
+            em.remove(entityToRemove);
+        }
+        em.getTransaction().commit();
     }
-
 }

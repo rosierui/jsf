@@ -27,6 +27,8 @@ public class FileUploadView extends BaseView {
     private UploadedFile file;
     private List<Upload> uploads;
 
+    private boolean readyToSave;
+
     public String getDescription() {
         return description;
     }
@@ -75,5 +77,38 @@ public class FileUploadView extends BaseView {
 //        RequestContext.getCurrentInstance().execute("PF('uploadJs').start()");
         System.out.println(event.getFile().getFileName());
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    /**
+     * Update upload objects with additional info prior to save
+     *
+     * @param userId
+     * @param tutorGroupId
+     * @param announcementId
+     * @param groupPostId
+     */
+    public void update(Integer userId, Short tutorGroupId, Integer announcementId, Integer groupPostId) {
+        for (Upload upload: uploads) {
+            upload.setUserId(userId);
+            upload.setTutorGroupId(tutorGroupId);
+            upload.setAnnouncementId(announcementId);
+            upload.setGroupPostId(groupPostId);
+        }
+        readyToSave = true;
+    }
+
+    /**
+     * Saves uploads to database
+     *
+     * Note: container view such as AnnouncementView must call update method
+     * before calling this save method 
+     */
+    public void save() {
+        if (!readyToSave) {
+            super.error("Upload objects are not ready to save");
+            LOG.error("Upload objects are not ready to save, container view failed to call update method");
+        }
+        super.getBasebo().persist(uploads);
+        readyToSave = false;
     }
 }
