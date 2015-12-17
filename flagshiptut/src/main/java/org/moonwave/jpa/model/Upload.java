@@ -3,6 +3,7 @@ package org.moonwave.jpa.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.apache.commons.io.FilenameUtils;
 import org.moonwave.util.FileUtil;
 
 import java.sql.Timestamp;
@@ -156,6 +157,6 @@ public class Upload implements Serializable {
 
     // ========================================================== Helper methods
     public String getFilename() {
-        return FileUtil.getFilename(filepath);
+        return FilenameUtils.getName(filepath);
     }
 }

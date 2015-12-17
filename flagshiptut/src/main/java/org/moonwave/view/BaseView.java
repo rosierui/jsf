@@ -8,6 +8,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 import org.moonwave.jpa.bo.BaseBO;
+import org.moonwave.jpa.model.User;
+import org.moonwave.util.AppProperties;
+import org.moonwave.util.DateUtil;
 
 /**
  * BaseView
@@ -50,5 +53,22 @@ public class BaseView implements Serializable {
 
     public void fatal(String msg) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", msg));
+    }
+
+    public Boolean isUserLogggedIn() {
+        Object user = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
+        return (user != null) ? true : false; 
+    }
+
+    public User getLogggedInUser() {
+        Object user = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
+        return (user != null) ? (User) user  : null; 
+    }
+
+    public String getUploadFolder() {
+        User user = getLogggedInUser();
+        String uploadFolder = AppProperties.getInstance().getProperty(AppProperties.KEY_upload_folder);
+        String filepath = uploadFolder + "/" + user.getTag() + "/" + DateUtil.toYYYYMMDD(DateUtil.getToday()); 
+        return filepath;
     }
 }

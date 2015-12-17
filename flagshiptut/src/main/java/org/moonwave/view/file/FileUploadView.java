@@ -9,7 +9,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.moonwave.jpa.model.Upload;
-import org.moonwave.util.AppProperties;
 import org.moonwave.util.FileUtil;
 import org.moonwave.util.Md5Util;
 import org.moonwave.view.BaseView;
@@ -71,10 +70,11 @@ public class FileUploadView extends BaseView {
      */
     public void upload() {
         if (file != null) {
-            String uploadFolder = AppProperties.getInstance().getProperty(AppProperties.KEY_upload_folder);
             try {
-                String filepath = uploadFolder + "/" + file.getFileName(); // + user-login-id + generated-mda5-userid
-                // upload folder + user tag + "/" + date + "/" + filename
+                String filepath = super.getUploadFolder() + "/" + file.getFileName();
+                filepath = FileUtil.alternativeFilepathIfExists(filepath);
+                FileUtil.createFile(filepath);
+
                 file.write(filepath);
                 super.info("Succesful", file.getFileName() + " is uploaded.");
 
@@ -99,7 +99,7 @@ public class FileUploadView extends BaseView {
         FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
         UploadedFile file = event.getFile();
         try {
-            file.write("/g01/srv/tomcat-latest/webapps/flagship-files/" + file.getFileName());
+            file.write(super.getUploadFolder() + "/" + file.getFileName());
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -109,21 +109,17 @@ public class FileUploadView extends BaseView {
     }
 
     /**
-     * Handle uploaded file deletion
+     * Handle uploaded file deletionVer
      * 
      */
     public void delete() {
         if (this.selectedTag != null) {
-            Upload upload = null;
-            for (Upload ul: uploads) {
-                if (this.selectedTag.equals(ul.getTag())) {
-                    upload = ul;
+            for (int i = uploads.size() -1; i >= 0 ; i--) {
+                if (this.selectedTag.equals(uploads.get(i).getTag())) {
+                    FileUtil.deleteFile(uploads.get(i).getFilepath());
+                    uploads.remove(i);
                     break;
                 }
-            }
-            if (upload != null) {
-                FileUtil.deleteFile(upload.getFilepath());
-                uploads.remove(upload);
             }
         }
     }

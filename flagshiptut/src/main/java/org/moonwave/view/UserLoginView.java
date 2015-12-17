@@ -35,12 +35,12 @@ public class UserLoginView extends BaseView {
     }
 
     public Boolean isUserLogggedIn() {
-        Object ret = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("isUserLoggedIn");
         Object user = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
-        return (ret != null) ? true : false; 
+        return (user != null) ? true : false; 
     }
 
-    public String login() {
+    @SuppressWarnings("unchecked")
+	public String login() {
         EntityManager em = super.getBasebo().getEntityManager();
         Query query = em.createQuery("Select u from User u where u.loginId = ?1 and u.password = ?2", User.class);
         query.setParameter(1, username);
@@ -54,14 +54,15 @@ public class UserLoginView extends BaseView {
         // login successful
         user = list.get(0);
         User loggedInUser = new User();
+        loggedInUser.setId(user.getId());
         loggedInUser.setFirstName(user.getFirstName());
         loggedInUser.setLastName(user.getLastName());
         loggedInUser.setLoginId(user.getLoginId());
         loggedInUser.setTimezone(user.getTimezone());
         loggedInUser.setEmail(user.getEmail());
         loggedInUser.setPhone(user.getPhone());
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isUserLoggedIn", Boolean.TRUE);
+        loggedInUser.setTag(user.getTag());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", loggedInUser);
-        return "/admin/newuser?faces-redirect=true";
+        return "/admin/newUser?faces-redirect=true";
     }
 }
