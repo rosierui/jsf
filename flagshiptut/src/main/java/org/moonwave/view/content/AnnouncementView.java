@@ -6,6 +6,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.model.Announcement;
+import org.moonwave.util.StackTrace;
 import org.moonwave.util.StringUtil;
 import org.moonwave.view.BaseView;
 import org.moonwave.view.file.FileUploadView;
@@ -80,9 +81,12 @@ public class AnnouncementView extends BaseView {
             a.setPublished(published);
             super.getBasebo().persist(a);
 
+            this.fileUploadView.update(super.getLogggedInUser().getId(), null, a.getId(), null);
+            this.fileUploadView.save();
+
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");
-            LOG.error("", e);
+            LOG.error(StackTrace.toString(e));
         }
         return null;
     }

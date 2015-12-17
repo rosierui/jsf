@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import org.apache.commons.io.FilenameUtils;
-import org.moonwave.util.FileUtil;
 
 import java.sql.Timestamp;
 
@@ -19,19 +18,20 @@ public class Upload implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name="user_id")
-    private int userId;
+    private Integer userId;
 
     @Column(name="tutor_group_id")
-    private short tutorGroupId;
+    private Short tutorGroupId;
 
     @Column(name="announcement_id")
-    private int announcementId;
+    private Integer announcementId;
 
     @Column(name="group_post_id")
-    private int groupPostId;
+    private Integer groupPostId;
 
     private String description;
 
@@ -56,35 +56,35 @@ public class Upload implements Serializable {
         this.id = id;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public short getTutorGroupId() {
+    public Short getTutorGroupId() {
         return tutorGroupId;
     }
 
-    public void setTutorGroupId(short tutorGroupId) {
+    public void setTutorGroupId(Short tutorGroupId) {
         this.tutorGroupId = tutorGroupId;
     }
 
-    public int getAnnouncementId() {
+    public Integer getAnnouncementId() {
         return announcementId;
     }
 
-    public void setAnnouncementId(int announcementId) {
+    public void setAnnouncementId(Integer announcementId) {
         this.announcementId = announcementId;
     }
 
-    public int getGroupPostId() {
+    public Integer getGroupPostId() {
         return groupPostId;
     }
 
-    public void setGroupPostId(int groupPostId) {
+    public void setGroupPostId(Integer groupPostId) {
         this.groupPostId = groupPostId;
     }
 

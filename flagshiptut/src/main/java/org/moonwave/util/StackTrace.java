@@ -32,6 +32,8 @@ public class StackTrace {
     public static String toString(Throwable cause) {
         StringBuffer sb = new StringBuffer(1024);
         if (cause != null) {
+            sb.append(cause.getMessage());
+            sb.append(Constants.NEW_LINE);
             StackTraceElement[] items = cause.getStackTrace();
             if (items != null) {
                 for (int i = 0;  i < items.length; i++) {
