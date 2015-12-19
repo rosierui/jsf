@@ -9,29 +9,6 @@
     template="template/ui.xhtml">
 
     <ui:define name="implementation">
-        <h3>Welcome to JSF Lab</h3>
-        <h4>Pure JSF</h4>
-        <h:form id="jsfForm">
-            <h:inputText id="name" value="#{mainController.name}" />
-            <h:commandButton value="Say Hi">
-                <f:ajax execute="name" render=":jsfForm:nameGroup" />
-            </h:commandButton>
-            <br />
-            <h:panelGroup id="nameGroup">
-                <h:outputText value="Hi #{mainController.name}!!" 
-                    rendered="#{not empty mainController.name}"/>
-            </h:panelGroup>
-        </h:form>
-        <hr />
-        <h4>PrimeFaces</h4>
-        <h:form id="primeForm">
-            <p:inputText id="name" value="#{mainController.primeName}">
-                <p:ajax event="keyup" process="@this" update=":primeForm:nameGroup" />
-            </p:inputText>
-            <h:panelGroup id="nameGroup">
-                <h:outputText value="Hi #{mainController.primeName}!!" 
-                    rendered="#{not empty mainController.primeName}" />
-            </h:panelGroup>
-        </h:form>
+        <f:event type="preRenderView" listener="#{userLoginView.redirect}" />
     </ui:define>
 </ui:composition>
