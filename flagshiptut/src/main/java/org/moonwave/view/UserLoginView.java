@@ -63,6 +63,6 @@ public class UserLoginView extends BaseView {
         loggedInUser.setPhone(user.getPhone());
         loggedInUser.setTag(user.getTag());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", loggedInUser);
-        return "/admin/newUser?faces-redirect=true";
+        return "/dashboard?faces-redirect=true";
     }
 }
