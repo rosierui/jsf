@@ -23,10 +23,16 @@
     <ui:define name="title">
         <span class="subitem">Home</span>
         <div style="float:right;">
-            <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
-                <h:outputLabel value="#{label.login}" />
-                <p:graphicImage name="/main/images/login.png" />
+            <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="Login">
+                <p:graphicImage name="/main/images/login-48.png" />
             </h:outputLink>
+
+            <a href="#{request.contextPath}/admin/newUser.xhtml" title="New Account"><h:graphicImage name="/main/images/new-48.png" /></a>
+
+            <a href="#{request.contextPath}/admin/newUser.xhtml" title="New Account">
+            <h:graphicImage name="/main/images/new-account-48.png" />
+            </a>
+            
         </div>
     </ui:define>
 
