@@ -43,101 +43,101 @@
 
     <!-- PC CONTENT STARTS HERE-->
     <div class="PC" >
-        
-	<div id="MENUSIDE" style = "display:block">
-    	<div id="MENUSIDEindent">
-            <span id="LOGO" class="bordersOfMenuSide">
-                <h:graphicImage name="main/images/logo.svg" />
-                <h:graphicImage id="BlueLogo" styleClass="hiddenLogo" name="main/images/logoBlue.svg" />
+        <!-- header bar start-->
+        <div class="ContentSideSections" id="PFTopLinksCover" style="height:60px;">
+            <a id="LOGOTEXTSIDE" href="#{request.contextPath}/index.xhtml">
+                <span class="dispBlock logoDarkText fontSize30">ASU Chinese Flagship</span>
+                <span class="dispBlock logoBlueText fontSize30 mediumFont">Tutoring System</span>
+            </a>
+
+            <a href="#{request.contextPath}/ui/misc/mockosx.xhtml" class="PFTopLinks floatRight boldFont marginRight20">
+            <h:graphicImage name="main/images/pfMockosx.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Logout</span>
+            </a>
+
+            <a href="http://www.primefaces.org/showcase-ext" class="PFTopLinks floatRight boldFont">
+            <h:graphicImage name="main/images/pfExtensions.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Extensions</span>
+            </a>
+
+            <span class="PFTopLinks floatRight boldFont cursorPointer" id="pushNav">
+                <h:graphicImage name="main/images/pfPush.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Content</span>
+                <div id="PushDemos" class="navOverlay">
+                    <a href="#{request.contextPath}/push/counter.xhtml"><span class="ui-text">Counter</span></a>
+                    <a href="#{request.contextPath}/push/chat.xhtml"><span class="ui-text">Chat</span></a>
+                    <a href="#{request.contextPath}/push/notify.xhtml"><span class="ui-text">Notify</span></a>
+                    <a href="#{request.contextPath}/mobile/checkin.xhtml"><span class="ui-text">Checkin</span></a>
+                    <a href="#{request.contextPath}/push/viewparam.xhtml"><span class="ui-text">ViewParam</span></a>
+                    <a href="#{request.contextPath}/push/chart.xhtml"><span class="ui-text">Chart</span></a>
+                    <a href="#{request.contextPath}/push/photoShare.xhtml"><span class="ui-text">PhotoShare</span></a>
+                </div>
             </span>
 
-            <span id="SubMenu-Ajax" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText">Ajax Core</span></span>
-            <div class="SubMenuLinkContainer">
-            	<a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/basic.xhtml">&bull; Basic</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; Event</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/listener.xhtml">&bull; Listener</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/counter.xhtml">&bull; Counter</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/process.xhtml">&bull; Process</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/validation.xhtml">&bull; Validation</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/dropdown.xhtml">&bull; Dropdown</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/partialSubmit.xhtml">&bull; PartialSubmit</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/selector.xhtml">&bull; Selector</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/search.xhtml">&bull; Search</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/poll.xhtml">&bull; Poll</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/fragment.xhtml">&bull; Fragment</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/status.xhtml">&bull; Status</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/remoteCommand.xhtml">&bull; RemoteCommand</a>                
-            </div>
+            <span class="PFTopLinks floatRight boldFont cursorPointer" id="themeSwitcher">
+                <h:form>
+                    <h:graphicImage name="main/images/themeswitcher.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Themes</span>
+                    <div id="GlobalThemeSwitcher" class="navOverlay">
+                        <ui:repeat value="#{themeSwitcherView.themes}" var="theme">
+                            <a href="#" data-theme="#{theme.name}"><span class="ui-theme ui-theme-#{theme}"></span><span class="ui-text">#{theme.displayName}</span></a>
+                        </ui:repeat>
+                    </div>
+                    <p:remoteCommand name="changeTheme" actionListener="#{guestPreferences.changeTheme}" />
+                </h:form>
+            </span>
 
-            <span id="SubMenu-Overlay" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/overlay.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/overlayBlue.svg" /><span class="MainLinkText">Overlay</span></span>
-            <div class="SubMenuLinkContainer">
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/confirmDialog.xhtml">&bull; ConfirmDialog</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/dialog/basic.xhtml">&bull; Dialog</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/lightBox.xhtml">&bull; LightBox</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/overlayPanel.xhtml">&bull; OverlayPanel</a>
-                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/tooltip/tooltipOptions.xhtml">&bull; Tooltip</a>
+            <div class="mobileLogoCover">
+                <h:graphicImage name="main/images/logoBlue.svg" style="height:40px;" styleClass="floatLeft marginRight10"/>
+                <span class="dispBlock logoDarkText fontSize16 floatLeft">PrimeFaces <span class="dispBlock logoBlueText fontSize18 mediumFont">SHOWCASE</span></span> 
             </div>
         </div>
-    </div>
-        
+        <!-- header bar end-->
+
     <script type="text/javascript">
         restoreMenuState();
     </script>
-    
+
     <div id="CONTENTSIDE">
+
+	    <div id="MENUSIDE" style = "display:block">
+	        <div id="MENUSIDEindent">
+	            <span id="LOGO" class="bordersOfMenuSide">
+	                <h:graphicImage name="main/images/logo.svg" />
+	                <h:graphicImage id="BlueLogo" styleClass="hiddenLogo" name="main/images/logoBlue.svg" />
+	            </span>
+	
+	            <span id="SubMenu-Ajax" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText">Ajax Core</span></span>
+	            <div class="SubMenuLinkContainer">
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/basic.xhtml">&bull; Basic</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; Event</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/listener.xhtml">&bull; Listener</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/counter.xhtml">&bull; Counter</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/process.xhtml">&bull; Process</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/validation.xhtml">&bull; Validation</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/dropdown.xhtml">&bull; Dropdown</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/partialSubmit.xhtml">&bull; PartialSubmit</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/selector.xhtml">&bull; Selector</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/search.xhtml">&bull; Search</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/poll.xhtml">&bull; Poll</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/fragment.xhtml">&bull; Fragment</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/status.xhtml">&bull; Status</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/remoteCommand.xhtml">&bull; RemoteCommand</a>                
+	            </div>
+	
+	            <span id="SubMenu-Overlay" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/overlay.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/overlayBlue.svg" /><span class="MainLinkText">Overlay</span></span>
+	            <div class="SubMenuLinkContainer">
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/confirmDialog.xhtml">&bull; ConfirmDialog</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/dialog/basic.xhtml">&bull; Dialog</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/lightBox.xhtml">&bull; LightBox</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/overlayPanel.xhtml">&bull; OverlayPanel</a>
+	                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/tooltip/tooltipOptions.xhtml">&bull; Tooltip</a>
+	            </div>
+	        </div>
+	    </div>
+
     	<div id="CONTENTSIDEindent">
-            
-        	<!-- header bar start-->
-			<div class="ContentSideSections" id="PFTopLinksCover" style="height:60px;">
-                <a id="LOGOTEXTSIDE" href="#{request.contextPath}/index.xhtml">
-                    <span class="dispBlock logoDarkText fontSize30">ASU Chinese Flagship</span>
-                    <span class="dispBlock logoBlueText fontSize30 mediumFont">Tutoring System</span>
-                </a>
-
-                <a href="#{request.contextPath}/ui/misc/mockosx.xhtml" class="PFTopLinks floatRight boldFont marginRight20">
-                <h:graphicImage name="main/images/pfMockosx.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Logout</span>
-                </a>
-
-                <a href="http://www.primefaces.org/showcase-ext" class="PFTopLinks floatRight boldFont">
-                <h:graphicImage name="main/images/pfExtensions.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Extensions</span>
-                </a>
-
-                <span class="PFTopLinks floatRight boldFont cursorPointer" id="pushNav">
-                    <h:graphicImage name="main/images/pfPush.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Content</span>
-                    <div id="PushDemos" class="navOverlay">
-                        <a href="#{request.contextPath}/push/counter.xhtml"><span class="ui-text">Counter</span></a>
-                        <a href="#{request.contextPath}/push/chat.xhtml"><span class="ui-text">Chat</span></a>
-                        <a href="#{request.contextPath}/push/notify.xhtml"><span class="ui-text">Notify</span></a>
-                        <a href="#{request.contextPath}/mobile/checkin.xhtml"><span class="ui-text">Checkin</span></a>
-                        <a href="#{request.contextPath}/push/viewparam.xhtml"><span class="ui-text">ViewParam</span></a>
-                        <a href="#{request.contextPath}/push/chart.xhtml"><span class="ui-text">Chart</span></a>
-                        <a href="#{request.contextPath}/push/photoShare.xhtml"><span class="ui-text">PhotoShare</span></a>
-                    </div>
-                </span>
-
-                <span class="PFTopLinks floatRight boldFont cursorPointer" id="themeSwitcher">
-                    <h:form>
-                        <h:graphicImage name="main/images/themeswitcher.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Themes</span>
-                        <div id="GlobalThemeSwitcher" class="navOverlay">
-                            <ui:repeat value="#{themeSwitcherView.themes}" var="theme">
-                                <a href="#" data-theme="#{theme.name}"><span class="ui-theme ui-theme-#{theme}"></span><span class="ui-text">#{theme.displayName}</span></a>
-                            </ui:repeat>
-                        </div>
-                        <p:remoteCommand name="changeTheme" actionListener="#{guestPreferences.changeTheme}" />
-                    </h:form>
-                </span>
-
-                <div class="mobileLogoCover">
-                    <h:graphicImage name="main/images/logoBlue.svg" style="height:40px;" styleClass="floatLeft marginRight10"/>
-                    <span class="dispBlock logoDarkText fontSize16 floatLeft">PrimeFaces <span class="dispBlock logoBlueText fontSize18 mediumFont">SHOWCASE</span></span> 
-                </div>
-            </div>
-            <!-- header bar end-->
 
             <ui:insert name="content">
-                
+
                 <ui:insert name="subsubmenu"></ui:insert>
-                
+
                 <div class="ContentSideSections">
                     <div class="Content100 overHidden TextShadow">
                         <span class="fontSize30 TextShadow orange mediumFont marginBottom20 dispBlock"><ui:insert name="title" /></span>
