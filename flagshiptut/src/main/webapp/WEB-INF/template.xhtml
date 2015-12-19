@@ -27,16 +27,16 @@
     <h:outputScript name="main/js/showcase.js" />
     <ui:insert name="head" />
     <script type="text/javascript">
-		var _gaq = _gaq || [];
-  		_gaq.push(['_setAccount', 'UA-12200033-1']);
-  		_gaq.push(['_trackPageview']);
+        var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-12200033-1']);
+          _gaq.push(['_trackPageview']);
 
-  		(function() {
-   			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  		})();
-	</script>
+          (function() {
+               var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+    </script>
 </h:head>
 
 <h:body>
@@ -96,43 +96,43 @@
 
     <div id="CONTENTSIDE">
 
-	    <div id="MENUSIDE" style = "display:block">
-	        <div id="MENUSIDEindent">
-	            <span id="LOGO" class="bordersOfMenuSide">
-	                <h:graphicImage name="main/images/logo.svg" />
-	                <h:graphicImage id="BlueLogo" styleClass="hiddenLogo" name="main/images/logoBlue.svg" />
-	            </span>
-	
-	            <span id="SubMenu-Ajax" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText">Ajax Core</span></span>
-	            <div class="SubMenuLinkContainer">
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/basic.xhtml">&bull; Basic</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; Event</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/listener.xhtml">&bull; Listener</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/counter.xhtml">&bull; Counter</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/process.xhtml">&bull; Process</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/validation.xhtml">&bull; Validation</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/dropdown.xhtml">&bull; Dropdown</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/partialSubmit.xhtml">&bull; PartialSubmit</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/selector.xhtml">&bull; Selector</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/search.xhtml">&bull; Search</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/poll.xhtml">&bull; Poll</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/fragment.xhtml">&bull; Fragment</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/status.xhtml">&bull; Status</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/remoteCommand.xhtml">&bull; RemoteCommand</a>                
-	            </div>
-	
-	            <span id="SubMenu-Overlay" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/overlay.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/overlayBlue.svg" /><span class="MainLinkText">Overlay</span></span>
-	            <div class="SubMenuLinkContainer">
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/confirmDialog.xhtml">&bull; ConfirmDialog</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/dialog/basic.xhtml">&bull; Dialog</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/lightBox.xhtml">&bull; LightBox</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/overlayPanel.xhtml">&bull; OverlayPanel</a>
-	                <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/tooltip/tooltipOptions.xhtml">&bull; Tooltip</a>
-	            </div>
-	        </div>
-	    </div>
+        <div id="MENUSIDE" style = "display:block">
+            <div id="MENUSIDEindent">
+                <span id="LOGO" class="bordersOfMenuSide">
+                    <h:graphicImage name="main/images/logo.svg" />
+                    <h:graphicImage id="BlueLogo" styleClass="hiddenLogo" name="main/images/logoBlue.svg" />
+                </span>
+    
+                <span id="SubMenu-Ajax" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText">Ajax Core</span></span>
+                <div class="SubMenuLinkContainer">
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/basic.xhtml">&bull; Basic</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; Event</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/listener.xhtml">&bull; Listener</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/counter.xhtml">&bull; Counter</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/process.xhtml">&bull; Process</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/validation.xhtml">&bull; Validation</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/dropdown.xhtml">&bull; Dropdown</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/partialSubmit.xhtml">&bull; PartialSubmit</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/selector.xhtml">&bull; Selector</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/search.xhtml">&bull; Search</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/poll.xhtml">&bull; Poll</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/fragment.xhtml">&bull; Fragment</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/status.xhtml">&bull; Status</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/remoteCommand.xhtml">&bull; RemoteCommand</a>                
+                </div>
+    
+                <span id="SubMenu-Overlay" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/overlay.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/overlayBlue.svg" /><span class="MainLinkText">Overlay</span></span>
+                <div class="SubMenuLinkContainer">
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/confirmDialog.xhtml">&bull; ConfirmDialog</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/dialog/basic.xhtml">&bull; Dialog</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/lightBox.xhtml">&bull; LightBox</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/overlayPanel.xhtml">&bull; OverlayPanel</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/tooltip/tooltipOptions.xhtml">&bull; Tooltip</a>
+                </div>
+            </div>
+        </div>
 
-    	<div id="CONTENTSIDEindent">
+        <div id="CONTENTSIDEindent">
 
             <ui:insert name="content">
 
