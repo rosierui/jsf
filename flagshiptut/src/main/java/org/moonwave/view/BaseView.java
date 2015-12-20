@@ -60,13 +60,19 @@ public class BaseView implements Serializable {
         return (user != null) ? true : false; 
     }
 
-    public User getLogggedInUser() {
+    public User getLoggedInUser() {
         Object user = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
         return (user != null) ? (User) user  : null; 
     }
 
+    public String getTimezone() {
+        User user = getLoggedInUser();
+        String timezone = (user != null) ? user.getTimezone() : AppProperties.getInstance().getProperty(AppProperties.KEY_default_timezone);
+        return timezone;
+    }
+
     public String getUploadFolder() {
-        User user = getLogggedInUser();
+        User user = getLoggedInUser();
         String uploadFolder = AppProperties.getInstance().getProperty(AppProperties.KEY_upload_folder);
         String filepath = uploadFolder + "/" + user.getTag() + "/" + DateUtil.toYYYYMMDD(DateUtil.getToday()); 
         return filepath;

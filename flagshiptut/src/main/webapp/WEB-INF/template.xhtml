@@ -50,43 +50,47 @@
                 <span class="dispBlock logoBlueText fontSize30 mediumFont">Tutoring System</span>
             </a>
 
-            <a href="#{request.contextPath}/logout.xhtml" class="PFTopLinks floatRight boldFont marginRight20">
-            <h:graphicImage name="main/images/pfMockosx.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Logout</span>
-            </a>
+            <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
+                <a href="#{request.contextPath}/logout.xhtml" class="PFTopLinks floatRight boldFont marginRight20">
+                <h:graphicImage name="main/images/pfMockosx.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Logout</span>
+                </a>
+            </h:panelGroup>
 
-            <a href="http://www.primefaces.org/showcase-ext" class="PFTopLinks floatRight boldFont">
-            <h:graphicImage name="main/images/pfExtensions.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Extensions</span>
-            </a>
+            <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
+                <a href="http://www.primefaces.org/showcase-ext" class="PFTopLinks floatRight boldFont">
+                <h:graphicImage name="main/images/pfExtensions.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Extensions</span>
+                </a>
+            </h:panelGroup>
 
-            <span class="PFTopLinks floatRight boldFont cursorPointer" id="pushNav">
-                <h:graphicImage name="main/images/pfPush.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Content</span>
-                <div id="PushDemos" class="navOverlay">
-                    <a href="#{request.contextPath}/push/counter.xhtml"><span class="ui-text">Counter</span></a>
-                    <a href="#{request.contextPath}/push/chat.xhtml"><span class="ui-text">Chat</span></a>
-                    <a href="#{request.contextPath}/push/notify.xhtml"><span class="ui-text">Notify</span></a>
-                    <a href="#{request.contextPath}/mobile/checkin.xhtml"><span class="ui-text">Checkin</span></a>
-                    <a href="#{request.contextPath}/push/viewparam.xhtml"><span class="ui-text">ViewParam</span></a>
-                    <a href="#{request.contextPath}/push/chart.xhtml"><span class="ui-text">Chart</span></a>
-                    <a href="#{request.contextPath}/push/photoShare.xhtml"><span class="ui-text">PhotoShare</span></a>
-                </div>
-            </span>
-
-            <span class="PFTopLinks floatRight boldFont cursorPointer" id="themeSwitcher">
-                <h:form>
-                    <h:graphicImage name="main/images/themeswitcher.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Themes</span>
-                    <div id="GlobalThemeSwitcher" class="navOverlay">
-                        <ui:repeat value="#{themeSwitcherView.themes}" var="theme">
-                            <a href="#" data-theme="#{theme.name}"><span class="ui-theme ui-theme-#{theme}"></span><span class="ui-text">#{theme.displayName}</span></a>
-                        </ui:repeat>
+            <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
+                <span class="PFTopLinks floatRight boldFont cursorPointer" id="pushNav">
+                    <h:graphicImage name="main/images/pfPush.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Content</span>
+                    <div id="PushDemos" class="navOverlay">
+                        <a href="#{request.contextPath}/push/counter.xhtml"><span class="ui-text">Counter</span></a>
+                        <a href="#{request.contextPath}/push/chat.xhtml"><span class="ui-text">Chat</span></a>
+                        <a href="#{request.contextPath}/push/notify.xhtml"><span class="ui-text">Notify</span></a>
+                        <a href="#{request.contextPath}/mobile/checkin.xhtml"><span class="ui-text">Checkin</span></a>
+                        <a href="#{request.contextPath}/push/viewparam.xhtml"><span class="ui-text">ViewParam</span></a>
+                        <a href="#{request.contextPath}/push/chart.xhtml"><span class="ui-text">Chart</span></a>
+                        <a href="#{request.contextPath}/push/photoShare.xhtml"><span class="ui-text">PhotoShare</span></a>
                     </div>
-                    <p:remoteCommand name="changeTheme" actionListener="#{guestPreferences.changeTheme}" />
-                </h:form>
-            </span>
+                </span>
+            </h:panelGroup>
 
-            <div class="mobileLogoCover">
-                <h:graphicImage name="main/images/logoBlue.svg" style="height:40px;" styleClass="floatLeft marginRight10"/>
-                <span class="dispBlock logoDarkText fontSize16 floatLeft">PrimeFaces <span class="dispBlock logoBlueText fontSize18 mediumFont">SHOWCASE</span></span> 
-            </div>
+            <h:panelGroup rendered="#{accessController.isAdmin()}">
+                <span class="PFTopLinks floatRight boldFont cursorPointer" id="themeSwitcher">
+                    <h:form>
+                        <h:graphicImage name="main/images/themeswitcher.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Themes</span>
+                        <div id="GlobalThemeSwitcher" class="navOverlay">
+                            <ui:repeat value="#{themeSwitcherView.themes}" var="theme">
+                                <a href="#" data-theme="#{theme.name}"><span class="ui-theme ui-theme-#{theme}"></span><span class="ui-text">#{theme.displayName}</span></a>
+                            </ui:repeat>
+                        </div>
+                        <p:remoteCommand name="changeTheme" actionListener="#{guestPreferences.changeTheme}" />
+                    </h:form>
+                </span>
+            </h:panelGroup>
+
         </div>
         <!-- header bar end-->
 

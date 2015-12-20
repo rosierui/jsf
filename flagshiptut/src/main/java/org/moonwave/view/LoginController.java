@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.moonwave.jpa.model.User;
 import org.moonwave.util.SHAUtil;
 
-@ManagedBean
+@ManagedBean(name = "loginController")
 @SessionScoped
 public class LoginController extends BaseView {
 
@@ -39,11 +39,6 @@ public class LoginController extends BaseView {
         this.password = password;
     }
 
-    public Boolean isUserLoggedIn() {
-        Object user = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
-        return (user != null) ? true : false; 
-    }
-
     @SuppressWarnings("unchecked")
     public String login() {
         EntityManager em = super.getBasebo().getEntityManager();
@@ -63,6 +58,7 @@ public class LoginController extends BaseView {
         loggedInUser.setFirstName(user.getFirstName());
         loggedInUser.setLastName(user.getLastName());
         loggedInUser.setLoginId(user.getLoginId());
+        loggedInUser.setRoles(user.getRoles());
         loggedInUser.setTimezone(user.getTimezone());
         loggedInUser.setEmail(user.getEmail());
         loggedInUser.setPhone(user.getPhone());
