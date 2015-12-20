@@ -115,6 +115,7 @@
                     <h:graphicImage name="main/images/asu-logo-3.jpg" />
                 </span>
     
+                <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
                     <span id="SubMenu-Ajax" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText"><h:outputText value="#{label.content}" /></span></span>
                     <div class="SubMenuLinkContainer">
                         <h:panelGroup rendered="#{accessController.isTeacher()}">
@@ -138,6 +139,7 @@
                           
                         </h:panelGroup>
                     </div>
+                </h:panelGroup>
     
                 <span id="SubMenu-Overlay" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/overlay.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/overlayBlue.svg" /><span class="MainLinkText">Overlay</span></span>
                 <div class="SubMenuLinkContainer">
