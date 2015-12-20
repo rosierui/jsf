@@ -111,23 +111,29 @@
                     <h:graphicImage name="main/images/asu-logo-3.jpg" />
                 </span>
     
-                <span id="SubMenu-Ajax" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText">Ajax Core</span></span>
-                <div class="SubMenuLinkContainer">
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/basic.xhtml">&bull; Basic</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; Event</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/listener.xhtml">&bull; Listener</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/counter.xhtml">&bull; Counter</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/process.xhtml">&bull; Process</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/validation.xhtml">&bull; Validation</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/dropdown.xhtml">&bull; Dropdown</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/partialSubmit.xhtml">&bull; PartialSubmit</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/selector.xhtml">&bull; Selector</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/search.xhtml">&bull; Search</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/poll.xhtml">&bull; Poll</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/fragment.xhtml">&bull; Fragment</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/status.xhtml">&bull; Status</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/remoteCommand.xhtml">&bull; RemoteCommand</a>                
-                </div>
+                <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
+                    <span id="SubMenu-Ajax" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText">Add Content</span></span>
+                    <div class="SubMenuLinkContainer">
+                        <h:panelGroup rendered="#{accessController.isTeacher()}">
+                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/basic.xhtml">&bull; <h:outputText value="#{label.announcement}" /></a>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{accessController.isTeacher()}">
+                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; <h:outputText value="#{label.grouppost}" /></a>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{accessController.isTeacher()}">
+                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/listener.xhtml">&bull; <h:outputText value="#{label.assignment}" /></a>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{accessController.isStudent()}">
+                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; <h:outputText value="#{label.selfEvaluation}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; <h:outputText value="#{label.myGrade}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; <h:outputText value="#{label.myGroups}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; <h:outputText value="#{label.mySchedule}" /></a>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{accessController.isTutor()}">
+                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; <h:outputText value="#{label.tutorEvaluation}" /></a>
+                        </h:panelGroup>
+                    </div>
+                </h:panelGroup>
     
                 <span id="SubMenu-Overlay" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/overlay.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/overlayBlue.svg" /><span class="MainLinkText">Overlay</span></span>
                 <div class="SubMenuLinkContainer">

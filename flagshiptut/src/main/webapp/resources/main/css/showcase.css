@@ -75,7 +75,7 @@ body{margin:0px; height:100%; overflow-x:hidden; overflow-y:auto; background-col
 				.MainLinkText{color:#9ba5ac; font-size:20px; margin:2px 0px 0px 60px; display:block;}
 				
 			.SubMenuLinkContainer{width:auto; padding:20px; overflow:hidden; background-color:#20282b; display: none;}
-				.SubMenuLink{width:50%; display:inline-block; float:left; padding:6px 0px; cursor:pointer; border-radius:4px; -webkit-border-radius:4px; color:#659eb3; font-size:14px;
+				.SubMenuLink{width:100%; display:inline-block; float:left; padding:6px 0px; cursor:pointer; border-radius:4px; -webkit-border-radius:4px; color:#659eb3; font-size:14px;
 				}
 				.SubMenuLink:hover{background-color:#101517; color:#8dc5d9;}
 						
