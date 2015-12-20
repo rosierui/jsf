@@ -23,16 +23,14 @@
     <ui:define name="title">
         <span class="subitem">Home</span>
         <div style="float:right;">
-            <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="Login">
-                <p:graphicImage name="/main/images/login-48.png" />
+            <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="Login" class="PFTopLinks floatRight boldFont">
+                <p:graphicImage name="/main/images/login-48.png" /><span class="PFGrayText"></span><span class="PFDarkText">Login</span>
             </h:outputLink>
 
-            <a href="#{request.contextPath}/admin/newUser.xhtml" title="New Account"><h:graphicImage name="/main/images/new-48.png" /></a>
-
-            <a href="#{request.contextPath}/admin/newUser.xhtml" title="New Account">
-            <h:graphicImage name="/main/images/new-account-48.png" />
+            <a href="#{request.contextPath}/admin/newUser.xhtml" title="New Account" class="PFTopLinks floatRight boldFont">
+            <h:graphicImage name="/main/images/new-account-48.png" /><span class="PFGrayText"></span><span class="PFDarkText">New Account</span>
             </a>
-            
+
         </div>
     </ui:define>
 
