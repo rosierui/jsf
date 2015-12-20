@@ -64,7 +64,7 @@
 
             <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
                 <span class="PFTopLinks floatRight boldFont cursorPointer" id="pushNav">
-                    <h:graphicImage name="main/images/pfPush.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Content</span>
+                    <h:graphicImage name="main/images/new-content-128.png" /><span class="PFGrayText"></span><span class="PFDarkText">Content</span>
                     <div id="PushDemos" class="navOverlay">
                         <a href="#{request.contextPath}/push/counter.xhtml"><span class="ui-text">Counter</span></a>
                         <a href="#{request.contextPath}/push/chat.xhtml"><span class="ui-text">Chat</span></a>
@@ -91,6 +91,11 @@
                 </span>
             </h:panelGroup>
 
+            <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
+                <a href="#{request.contextPath}/dashboard.xhtml" class="PFTopLinks floatRight boldFont">
+                <h:graphicImage name="main/images/dashboard-128.png" /><span class="PFGrayText"></span><span class="PFDarkText">Dashboard</span>
+                </a>
+            </h:panelGroup>
         </div>
         <!-- header bar end-->
 
@@ -102,9 +107,8 @@
 
         <div id="MENUSIDE" style = "display:block">
             <div id="MENUSIDEindent">
-                <span id="LOGO" class="bordersOfMenuSide">
-                    <h:graphicImage name="main/images/logo.svg" />
-                    <h:graphicImage id="BlueLogo" styleClass="hiddenLogo" name="main/images/logoBlue.svg" />
+                <span id="LOGO1" class="bordersOfMenuSide">
+                    <h:graphicImage name="main/images/asu-logo-3.jpg" />
                 </span>
     
                 <span id="SubMenu-Ajax" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText">Ajax Core</span></span>
