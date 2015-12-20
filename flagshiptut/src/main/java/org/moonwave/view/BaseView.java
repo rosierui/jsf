@@ -55,7 +55,7 @@ public class BaseView implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", msg));
     }
 
-    public Boolean isUserLogggedIn() {
+    public Boolean isUserLoggedIn() {
         Object user = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
         return (user != null) ? true : false; 
     }

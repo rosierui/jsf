@@ -12,6 +12,9 @@
         Group Post
     </ui:define>
     <ui:define name="implementation">
+        <c:if test="#{!loginController.isUserLoggedIn()}">
+            #{loginController.redirectToLogin()}
+        </c:if>
         <h:panelGroup id="msgPanel">
             <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         </h:panelGroup>

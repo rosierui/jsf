@@ -13,6 +13,9 @@
     </ui:define>
     <ui:define name="implementation">
         <h:form id="jsfForm">
+            <c:if test="#{!loginController.isUserLoggedIn()}">
+                #{loginController.redirectToLogin()}
+            </c:if>
             <p:messages id="messages" autoUpdate="false" />
             <h:panelGrid columns="2">
                 <h:outputLabel value="${label.visibleTo}" />

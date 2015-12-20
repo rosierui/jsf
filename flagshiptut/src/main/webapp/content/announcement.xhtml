@@ -12,6 +12,12 @@
         <h:outputLabel value="${label.announcement}" />
     </ui:define>
     <ui:define name="implementation">
+        <c:if test="#{!loginController.isUserLoggedIn()}">
+            #{loginController.redirectToLogin()}
+        </c:if>
+        <c:if test="#{!loginController.isUserLoggedIn()}">
+            #{loginController.redirectToLogin()}
+        </c:if>
         <p:growl id="messages" showDetail="true" />
         <h:form id="jsfForm">
         <!-- 

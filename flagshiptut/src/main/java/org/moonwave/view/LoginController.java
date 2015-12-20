@@ -39,7 +39,7 @@ public class LoginController extends BaseView {
         this.password = password;
     }
 
-    public Boolean isUserLogggedIn() {
+    public Boolean isUserLoggedIn() {
         Object user = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
         return (user != null) ? true : false; 
     }
@@ -80,11 +80,17 @@ public class LoginController extends BaseView {
     public void redirect() throws IOException {
         FacesContext fContext = FacesContext.getCurrentInstance();
         ExternalContext extContext = fContext.getExternalContext();
-        if (this.isUserLogggedIn()) {
+        if (this.isUserLoggedIn()) {
             extContext.redirect(extContext.getRequestContextPath() + "/dashboard.xhtml");
         } else {
             extContext.redirect(extContext.getRequestContextPath() + "/login.xhtml");
         }
+    }
+
+    public void redirectToLogin() throws IOException {
+        FacesContext fContext = FacesContext.getCurrentInstance();
+        ExternalContext extContext = fContext.getExternalContext();
+        extContext.redirect(extContext.getRequestContextPath() + "/login.xhtml");
     }
 
     public void logout() throws IOException {

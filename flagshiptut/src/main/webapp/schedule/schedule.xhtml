@@ -3,6 +3,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
                 template="/WEB-INF/template.xhtml">
 
     <ui:define name="head">
@@ -16,6 +17,9 @@
     </ui:define>
 
     <ui:define name="implementation">
+        <c:if test="#{!loginController.isUserLoggedIn()}">
+            #{loginController.redirectToLogin()}
+        </c:if>
 
         <h:form>
             <p:growl id="messages" showDetail="true" />
