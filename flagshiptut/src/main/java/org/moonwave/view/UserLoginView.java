@@ -71,15 +71,6 @@ public class UserLoginView extends BaseView {
         return "/dashboard?faces-redirect=true";
     }
 
-    public String logout() {
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", null);
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-        return "/login?faces-redirect=true";
-    }
-
     /**
      * http://stackoverflow.com/questions/4032825/how-to-make-a-redirection-in-jsf
      * http://stackoverflow.com/questions/12815529/jsf-index-xhtml-and-redirect-to-faces-action
@@ -94,5 +85,16 @@ public class UserLoginView extends BaseView {
         } else {
             extContext.redirect(extContext.getRequestContextPath() + "/login.xhtml");
         }
+    }
+
+    public void logout() throws IOException {
+        FacesContext fContext = FacesContext.getCurrentInstance();
+        ExternalContext extContext = fContext.getExternalContext();
+        extContext.getSessionMap().put("loggedInUser", null);
+        HttpSession session = (HttpSession) extContext.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        extContext.redirect(extContext.getRequestContextPath() + "/login.xhtml");
     }
 }
