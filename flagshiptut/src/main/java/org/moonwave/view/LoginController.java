@@ -16,7 +16,7 @@ import org.moonwave.util.SHAUtil;
 
 @ManagedBean
 @SessionScoped
-public class UserLoginView extends BaseView {
+public class LoginController extends BaseView {
 
     private static final long serialVersionUID = 1L;
 
@@ -97,4 +97,14 @@ public class UserLoginView extends BaseView {
         }
         extContext.redirect(extContext.getRequestContextPath() + "/login.xhtml");
     }
+
+//    /**
+//     * http://stackoverflow.com/questions/3841361/jsf-http-session-login
+//     *
+//     * @return
+//     */
+//    public String logout() {
+//        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+//        return "/login?faces-redirect=true";
+//    }
 }
