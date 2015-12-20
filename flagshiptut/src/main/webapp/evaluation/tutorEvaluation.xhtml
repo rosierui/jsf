@@ -9,7 +9,7 @@
     template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
-        <h:outputLabel value="${label.evaluation}" />
+        <h:outputLabel value="${label.tutorEvaluation}" />
     </ui:define>
     <ui:define name="implementation">
         <c:if test="#{!loginController.isUserLoggedIn()}">
@@ -38,7 +38,7 @@
             <h:outputLabel value="${message.eval_part1}" />
             <p:panelGrid columns="2" cellpadding="5" id="panel1">
                 <h:outputLabel value="Evaluation" />
-                <h:outputLabel value="Student" />
+                <h:outputLabel value="Tutor" />
 
                 <h:outputText value="${message.eval_part1_1}" />
                 <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart11}" />
@@ -60,7 +60,7 @@
             <h:outputLabel value="${message.eval_part2}" />
             <p:panelGrid columns="2" cellpadding="5" id="panel2">
                 <h:outputLabel value="Evaluation" />
-                <h:outputLabel value="Student" />
+                <h:outputLabel value="Tutor" />
 
                 <h:outputText value="${message.eval_part2_1}" />
                 <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart21}" />
@@ -82,7 +82,7 @@
             <h:outputLabel value="${message.eval_part3}" />
             <p:panelGrid columns="2" cellpadding="5" id="panel3">
                 <h:outputLabel value="Evaluation" />
-                <h:outputLabel value="Student" />
+                <h:outputLabel value="Tutor" />
 
                 <h:outputText value="${message.eval_part3_1}" />
                 <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart31}" />

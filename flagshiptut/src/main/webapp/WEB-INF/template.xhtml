@@ -57,23 +57,31 @@
             </h:panelGroup>
 
             <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
-                <a href="http://www.primefaces.org/showcase-ext" class="PFTopLinks floatRight boldFont">
-                <h:graphicImage name="main/images/pfExtensions.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Extensions</span>
-                </a>
-            </h:panelGroup>
-
-            <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
                 <span class="PFTopLinks floatRight boldFont cursorPointer" id="pushNav">
-                    <h:graphicImage name="main/images/new-content-128.png" /><span class="PFGrayText"></span><span class="PFDarkText">Content</span>
-                    <div id="PushDemos" class="navOverlay">
-                        <a href="#{request.contextPath}/push/counter.xhtml"><span class="ui-text">Counter</span></a>
-                        <a href="#{request.contextPath}/push/chat.xhtml"><span class="ui-text">Chat</span></a>
-                        <a href="#{request.contextPath}/push/notify.xhtml"><span class="ui-text">Notify</span></a>
-                        <a href="#{request.contextPath}/mobile/checkin.xhtml"><span class="ui-text">Checkin</span></a>
-                        <a href="#{request.contextPath}/push/viewparam.xhtml"><span class="ui-text">ViewParam</span></a>
-                        <a href="#{request.contextPath}/push/chart.xhtml"><span class="ui-text">Chart</span></a>
-                        <a href="#{request.contextPath}/push/photoShare.xhtml"><span class="ui-text">PhotoShare</span></a>
-                    </div>
+                    <h:graphicImage name="main/images/new-content-128.png" /><span class="PFGrayText"></span><span class="PFDarkText"><h:outputText value="#{label.content}" /></span>
+                        <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
+                            <div id="PushDemos" class="navOverlay">
+                                <h:panelGroup rendered="#{accessController.isTeacher()}">
+                                  <a href="#{request.contextPath}/content/announcement.xhtml"><h:outputText value="#{label.announcement}" /></a>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{accessController.isTeacher()}">
+                                  <a href="#{request.contextPath}/content/grouppost.xhtml"><h:outputText value="#{label.grouppost}" /></a>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{accessController.isTeacher()}">
+                                  <a href="#{request.contextPath}/error/tbd.xhtml"><h:outputText value="#{label.assignment}" /></a>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{accessController.isStudent()}">
+                                  <a href="#{request.contextPath}/evaluation/selfEvaluation.xhtml"><h:outputText value="#{label.selfEvaluation}" /></a>
+                                  <a href="#{request.contextPath}/error/tbd.xhtml"><h:outputText value="#{label.myGrade}" /></a>
+                                  <a href="#{request.contextPath}/error/tbd.xhtml"><h:outputText value="#{label.myGroups}" /></a>
+                                  <a href="#{request.contextPath}/error/tbd.xhtml"><h:outputText value="#{label.mySchedule}" /></a>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{accessController.isTutor()}">
+                                  <a href="#{request.contextPath}/evaluation/tutorEvaluation.xhtml"><h:outputText value="#{label.tutorEvaluation}" /></a>
+                                  <a href="#{request.contextPath}/evaluation/performance.xhtml"><h:outputText value="#{label.performanceEvaluation}" /></a>
+                                </h:panelGroup>
+                            </div>
+                        </h:panelGroup>
                 </span>
             </h:panelGroup>
 
@@ -112,25 +120,27 @@
                 </span>
     
                 <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
-                    <span id="SubMenu-Ajax" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText">Add Content</span></span>
+                    <span id="SubMenu-Ajax" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText"><h:outputText value="#{label.content}" /></span></span>
                     <div class="SubMenuLinkContainer">
                         <h:panelGroup rendered="#{accessController.isTeacher()}">
-                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/basic.xhtml">&bull; <h:outputText value="#{label.announcement}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/content/announcement.xhtml">&bull; <h:outputText value="#{label.announcement}" /></a>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{accessController.isTeacher()}">
-                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; <h:outputText value="#{label.grouppost}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/content/grouppost.xhtml">&bull; <h:outputText value="#{label.grouppost}" /></a>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{accessController.isTeacher()}">
-                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/listener.xhtml">&bull; <h:outputText value="#{label.assignment}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml">&bull; <h:outputText value="#{label.assignment}" /></a>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{accessController.isStudent()}">
-                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; <h:outputText value="#{label.selfEvaluation}" /></a>
-                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; <h:outputText value="#{label.myGrade}" /></a>
-                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; <h:outputText value="#{label.myGroups}" /></a>
-                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; <h:outputText value="#{label.mySchedule}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/evaluation/selfEvaluation.xhtml">&bull; <h:outputText value="#{label.selfEvaluation}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml">&bull; <h:outputText value="#{label.myGrade}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml">&bull; <h:outputText value="#{label.myGroups}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml">&bull; <h:outputText value="#{label.mySchedule}" /></a>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{accessController.isTutor()}">
-                          <a class="SubMenuLink" href="#{request.contextPath}/ui/ajax/event.xhtml">&bull; <h:outputText value="#{label.tutorEvaluation}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/evaluation/tutorEvaluation.xhtml">&bull; <h:outputText value="#{label.tutorEvaluation}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/evaluation/performance.xhtml">&bull; <h:outputText value="#{label.performanceEvaluation}" /></a>
+                          
                         </h:panelGroup>
                     </div>
                 </h:panelGroup>
