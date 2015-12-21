@@ -128,6 +128,24 @@
                     <span id="divContent" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText"><h:outputText value="#{label.content}" /></span></span>
                     <div class="SubMenuLinkContainer">
                         <h:panelGroup rendered="#{accessController.isTeacher() or accessController.isTutor()}">
+                          <a class="SubMenuLink" href="#{request.contextPath}/content/announcementList.xhtml">&bull; <h:outputText value="#{label.announcements}" /></a>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{accessController.isTeacher() or accessController.isTutor()}">
+                          <a class="SubMenuLink" href="#{request.contextPath}/content/grouppostList.xhtml">&bull; <h:outputText value="#{label.groupposts}" /></a>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{accessController.isStudent()}">
+                          <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=My Grade">&bull; <h:outputText value="#{label.myGrade}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=My Groups">&bull; <h:outputText value="#{label.myGroups}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=My Schedule">&bull; <h:outputText value="#{label.mySchedule}" /></a>
+                        </h:panelGroup>
+                    </div>
+                </h:panelGroup>
+
+                <!-- New Content -->
+                <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
+                    <span id="divNewContent" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/data.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/dataBlue.svg" /><span class="MainLinkText"><h:outputText value="#{label.add}" /></span></span>
+                    <div class="SubMenuLinkContainer">
+                        <h:panelGroup rendered="#{accessController.isTeacher() or accessController.isTutor()}">
                           <a class="SubMenuLink" href="#{request.contextPath}/content/announcement.xhtml">&bull; <h:outputText value="#{label.announcement}" /></a>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{accessController.isTeacher() or accessController.isTutor()}">
@@ -138,8 +156,6 @@
                         </h:panelGroup>
                         <h:panelGroup rendered="#{accessController.isStudent()}">
                           <a class="SubMenuLink" href="#{request.contextPath}/evaluation/selfEvaluation.xhtml">&bull; <h:outputText value="#{label.selfEvaluation}" /></a>
-                          <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=My Grade">&bull; <h:outputText value="#{label.myGrade}" /></a>
-                          <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=My Groups">&bull; <h:outputText value="#{label.myGroups}" /></a>
                           <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=My Schedule">&bull; <h:outputText value="#{label.mySchedule}" /></a>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{accessController.isTutor()}">
@@ -148,7 +164,6 @@
                         </h:panelGroup>
                     </div>
                 </h:panelGroup>
-
 
                 <!-- Account -->
                 <span id="SubMenu-Overlay" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/overlay.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/overlayBlue.svg" /><span class="MainLinkText"><h:outputText value="#{label.account}" /></span></span>

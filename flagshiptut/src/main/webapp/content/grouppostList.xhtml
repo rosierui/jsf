@@ -9,7 +9,7 @@
     template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
-        Group Post
+        <h:outputText value="#{label.grouppost}" />
     </ui:define>
     <ui:define name="implementation">
         <c:if test="#{!loginController.isUserLoggedIn()}">
