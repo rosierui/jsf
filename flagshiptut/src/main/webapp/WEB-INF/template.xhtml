@@ -52,13 +52,13 @@
 
             <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
                 <a href="#{request.contextPath}/logout.xhtml" class="PFTopLinks floatRight boldFont marginRight20">
-                <h:graphicImage name="main/images/pfMockosx.svg" /><span class="PFGrayText"></span><span class="PFDarkText">Logout</span>
+                <h:graphicImage name="main/images/pfMockosx.svg" /><span class="PFGrayText"></span><span class="PFDarkText"><h:outputText value="#{label.logout}" /></span>
                 </a>
             </h:panelGroup>
 
             <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
                 <span class="PFTopLinks floatRight boldFont cursorPointer" id="pushNav">
-                    <h:graphicImage name="main/images/new-content-128.png" /><span class="PFGrayText"></span><span class="PFDarkText"><h:outputText value="#{label.content}" /></span>
+                    <h:graphicImage name="main/images/content-128.png" /><span class="PFGrayText"></span><span class="PFDarkText"><h:outputText value="#{label.content}" /></span>
                         <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
                             <div id="PushDemos" class="navOverlay">
                                 <h:panelGroup rendered="#{accessController.isTeacher()}">
@@ -101,7 +101,7 @@
 
             <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
                 <a href="#{request.contextPath}/dashboard.xhtml" class="PFTopLinks floatRight boldFont">
-                <h:graphicImage name="main/images/dashboard-128.png" /><span class="PFGrayText"></span><span class="PFDarkText">Dashboard</span>
+                <h:graphicImage name="main/images/dashboard-128.png" /><span class="PFGrayText"></span><span class="PFDarkText"><h:outputText value="#{label.dashboard}" /></span>
                 </a>
             </h:panelGroup>
         </div>
