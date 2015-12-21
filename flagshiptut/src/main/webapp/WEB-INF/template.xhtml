@@ -136,18 +136,18 @@
                         <h:panelGroup rendered="#{accessController.isTutor()}">
                           <a class="SubMenuLink" href="#{request.contextPath}/evaluation/tutorEvaluation.xhtml">&bull; <h:outputText value="#{label.tutorEvaluation}" /></a>
                           <a class="SubMenuLink" href="#{request.contextPath}/evaluation/performance.xhtml">&bull; <h:outputText value="#{label.performanceEvaluation}" /></a>
-                          
                         </h:panelGroup>
                     </div>
                 </h:panelGroup>
     
-                <span id="SubMenu-Overlay" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/overlay.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/overlayBlue.svg" /><span class="MainLinkText">Overlay</span></span>
+                <span id="SubMenu-Overlay" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/overlay.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/overlayBlue.svg" /><span class="MainLinkText"><h:outputText value="#{label.account}" /></span></span>
                 <div class="SubMenuLinkContainer">
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/confirmDialog.xhtml">&bull; ConfirmDialog</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/dialog/basic.xhtml">&bull; Dialog</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/lightBox.xhtml">&bull; LightBox</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/overlayPanel.xhtml">&bull; OverlayPanel</a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/ui/overlay/tooltip/tooltipOptions.xhtml">&bull; Tooltip</a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/login.xhtml">&bull; <h:outputText value="#{label.login}" /></a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/admin/newUser.xhtml">&bull; <h:outputText value="#{label.newAccount}" /></a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml">&bull; <h:outputText value="#{label.forgotPassword}" /></a>
+                    <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
+                      <a class="SubMenuLink" href="#{request.contextPath}/logout.xhtml">&bull; <h:outputText value="#{label.logout}" /></a>
+                    </h:panelGroup>
                 </div>
             </div>
         </div>
