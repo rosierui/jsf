@@ -114,7 +114,12 @@
                 <span id="LOGO1" class="bordersOfMenuSide">
                     <h:graphicImage name="main/images/asu-logo-3.jpg" />
                 </span>
-    
+                <h:panelGroup class="WELCOME" rendered="#{loginController.isUserLoggedIn()}">
+                    Welcome <h:outputText value="#{loginController.loggedInUser.firstName} #{loginController.loggedInUser.lastName}" />
+                </h:panelGroup>
+                <h:panelGroup class="BLANK" rendered="#{!loginController.isUserLoggedIn()}">
+                    <h:outputText value="" />
+                </h:panelGroup>
                 <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
                     <span id="SubMenu-Ajax" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText"><h:outputText value="#{label.content}" /></span></span>
                     <div class="SubMenuLinkContainer">
