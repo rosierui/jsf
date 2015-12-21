@@ -122,8 +122,10 @@
                 <h:panelGroup class="BLANK" rendered="#{!loginController.isUserLoggedIn()}">
                     <h:outputText value="" />
                 </h:panelGroup>
+
+                <!-- Content -->
                 <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
-                    <span id="SubMenu-Ajax" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText"><h:outputText value="#{label.content}" /></span></span>
+                    <span id="divContent" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText"><h:outputText value="#{label.content}" /></span></span>
                     <div class="SubMenuLinkContainer">
                         <h:panelGroup rendered="#{accessController.isTeacher() or accessController.isTutor()}">
                           <a class="SubMenuLink" href="#{request.contextPath}/content/announcement.xhtml">&bull; <h:outputText value="#{label.announcement}" /></a>
@@ -146,7 +148,9 @@
                         </h:panelGroup>
                     </div>
                 </h:panelGroup>
-    
+
+
+                <!-- Account -->
                 <span id="SubMenu-Overlay" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/overlay.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/overlayBlue.svg" /><span class="MainLinkText"><h:outputText value="#{label.account}" /></span></span>
                 <div class="SubMenuLinkContainer">
                     <a class="SubMenuLink" href="#{request.contextPath}/login.xhtml">&bull; <h:outputText value="#{label.login}" /></a>
