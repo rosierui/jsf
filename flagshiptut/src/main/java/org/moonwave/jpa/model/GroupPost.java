@@ -73,7 +73,7 @@ public class GroupPost implements Serializable {
     public String getBodyFirst60() {
         String bodyFirst60 = null;
         if (this.body != null) {
-            bodyFirst60 = this.body.substring(0, 60);
+            bodyFirst60 = this.body.substring(0, Math.min(60, body.length()));
             if (this.body.length() > 60) {
                 bodyFirst60 += "...";
             }
