@@ -33,7 +33,7 @@
                 <p:selectBooleanCheckbox value="#{announcementView.published}" style="margin-left:10px" />
             </h:panelGrid>
             <br/>
-            <p:commandButton value="#{label.submit}" update="messages" action="#{announcementView.save}" />
+            <p:commandButton value="#{label.submit}" update="messages @([id$=jsfForm]) @([id$=uploadForm])" action="#{announcementView.save}" />
 
         </h:form>
 

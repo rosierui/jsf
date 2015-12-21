@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.bo.TutorGroupBO;
@@ -11,6 +12,7 @@ import org.moonwave.jpa.model.GroupPost;
 import org.moonwave.jpa.model.TutorGroup;
 import org.moonwave.util.StringUtil;
 import org.moonwave.view.BaseView;
+import org.moonwave.view.file.FileUploadView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,9 @@ public class GroupPostView extends BaseView {
     private String subject;
     private String body;
     private Boolean published;
+
+    @ManagedProperty("#{fileUploadView}")
+    private FileUploadView fileUploadView;
 
     @PostConstruct
     public void init() {
@@ -75,6 +80,14 @@ public class GroupPostView extends BaseView {
         this.published = published;
     }
 
+    public FileUploadView getFileUploadView() {
+        return fileUploadView;
+    }
+
+    public void setFileUploadView(FileUploadView fileUploadView) {
+        this.fileUploadView = fileUploadView;
+    }
+
     public void save() {
         if (StringUtil.nullOrEmpty(subject)) {
             super.error("Subject is empty");
@@ -100,9 +113,26 @@ public class GroupPostView extends BaseView {
             }
             super.getBasebo().update(gp);
 
+            this.fileUploadView.update(super.getLoggedInUser().getId(), null, null, gp.getId());
+            this.fileUploadView.save();
+
+            // show successful message and reset fields
+            super.info("Data save successful");
+            this.clearFields();
+            this.fileUploadView.clearFields();
+
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");
             LOG.error("", e);
         }
+    }
+
+    public void clearFields() {
+        selectedTutorGroups = null; 
+        tutorGroups = null;
+
+        this.subject = null;
+        this.body = null;
+        this.published = false;
     }
 }

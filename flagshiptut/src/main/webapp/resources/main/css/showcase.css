@@ -52,7 +52,7 @@
 
 body{margin:0px; height:100%; overflow-x:hidden; overflow-y:auto; background-color:#20272a; font-family: 'exoregular', "Trebuchet MS", Arial, Helvetica, sans-serif;}
 
-	#LOGOTEXTSIDE{display:block;width:290px; float:left; height:74px; z-index:999; background-image:url(#{resource['main/images/logoCircuitLines.svg']}); background-repeat:no-repeat; background-position:center right;
+	#LOGOTEXTSIDE{display:block;width:290px; float:left; height:74px; z-index:999; background-repeat:no-repeat; background-position:center right;
 				  margin:-20px 0px 0px 0px; padding-top:25px; line-height:30px;}
 		.logoDarkText{color:#5c666a;}
 		.logoBlueText{color:#25aae1;}
@@ -428,7 +428,7 @@ input.searchInput {
 }
 
 /* Themes */
-.ui-theme {background: url("#{resource['demo/images/themes.png']}") no-repeat top left;display: block;}
+.ui-theme {background: url("#{resource['main/images/themes.png']}") no-repeat top left;display: block;}
 .ui-theme.ui-theme-afterdark{ background-position: 0 0; width: 30px; height: 25px; } 
 .ui-theme.ui-theme-afternoon{ background-position: 0 -75px; width: 30px; height: 25px; } 
 .ui-theme.ui-theme-afterwork{ background-position: 0 -150px; width: 30px; height: 25px; } 
@@ -467,4 +467,4 @@ input.searchInput {
 .ui-theme.ui-theme-ui-darkness{ background-position: -80px -691px; width: 30px; height: 27px; } 
 .ui-theme.ui-theme-ui-lightness{ background-position: -80px -768px; width: 30px; height: 27px; } 
 .ui-theme.ui-theme-vader{ background-position: -80px -845px; width: 30px; height: 27px; } 
-.ui-theme.ui-theme-metroui{ background: url("#{resource['demo/images/metroui.png']}") no-repeat top left; display: block;width: 30px; height: 27px;} 
+.ui-theme.ui-theme-metroui{ background: url("#{resource['main/images/metroui.png']}") no-repeat top left; display: block;width: 30px; height: 27px;} 

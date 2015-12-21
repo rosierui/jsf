@@ -156,4 +156,11 @@ public class FileUploadView extends BaseView {
         super.getBasebo().persist(uploads);
         readyToSave = false;
     }
+
+    public void clearFields() {
+        description = null;
+        selectedTag = null;
+        file = null;
+        uploads.clear();
+    }
 }

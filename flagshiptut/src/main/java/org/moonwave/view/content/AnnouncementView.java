@@ -84,10 +84,21 @@ public class AnnouncementView extends BaseView {
             this.fileUploadView.update(super.getLoggedInUser().getId(), null, a.getId(), null);
             this.fileUploadView.save();
 
+            // show successful message and reset fields
+            super.info("Data save successful");
+            this.clearFields();
+            this.fileUploadView.clearFields();
+
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");
             LOG.error(StackTrace.toString(e));
         }
         return null;
+    }
+
+    public void clearFields() {
+        this.subject = null;
+        this.body = null;
+        this.published = false;
     }
 }
