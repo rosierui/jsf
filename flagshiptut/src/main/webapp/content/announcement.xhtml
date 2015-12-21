@@ -37,34 +37,7 @@
 
         </h:form>
 
-        <h:form enctype="multipart/form-data">
-            <p:dataTable id="uploads" var="ul" value="#{fileUploadView.uploads}">
-                <p:column headerText="${label.description}">
-                    <h:outputText value="#{ul.description}" />
-                </p:column>
-                <p:column headerText="${label.filename}">
-                    <h:outputText value="#{ul.filename}" />
-                </p:column>
-                <p:column headerText="${label.action}">
-                    <p:commandButton
-                        id="delete"
-                        ajax="true"
-                        action="#{fileUploadView.delete}"
-                        value="#{label.delete}"
-                        title="#{label.delete}"
-                        update="@([id$=uploads]) @([id$=messages])">
-                            <f:setPropertyActionListener target="#{fileUploadView.selectedTag}" value="#{ul.tag}" />
-                    </p:commandButton>
-                </p:column>
-            </p:dataTable>
-            <h:panelGrid columns="5" style="border-collapse: separate;border-spacing: 5px;">
-                <h:outputLabel value="#{label.upload}: " />
-                <p:fileUpload value="#{fileUploadView.file}" mode="simple" skinSimple="true"/>
-                <h:outputLabel value="#{label.description}: " />
-                <p:inputText value="#{fileUploadView.description}" />
-                <p:commandButton value="#{label.upload}" ajax="false" actionListener="#{fileUploadView.upload}" disabled="false" />
-            </h:panelGrid>
-        </h:form>
+        <ui:include src="/file/upload-inc.xhtml" />
 
     </ui:define>
 </ui:composition>
