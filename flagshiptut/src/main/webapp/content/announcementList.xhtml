@@ -20,25 +20,6 @@
         </h:panelGroup>
         <h:form id="jsfForm">
 
-            <h:panelGrid columns="3" cellpadding="5" id="divRole">
-                <h:outputLabel for="role" value="${label.role}:" />
-                <p:selectOneMenu id="role" value="#{announcementListView.selectedRoleId}" style="width:200px">
-                    <f:selectItems value="#{announcementListView.roles}" var="role" itemLabel="#{role.name}" itemValue="#{role.id}" />
-                    <p:ajax event="change" update="divUser" partialSubmit="true" process="@this" listener="#{announcementListView.changeRole}" />
-                </p:selectOneMenu>
-            </h:panelGrid>
-
-            <!-- Since both buttons are Submit, only one works -->
-            <h:panelGrid columns="3" cellpadding="5" id="divUser">
-                <h:outputLabel for="user" value="${label.user}:" />
-                <p:selectOneMenu id="user" value="#{announcementListView.selectedId}"
-                                 filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                    <f:selectItems value="#{announcementListView.usersInRole}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
-                    <p:ajax event="change" partialSubmit="true" process="@this" />
-                </p:selectOneMenu>
-                <p:commandButton value="${label.removeFromSelectedRole}" update="divUser :msgPanel" actionListener="#{announcementListView.removeUserFromRole}" />
-            </h:panelGrid>
-
             <p:dataTable var="item" value="#{announcementListView.data}">
                 <p:column headerText="${label.subject}">
                     <h:outputText value="#{item.subject}" />

@@ -20,25 +20,6 @@
         </h:panelGroup>
         <h:form id="jsfForm">
 
-            <h:panelGrid columns="3" cellpadding="5" id="divRole">
-                <h:outputLabel for="role" value="${label.role}:" />
-                <p:selectOneMenu id="role" value="#{groupPostListView.selectedRoleId}" style="width:200px">
-                    <f:selectItems value="#{groupPostListView.roles}" var="role" itemLabel="#{role.name}" itemValue="#{role.id}" />
-                    <p:ajax event="change" update="divUser" partialSubmit="true" process="@this" listener="#{groupPostListView.changeRole}" />
-                </p:selectOneMenu>
-            </h:panelGrid>
-
-            <!-- Since both buttons are Submit, only one works -->
-            <h:panelGrid columns="3" cellpadding="5" id="divUser">
-                <h:outputLabel for="user" value="${label.user}:" />
-                <p:selectOneMenu id="user" value="#{groupPostListView.selectedPostId}"
-                                 filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                    <f:selectItems value="#{groupPostListView.usersInRole}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
-                    <p:ajax event="change" partialSubmit="true" process="@this" />
-                </p:selectOneMenu>
-                <p:commandButton value="${label.removeFromSelectedRole}" update="divUser :msgPanel" actionListener="#{groupPostListView.removeUserFromRole}" />
-            </h:panelGrid>
-
             <p:dataTable var="item" value="#{groupPostListView.data}">
                 <p:column headerText="${label.subject}">
                     <h:outputText value="#{item.subject}" />
@@ -54,7 +35,7 @@
                 </p:column>
                 <p:column headerText="${label.action}">
                     <p:commandButton value="View Details" ajax="true" update="@([id$=dlgDetails])" oncomplete="PF('dlgDetails').show();" > 
-                        <f:setPropertyActionListener target="#{groupPostListView.selectedPostId}" value="#{item.id}" />
+                        <f:setPropertyActionListener target="#{groupPostListView.selectedId}" value="#{item.id}" />
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
