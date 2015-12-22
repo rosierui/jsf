@@ -22,55 +22,55 @@
 
             <h:panelGrid columns="3" cellpadding="5" id="divRole">
                 <h:outputLabel for="role" value="${label.role}:" />
-                <p:selectOneMenu id="role" value="#{groupPostListView.selectedRoleId}" style="width:200px">
-                    <f:selectItems value="#{groupPostListView.roles}" var="role" itemLabel="#{role.name}" itemValue="#{role.id}" />
-                    <p:ajax event="change" update="divUser" partialSubmit="true" process="@this" listener="#{groupPostListView.changeRole}" />
+                <p:selectOneMenu id="role" value="#{announcementListView.selectedRoleId}" style="width:200px">
+                    <f:selectItems value="#{announcementListView.roles}" var="role" itemLabel="#{role.name}" itemValue="#{role.id}" />
+                    <p:ajax event="change" update="divUser" partialSubmit="true" process="@this" listener="#{announcementListView.changeRole}" />
                 </p:selectOneMenu>
             </h:panelGrid>
 
             <!-- Since both buttons are Submit, only one works -->
             <h:panelGrid columns="3" cellpadding="5" id="divUser">
                 <h:outputLabel for="user" value="${label.user}:" />
-                <p:selectOneMenu id="user" value="#{groupPostListView.selectedPostId}"
+                <p:selectOneMenu id="user" value="#{announcementListView.selectedId}"
                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                    <f:selectItems value="#{groupPostListView.usersInRole}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
+                    <f:selectItems value="#{announcementListView.usersInRole}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
                     <p:ajax event="change" partialSubmit="true" process="@this" />
                 </p:selectOneMenu>
-                <p:commandButton value="${label.removeFromSelectedRole}" update="divUser :msgPanel" actionListener="#{groupPostListView.removeUserFromRole}" />
+                <p:commandButton value="${label.removeFromSelectedRole}" update="divUser :msgPanel" actionListener="#{announcementListView.removeUserFromRole}" />
             </h:panelGrid>
 
-            <p:dataTable var="post" value="#{groupPostListView.groupposts}">
+            <p:dataTable var="item" value="#{announcementListView.data}">
                 <p:column headerText="${label.subject}">
-                    <h:outputText value="#{post.subject}" />
+                    <h:outputText value="#{item.subject}" />
                 </p:column>
                 <p:column headerText="${label.body}">
-                    <h:outputText value="#{post.bodyFirst60}" />
+                    <h:outputText value="#{item.bodyFirst60}" />
                 </p:column>
                 <p:column headerText="${label.date}">
-                    <h:outputText value="#{post.createTime}" />
+                    <h:outputText value="#{item.createTime}" />
                 </p:column>
                 <p:column headerText="${label.published}">
-                    <h:outputText value="#{post.published}" />
+                    <h:outputText value="#{item.published}" />
                 </p:column>
                 <p:column headerText="${label.action}">
                     <p:commandButton value="View Details" ajax="true" update="@([id$=dlgDetails])" oncomplete="PF('dlgDetails').show();" > 
-                        <f:setPropertyActionListener target="#{groupPostListView.selectedPostId}" value="#{post.id}" />
+                        <f:setPropertyActionListener target="#{announcementListView.selectedId}" value="#{item.id}" />
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
 
-            <p:dialog header="Group Post Details" id="dlgDetails" widgetVar="dlgDetails" modal="true"
+            <p:dialog header="${label.announcementDetails}" id="dlgDetails" widgetVar="dlgDetails" modal="true"
                       position="center" closable="true" closeOnEscape="true" resizable="true"
                       showEffect="clip" hideEffect="clip" width="600" height="400">
                 <h:panelGrid columns="2" cellpadding="5" id="divPost">
                     <h:outputLabel value="${label.date}:" />
-                    <h:outputText value="#{groupPostListView.current.createTime}" />
+                    <h:outputText value="#{announcementListView.current.createTime}" />
                     <h:outputLabel value="${label.published}:" />
-                    <h:outputText value="#{groupPostListView.current.published}" />
+                    <h:outputText value="#{announcementListView.current.published}" />
                     <h:outputLabel value="${label.subject}:" />
-                    <h:outputText value="#{groupPostListView.current.subject}" />
+                    <h:outputText value="#{announcementListView.current.subject}" />
                     <h:outputLabel value="" />
-                    <h:outputText value="#{groupPostListView.current.body}" escape="false"/>
+                    <h:outputText value="#{announcementListView.current.body}" escape="false"/>
                 </h:panelGrid>
             </p:dialog>
         </h:form>

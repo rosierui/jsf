@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 @Table(name="announcement")
 
 @NamedQueries({
-    @NamedQuery(name="Announcement.findAll",  query="SELECT a FROM Announcement a"),
+    @NamedQuery(name="Announcement.findAll",  query="SELECT a FROM Announcement a order by a.createTime desc"),
     @NamedQuery(name="Announcement.findById", query="SELECT a FROM Announcement a WHERE a.id = :id")
 })
 
@@ -24,15 +24,15 @@ public class Announcement implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
+    private String subject;
+
     @Lob
     private String body;
 
-    @Column(name="create_time")
-    private Timestamp createTime;
-
     private Boolean published;
 
-    private String subject;
+    @Column(name="create_time")
+    private Timestamp createTime;
 
     @Column(name="update_time")
     private Timestamp updateTime;
@@ -48,20 +48,20 @@ public class Announcement implements Serializable {
         this.id = id;
     }
 
+    public String getSubject() {
+        return this.subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
     public String getBody() {
         return this.body;
     }
 
     public void setBody(String body) {
         this.body = body;
-    }
-
-    public Timestamp getCreateTime() {
-        return this.createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
     }
 
     public Boolean getPublished() {
@@ -72,12 +72,12 @@ public class Announcement implements Serializable {
         this.published = published;
     }
 
-    public String getSubject() {
-        return this.subject;
+    public Timestamp getCreateTime() {
+        return this.createTime;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
     }
 
     public Timestamp getUpdateTime() {
@@ -86,6 +86,17 @@ public class Announcement implements Serializable {
 
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getBodyFirst60() {
+        String bodyFirst60 = null;
+        if (this.body != null) {
+            bodyFirst60 = this.body.substring(0, Math.min(60, body.length()));
+            if (this.body.length() > 60) {
+                bodyFirst60 += "...";
+            }
+        }
+        return bodyFirst60;
     }
 
     @Override

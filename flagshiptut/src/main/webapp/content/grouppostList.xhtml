@@ -39,27 +39,27 @@
                 <p:commandButton value="${label.removeFromSelectedRole}" update="divUser :msgPanel" actionListener="#{groupPostListView.removeUserFromRole}" />
             </h:panelGrid>
 
-            <p:dataTable var="post" value="#{groupPostListView.groupposts}">
+            <p:dataTable var="item" value="#{groupPostListView.data}">
                 <p:column headerText="${label.subject}">
-                    <h:outputText value="#{post.subject}" />
+                    <h:outputText value="#{item.subject}" />
                 </p:column>
                 <p:column headerText="${label.body}">
-                    <h:outputText value="#{post.bodyFirst60}" />
+                    <h:outputText value="#{item.bodyFirst60}" />
                 </p:column>
                 <p:column headerText="${label.date}">
-                    <h:outputText value="#{post.createTime}" />
+                    <h:outputText value="#{item.createTime}" />
                 </p:column>
                 <p:column headerText="${label.published}">
-                    <h:outputText value="#{post.published}" />
+                    <h:outputText value="#{item.published}" />
                 </p:column>
                 <p:column headerText="${label.action}">
                     <p:commandButton value="View Details" ajax="true" update="@([id$=dlgDetails])" oncomplete="PF('dlgDetails').show();" > 
-                        <f:setPropertyActionListener target="#{groupPostListView.selectedPostId}" value="#{post.id}" />
+                        <f:setPropertyActionListener target="#{groupPostListView.selectedPostId}" value="#{item.id}" />
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
 
-            <p:dialog header="Group Post Details" id="dlgDetails" widgetVar="dlgDetails" modal="true"
+            <p:dialog header="${label.grouppostDetails}" id="dlgDetails" widgetVar="dlgDetails" modal="true"
                       position="center" closable="true" closeOnEscape="true" resizable="true"
                       showEffect="clip" hideEffect="clip" width="600" height="400">
                 <h:panelGrid columns="2" cellpadding="5" id="divPost">

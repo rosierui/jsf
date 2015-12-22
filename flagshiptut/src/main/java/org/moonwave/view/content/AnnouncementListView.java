@@ -11,7 +11,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import org.moonwave.jpa.bo.GenericBO;
 import org.moonwave.jpa.bo.RoleBO;
 import org.moonwave.jpa.bo.UserBO;
-import org.moonwave.jpa.model.GroupPost;
+import org.moonwave.jpa.model.Announcement;
 import org.moonwave.jpa.model.Role;
 import org.moonwave.jpa.model.User;
 import org.moonwave.view.BaseView;
@@ -19,33 +19,33 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * GroupPost List View
+ * Announcement List View
  *
  * @author moonwave
  *
  */
 @ManagedBean
 @ViewScoped
-public class GroupPostListView extends BaseView {
+public class AnnouncementListView extends BaseView {
 
     private static final long serialVersionUID = 1L;
-    static final Logger LOG = LoggerFactory.getLogger(GroupPostListView.class);
+    static final Logger LOG = LoggerFactory.getLogger(AnnouncementListView.class);
 
     private String selectedRoleId;
     private List<Role> roles;
 
-    private String selectedPostId;
+    private String selectedId;
     private List<User> users;
     private List<User> usersInRole;
 
-    private List<GroupPost> data;
-    private GroupPost current;
+    private List<Announcement> data;
+    private Announcement current;
 
     @PostConstruct
     public void init() {
 
         // get a list of group posts
-        GenericBO<GroupPost> bo = new GenericBO<>(GroupPost.class);
+        GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
         data = bo.findAll();
 
         // get a list of roles
@@ -59,19 +59,19 @@ public class GroupPostListView extends BaseView {
         }
     }
 
-    public GroupPost getCurrent() {
+    public Announcement getCurrent() {
         return current;
     }
 
-    public void setCurrent(GroupPost current) {
+    public void setCurrent(Announcement current) {
         this.current = current;
     }
 
-    public List<GroupPost> getData() {
+    public List<Announcement> getData() {
         return data;
     }
 
-    public void setGroupposts(List<GroupPost> data) {
+    public void setData(List<Announcement> data) {
         this.data = data;
     }
 
@@ -79,15 +79,15 @@ public class GroupPostListView extends BaseView {
         return users;
     }
 
-    public String getSelectedPostId() {
-        return selectedPostId;
+    public String getSelectedId() {
+        return selectedId;
     }
 
-    public void setSelectedPostId(String selectedPostId) {
-        this.selectedPostId = selectedPostId;
-        if ((this.selectedPostId != null) && !this.selectedPostId.isEmpty()) {
-            GenericBO<GroupPost> bo = new GenericBO<>(GroupPost.class);
-            this.current = bo.findById(Integer.parseInt(selectedPostId));
+    public void setSelectedId(String selectedId) {
+        this.selectedId = selectedId;
+        if ((this.selectedId != null) && !this.selectedId.isEmpty()) {
+            GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
+            this.current = bo.findById(Integer.parseInt(selectedId));
         }
     }
 
@@ -126,7 +126,7 @@ public class GroupPostListView extends BaseView {
     public void removeUserFromRole() {
         try {
             Role role = new RoleBO().findById(Short.parseShort(selectedRoleId));
-            User user = new UserBO().findById(Integer.parseInt(selectedPostId));
+            User user = new UserBO().findById(Integer.parseInt(selectedId));
             List<User> users = (role.getUsers() != null) ? role.getUsers() : new ArrayList<User>();
             for (User u : users) {
                 if (u.getId() == user.getId()) {
@@ -157,13 +157,13 @@ public class GroupPostListView extends BaseView {
             Role role = new RoleBO().findById(Short.parseShort(selectedRoleId));
             List<User> users = (role.getUsers() != null) ? role.getUsers() : new ArrayList<User>();
             for (User user : users) {
-                if (user.getId() == Integer.parseInt(selectedPostId)) {
+                if (user.getId() == Integer.parseInt(selectedId)) {
                   super.info("User is already in selected role");
                   return null;
                 }
             }
             // work on master object in a many-to-many relationship
-            User user = new UserBO().findById(Integer.parseInt(selectedPostId));
+            User user = new UserBO().findById(Integer.parseInt(selectedId));
             List<Role> roles = (user.getRoles() != null) ? user.getRoles() : new ArrayList<Role>();  
             roles.add(role);
             user.setRoles(roles);

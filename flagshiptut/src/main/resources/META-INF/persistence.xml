@@ -2,6 +2,7 @@
     <!-- 
         http://www.javavids.com/video/creating-a-jpa-project-with-eclipselink-and-maven.html
         http://stackoverflow.com/questions/1780341/do-i-need-class-elements-in-persistence-xml
+        http://stackoverflow.com/questions/18163328/jpa-utf-8-characters-not-persisted
      -->
     <persistence-unit name="jpa-mysql" transaction-type="RESOURCE_LOCAL">
 
@@ -27,7 +28,7 @@
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
 
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/flagshiptut"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/flagshiptut?useUnicode=yes&amp;characterEncoding=UTF-8"/>
             <property name="javax.persistence.jdbc.user" value="flagshiptut"/>
             <property name="javax.persistence.jdbc.password" value="QjzwFd!5"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
