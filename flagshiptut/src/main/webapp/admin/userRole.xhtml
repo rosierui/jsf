@@ -9,11 +9,14 @@
     template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
-        User Role Administration
+        <h:outputText value="${label.userRoleAdmin}" />
     </ui:define>
     <ui:define name="implementation">
         <c:if test="#{!loginController.isUserLoggedIn()}">
             #{loginController.redirectToLogin()}
+        </c:if>
+        <c:if test="#{!accessController.isAdmin()}">
+            #{accessController.redirectTo401()}
         </c:if>
         <h:panelGroup id="msgPanel">
             <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />

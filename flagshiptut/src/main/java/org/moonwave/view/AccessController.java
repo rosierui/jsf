@@ -1,11 +1,14 @@
 package org.moonwave.view;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 import org.moonwave.jpa.model.Role;
 import org.moonwave.jpa.model.User;
@@ -40,6 +43,7 @@ public class AccessController implements Serializable {
     public boolean isTutor() {
         return isInRole(tutor);
     }
+
     public boolean isTeacher() {
         return isInRole(teacher);
     }
@@ -51,6 +55,22 @@ public class AccessController implements Serializable {
     public boolean isAdmin() {
         return isInRole(admin);
     }
+
+    /**
+     * Editor can add new announcement, group post, assignment, etc. 
+     * @return
+     */
+    public boolean isEditor() {
+        return isTutor() || isTeacher() || isSupervisor() || isAdmin();
+    }
+
+    public void redirectTo401() throws IOException {
+        FacesContext fContext = FacesContext.getCurrentInstance();
+        ExternalContext extContext = fContext.getExternalContext();
+        extContext.redirect(extContext.getRequestContextPath() + "/error/401.xhtml");
+    }
+
+    // ========================================================= Private methods
 
     private boolean isInRole(String roleAlias) {
         boolean ret = false;

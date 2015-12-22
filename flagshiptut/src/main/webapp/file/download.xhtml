@@ -32,6 +32,9 @@
         <c:if test="#{!loginController.isUserLoggedIn()}">
             #{loginController.redirectToLogin()}
         </c:if>
+        <c:if test="#{!accessController.isEditor()}">
+            #{accessController.redirectTo401()}
+        </c:if>
 
         <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
             <p:graphicImage name="/demo/images/ajaxloadingbar.gif" />

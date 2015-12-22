@@ -15,8 +15,8 @@
         <c:if test="#{!loginController.isUserLoggedIn()}">
             #{loginController.redirectToLogin()}
         </c:if>
-        <c:if test="#{!loginController.isUserLoggedIn()}">
-            #{loginController.redirectToLogin()}
+        <c:if test="#{!accessController.isEditor()}">
+            #{accessController.redirectTo401()}
         </c:if>
         <p:growl id="messages" showDetail="true" />
         <h:form id="jsfForm">

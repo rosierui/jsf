@@ -135,22 +135,36 @@ $(document).ready(function() {
     .on("mouseleave",function(){
 		$("#GlobalThemeSwitcher").slideUp(1);
 	});
-    
+
     $("#GlobalThemeSwitcher > a").on("click", function(e) {
         var theme = $(this).data("theme");
         changeTheme([{name:'globaltheme', value:theme}]);
         PrimeFaces.changeTheme(theme);
         e.preventDefault();
     });
-    
-    // open theme switcher combo
-    $("#pushNav").on("click",function(){
-		$("#PushDemos").slideDown(500);
+
+    // toggle push menu
+    $("#pushContent").on("click",function(){
+		$("#pushContentMenu").slideDown(500);
 	})
     .on("mouseleave",function(){
-		$("#PushDemos").slideUp(1);
+		$("#pushContentMenu").slideUp(1);
 	});
-    
+
+    $("#pushNewContent").on("click",function(){
+		$("#pushNewContentMenu").slideDown(500);
+	})
+    .on("mouseleave",function(){
+		$("#pushNewContentMenu").slideUp(1);
+	});
+
+    $("#pushAdmin").on("click",function(){
+		$("#pushAdminMenu").slideDown(500);
+	})
+    .on("mouseleave",function(){
+		$("#pushAdminMenu").slideUp(1);
+	});
+
     //mobile menu
     $('#mobilemenu').on('change', function(e) {
         var url = $(this).val();
