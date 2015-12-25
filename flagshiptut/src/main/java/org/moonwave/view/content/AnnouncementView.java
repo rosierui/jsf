@@ -79,6 +79,7 @@ public class AnnouncementView extends BaseView {
             a.setSubject(subject);
             a.setBody(body);
             a.setPublished(published);
+            a.setUser(super.getLoggedInUser());
             super.getBasebo().persist(a);
 
             this.fileUploadView.update(super.getLoggedInUser().getId(), null, a.getId(), null);

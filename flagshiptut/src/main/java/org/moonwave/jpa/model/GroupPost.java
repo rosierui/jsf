@@ -32,6 +32,11 @@ public class GroupPost implements Serializable {
 
     private Boolean published;
 
+    //bi-directional one-to-one association to User
+    @OneToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
     @Column(name="create_time")
     private Timestamp createTime;
 
@@ -84,6 +89,14 @@ public class GroupPost implements Serializable {
 
     public void setPublished(Boolean published) {
         this.published = published;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Timestamp getCreateTime() {

@@ -100,6 +100,14 @@ public class User implements Serializable {
         )
     private List<TutorGroup> tutorGroups;
 
+    //bi-directional one-to-one association to Announcement
+    @OneToOne(mappedBy="user")
+    private Announcement announcement;
+
+    //bi-directional one-to-one association to GroupPost
+    @OneToOne(mappedBy="user")
+    private GroupPost groupPost;
+
     public User() {
     }
 
@@ -269,6 +277,22 @@ public class User implements Serializable {
 
     public void setTutorGroups(List<TutorGroup> tutorGroups) {
         this.tutorGroups = tutorGroups;
+    }
+
+    public Announcement getAnnouncement() {
+        return announcement;
+    }
+
+    public void setAnnouncement(Announcement announcement) {
+        this.announcement = announcement;
+    }
+
+    public GroupPost getGroupPost() {
+        return groupPost;
+    }
+
+    public void setGroupPost(GroupPost groupPost) {
+        this.groupPost = groupPost;
     }
 
     @Override

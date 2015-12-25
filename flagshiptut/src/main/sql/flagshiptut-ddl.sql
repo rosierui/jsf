@@ -209,6 +209,7 @@ CREATE TABLE announcement ( -- anouncement to all people
     subject                 VARCHAR(255) CHARACTER SET utf8 NOT NULL,
     body                    TEXT CHARACTER SET utf8, -- 64K
     published               BOOLEAN,
+    user_id                 INTEGER NOT NULL REFERENCES user(id),
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP
 );
@@ -221,6 +222,7 @@ CREATE TABLE group_post (-- base group post
     subject                 VARCHAR(255) CHARACTER SET utf8 NOT NULL,
     body                    TEXT CHARACTER SET utf8, -- 64K
     published               BOOLEAN,
+    user_id                 INTEGER NOT NULL REFERENCES user(id),
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP
 );

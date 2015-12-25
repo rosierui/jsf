@@ -98,6 +98,7 @@ public class GroupPostView extends BaseView {
             gp.setSubject(subject);
             gp.setBody(body);
             gp.setPublished(published);
+            gp.setUser(super.getLoggedInUser());
             super.getBasebo().persist(gp);
 
             // save many-to-many relationship

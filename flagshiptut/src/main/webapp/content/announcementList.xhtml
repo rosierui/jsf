@@ -31,7 +31,10 @@
                     <h:outputText value="#{item.createTime}" />
                 </p:column>
                 <p:column headerText="${label.published}">
-                    <h:outputText value="#{item.published}" />
+                    <h:outputText value="#{item.published ? 'Yes' : 'No'}" />
+                </p:column>
+                <p:column headerText="${label.author}">
+                    <h:outputText value="#{item.user.firstName} #{item.user.lastName}" />
                 </p:column>
                 <p:column headerText="${label.action}">
                     <p:commandButton value="View Details" ajax="true" update="@([id$=dlgDetails])" oncomplete="PF('dlgDetails').show();" > 
@@ -47,7 +50,9 @@
                     <h:outputLabel value="${label.date}:" />
                     <h:outputText value="#{announcementListView.current.createTime}" />
                     <h:outputLabel value="${label.published}:" />
-                    <h:outputText value="#{announcementListView.current.published}" />
+                    <h:outputText value="#{announcementListView.current.published ? 'Yes' : 'No'}" />
+                    <h:outputLabel value="${label.author}:" />
+                    <h:outputText value="#{announcementListView.current.user.firstName} #{announcementListView.current.user.lastName}" />
                     <h:outputLabel value="${label.subject}:" />
                     <h:outputText value="#{announcementListView.current.subject}" />
                     <h:outputLabel value="" />
