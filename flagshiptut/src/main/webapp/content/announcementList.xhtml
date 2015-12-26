@@ -28,14 +28,13 @@
                     <h:outputText value="#{item.bodyFirst60}" />
                 </p:column>
                 <p:column headerText="${label.date}">
-                    <h:outputText value="#{item.createTime}" />
+                    <h:outputText value="#{announcementListView.getLocaleDateString(item.createTime)}" />
                 </p:column>
                 <p:column headerText="${label.published}" rendered="#{accessController.isEditor()}" >
                     <h:outputText value="#{item.published ? 'Yes' : 'No'}" />
                     <p:commandButton value="#{item.published ? 'Unpublish' : 'Publish'}" ajax="true" update="@([id$=jsfForm])"
                             actionListener="#{announcementListView.togglePublish(item.id)}"
                             rendered="#{accessController.isSelf(item.user)}" > 
-                        <f:setPropertyActionListener target="#{announcementListView.selectedId}" value="#{item.id}" />
                     </p:commandButton>
                 </p:column>
                 <p:column headerText="${label.author}" >
@@ -53,9 +52,7 @@
                       showEffect="clip" hideEffect="clip" width="800" height="400">
                 <h:panelGrid columns="2" cellpadding="5" id="divPost">
                     <h:outputLabel value="${label.date}:" />
-                    <h:outputText value="#{announcementListView.current.createTime}" />
-                    <h:outputLabel value="${label.published}:" rendered="#{accessController.isEditor()}" />
-                    <h:outputText value="#{announcementListView.current.published ? 'Yes' : 'No'}" rendered="#{accessController.isEditor()}" />
+                    <h:outputText value="#{announcementListView.getLocaleDateString(announcementListView.current.createTime)}" />
                     <h:outputLabel value="${label.author}:" />
                     <h:outputText value="#{announcementListView.current.user.firstName} #{announcementListView.current.user.lastName}" />
                     <h:outputLabel value="${label.subject}:" />

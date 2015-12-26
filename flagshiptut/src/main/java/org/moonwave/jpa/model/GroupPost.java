@@ -33,7 +33,7 @@ public class GroupPost implements Serializable {
     private Boolean published;
 
     //bi-directional one-to-one association to User
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User user;
 

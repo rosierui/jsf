@@ -101,11 +101,11 @@ public class User implements Serializable {
     private List<TutorGroup> tutorGroups;
 
     //bi-directional one-to-one association to Announcement
-    @OneToOne(mappedBy="user")
+    @OneToOne(mappedBy="user", fetch = FetchType.EAGER)
     private Announcement announcement;
 
     //bi-directional one-to-one association to GroupPost
-    @OneToOne(mappedBy="user")
+    @OneToOne(mappedBy="user", fetch = FetchType.LAZY)
     private GroupPost groupPost;
 
     public User() {

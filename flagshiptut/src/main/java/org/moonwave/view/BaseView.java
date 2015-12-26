@@ -2,6 +2,7 @@ package org.moonwave.view;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -24,6 +25,8 @@ public class BaseView implements Serializable {
     // load message and labels by locale
 
     private static final long serialVersionUID = 5631028692861147930L;
+
+    private static final String Locale_en_US = "en-US";
 
     BaseBO basebo = new BaseBO();
 
@@ -76,5 +79,23 @@ public class BaseView implements Serializable {
         String uploadFolder = AppProperties.getInstance().getProperty(AppProperties.KEY_upload_folder);
         String filepath = uploadFolder + "/" + user.getTag() + "/" + DateUtil.toYYYYMMDD(DateUtil.getToday()); 
         return filepath;
+    }
+
+    public Locale getLocale() {
+        Locale browserLocale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+        return browserLocale;
+    }
+
+    public String getLocaleDateString(java.sql.Timestamp date) {
+        String ret = null;
+        String langCountry = getLocale().toLanguageTag();
+        if (Locale_en_US.equals(langCountry)) {
+            if (date != null) {
+                ret = DateUtil.toDisplayFormat(date);
+            }
+        } else {
+            ret = DateUtil.toDisplayFormat(date);
+        }
+        return ret;
     }
 }

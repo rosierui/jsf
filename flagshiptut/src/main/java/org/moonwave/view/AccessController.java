@@ -64,6 +64,17 @@ public class AccessController implements Serializable {
         return isTutor() || isTeacher() || isSupervisor() || isAdmin();
     }
 
+    /**
+     * Return true if passed in user is the logged in user
+     *
+     * @param user
+     * @return
+     */
+    public boolean isSelf(User user) {
+        User loggedInUser = loginController.getLoggedInUser();
+        return (loggedInUser.equals(user));
+    }
+
     public void redirectTo401() throws IOException {
         FacesContext fContext = FacesContext.getCurrentInstance();
         ExternalContext extContext = fContext.getExternalContext();
