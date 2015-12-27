@@ -1,4 +1,4 @@
-package org.moonwave.view.content;
+package org.moonwave.view.content.add;
 
 import java.util.List;
 
@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * GroupPost List View
+ *
+ * Modified from GroupPostsView
  *
  * @author moonwave
  *

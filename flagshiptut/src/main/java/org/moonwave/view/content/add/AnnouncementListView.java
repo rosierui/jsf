@@ -1,4 +1,4 @@
-package org.moonwave.view.content;
+package org.moonwave.view.content.add;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Announcement List View
+ * 
+ * Modified from AnnouncementsView
  *
  * @author moonwave
  *

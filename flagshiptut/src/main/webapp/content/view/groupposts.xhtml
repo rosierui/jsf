@@ -20,7 +20,7 @@
         </h:panelGroup>
         <h:form id="jsfForm">
 
-            <p:dataTable var="item" value="#{groupPostListView.data}">
+            <p:dataTable var="item" value="#{groupPostsView.data}">
                 <p:column headerText="${label.subject}">
                     <h:outputText value="#{item.subject}" />
                 </p:column>
@@ -35,7 +35,7 @@
                 </p:column>
                 <p:column headerText="${label.action}">
                     <p:commandButton value="View Details" ajax="true" update="@([id$=dlgDetails])" oncomplete="PF('dlgDetails').show();" > 
-                        <f:setPropertyActionListener target="#{groupPostListView.selectedId}" value="#{item.id}" />
+                        <f:setPropertyActionListener target="#{groupPostsView.selectedId}" value="#{item.id}" />
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
@@ -45,13 +45,13 @@
                       showEffect="clip" hideEffect="clip" width="600" height="400">
                 <h:panelGrid columns="2" cellpadding="5" id="divPost">
                     <h:outputLabel value="${label.date}:" />
-                    <h:outputText value="#{groupPostListView.current.createTime}" />
+                    <h:outputText value="#{groupPostsView.current.createTime}" />
                     <h:outputLabel value="${label.published}:" />
-                    <h:outputText value="#{groupPostListView.current.published}" />
+                    <h:outputText value="#{groupPostsView.current.published}" />
                     <h:outputLabel value="${label.subject}:" />
-                    <h:outputText value="#{groupPostListView.current.subject}" />
+                    <h:outputText value="#{groupPostsView.current.subject}" />
                     <h:outputLabel value="" />
-                    <h:outputText value="#{groupPostListView.current.body}" escape="false"/>
+                    <h:outputText value="#{groupPostsView.current.body}" escape="false"/>
                 </h:panelGrid>
             </p:dialog>
         </h:form>

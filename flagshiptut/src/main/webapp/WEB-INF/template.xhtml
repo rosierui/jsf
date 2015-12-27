@@ -60,8 +60,8 @@
                 <span class="PFTopLinks floatRight boldFont cursorPointer" id="pushContent">
                     <h:graphicImage name="main/images/content-128.png" /><span class="PFGrayText"></span><span class="PFDarkText"><h:outputText value="#{label.content}" /></span>
                         <div id="pushContentMenu" class="navOverlay">
-                            <a href="#{request.contextPath}/content/announcementList.xhtml"><h:outputText value="#{label.announcements}" /></a>
-                            <a href="#{request.contextPath}/content/grouppostList.xhtml"><h:outputText value="#{label.groupposts}" /></a>
+                            <a href="#{request.contextPath}/content/view/announcements.xhtml"><h:outputText value="#{label.announcements}" /></a>
+                            <a href="#{request.contextPath}/content/view/groupposts.xhtml"><h:outputText value="#{label.groupposts}" /></a>
                             <h:panelGroup rendered="#{accessController.isStudent()}">
                               <a href="#{request.contextPath}/error/tbd.xhtml?title=My Grade"><h:outputText value="#{label.myGrade}" /></a>
                               <a href="#{request.contextPath}/error/tbd.xhtml?title=My Groups"><h:outputText value="#{label.myGroups}" /></a>
@@ -80,8 +80,8 @@
                               <a href="#{request.contextPath}/error/tbd.xhtml?title=Schedule"><h:outputText value="#{label.schedule}" /></a>
                             </h:panelGroup>
                             <h:panelGroup rendered="#{accessController.isEditor()}">
-                              <a href="#{request.contextPath}/content/announcement.xhtml"><h:outputText value="#{label.announcement}" /></a>
-                              <a href="#{request.contextPath}/content/grouppost.xhtml"><h:outputText value="#{label.grouppost}" /></a>
+                              <a href="#{request.contextPath}/content/add/announcementList.xhtml"><h:outputText value="#{label.announcement}" /></a>
+                              <a href="#{request.contextPath}/content/add/grouppostList.xhtml"><h:outputText value="#{label.grouppost}" /></a>
                               <a href="#{request.contextPath}/error/tbd.xhtml?title=Assignment"><h:outputText value="#{label.assignment}" /></a>
                             </h:panelGroup>
                             <h:panelGroup rendered="#{accessController.isTutor()}">
@@ -144,8 +144,8 @@
                 <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
                     <span id="divContent" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText"><h:outputText value="#{label.content}" /></span></span>
                     <div class="SubMenuLinkContainer">
-                        <a class="SubMenuLink" href="#{request.contextPath}/content/announcementList.xhtml">&bull; <h:outputText value="#{label.announcements}" /></a>
-                        <a class="SubMenuLink" href="#{request.contextPath}/content/grouppostList.xhtml">&bull; <h:outputText value="#{label.groupposts}" /></a>
+                        <a class="SubMenuLink" href="#{request.contextPath}/content/view/announcements.xhtml">&bull; <h:outputText value="#{label.announcements}" /></a>
+                        <a class="SubMenuLink" href="#{request.contextPath}/content/view/groupposts.xhtml">&bull; <h:outputText value="#{label.groupposts}" /></a>
                         <h:panelGroup rendered="#{accessController.isStudent()}">
                           <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=My Grade">&bull; <h:outputText value="#{label.myGrade}" /></a>
                           <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=My Groups">&bull; <h:outputText value="#{label.myGroups}" /></a>
@@ -159,10 +159,10 @@
                     <span id="divNewContent" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/data.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/dataBlue.svg" /><span class="MainLinkText"><h:outputText value="#{label.add}" /></span></span>
                     <div class="SubMenuLinkContainer">
                         <h:panelGroup rendered="#{accessController.isTeacher() or accessController.isTutor()}">
-                          <a class="SubMenuLink" href="#{request.contextPath}/content/announcement.xhtml">&bull; <h:outputText value="#{label.announcement}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/content/add/announcementList.xhtml">&bull; <h:outputText value="#{label.announcement}" /></a>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{accessController.isTeacher() or accessController.isTutor()}">
-                          <a class="SubMenuLink" href="#{request.contextPath}/content/grouppost.xhtml">&bull; <h:outputText value="#{label.grouppost}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/content/add/grouppostList.xhtml">&bull; <h:outputText value="#{label.grouppost}" /></a>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{accessController.isTeacher()}">
                           <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=Assignment">&bull; <h:outputText value="#{label.assignment}" /></a>

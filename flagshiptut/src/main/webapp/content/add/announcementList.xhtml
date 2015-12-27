@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- modified from content/view/announcementList.xhtml -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        <h:outputText value="#{label.announcement}" />
+    </ui:define>
+    <ui:define name="implementation">
+        <c:if test="#{!loginController.isUserLoggedIn()}">
+            #{loginController.redirectToLogin()}
+        </c:if>
+        <h:panelGroup id="msgPanel">
+            <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
+        </h:panelGroup>
+        <h:form id="jsfForm">
+
+            <p:dataTable var="item" value="#{announcementListView.data}">
+                <p:column headerText="${label.subject}">
+                    <h:outputText value="#{item.subject}" />
+                </p:column>
+                <p:column headerText="${label.body}">
+                    <h:outputText value="#{item.bodyFirst60}" />
+                </p:column>
+                <p:column headerText="${label.date}">
+                    <h:outputText value="#{announcementListView.getLocaleDateString(item.createTime)}" />
+                </p:column>
+                <p:column headerText="${label.published}" rendered="#{accessController.isEditor()}" >
+                    <h:outputText value="#{item.published ? 'Yes' : 'No'}" />
+                    <p:commandButton value="#{item.published ? 'Unpublish' : 'Publish'}" ajax="true" update="@([id$=jsfForm])"
+                            actionListener="#{announcementListView.togglePublish(item.id)}"
+                            rendered="#{accessController.isSelf(item.user)}" > 
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="${label.author}" >
+                    <h:outputText value="#{item.user.firstName} #{item.user.lastName}" />
+                </p:column>
+                <p:column headerText="${label.action}">
+                    <p:commandButton value="View Details" ajax="true" update="@([id$=dlgDetails])" oncomplete="PF('dlgDetails').show();" > 
+                        <f:setPropertyActionListener target="#{announcementListView.selectedId}" value="#{item.id}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+
+            <p:dialog header="${label.announcementDetails}" id="dlgDetails" widgetVar="dlgDetails" modal="true"
+                      position="center" closable="true" closeOnEscape="true" resizable="true"
+                      showEffect="clip" hideEffect="clip" width="800" height="400">
+                <h:panelGrid columns="2" cellpadding="5" id="divPost">
+                    <h:outputLabel value="${label.date}:" />
+                    <h:outputText value="#{announcementListView.getLocaleDateString(announcementListView.current.createTime)}" />
+                    <h:outputLabel value="${label.author}:" />
+                    <h:outputText value="#{announcementListView.current.user.firstName} #{announcementListView.current.user.lastName}" />
+                    <h:outputLabel value="${label.subject}:" />
+                    <h:outputText value="#{announcementListView.current.subject}" />
+                    <h:outputLabel value="" />
+                    <h:outputText value="#{announcementListView.current.body}" escape="false"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- modified from content/view/grouppostList.xhtml -->
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html"
@@ -9,7 +10,7 @@
     template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
-        <h:outputText value="#{label.announcement}" />
+        <h:outputText value="#{label.grouppost}" />
     </ui:define>
     <ui:define name="implementation">
         <c:if test="#{!loginController.isUserLoggedIn()}">
@@ -20,7 +21,7 @@
         </h:panelGroup>
         <h:form id="jsfForm">
 
-            <p:dataTable var="item" value="#{announcementListView.data}">
+            <p:dataTable var="item" value="#{groupPostListView.data}">
                 <p:column headerText="${label.subject}">
                     <h:outputText value="#{item.subject}" />
                 </p:column>
@@ -28,37 +29,30 @@
                     <h:outputText value="#{item.bodyFirst60}" />
                 </p:column>
                 <p:column headerText="${label.date}">
-                    <h:outputText value="#{announcementListView.getLocaleDateString(item.createTime)}" />
+                    <h:outputText value="#{item.createTime}" />
                 </p:column>
-                <p:column headerText="${label.published}" rendered="#{accessController.isEditor()}" >
-                    <h:outputText value="#{item.published ? 'Yes' : 'No'}" />
-                    <p:commandButton value="#{item.published ? 'Unpublish' : 'Publish'}" ajax="true" update="@([id$=jsfForm])"
-                            actionListener="#{announcementListView.togglePublish(item.id)}"
-                            rendered="#{accessController.isSelf(item.user)}" > 
-                    </p:commandButton>
-                </p:column>
-                <p:column headerText="${label.author}" >
-                    <h:outputText value="#{item.user.firstName} #{item.user.lastName}" />
+                <p:column headerText="${label.published}">
+                    <h:outputText value="#{item.published}" />
                 </p:column>
                 <p:column headerText="${label.action}">
                     <p:commandButton value="View Details" ajax="true" update="@([id$=dlgDetails])" oncomplete="PF('dlgDetails').show();" > 
-                        <f:setPropertyActionListener target="#{announcementListView.selectedId}" value="#{item.id}" />
+                        <f:setPropertyActionListener target="#{groupPostListView.selectedId}" value="#{item.id}" />
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
 
-            <p:dialog header="${label.announcementDetails}" id="dlgDetails" widgetVar="dlgDetails" modal="true"
+            <p:dialog header="${label.grouppostDetails}" id="dlgDetails" widgetVar="dlgDetails" modal="true"
                       position="center" closable="true" closeOnEscape="true" resizable="true"
-                      showEffect="clip" hideEffect="clip" width="800" height="400">
+                      showEffect="clip" hideEffect="clip" width="600" height="400">
                 <h:panelGrid columns="2" cellpadding="5" id="divPost">
                     <h:outputLabel value="${label.date}:" />
-                    <h:outputText value="#{announcementListView.getLocaleDateString(announcementListView.current.createTime)}" />
-                    <h:outputLabel value="${label.author}:" />
-                    <h:outputText value="#{announcementListView.current.user.firstName} #{announcementListView.current.user.lastName}" />
+                    <h:outputText value="#{groupPostListView.current.createTime}" />
+                    <h:outputLabel value="${label.published}:" />
+                    <h:outputText value="#{groupPostListView.current.published}" />
                     <h:outputLabel value="${label.subject}:" />
-                    <h:outputText value="#{announcementListView.current.subject}" />
+                    <h:outputText value="#{groupPostListView.current.subject}" />
                     <h:outputLabel value="" />
-                    <h:outputText value="#{announcementListView.current.body}" escape="false"/>
+                    <h:outputText value="#{groupPostListView.current.body}" escape="false"/>
                 </h:panelGrid>
             </p:dialog>
         </h:form>
