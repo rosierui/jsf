@@ -53,7 +53,7 @@
                     <p:commandButton value="#{label.edit}" ajax="true" update="@([id$=jsfForm])"
                         actionListener="#{announcementListView.edit(item.id)}"> 
                     </p:commandButton>
-                    <p:commandButton value="#{label.delete}" ajax="true" update="@([id$=jsfForm])"
+                    <p:commandButton value="#{label.delete}" ajax="true" update="@([id$=jsfForm])" rendered="false"
                         actionListener="#{announcementListView.delete(item.id)}">
                     </p:commandButton>
                 </p:column>

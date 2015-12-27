@@ -77,12 +77,14 @@ public class AnnouncementView extends BaseView {
             if (current.getId() == null) {
                 current.setUser(super.getLoggedInUser());
                 super.getBasebo().persist(current);
+
+                this.fileUploadView.update(super.getLoggedInUser().getId(), null, current.getId(), null);
+                this.fileUploadView.save(true);
             } else {
                 super.getBasebo().update(current);
+                this.fileUploadView.update(super.getLoggedInUser().getId(), null, current.getId(), null);
+                this.fileUploadView.save(false);
             }
-
-            this.fileUploadView.update(super.getLoggedInUser().getId(), null, current.getId(), null);
-            this.fileUploadView.save();
 
             // show successful message and reset fields
             super.info("Data save successful");

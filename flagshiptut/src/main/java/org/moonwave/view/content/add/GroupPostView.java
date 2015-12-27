@@ -115,7 +115,7 @@ public class GroupPostView extends BaseView {
             super.getBasebo().update(gp);
 
             this.fileUploadView.update(super.getLoggedInUser().getId(), null, null, gp.getId());
-            this.fileUploadView.save();
+            this.fileUploadView.save(true);
 
             // show successful message and reset fields
             super.info("Data save successful");

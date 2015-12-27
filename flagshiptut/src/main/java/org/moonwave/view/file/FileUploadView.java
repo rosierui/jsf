@@ -157,12 +157,17 @@ public class FileUploadView extends BaseView {
      * Note: container view such as AnnouncementView must call update method
      * before calling this save method 
      */
-    public void save() {
+    public void save(boolean create) {
         if (!readyToSave) {
             super.error("Upload objects are not ready to save");
             LOG.error("Upload objects are not ready to save, container view failed to call update method");
         }
-        super.getBasebo().persist(uploads);
+        // check duplicate uploads especially in edit mode
+        if (create) {
+            super.getBasebo().persist(uploads);
+        } else {
+            super.getBasebo().update(uploads);
+        }
         readyToSave = false;
     }
 
