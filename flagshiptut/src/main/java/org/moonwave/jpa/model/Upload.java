@@ -13,7 +13,13 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="upload")
-@NamedQuery(name="Upload.findAll", query="SELECT u FROM Upload u")
+
+@NamedQueries({
+	@NamedQuery(name="Upload.findAll", query="SELECT u FROM Upload u"),
+    @NamedQuery(name="Upload.findByUserAnnouncement", query="SELECT u FROM Upload u WHERE u.userId = :userId and u.announcementId = :announcementId"),
+    @NamedQuery(name="Upload.findByUserGroupPost", query="SELECT u FROM Upload u WHERE u.userId = :userId and u.groupPostId = :groupPostId")
+})
+
 public class Upload implements Serializable {
     private static final long serialVersionUID = 1L;
 

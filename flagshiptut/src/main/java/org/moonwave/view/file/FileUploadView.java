@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.moonwave.jpa.bo.UploadBO;
 import org.moonwave.jpa.model.Upload;
 import org.moonwave.util.FileUtil;
 import org.moonwave.util.Md5Util;
@@ -62,6 +63,14 @@ public class FileUploadView extends BaseView {
 
     public void setUploads(List<Upload> uploads) {
         this.uploads = uploads;
+    }
+
+    public void loadUploads4Announcement(Integer userId, Integer announcementId) {
+        this.uploads = new UploadBO().findByUserAnnouncement(userId, announcementId);
+    }
+
+    public void loadUploads4GroupPost(Integer userId, Integer groupPostId) {
+        this.uploads = new UploadBO().findByUserAnnouncement(userId, groupPostId);
     }
 
     /**

@@ -40,6 +40,7 @@ public class AnnouncementView extends BaseView {
         if (selectedId != null) { // edit
             GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
             current = bo.findById(Integer.valueOf(selectedId));
+            fileUploadView.loadUploads4Announcement(current.getUser().getId(), current.getId());
         } else {
             current = new Announcement();
         }
