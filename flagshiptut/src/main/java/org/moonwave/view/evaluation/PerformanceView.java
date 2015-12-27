@@ -7,7 +7,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.bo.GenericBO;
-import org.moonwave.jpa.model.EvaluationObjective;
 import org.moonwave.jpa.model.EvaluationPerformance;
 import org.moonwave.jpa.model.Semester;
 import org.moonwave.jpa.model.Week;

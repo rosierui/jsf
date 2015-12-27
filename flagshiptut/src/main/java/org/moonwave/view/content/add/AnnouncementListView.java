@@ -1,5 +1,6 @@
 package org.moonwave.view.content.add;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,9 +95,18 @@ public class AnnouncementListView extends BaseView {
 
             data = loadAndFilterData();
         }
-        // tets code
-        super.getLocaleDateString(null);
-        
+    }
+
+    /**
+    *
+    * @param selectedId
+    */
+   public void edit(String selectedId) throws IOException {
+       super.redirectTo("/content/add/announcement.xhtml?selectedId=" + selectedId);
+   }
+
+   public void newAnnouncement() throws IOException {
+        super.redirectTo("/content/add/announcement.xhtml");
     }
 
     // ========================================================= Private methods
@@ -111,10 +121,7 @@ public class AnnouncementListView extends BaseView {
         List <Announcement> list = bo.findAll(); 
         List <Announcement> ret = new ArrayList<Announcement>();
         for (Announcement a : list) {
-            if (a.getPublished()) {
-                ret.add(a);
-            }
-            else if (accessController.isSelf(a.getUser())) {
+            if (accessController.isSelf(a.getUser())) {
                 ret.add(a);
             }
         }

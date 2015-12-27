@@ -11,7 +11,6 @@ import org.moonwave.jpa.model.EvaluationObjective;
 import org.moonwave.jpa.model.Semester;
 import org.moonwave.jpa.model.Week;
 import org.moonwave.view.BaseView;
-import org.moonwave.view.content.GroupPostView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

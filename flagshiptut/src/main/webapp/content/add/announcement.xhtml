@@ -23,14 +23,19 @@
         <!-- 
             <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         -->
+            <p:commandButton value="#{label.cancel}" ajax="true" actionListener="#{announcementView.cancel}">
+            </p:commandButton>
+            <br/>
+            <br/>
+
             <h:panelGrid columns="1">
                 <h:outputLabel value="${label.subject}" />
-                <p:inputText id="subject" value="#{announcementView.subject}" style="margin-left:0px" size="50"/>
+                <p:inputText id="subject" value="#{announcementView.current.subject}" style="margin-left:0px" size="50"/>
             </h:panelGrid>
-            <p:editor id="editor" widgetVar="editorWidget" value="#{announcementView.body}" width="600" />
+            <p:editor id="editor" widgetVar="editorWidget" value="#{announcementView.current.body}" width="600" />
             <h:panelGrid columns="2">
                 <h:outputText value="${label.publish}" />
-                <p:selectBooleanCheckbox value="#{announcementView.published}" style="margin-left:10px" />
+                <p:selectBooleanCheckbox value="#{announcementView.current.published}" style="margin-left:10px" />
             </h:panelGrid>
             <br/>
             <p:commandButton value="#{label.submit}" update="messages @([id$=jsfForm]) @([id$=uploadForm])" action="#{announcementView.save}" />

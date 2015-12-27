@@ -21,6 +21,11 @@
         </h:panelGroup>
         <h:form id="jsfForm">
 
+            <p:commandButton value="#{label.newAnnouncement}" ajax="true" actionListener="#{announcementListView.newAnnouncement}">
+            </p:commandButton>
+            <br/>
+            <br/>
+
             <p:dataTable var="item" value="#{announcementListView.data}">
                 <p:column headerText="${label.subject}">
                     <h:outputText value="#{item.subject}" />
@@ -34,8 +39,8 @@
                 <p:column headerText="${label.published}" rendered="#{accessController.isEditor()}" >
                     <h:outputText value="#{item.published ? 'Yes' : 'No'}" />
                     <p:commandButton value="#{item.published ? 'Unpublish' : 'Publish'}" ajax="true" update="@([id$=jsfForm])"
-                            actionListener="#{announcementListView.togglePublish(item.id)}"
-                            rendered="#{accessController.isSelf(item.user)}" > 
+                        actionListener="#{announcementListView.togglePublish(item.id)}"
+                        rendered="#{accessController.isSelf(item.user)}" > 
                     </p:commandButton>
                 </p:column>
                 <p:column headerText="${label.author}" >
@@ -44,6 +49,12 @@
                 <p:column headerText="${label.action}">
                     <p:commandButton value="View Details" ajax="true" update="@([id$=dlgDetails])" oncomplete="PF('dlgDetails').show();" > 
                         <f:setPropertyActionListener target="#{announcementListView.selectedId}" value="#{item.id}" />
+                    </p:commandButton>
+                    <p:commandButton value="#{label.edit}" ajax="true" update="@([id$=jsfForm])"
+                        actionListener="#{announcementListView.edit(item.id)}"> 
+                    </p:commandButton>
+                    <p:commandButton value="#{label.delete}" ajax="true" update="@([id$=jsfForm])"
+                        actionListener="#{announcementListView.delete(item.id)}">
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
@@ -56,6 +67,8 @@
                     <h:outputText value="#{announcementListView.getLocaleDateString(announcementListView.current.createTime)}" />
                     <h:outputLabel value="${label.author}:" />
                     <h:outputText value="#{announcementListView.current.user.firstName} #{announcementListView.current.user.lastName}" />
+                    <h:outputLabel value="${label.published}:" />
+                    <h:outputText value="#{announcementListView.current.published ? 'Yes' : 'No'}" />
                     <h:outputLabel value="${label.subject}:" />
                     <h:outputText value="#{announcementListView.current.subject}" />
                     <h:outputLabel value="" />

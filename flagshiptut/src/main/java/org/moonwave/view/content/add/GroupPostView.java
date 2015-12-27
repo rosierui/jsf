@@ -1,4 +1,4 @@
-package org.moonwave.view.content;
+package org.moonwave.view.content.add;
 
 import java.util.ArrayList;
 import java.util.List;

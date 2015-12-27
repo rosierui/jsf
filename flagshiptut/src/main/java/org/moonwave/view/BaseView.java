@@ -1,11 +1,14 @@
 package org.moonwave.view;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import org.moonwave.jpa.bo.BaseBO;
@@ -32,6 +35,13 @@ public class BaseView implements Serializable {
 
     public BaseBO getBasebo() {
         return basebo;
+    }
+
+    public String getParameter(String key) {
+        Map<String, String> params =FacesContext.getCurrentInstance().
+                getExternalContext().getRequestParameterMap();
+        String parameter = params.get(key);
+        return parameter;
     }
 
     public java.sql.Timestamp getSqlTimestamp() {
@@ -97,5 +107,11 @@ public class BaseView implements Serializable {
             ret = DateUtil.toDisplayFormat(date);
         }
         return ret;
+    }
+
+    public void redirectTo(String pageUrl) throws IOException {
+        FacesContext fContext = FacesContext.getCurrentInstance();
+        ExternalContext extContext = fContext.getExternalContext();
+        extContext.redirect(extContext.getRequestContextPath() + pageUrl);
     }
 }

@@ -74,19 +74,15 @@ public class LoginController extends BaseView {
      * @throws IOException
      */
     public void redirect() throws IOException {
-        FacesContext fContext = FacesContext.getCurrentInstance();
-        ExternalContext extContext = fContext.getExternalContext();
         if (this.isUserLoggedIn()) {
-            extContext.redirect(extContext.getRequestContextPath() + "/dashboard.xhtml");
+            super.redirectTo("/dashboard.xhtml");
         } else {
-            extContext.redirect(extContext.getRequestContextPath() + "/login.xhtml");
+            super.redirectTo("/login.xhtml");
         }
     }
 
     public void redirectToLogin() throws IOException {
-        FacesContext fContext = FacesContext.getCurrentInstance();
-        ExternalContext extContext = fContext.getExternalContext();
-        extContext.redirect(extContext.getRequestContextPath() + "/login.xhtml");
+        super.redirectTo("/login.xhtml");
     }
 
     public void logout() throws IOException {
@@ -97,7 +93,7 @@ public class LoginController extends BaseView {
         if (session != null) {
             session.invalidate();
         }
-        extContext.redirect(extContext.getRequestContextPath() + "/login.xhtml");
+        super.redirectTo("/login.xhtml");
     }
 
 //    /**

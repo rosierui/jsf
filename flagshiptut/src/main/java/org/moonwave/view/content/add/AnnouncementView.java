@@ -1,10 +1,13 @@
-package org.moonwave.view.content;
+package org.moonwave.view.content.add;
+
+import java.io.IOException;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import org.moonwave.jpa.bo.GenericBO;
 import org.moonwave.jpa.model.Announcement;
 import org.moonwave.util.StackTrace;
 import org.moonwave.util.StringUtil;
@@ -26,39 +29,28 @@ public class AnnouncementView extends BaseView {
     private static final long serialVersionUID = 1L;
     static final Logger LOG = LoggerFactory.getLogger(AnnouncementView.class);
 
-    private String subject;
-    private String body;
-    private Boolean published;
+    Announcement current;
 
     @ManagedProperty("#{fileUploadView}")
     private FileUploadView fileUploadView;
 
     @PostConstruct
     public void init() {
+        String selectedId = super.getParameter("selectedId");
+        if (selectedId != null) { // edit
+            GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
+            current = bo.findById(Integer.valueOf(selectedId));
+        } else {
+            current = new Announcement();
+        }
     }
 
-    public String getSubject() {
-        return subject;
+    public Announcement getCurrent() {
+        return current;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public Boolean getPublished() {
-        return published;
-    }
-
-    public void setPublished(Boolean published) {
-        this.published = published;
+    public void setCurrent(Announcement current) {
+        this.current = current;
     }
 
     public FileUploadView getFileUploadView() {
@@ -69,37 +61,37 @@ public class AnnouncementView extends BaseView {
         this.fileUploadView = fileUploadView;
     }
 
+    // ========================================================== ActionListener
+
+    public void cancel() throws IOException {
+        super.redirectTo("/content/add/announcementList.xhtml");
+    }
+
     public String save() {
-        if (StringUtil.nullOrEmpty(subject)) {
+        if (StringUtil.nullOrEmpty(current.getSubject())) {
             super.error("Subject is empty");
             return null;
         }
         try {
-            Announcement a = new Announcement();
-            a.setSubject(subject);
-            a.setBody(body);
-            a.setPublished(published);
-            a.setUser(super.getLoggedInUser());
-            super.getBasebo().persist(a);
+            if (current.getId() == null) {
+                current.setUser(super.getLoggedInUser());
+                super.getBasebo().persist(current);
+            } else {
+                super.getBasebo().update(current);
+            }
 
-            this.fileUploadView.update(super.getLoggedInUser().getId(), null, a.getId(), null);
+            this.fileUploadView.update(super.getLoggedInUser().getId(), null, current.getId(), null);
             this.fileUploadView.save();
 
             // show successful message and reset fields
             super.info("Data save successful");
-            this.clearFields();
             this.fileUploadView.clearFields();
+            super.redirectTo("/content/add/announcementList.xhtml");
 
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");
             LOG.error(StackTrace.toString(e));
         }
         return null;
-    }
-
-    public void clearFields() {
-        this.subject = null;
-        this.body = null;
-        this.published = false;
     }
 }
