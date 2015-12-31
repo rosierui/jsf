@@ -41,7 +41,7 @@ public class GroupPostView extends BaseView {
 
     @PostConstruct
     public void init() {
-        tutorGroups = new TutorGroupBO().getAllGroups();
+        tutorGroups = new TutorGroupBO().findAllGroups();
     }
 
     public String[] getSelectedTutorGroups() {

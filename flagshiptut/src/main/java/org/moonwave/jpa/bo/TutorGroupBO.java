@@ -20,7 +20,7 @@ public class TutorGroupBO extends BaseBO {
     private static final long serialVersionUID = 1L;
     static final Logger LOG = LoggerFactory.getLogger(TutorGroupBO.class);
 
-    public List<TutorGroup> getAllGroups() {
+    public List<TutorGroup> findAllGroups() {
         Query query = super.getEntityManager().createNamedQuery("TutorGroup.findAll", TutorGroup.class);
         @SuppressWarnings("unchecked")
         List<TutorGroup> list = query.getResultList();
@@ -43,4 +43,13 @@ public class TutorGroupBO extends BaseBO {
         }
         return ret;
     }
+
+//    public List<TutorGroup> findGroupsByUser() {
+//        Query query = super.getEntityManager().createNamedQuery("TutorGroup.findGroupsByUser", TutorGroup.class);
+//        query.setParameter("user", user);
+//        @SuppressWarnings("unchecked")
+//        List<TutorGroup> list = query.getResultList();
+//        super.release();
+//        return list;
+//    }
 }

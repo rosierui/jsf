@@ -62,9 +62,9 @@
                         <div id="pushContentMenu" class="navOverlay">
                             <a href="#{request.contextPath}/content/view/announcements.xhtml"><h:outputText value="#{label.announcements}" /></a>
                             <a href="#{request.contextPath}/content/view/groupposts.xhtml"><h:outputText value="#{label.groupposts}" /></a>
+                            <a href="#{request.contextPath}/content/view/mygroups.xhtml"><h:outputText value="#{label.myGroups}" /></a>
                             <h:panelGroup rendered="#{accessController.isStudent()}">
-                              <a href="#{request.contextPath}/error/tbd.xhtml?title=My Grade"><h:outputText value="#{label.myGrade}" /></a>
-                              <a href="#{request.contextPath}/error/tbd.xhtml?title=My Groups"><h:outputText value="#{label.myGroups}" /></a>
+                              <a href="#{request.contextPath}/error/tbd.xhtml?title=My Schedule"><h:outputText value="#{label.myGrade}" /></a>
                               <a href="#{request.contextPath}/error/tbd.xhtml?title=My Schedule"><h:outputText value="#{label.mySchedules}" /></a>
                             </h:panelGroup>
                         </div>
@@ -146,9 +146,9 @@
                     <div class="SubMenuLinkContainer">
                         <a class="SubMenuLink" href="#{request.contextPath}/content/view/announcements.xhtml">&bull; <h:outputText value="#{label.announcements}" /></a>
                         <a class="SubMenuLink" href="#{request.contextPath}/content/view/groupposts.xhtml">&bull; <h:outputText value="#{label.groupposts}" /></a>
+                        <a class="SubMenuLink" href="#{request.contextPath}/content/view/mygroups.xhtml">&bull; <h:outputText value="#{label.myGroups}" /></a>
                         <h:panelGroup rendered="#{accessController.isStudent()}">
                           <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=My Grade">&bull; <h:outputText value="#{label.myGrade}" /></a>
-                          <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=My Groups">&bull; <h:outputText value="#{label.myGroups}" /></a>
                           <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=My Schedules">&bull; <h:outputText value="#{label.mySchedules}" /></a>
                         </h:panelGroup>
                     </div>

@@ -9,27 +9,28 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.bo.GenericBO;
-import org.moonwave.jpa.model.Announcement;
+import org.moonwave.jpa.model.TutorGroup;
+import org.moonwave.jpa.model.User;
 import org.moonwave.view.AccessController;
 import org.moonwave.view.BaseView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Announcements View
+ * My Groups View
  *
  * @author moonwave
  *
  */
 @ManagedBean
 @ViewScoped
-public class AnnouncementsView extends BaseView {
+public class MyGroupsView extends BaseView {
 
     private static final long serialVersionUID = 1L;
     static final Logger LOG = LoggerFactory.getLogger(MyGroupsView.class);
 
-    private List<Announcement> data;
-    private Announcement current;
+    private List<TutorGroup> data;
+    private TutorGroup current;
     private String selectedId;
 
     @ManagedProperty("#{accessController}")
@@ -37,22 +38,23 @@ public class AnnouncementsView extends BaseView {
 
     @PostConstruct
     public void init() {
-        data = loadAndFilterData();
+        User user = getLoggedInUser();
+        data = user.getTutorGroups();
     }
 
-    public List<Announcement> getData() {
+    public List<TutorGroup> getData() {
         return data;
     }
 
-    public void setData(List<Announcement> data) {
+    public void setData(List<TutorGroup> data) {
         this.data = data;
     }
 
-    public Announcement getCurrent() {
+    public TutorGroup getCurrent() {
         return current;
     }
 
-    public void setCurrent(Announcement current) {
+    public void setCurrent(TutorGroup current) {
         this.current = current;
     }
 
@@ -63,7 +65,7 @@ public class AnnouncementsView extends BaseView {
     public void setSelectedId(String selectedId) {
         this.selectedId = selectedId;
         if ((this.selectedId != null) && !this.selectedId.isEmpty()) {
-            GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
+            GenericBO<TutorGroup> bo = new GenericBO<>(TutorGroup.class);
             this.current = bo.findById(Integer.parseInt(selectedId));
         }
     }
@@ -78,18 +80,4 @@ public class AnnouncementsView extends BaseView {
 
     // ========================================================= Private methods
 
-    /**
-     * only show published announcements
-     */
-    private List <Announcement> loadAndFilterData() {
-        GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
-        List <Announcement> list = bo.findAll(); 
-        List <Announcement> ret = new ArrayList<Announcement>();
-        for (Announcement a : list) {
-            if (a.getPublished()) {
-                ret.add(a);
-            }
-        }
-        return ret;
-    }
 }

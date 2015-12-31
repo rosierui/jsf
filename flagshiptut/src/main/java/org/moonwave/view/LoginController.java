@@ -59,6 +59,7 @@ public class LoginController extends BaseView {
         loggedInUser.setLastName(user.getLastName());
         loggedInUser.setLoginId(user.getLoginId());
         loggedInUser.setRoles(user.getRoles());
+        loggedInUser.setTutorGroups(user.getTutorGroups());
         loggedInUser.setTimezone(user.getTimezone());
         loggedInUser.setEmail(user.getEmail());
         loggedInUser.setPhone(user.getPhone());
