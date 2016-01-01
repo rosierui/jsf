@@ -25,7 +25,7 @@ import java.util.List;
     @NamedQuery(name="User.findInIds", query="SELECT u FROM User u WHERE u.id in (:ids)")
 })
 
-public class User implements Serializable {
+public class User implements Serializable, Comparable<User> {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -327,6 +327,10 @@ public class User implements Serializable {
 
     public String getName() {
         return this.firstName + " " + this.lastName;
+    }
+
+    public int compareTo(User user2) {
+        return this.getName().toLowerCase().compareTo(user2.getName().toLowerCase());
     }
 
     public void clearFields() {

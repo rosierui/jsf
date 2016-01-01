@@ -19,7 +19,10 @@
             <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
             <h:panelGrid columns="4" cellpadding="5" >
                 <h:outputLabel value="Student Name:" />
-                <h:outputText value="John" />
+                <p:selectOneMenu id="student" converter="javax.faces.Integer" value="#{selfEvaluationView.selectedStudentId}" label="#{label.student}"
+                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px" disabled="#{selfEvaluationView.byStudent}">
+                    <f:selectItems value="#{selfEvaluationView.students}" var="s" itemLabel="#{s.name}" itemValue="#{s.id}" />
+                </p:selectOneMenu>
                 <h:outputLabel value="Semester:" style="margin-left:150px"/>
                 <p:selectOneMenu id="Semester" value="#{selfEvaluationView.evaluation.semester}" label="Semesters"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" >
@@ -27,7 +30,10 @@
                 </p:selectOneMenu>
 
                 <h:outputLabel value="Tutor Name:" />
-                <h:outputText value="Yong" />
+                <p:selectOneMenu id="tutor" converter="javax.faces.Integer" value="#{selfEvaluationView.selectedTutorId}" label="#{label.tutor}"
+                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px" disabled="#{selfEvaluationView.byTutor}">
+                    <f:selectItems value="#{selfEvaluationView.tutors}" var="t" itemLabel="#{t.name}" itemValue="#{t.id}" />
+                </p:selectOneMenu>
                 <h:outputLabel value="Week:" style="margin-left:150px"/>
                 <p:selectOneMenu id="week" value="#{selfEvaluationView.evaluation.week}" label="Weeks"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" >
