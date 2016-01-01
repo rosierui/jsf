@@ -15,11 +15,14 @@
         <c:if test="#{!loginController.isUserLoggedIn()}">
             #{loginController.redirectToLogin()}
         </c:if>
+        <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         <h:form id="jsfForm">
-            <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
             <h:panelGrid columns="4" cellpadding="5" >
                 <h:outputLabel value="Student Name:" />
-                <h:outputText value="John" />
+                <p:selectOneMenu id="student" converter="javax.faces.Integer" value="#{performanceView.evaluation.userId}" label="#{label.student}"
+                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+                    <f:selectItems value="#{performanceView.students}" var="s" itemLabel="#{s.name}" itemValue="#{s.id}" />
+                </p:selectOneMenu>
                 <h:outputLabel value="Semester:" style="margin-left:150px"/>
                 <p:selectOneMenu id="Semester" value="#{performanceView.evaluation.semester}" label="Semesters"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" >
@@ -27,14 +30,18 @@
                 </p:selectOneMenu>
 
                 <h:outputLabel value="Tutor Name:" />
-                <h:outputText value="Yong" />
+                <p:selectOneMenu id="tutor" converter="javax.faces.Integer" value="#{performanceView.evaluation.tutorId}" label="#{label.tutor}"
+                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px" disabled="true">
+                    <f:selectItems value="#{performanceView.tutors}" var="t" itemLabel="#{t.name}" itemValue="#{t.id}" />
+                </p:selectOneMenu>
                 <h:outputLabel value="Week:" style="margin-left:150px"/>
                 <p:selectOneMenu id="week" value="#{performanceView.evaluation.week}" label="Weeks"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" >
                     <f:selectItems value="#{performanceView.weeks}" var="w" itemLabel="#{w.week}" itemValue="#{w.week}" />
                 </p:selectOneMenu>
             </h:panelGrid>
-            <p:panelGrid columns="4" cellpadding="5" id="panel1">
+
+            <p:panelGrid columns="4" cellpadding="5">
                 <h:outputLabel for="attendance" value="Attendance (4)" />
                 <h:outputLabel for="participation" value="Prticipation (3)" />
                 <h:outputLabel for="performance" value="Performance (3)" />
@@ -44,11 +51,12 @@
                 <p:inputText id="performance" value="#{performanceView.evaluation.performance}" size="5" />
                 <p:inputText id="total" value="#{performanceView.evaluation.total}" size="5" />
             </p:panelGrid>
-            <h:panelGrid columns="1" cellpadding="5" id="panel2">
-                <h:outputLabel for="note" value="Note" />
-                <p:inputTextarea id="note" value="#{performanceView.evaluation.note}" rows="6" cols="55" />
-            </h:panelGrid>
-            <p:commandButton value="Submit" update="messages" actionListener="#{performanceView.save}" />
+
+            <br/>
+            <h:outputLabel for="note" value="Note" /><br/>
+            <p:inputTextarea id="note" value="#{performanceView.evaluation.note}" rows="6" cols="55" autoResize="false" />
+            <br/>
+            <p:commandButton value="Submit" update="messages jsfForm" actionListener="#{performanceView.save}" />
 
         </h:form>
     </ui:define>

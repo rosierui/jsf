@@ -30,6 +30,7 @@ public class EvaluationObjective implements Serializable {
     private Integer tutorId;
 
     private String semester;
+
     private String week;
 
     @Column(name="eval_part1_1")

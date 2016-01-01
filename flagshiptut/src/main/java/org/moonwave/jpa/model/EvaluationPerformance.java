@@ -24,25 +24,31 @@ public class EvaluationPerformance implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name="user_id")
+    private Integer userId;
+
+    @Column(name="tutor_id")
+    private Integer tutorId;
+
+    private String semester;
+
+    private String week;
+
     private short attendance;
-
-    @Column(name="create_time")
-    private Timestamp createTime;
-
-    private String note;
 
     private short participation;
 
     private short performance;
 
-    private String semester;
-
     private short total;
+
+    private String note;
 
     @Column(name="update_time")
     private Timestamp updateTime;
 
-    private String week;
+    @Column(name="create_time")
+    private Timestamp createTime;
 
     public EvaluationPerformance() {
     }
@@ -55,28 +61,44 @@ public class EvaluationPerformance implements Serializable {
         this.id = id;
     }
 
+    public Integer getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getTutorId() {
+        return tutorId;
+    }
+
+    public void setTutorId(Integer tutorId) {
+        this.tutorId = tutorId;
+    }
+
+    public String getSemester() {
+        return this.semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
+    public String getWeek() {
+        return this.week;
+    }
+
+    public void setWeek(String week) {
+        this.week = week;
+    }
+
     public short getAttendance() {
         return this.attendance;
     }
 
     public void setAttendance(short attendance) {
         this.attendance = attendance;
-    }
-
-    public Timestamp getCreateTime() {
-        return this.createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getNote() {
-        return this.note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
     }
 
     public short getParticipation() {
@@ -95,14 +117,6 @@ public class EvaluationPerformance implements Serializable {
         this.performance = performance;
     }
 
-    public String getSemester() {
-        return this.semester;
-    }
-
-    public void setSemester(String semester) {
-        this.semester = semester;
-    }
-
     public short getTotal() {
         return this.total;
     }
@@ -111,20 +125,28 @@ public class EvaluationPerformance implements Serializable {
         this.total = toatl;
     }
 
+    public String getNote() {
+        return this.note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Timestamp getCreateTime() {
+        return this.createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
+
     public Timestamp getUpdateTime() {
         return this.updateTime;
     }
 
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public String getWeek() {
-        return this.week;
-    }
-
-    public void setWeek(String week) {
-        this.week = week;
     }
 
     @Override
@@ -148,6 +170,10 @@ public class EvaluationPerformance implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("id= ").append(id);
+        sb.append(",user_id= ").append(userId);
+        sb.append(",tutor_id= ").append(tutorId);
+        sb.append(",semester= ").append(semester);
+        sb.append(",week= ").append(week);
         sb.append(",attendance= ").append(attendance);
         sb.append(",participation= ").append(participation);
         sb.append(",performance= ").append(performance);

@@ -135,7 +135,6 @@ public class SelfEvaluationView extends BaseView {
             evaluation.setCreateTime(super.getSqlTimestamp());
             super.getBasebo().persist(evaluation);
 
-            // reset fields
             resetfields();
             super.info("Data was saved successfully");
         } catch (Exception e) {
