@@ -277,6 +277,7 @@ CREATE TABLE evaluation_performance (
 CREATE TABLE evaluation_objective (
     id                      INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id                 INTEGER REFERENCES `user`(user_id),
+    tutor_id                INTEGER REFERENCES `user`(user_id),
     semester                VARCHAR(15) REFERENCES semester(alias),
     week                    VARCHAR(15) REFERENCES week(week),
     -- Part I Interpretive Listening Mode

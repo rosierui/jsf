@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-
 /**
  * The persistent class for the evaluation_objective database table.
  * 
@@ -24,8 +23,14 @@ public class EvaluationObjective implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="create_time")
-    private Timestamp createTime;
+    @Column(name="user_id")
+    private Integer userId;
+
+    @Column(name="tutor_id")
+    private Integer tutorId;
+
+    private String semester;
+    private String week;
 
     @Column(name="eval_part1_1")
     private Boolean evalPart11;
@@ -63,18 +68,14 @@ public class EvaluationObjective implements Serializable {
     @Column(name="eval_part3_comments")
     private String evalPart3Comments;
 
-    private String semester;
-
     @Column(name="student_evaluation")
     private Boolean studentEvaluation;
 
     @Column(name="update_time")
     private Timestamp updateTime;
 
-    @Column(name="user_id")
-    private int userId;
-
-    private String week;
+    @Column(name="create_time")
+    private Timestamp createTime;
 
     public EvaluationObjective() {
     }
@@ -87,12 +88,36 @@ public class EvaluationObjective implements Serializable {
         this.id = id;
     }
 
-    public Timestamp getCreateTime() {
-        return this.createTime;
+    public Integer getUserId() {
+        return this.userId;
     }
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getTutorId() {
+        return tutorId;
+    }
+
+    public void setTutorId(Integer tutorId) {
+        this.tutorId = tutorId;
+    }
+
+    public String getSemester() {
+        return this.semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
+    public String getWeek() {
+        return this.week;
+    }
+
+    public void setWeek(String week) {
+        this.week = week;
     }
 
     public Boolean getEvalPart11() {
@@ -191,14 +216,6 @@ public class EvaluationObjective implements Serializable {
         this.evalPart3Comments = evalPart3Comments;
     }
 
-    public String getSemester() {
-        return this.semester;
-    }
-
-    public void setSemester(String semester) {
-        this.semester = semester;
-    }
-
     public Boolean getStudentEvaluation() {
         return this.studentEvaluation;
     }
@@ -215,20 +232,12 @@ public class EvaluationObjective implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public int getUserId() {
-        return this.userId;
+    public Timestamp getCreateTime() {
+        return this.createTime;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getWeek() {
-        return this.week;
-    }
-
-    public void setWeek(String week) {
-        this.week = week;
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
     }
 
     @Override
@@ -253,8 +262,10 @@ public class EvaluationObjective implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("id= ").append(id);
         sb.append(",user_id= ").append(userId);
+        sb.append(",tutor_id= ").append(tutorId);
         sb.append(",semester= ").append(semester);
         sb.append(",week= ").append(week);
+        sb.append(",studentEvaluation= ").append(studentEvaluation);
         return sb.toString();
     }
 }

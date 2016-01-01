@@ -13,6 +13,7 @@ import org.moonwave.jpa.model.EvaluationObjective;
 import org.moonwave.jpa.model.Semester;
 import org.moonwave.jpa.model.User;
 import org.moonwave.jpa.model.Week;
+import org.moonwave.util.StackTrace;
 import org.moonwave.view.BaseView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,14 +37,14 @@ public class SelfEvaluationView extends BaseView {
     List<Semester> semesters;
     List<Week> weeks;
 
-    Integer selectedStudentId;
-    Integer selectedTutorId;
 
     boolean byStudent = false; // evaluation by student 
     boolean byTutor = false;   // evaluation by tutor
 
     @PostConstruct
     public void init() {
+        evaluation =  new EvaluationObjective();
+
         byStudent = (super.getParameter("student") != null) ? true : false;
         byTutor = (super.getParameter("tutor") != null) ? true : false;
 
@@ -56,13 +57,12 @@ public class SelfEvaluationView extends BaseView {
         Collections.sort(tutors);
 
         if (byStudent) {
-            selectedStudentId = super.getLoggedInUser().getId();
+            evaluation.setUserId(super.getLoggedInUser().getId());
         }
         if (byTutor) {
-            selectedTutorId = super.getLoggedInUser().getId();
+            evaluation.setTutorId(super.getLoggedInUser().getId());
         }
 
-        evaluation =  new EvaluationObjective();
         GenericBO<Semester> bo = new GenericBO<>(Semester.class);
         semesters = bo.findAll();
 
@@ -110,22 +110,6 @@ public class SelfEvaluationView extends BaseView {
         this.weeks = weeks;
     }
 
-    public Integer getSelectedStudentId() {
-        return selectedStudentId;
-    }
-
-    public void setSelectedStudentId(Integer selectedStudentId) {
-        this.selectedStudentId = selectedStudentId;
-    }
-
-    public Integer getSelectedTutorId() {
-        return selectedTutorId;
-    }
-
-    public void setSelectedTutorId(Integer selectedTutorId) {
-        this.selectedTutorId = selectedTutorId;
-    }
-
     public boolean isByStudent() {
         return byStudent;
     }
@@ -149,11 +133,17 @@ public class SelfEvaluationView extends BaseView {
 //            return null;
 //        }
         try {
+            if (this.byStudent) {
+                evaluation.setStudentEvaluation(true);
+            } else if (this.byTutor) {
+                evaluation.setStudentEvaluation(false);
+            }
+            evaluation.setCreateTime(super.getSqlTimestamp());
             super.getBasebo().persist(evaluation);
 
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");
-            LOG.error("", e);
+            LOG.error(StackTrace.toString(e));
         }
         return null;
     }
