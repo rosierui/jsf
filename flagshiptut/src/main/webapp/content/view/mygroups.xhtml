@@ -36,7 +36,7 @@
 
             <p:dialog header="${label.groupDetails}" id="dlgDetails" widgetVar="dlgDetails" modal="true"
                       position="center" closable="true" closeOnEscape="true" resizable="true"
-                      showEffect="clip" hideEffect="clip" width="800" height="400">
+                      showEffect="clip" hideEffect="clip" width="600" height="300">
                 <h:panelGrid columns="2" cellpadding="5" id="divPost">
                     <h:outputLabel value="${label.alias}:" />
                     <h:outputText value="#{myGroupsView.current.alias}" />
@@ -47,7 +47,7 @@
                     <h:outputLabel value="${label.groupMembers}" />
                     <h:outputLabel value="" />
                 </h:panelGrid>
-                <p:dataTable var="item" value="#{myGroupsView.current.users}">
+                <p:dataTable var="item" value="#{myGroupsView.current.sortedUsers}">
                     <p:column headerText="${label.firstName}">
                         <h:outputText value="#{item.firstName}" />
                     </p:column>
@@ -55,7 +55,7 @@
                         <h:outputText value="#{item.lastName}" />
                     </p:column>
                     <p:column headerText="${label.chineseName}">
-                        <h:outputText value="#{user.chineseName}" />
+                        <h:outputText value="#{item.chineseName}" />
                     </p:column>
                 </p:dataTable>
             </p:dialog>

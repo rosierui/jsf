@@ -325,6 +325,10 @@ public class User implements Serializable {
 
     // ========================================================== Helper methods
 
+    public String getName() {
+        return this.firstName + " " + this.lastName;
+    }
+
     public void clearFields() {
         this.firstName = null;
         this.lastName = null;

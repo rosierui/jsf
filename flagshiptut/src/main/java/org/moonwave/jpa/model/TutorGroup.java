@@ -2,6 +2,9 @@ package org.moonwave.jpa.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -114,5 +117,16 @@ public class TutorGroup implements Serializable {
         sb.append(",name= ").append(name);
         sb.append(",ordinal= ").append(ordinal);
         return sb.toString();
+    }
+
+    // =================================================== Public helper methods
+
+    public List<User> getSortedUsers() {
+        Collections.sort(users, new Comparator<User>() {
+            public int compare(User user1, User user2) {
+                return user1.getName().toLowerCase().compareTo(user2.getName().toLowerCase());
+            }
+        });
+        return users;
     }
 }
