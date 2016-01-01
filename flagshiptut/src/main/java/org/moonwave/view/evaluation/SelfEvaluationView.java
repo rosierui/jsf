@@ -43,7 +43,6 @@ public class SelfEvaluationView extends BaseView {
 
     @PostConstruct
     public void init() {
-        evaluation =  new EvaluationObjective();
 
         byStudent = (super.getParameter("student") != null) ? true : false;
         byTutor = (super.getParameter("tutor") != null) ? true : false;
@@ -56,18 +55,13 @@ public class SelfEvaluationView extends BaseView {
         tutors = new UserBO().findAllTutors();
         Collections.sort(tutors);
 
-        if (byStudent) {
-            evaluation.setUserId(super.getLoggedInUser().getId());
-        }
-        if (byTutor) {
-            evaluation.setTutorId(super.getLoggedInUser().getId());
-        }
-
         GenericBO<Semester> bo = new GenericBO<>(Semester.class);
         semesters = bo.findAll();
 
         GenericBO<Week> weekbo = new GenericBO<>(Week.class);
         weeks = weekbo.findAll();
+
+        resetfields();
     }
 
     public EvaluationObjective getEvaluation() {
@@ -141,6 +135,9 @@ public class SelfEvaluationView extends BaseView {
             evaluation.setCreateTime(super.getSqlTimestamp());
             super.getBasebo().persist(evaluation);
 
+            // reset fields
+            resetfields();
+            super.info("Data was saved successfully");
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");
             LOG.error(StackTrace.toString(e));
@@ -148,4 +145,15 @@ public class SelfEvaluationView extends BaseView {
         return null;
     }
 
+    // ========================================================= Private methods
+
+    private void resetfields() {
+        evaluation =  new EvaluationObjective();
+        if (byStudent) {
+            evaluation.setUserId(super.getLoggedInUser().getId());
+        }
+        if (byTutor) {
+            evaluation.setTutorId(super.getLoggedInUser().getId());
+        }
+    }
 }

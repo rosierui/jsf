@@ -15,8 +15,8 @@
         <c:if test="#{!loginController.isUserLoggedIn()}">
             #{loginController.redirectToLogin()}
         </c:if>
+        <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         <h:form id="jsfForm">
-            <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
             <h:panelGrid columns="4" cellpadding="5" >
                 <h:outputLabel value="Student Name:" />
                 <p:selectOneMenu id="student" converter="javax.faces.Integer" value="#{selfEvaluationView.evaluation.userId}" label="#{label.student}"
@@ -106,7 +106,7 @@
                 <h:outputText value="" />
             </p:panelGrid>
 
-            <p:commandButton value="Submit" update="messages" actionListener="#{selfEvaluationView.save}" />
+            <p:commandButton value="Submit" update=":messages jsfForm" actionListener="#{selfEvaluationView.save}" />
 
         </h:form>
     </ui:define>
