@@ -272,6 +272,9 @@ CREATE TABLE evaluation_performance (
     create_time             TIMESTAMP
 );
 
+CREATE INDEX eva_performance_idx1 ON evaluation_performance (user_id, semester, week);
+CREATE INDEX eva_performance_idx2 ON evaluation_performance (create_time);
+
 -- -----------------------------------------------------------------------------
 -- Create table evaluation_objective
 
@@ -301,6 +304,9 @@ CREATE TABLE evaluation_objective (
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP
 );
+
+CREATE INDEX eva_objective_idx1 ON evaluation_objective (user_id, semester, week);
+CREATE INDEX eva_objective_idx2 ON evaluation_objective (create_time);
 
 -- -----------------------------------------------------------------------------
 -- Create table course
