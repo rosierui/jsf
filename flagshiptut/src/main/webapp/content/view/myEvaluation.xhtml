@@ -9,23 +9,29 @@
     template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
-        <h:outputText value="#{label.myGrade}" />
+        <h:outputText value="#{label.myGrades}" />
     </ui:define>
 
     <ui:define name="description">
         My Evaluations
+        <br/>
+        <br/>
+        <h:form id="menu">
+            <p:menuButton value="View">
+               <p:menuitem value="Performance" url="/content/view/myPerformance.xhtml" icon="ui-icon-wrench" />
+               <p:menuitem value="Evaluation" url="/content/view/myEvaluation.xhtml" icon="ui-icon-document" disabled="true"/>
+            </p:menuButton>
+        </h:form>
     </ui:define>
 
     <ui:define name="implementation">
+        <c:if test="#{!loginController.isUserLoggedIn()}">
+            #{loginController.redirectToLogin()}
+        </c:if>
 
         <h:form id="form">
             <p:growl id="messages" showDetail="true"/>
  
-            <p:menuButton value="View">
-                <p:menuitem value="Performance" url="/content/view/myPerformance.xhtml" icon="ui-icon-wrench" />
-                <p:menuitem value="Evaluation" url="/content/view/myEvaluation.xhtml" icon="ui-icon-document" disabled="true"/>
-            </p:menuButton>
-
         </h:form>
 
     </ui:define>

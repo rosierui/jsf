@@ -108,6 +108,14 @@ public class User implements Serializable, Comparable<User> {
     @OneToOne(mappedBy="user", fetch = FetchType.LAZY)
     private GroupPost groupPost;
 
+    //bi-directional one-to-one association to EvaluationPerformance
+    @OneToOne(mappedBy="user", fetch = FetchType.EAGER)
+    private EvaluationPerformance user;
+
+    //bi-directional one-to-one association to EvaluationPerformance
+    @OneToOne(mappedBy="tutor", fetch = FetchType.EAGER)
+    private EvaluationPerformance tutor;
+
     public User() {
     }
 

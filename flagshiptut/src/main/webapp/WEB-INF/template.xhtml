@@ -64,7 +64,7 @@
                             <a href="#{request.contextPath}/content/view/groupposts.xhtml"><h:outputText value="#{label.groupposts}" /></a>
                             <a href="#{request.contextPath}/content/view/myGroups.xhtml"><h:outputText value="#{label.myGroups}" /></a>
                             <h:panelGroup rendered="#{accessController.isStudent()}">
-                              <a href="#{request.contextPath}/content/view/myGrade.xhtml"><h:outputText value="#{label.myGrade}" /></a>
+                              <a href="#{request.contextPath}/content/view/myGrades.xhtml"><h:outputText value="#{label.myGrades}" /></a>
                               <a href="#{request.contextPath}/error/tbd.xhtml?title=My Schedule"><h:outputText value="#{label.mySchedules}" /></a>
                             </h:panelGroup>
                         </div>
@@ -148,7 +148,7 @@
                         <a class="SubMenuLink" href="#{request.contextPath}/content/view/groupposts.xhtml">&bull; <h:outputText value="#{label.groupposts}" /></a>
                         <a class="SubMenuLink" href="#{request.contextPath}/content/view/myGroups.xhtml">&bull; <h:outputText value="#{label.myGroups}" /></a>
                         <h:panelGroup rendered="#{accessController.isStudent()}">
-                          <a class="SubMenuLink" href="#{request.contextPath}/content/view/myGrade.xhtml">&bull; <h:outputText value="#{label.myGrade}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/content/view/myGrades.xhtml">&bull; <h:outputText value="#{label.myGrades}" /></a>
                           <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=My Schedules">&bull; <h:outputText value="#{label.mySchedules}" /></a>
                         </h:panelGroup>
                     </div>

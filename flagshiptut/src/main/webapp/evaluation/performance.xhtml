@@ -19,7 +19,7 @@
         <h:form id="jsfForm">
             <h:panelGrid columns="4" cellpadding="5" >
                 <h:outputLabel value="Student Name:" />
-                <p:selectOneMenu id="student" converter="javax.faces.Integer" value="#{performanceView.evaluation.userId}" label="#{label.student}"
+                <p:selectOneMenu id="student" converter="javax.faces.Integer" value="#{performanceView.evaluation.user.id}" label="#{label.student}"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
                     <f:selectItems value="#{performanceView.students}" var="s" itemLabel="#{s.name}" itemValue="#{s.id}" />
                 </p:selectOneMenu>
@@ -30,7 +30,7 @@
                 </p:selectOneMenu>
 
                 <h:outputLabel value="Tutor Name:" />
-                <p:selectOneMenu id="tutor" converter="javax.faces.Integer" value="#{performanceView.evaluation.tutorId}" label="#{label.tutor}"
+                <p:selectOneMenu id="tutor" converter="javax.faces.Integer" value="#{performanceView.evaluation.tutor.id}" label="#{label.tutor}"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" disabled="true">
                     <f:selectItems value="#{performanceView.tutors}" var="t" itemLabel="#{t.name}" itemValue="#{t.id}" />
                 </p:selectOneMenu>

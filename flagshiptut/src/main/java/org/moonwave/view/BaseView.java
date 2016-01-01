@@ -101,6 +101,19 @@ public class BaseView implements Serializable {
         String langCountry = getLocale().toLanguageTag();
         if (Locale_en_US.equals(langCountry)) {
             if (date != null) {
+                ret = DateUtil.toMMDDYYYY(date);
+            }
+        } else {
+            ret = DateUtil.toMMDDYYYY(date);
+        }
+        return ret;
+    }
+
+    public String getLocaleDateTimeString(java.sql.Timestamp date) {
+        String ret = null;
+        String langCountry = getLocale().toLanguageTag();
+        if (Locale_en_US.equals(langCountry)) {
+            if (date != null) {
                 ret = DateUtil.toDisplayFormat(date);
             }
         } else {

@@ -14,7 +14,8 @@ import java.sql.Timestamp;
 
 @NamedQueries({
     @NamedQuery(name="EvaluationPerformance.findAll",  query="SELECT e FROM EvaluationPerformance e"),
-    @NamedQuery(name="EvaluationPerformance.findById", query="SELECT e FROM EvaluationPerformance e WHERE e.id = :id")
+    @NamedQuery(name="EvaluationPerformance.findById", query="SELECT e FROM EvaluationPerformance e WHERE e.id = :id"),
+    @NamedQuery(name="EvaluationPerformance.findByUserId", query="SELECT e FROM EvaluationPerformance e WHERE e.user.id = :userId"),
 })
 
 public class EvaluationPerformance implements Serializable {
@@ -24,11 +25,15 @@ public class EvaluationPerformance implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="user_id")
-    private Integer userId;
+    //bi-directional one-to-one association to User
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id")
+    private User user;
 
-    @Column(name="tutor_id")
-    private Integer tutorId;
+    //bi-directional one-to-one association to User
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="tutor_id")
+    private User tutor;
 
     private String semester;
 
@@ -61,20 +66,26 @@ public class EvaluationPerformance implements Serializable {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return this.userId;
+    public User getUser() {
+        if (id == null) {
+            user = new User();
+        }
+        return this.user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Integer getTutorId() {
-        return tutorId;
+    public User getTutor() {
+        if (id == null) {
+            tutor = new User();
+        }
+        return tutor;
     }
 
-    public void setTutorId(Integer tutorId) {
-        this.tutorId = tutorId;
+    public void setTutor(User tutor) {
+        this.tutor = tutor;
     }
 
     public String getSemester() {
@@ -170,8 +181,8 @@ public class EvaluationPerformance implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("id= ").append(id);
-        sb.append(",user_id= ").append(userId);
-        sb.append(",tutor_id= ").append(tutorId);
+        sb.append(",user_id= ").append(user.getId());
+        sb.append(",tutor_id= ").append(tutor.getId());
         sb.append(",semester= ").append(semester);
         sb.append(",week= ").append(week);
         sb.append(",attendance= ").append(attendance);

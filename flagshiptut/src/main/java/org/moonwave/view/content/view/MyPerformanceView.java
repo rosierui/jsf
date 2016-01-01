@@ -1,6 +1,5 @@
 package org.moonwave.view.content.view;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -8,28 +7,29 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import org.moonwave.jpa.bo.EvaluationPerformanceBO;
 import org.moonwave.jpa.bo.GenericBO;
-import org.moonwave.jpa.model.Announcement;
+import org.moonwave.jpa.model.EvaluationPerformance;
 import org.moonwave.view.AccessController;
 import org.moonwave.view.BaseView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Announcements View
+ * EvaluationPerformances View
  *
  * @author moonwave
  *
  */
 @ManagedBean
 @ViewScoped
-public class AnnouncementsView extends BaseView {
+public class MyPerformanceView extends BaseView {
 
     private static final long serialVersionUID = 1L;
-    static final Logger LOG = LoggerFactory.getLogger(AnnouncementsView.class);
+    static final Logger LOG = LoggerFactory.getLogger(MyPerformanceView.class);
 
-    private List<Announcement> data;
-    private Announcement current;
+    private List<EvaluationPerformance> data;
+    private EvaluationPerformance current;
     private String selectedId;
 
     @ManagedProperty("#{accessController}")
@@ -37,22 +37,22 @@ public class AnnouncementsView extends BaseView {
 
     @PostConstruct
     public void init() {
-        data = loadAndFilterData();
+        data = new EvaluationPerformanceBO().findByUserId(super.getLoggedInUser().getId());
     }
 
-    public List<Announcement> getData() {
+    public List<EvaluationPerformance> getData() {
         return data;
     }
 
-    public void setData(List<Announcement> data) {
+    public void setData(List<EvaluationPerformance> data) {
         this.data = data;
     }
 
-    public Announcement getCurrent() {
+    public EvaluationPerformance getCurrent() {
         return current;
     }
 
-    public void setCurrent(Announcement current) {
+    public void setCurrent(EvaluationPerformance current) {
         this.current = current;
     }
 
@@ -63,7 +63,7 @@ public class AnnouncementsView extends BaseView {
     public void setSelectedId(String selectedId) {
         this.selectedId = selectedId;
         if ((this.selectedId != null) && !this.selectedId.isEmpty()) {
-            GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
+            GenericBO<EvaluationPerformance> bo = new GenericBO<>(EvaluationPerformance.class);
             this.current = bo.findById(Integer.parseInt(selectedId));
         }
     }
@@ -77,19 +77,4 @@ public class AnnouncementsView extends BaseView {
     }
 
     // ========================================================= Private methods
-
-    /**
-     * only show published announcements
-     */
-    private List <Announcement> loadAndFilterData() {
-        GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
-        List <Announcement> list = bo.findAll(); 
-        List <Announcement> ret = new ArrayList<Announcement>();
-        for (Announcement a : list) {
-            if (a.getPublished()) {
-                ret.add(a);
-            }
-        }
-        return ret;
-    }
 }

@@ -119,6 +119,6 @@ public class PerformanceView extends BaseView {
 
     private void resetfields() {
         evaluation =  new EvaluationPerformance();
-        evaluation.setTutorId(super.getLoggedInUser().getId());
+        evaluation.setTutor(super.getLoggedInUser());
     }
 }
