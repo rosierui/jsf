@@ -54,26 +54,58 @@
 
             <p:dialog header="${label.evaluationDetails}" id="dlgDetails" widgetVar="dlgDetails" modal="true"
                       position="center" closable="true" closeOnEscape="true" resizable="true"
-                      showEffect="clip" hideEffect="clip" width="600" height="400">
+                      showEffect="clip" hideEffect="clip" width="800" height="400">
                 <h:panelGrid columns="2" cellpadding="5" id="divPost">
                     <h:outputLabel value="${label.date}:" />
                     <h:outputText value="#{myEvaluationView.getLocaleDateString(myEvaluationView.current.createTime)}" />
-                    <h:outputLabel value="${label.tutor}:" />
-                    <h:outputText value="#{myEvaluationView.current.user.name} " />
+                    <h:outputLabel value="${label.evaluatedBy}:" />
+                    <h:outputText value="#{myEvaluationView.current.studentEvaluation ? myEvaluationView.current.user.name : myEvaluationView.current.tutor.name} " />
                     <h:outputLabel value="${label.semester}:" />
                     <h:outputText value="#{myEvaluationView.current.semester}" />
                     <h:outputLabel value="${label.week}:" />
                     <h:outputText value="#{myEvaluationView.current.week}" />
-                    <h:outputLabel value="${label.attendance} (4):" />
-                    <h:outputText value="#{myEvaluationView.current.attendance}" />
-                    <h:outputLabel value="${label.participation} (3):" />
-                    <h:outputText value="#{myEvaluationView.current.participation}" />
-                    <h:outputLabel value="${label.performance} (3):" />
-                    <h:outputText value="#{myEvaluationView.current.performance}" />
-                    <h:outputLabel value="${label.total} (10):" />
-                    <h:outputText value="#{myEvaluationView.current.total}" />
-                    <h:outputLabel value="${label.note}:" />
-                    <h:outputText value="#{myEvaluationView.current.note}" escape="false"/>
+                </h:panelGrid>
+                <h:outputText value="${message.eval_part1}" style="font-weight:900"/>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="${message.eval_part1_1}:" />
+                    <p:selectBooleanCheckbox value="#{myEvaluationView.current.evalPart11}" disabled="true"/>
+                    <h:outputLabel value="${message.eval_part1_2}:" />
+                    <p:selectBooleanCheckbox value="#{myEvaluationView.current.evalPart12}" disabled="true"/>
+                    <h:outputLabel value="${message.eval_part1_3}:" />
+                    <p:selectBooleanCheckbox value="#{myEvaluationView.current.evalPart13}" disabled="true"/>
+	                <h:panelGroup>
+	                    <h:outputText value="${message.other_comments}" /><br/>
+	                    <h:outputText value="#{myEvaluationView.current.evalPart1Comments}"/>
+	                </h:panelGroup>
+	                <h:outputText value="" />
+                </h:panelGrid>
+                <h:outputText value="${message.eval_part2}" style="font-weight:900"/>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="${message.eval_part2_1}:" />
+                    <p:selectBooleanCheckbox value="#{myEvaluationView.current.evalPart21}" disabled="true"/>
+                    <h:outputLabel value="${message.eval_part2_2}:" />
+                    <p:selectBooleanCheckbox value="#{myEvaluationView.current.evalPart22}" disabled="true"/>
+                    <h:outputLabel value="${message.eval_part2_3}:" />
+                    <p:selectBooleanCheckbox value="#{myEvaluationView.current.evalPart23}" disabled="true"/>
+                    <h:panelGroup>
+                        <h:outputText value="${message.other_comments}" /><br/>
+                        <h:outputText value="#{myEvaluationView.current.evalPart2Comments}"/>
+                    </h:panelGroup>
+                    <h:outputText value="" />
+                </h:panelGrid>
+                <h:outputText value="${message.eval_part3}" style="font-weight:900"/>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="${message.eval_part3_1}:" />
+                    <p:selectBooleanCheckbox value="#{myEvaluationView.current.evalPart31}" disabled="true"/>
+                    <h:outputLabel value="${message.eval_part3_2}:" />
+                    <p:selectBooleanCheckbox value="#{myEvaluationView.current.evalPart32}" disabled="true"/>
+                    <h:outputLabel value="${message.eval_part3_3}:" />
+                    <p:selectBooleanCheckbox value="#{myEvaluationView.current.evalPart33}" disabled="true"/>
+                    <h:panelGroup>
+                        <h:outputText value="${message.other_comments}" /><br/>
+                        <h:outputText value="#{myEvaluationView.current.evalPart3Comments}"/>
+                    </h:panelGroup>
+                    <h:outputText value="" />
                 </h:panelGrid>
             </p:dialog>
          </h:form>
