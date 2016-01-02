@@ -7,29 +7,29 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import org.moonwave.jpa.bo.EvaluationPerformanceBO;
+import org.moonwave.jpa.bo.EvaluationObjectiveBO;
 import org.moonwave.jpa.bo.GenericBO;
-import org.moonwave.jpa.model.EvaluationPerformance;
+import org.moonwave.jpa.model.EvaluationObjective;
 import org.moonwave.view.AccessController;
 import org.moonwave.view.BaseView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * My Performance View
+ * My Evaluation View
  *
  * @author moonwave
  *
  */
 @ManagedBean
 @ViewScoped
-public class MyPerformanceView extends BaseView {
+public class MyEvaluationView extends BaseView {
 
     private static final long serialVersionUID = 1L;
-    static final Logger LOG = LoggerFactory.getLogger(MyPerformanceView.class);
+    static final Logger LOG = LoggerFactory.getLogger(MyEvaluationView.class);
 
-    private List<EvaluationPerformance> data;
-    private EvaluationPerformance current;
+    private List<EvaluationObjective> data;
+    private EvaluationObjective current;
     private String selectedId;
 
     @ManagedProperty("#{accessController}")
@@ -37,22 +37,22 @@ public class MyPerformanceView extends BaseView {
 
     @PostConstruct
     public void init() {
-        data = new EvaluationPerformanceBO().findByUserId(super.getLoggedInUser().getId());
+        data = new EvaluationObjectiveBO().findByUserId(super.getLoggedInUser().getId());
     }
 
-    public List<EvaluationPerformance> getData() {
+    public List<EvaluationObjective> getData() {
         return data;
     }
 
-    public void setData(List<EvaluationPerformance> data) {
+    public void setData(List<EvaluationObjective> data) {
         this.data = data;
     }
 
-    public EvaluationPerformance getCurrent() {
+    public EvaluationObjective getCurrent() {
         return current;
     }
 
-    public void setCurrent(EvaluationPerformance current) {
+    public void setCurrent(EvaluationObjective current) {
         this.current = current;
     }
 
@@ -63,7 +63,7 @@ public class MyPerformanceView extends BaseView {
     public void setSelectedId(String selectedId) {
         this.selectedId = selectedId;
         if ((this.selectedId != null) && !this.selectedId.isEmpty()) {
-            GenericBO<EvaluationPerformance> bo = new GenericBO<>(EvaluationPerformance.class);
+            GenericBO<EvaluationObjective> bo = new GenericBO<>(EvaluationObjective.class);
             this.current = bo.findById(Integer.parseInt(selectedId));
         }
     }

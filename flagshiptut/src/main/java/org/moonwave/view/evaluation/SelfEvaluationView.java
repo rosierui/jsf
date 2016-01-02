@@ -149,10 +149,10 @@ public class SelfEvaluationView extends BaseView {
     private void resetfields() {
         evaluation =  new EvaluationObjective();
         if (byStudent) {
-            evaluation.setUserId(super.getLoggedInUser().getId());
+            evaluation.setUser(super.getLoggedInUser());
         }
         if (byTutor) {
-            evaluation.setTutorId(super.getLoggedInUser().getId());
+            evaluation.setTutor(super.getLoggedInUser());
         }
     }
 }

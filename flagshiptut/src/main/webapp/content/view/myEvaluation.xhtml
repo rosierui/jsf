@@ -32,7 +32,52 @@
         <h:form id="form">
             <p:growl id="messages" showDetail="true"/>
  
-        </h:form>
+            <p:dataTable var="item" value="#{myEvaluationView.data}">
+                <p:column headerText="${label.semester}">
+                    <h:outputText value="#{item.semester}" />
+                </p:column>
+                <p:column headerText="${label.week}">
+                    <h:outputText value="#{item.week}" />
+                </p:column>
+                <p:column headerText="${label.date}">
+                    <h:outputText value="#{myEvaluationView.getLocaleDateString(item.createTime)}" />
+                </p:column>
+                <p:column headerText="${label.evaluatedBy}" >
+                    <h:outputText value="#{item.studentEvaluation ? item.user.name : item.tutor.name}" />
+                </p:column>
+                <p:column headerText="${label.action}">
+                    <p:commandButton value="View Details" ajax="true" update="@([id$=dlgDetails])" oncomplete="PF('dlgDetails').show();" > 
+                        <f:setPropertyActionListener target="#{myEvaluationView.selectedId}" value="#{item.id}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+
+            <p:dialog header="${label.evaluationDetails}" id="dlgDetails" widgetVar="dlgDetails" modal="true"
+                      position="center" closable="true" closeOnEscape="true" resizable="true"
+                      showEffect="clip" hideEffect="clip" width="600" height="400">
+                <h:panelGrid columns="2" cellpadding="5" id="divPost">
+                    <h:outputLabel value="${label.date}:" />
+                    <h:outputText value="#{myEvaluationView.getLocaleDateString(myEvaluationView.current.createTime)}" />
+                    <h:outputLabel value="${label.tutor}:" />
+                    <h:outputText value="#{myEvaluationView.current.user.name} " />
+                    <h:outputLabel value="${label.semester}:" />
+                    <h:outputText value="#{myEvaluationView.current.semester}" />
+                    <h:outputLabel value="${label.week}:" />
+                    <h:outputText value="#{myEvaluationView.current.week}" />
+                    <h:outputLabel value="${label.attendance} (4):" />
+                    <h:outputText value="#{myEvaluationView.current.attendance}" />
+                    <h:outputLabel value="${label.participation} (3):" />
+                    <h:outputText value="#{myEvaluationView.current.participation}" />
+                    <h:outputLabel value="${label.performance} (3):" />
+                    <h:outputText value="#{myEvaluationView.current.performance}" />
+                    <h:outputLabel value="${label.total} (10):" />
+                    <h:outputText value="#{myEvaluationView.current.total}" />
+                    <h:outputLabel value="${label.note}:" />
+                    <h:outputText value="#{myEvaluationView.current.note}" escape="false"/>
+                </h:panelGrid>
+            </p:dialog>
+         </h:form>
 
     </ui:define>
+
 </ui:composition>
