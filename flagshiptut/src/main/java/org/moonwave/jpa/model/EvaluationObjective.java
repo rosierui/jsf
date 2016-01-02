@@ -95,6 +95,9 @@ public class EvaluationObjective implements Serializable {
     }
 
     public User getUser() {
+        if ((user == null) && (id == null)) {
+            user = new User();
+        }
         return this.user;
     }
 
@@ -103,6 +106,9 @@ public class EvaluationObjective implements Serializable {
     }
 
     public User getTutor() {
+        if ((tutor == null) && (id == null)) {
+            tutor = new User();
+        }
         return tutor;
     }
 

@@ -117,12 +117,12 @@ public class User implements Serializable, Comparable<User> {
     private EvaluationPerformance tutor;
 
     //bi-directional one-to-one association to EvaluationPerformance
-//    @OneToOne(mappedBy="user", fetch = FetchType.EAGER)
-//    private EvaluationObjective user2;
+    @OneToOne(mappedBy="user", fetch = FetchType.EAGER)
+    private EvaluationObjective user2;
 
     //bi-directional one-to-one association to EvaluationPerformance
-//    @OneToOne(mappedBy="tutor", fetch = FetchType.EAGER)
-//    private EvaluationObjective tutor2;
+    @OneToOne(mappedBy="tutor", fetch = FetchType.EAGER)
+    private EvaluationObjective tutor2;
 
     public User() {
     }

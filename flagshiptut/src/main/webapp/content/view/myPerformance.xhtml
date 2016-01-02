@@ -66,7 +66,7 @@
 
             <p:dialog header="${label.performanceDetails}" id="dlgDetails" widgetVar="dlgDetails" modal="true"
                       position="center" closable="true" closeOnEscape="true" resizable="true"
-                      showEffect="clip" hideEffect="clip" width="600" height="400">
+                      showEffect="clip" hideEffect="clip" width="800" height="400">
                 <h:panelGrid columns="2" cellpadding="5" id="divPost">
                     <h:outputLabel value="${label.date}:" />
                     <h:outputText value="#{myPerformanceView.getLocaleDateString(myPerformanceView.current.createTime)}" />
@@ -84,7 +84,11 @@
                     <h:outputText value="#{myPerformanceView.current.performance}" />
                     <h:outputLabel value="${label.total} (10):" />
                     <h:outputText value="#{myPerformanceView.current.total}" />
-                    <h:outputLabel value="${label.note}:" />
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="${label.note}:"/>
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5">
                     <h:outputText value="#{myPerformanceView.current.note}" escape="false"/>
                 </h:panelGrid>
             </p:dialog>

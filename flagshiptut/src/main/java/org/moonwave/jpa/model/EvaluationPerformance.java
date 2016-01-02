@@ -67,18 +67,18 @@ public class EvaluationPerformance implements Serializable {
     }
 
     public User getUser() {
-        if (id == null) {
+        if ((user == null) && (id == null)) {
             user = new User();
         }
         return this.user;
     }
 
     public void setUser(User user) {
-        this.user = user;
+        this.user= user;
     }
 
     public User getTutor() {
-        if (id == null) {
+        if ((tutor == null) && (id == null)) {
             tutor = new User();
         }
         return tutor;

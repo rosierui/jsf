@@ -54,7 +54,7 @@
 
             <br/>
             <h:outputLabel for="note" value="Note" /><br/>
-            <p:inputTextarea id="note" value="#{performanceView.evaluation.note}" rows="6" cols="55" autoResize="false" />
+            <p:inputTextarea id="note" value="#{performanceView.evaluation.note}" rows="6" cols="55" autoResize="false" maxlength="255"/>
             <br/>
             <p:commandButton value="Submit" update="messages jsfForm" actionListener="#{performanceView.save}" />
 
