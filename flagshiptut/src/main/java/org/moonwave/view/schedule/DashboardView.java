@@ -31,11 +31,10 @@ import org.slf4j.LoggerFactory;
 
 @ManagedBean
 @ViewScoped
-public class ScheduleView extends BaseView {
+public class DashboardView extends BaseView {
 
-
-	private static final long serialVersionUID = 3781028814181168804L;
-	static final Logger LOG = LoggerFactory.getLogger(ScheduleView.class);
+    private static final long serialVersionUID = -8417089268399596277L;
+    static final Logger LOG = LoggerFactory.getLogger(DashboardView.class);
 
     private ScheduleModel eventModel;
     private ScheduleEvent event = new DefaultScheduleEvent();

@@ -65,7 +65,7 @@ public class LoginController extends BaseView {
         loggedInUser.setPhone(user.getPhone());
         loggedInUser.setTag(user.getTag());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", loggedInUser);
-        return "/dashboard?faces-redirect=true";
+        return "/schedule/dashboard?faces-redirect=true";
     }
 
     /**
@@ -76,7 +76,7 @@ public class LoginController extends BaseView {
      */
     public void redirect() throws IOException {
         if (this.isUserLoggedIn()) {
-            super.redirectTo("/dashboard.xhtml");
+            super.redirectTo("/schedule/dashboard.xhtml");
         } else {
             super.redirectTo("/login.xhtml");
         }

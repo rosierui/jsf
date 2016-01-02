@@ -65,7 +65,7 @@
                             <a href="#{request.contextPath}/content/view/myGroups.xhtml"><h:outputText value="#{label.myGroups}" /></a>
                             <h:panelGroup rendered="#{accessController.isStudent()}">
                               <a href="#{request.contextPath}/content/view/myGrades.xhtml"><h:outputText value="#{label.myGrades}" /></a>
-                              <a href="#{request.contextPath}/dashboard.xhtml"><h:outputText value="#{label.mySchedules}" /></a>
+                              <a href="#{request.contextPath}/schedule/dashboard.xhtml"><h:outputText value="#{label.mySchedules}" /></a>
                             </h:panelGroup>
                         </div>
                 </span>
@@ -118,7 +118,7 @@
             </h:panelGroup>
 
             <h:panelGroup rendered="#{loginController.isUserLoggedIn()}">
-                <a href="#{request.contextPath}/dashboard.xhtml" class="PFTopLinks floatRight boldFont">
+                <a href="#{request.contextPath}/schedule/dashboard.xhtml" class="PFTopLinks floatRight boldFont">
                 <h:graphicImage name="main/images/dashboard-128.png" /><span class="PFGrayText"></span><span class="PFDarkText"><h:outputText value="#{label.dashboard}" /></span>
                 </a>
             </h:panelGroup>
@@ -150,7 +150,7 @@
                         <a class="SubMenuLink" href="#{request.contextPath}/content/view/myGroups.xhtml">&bull; <h:outputText value="#{label.myGroups}" /></a>
                         <h:panelGroup rendered="#{accessController.isStudent()}">
                           <a class="SubMenuLink" href="#{request.contextPath}/content/view/myGrades.xhtml">&bull; <h:outputText value="#{label.myGrades}" /></a>
-                          <a class="SubMenuLink" href="#{request.contextPath}/dashboard.xhtml">&bull; <h:outputText value="#{label.mySchedules}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/schedule/dashboard.xhtml">&bull; <h:outputText value="#{label.mySchedules}" /></a>
                         </h:panelGroup>
                     </div>
                 </h:panelGroup>

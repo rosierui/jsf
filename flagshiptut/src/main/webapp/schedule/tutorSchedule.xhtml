@@ -26,13 +26,13 @@
 
             <h:panelGrid columnClasses="value">
                 <h3 style="margin-top: 0"><h:outputText value="${label.tutorSchedule}" /></h3>
-                <p:schedule id="schedule" value="#{scheduleView.eventModel}" widgetVar="myschedule" timeZone="America/Phoenix">
+                <p:schedule id="schedule" value="#{tutorScheduleView.eventModel}" widgetVar="myschedule" timeZone="America/Phoenix">
 
-                    <p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-                    <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-                    <p:ajax event="eventMove" listener="#{scheduleView.onEventMove}" update="messages" />
-                    <p:ajax event="eventResize" listener="#{scheduleView.onEventResize}" update="messages" />
-                    <p:ajax event="viewChange" listener="#{scheduleView.onViewChange}" update="messages" />
+                    <p:ajax event="dateSelect" listener="#{tutorScheduleView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                    <p:ajax event="eventSelect" listener="#{tutorScheduleView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                    <p:ajax event="eventMove" listener="#{tutorScheduleView.onEventMove}" update="messages" />
+                    <p:ajax event="eventResize" listener="#{tutorScheduleView.onEventResize}" update="messages" />
+                    <p:ajax event="viewChange" listener="#{tutorScheduleView.onViewChange}" update="messages" />
     
                 </p:schedule>
 
@@ -41,44 +41,44 @@
             <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
                 <h:panelGrid id="eventDetails" columns="2">
                     <p:outputLabel for="tutor" value="Tutor:" />
-                    <p:selectOneMenu id="tutor" value="#{scheduleView.tutorId}" required="true"
+                    <p:selectOneMenu id="tutor" value="#{tutorScheduleView.tutorId}" required="true"
                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
                         <f:selectItem itemValue="" itemLabel="Select One"/>
-                        <f:selectItems value="#{scheduleView.tutors}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
+                        <f:selectItems value="#{tutorScheduleView.tutors}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
                         <p:ajax event="change" partialSubmit="true" process="@this" />
                     </p:selectOneMenu>
 
                     <p:outputLabel for="student" value="Student:" />
-                    <p:selectOneMenu id="student" value="#{scheduleView.studentId}" required="#{! scheduleView.tutorSetup}"
+                    <p:selectOneMenu id="student" value="#{tutorScheduleView.studentId}" required="#{! tutorScheduleView.tutorSetup}"
                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
                         <f:selectItem itemValue="" itemLabel="Select One"/>
-                        <f:selectItems value="#{scheduleView.students}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
+                        <f:selectItems value="#{tutorScheduleView.students}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
                         <p:ajax event="change" partialSubmit="true" process="@this" />
                     </p:selectOneMenu>
 
                     <p:outputLabel for="event" value="Event:" />
-                    <p:inputText id="event" value="#{scheduleView.event.title}" required="true" />
+                    <p:inputText id="event" value="#{tutorScheduleView.event.title}" required="true" />
 
                     <p:outputLabel for="from" value="From:" />
-                    <p:calendar id="from" value="#{scheduleView.event.startDate}" timeZone="America/Phoenix" pattern="MM/dd/yyyy HH:mm a"/>
+                    <p:calendar id="from" value="#{tutorScheduleView.event.startDate}" timeZone="America/Phoenix" pattern="MM/dd/yyyy HH:mm a"/>
 
                     <p:outputLabel for="to" value="To:" />
-                    <p:calendar id="to" value="#{scheduleView.event.endDate}" timeZone="America/Phoenix" pattern="MM/dd/yyyy HH:mm a"/>
+                    <p:calendar id="to" value="#{tutorScheduleView.event.endDate}" timeZone="America/Phoenix" pattern="MM/dd/yyyy HH:mm a"/>
 
                     <p:outputLabel for="allDay" value="All Day:" />
-                    <h:selectBooleanCheckbox id="allDay" value="#{scheduleView.event.allDay}" />
+                    <h:selectBooleanCheckbox id="allDay" value="#{tutorScheduleView.event.allDay}" />
 
                     <p:outputLabel value="" />
                     <h:panelGroup>
 	                    <p:commandButton type="reset" value="Reset" />
-	                    <p:commandButton id="saveButton" value="Save" ajax="true" actionListener="#{scheduleView.saveEvent}"
-	                       update="messages" disabled="#{!scheduleView.edit and scheduleView.remove}"
+	                    <p:commandButton id="saveButton" value="Save" ajax="true" actionListener="#{tutorScheduleView.saveEvent}"
+	                       update="messages" disabled="#{!tutorScheduleView.edit and tutorScheduleView.remove}"
 	                       oncomplete="PF('myschedule').update(); PF('eventDialog').hide();" />
                     </h:panelGroup>
                     <p:outputLabel value="" />
                     <h:panelGroup>
-                        <p:commandButton id="removeButton" value="Remove" ajax="true" actionListener="#{scheduleView.removeEvent}" 
-                           update="messages" disabled="#{!scheduleView.edit and !scheduleView.remove}"
+                        <p:commandButton id="removeButton" value="Remove" ajax="true" actionListener="#{tutorScheduleView.removeEvent}" 
+                           update="messages" disabled="#{!tutorScheduleView.edit and !tutorScheduleView.remove}"
                            oncomplete="PF('myschedule').update(); PF('eventDialog').hide();" />
                         <p:commandButton id="closeButton" value="Close" onclick="PF('eventDialog').hide();return false;" />
                     </h:panelGroup>
