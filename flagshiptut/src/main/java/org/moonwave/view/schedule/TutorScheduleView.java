@@ -16,6 +16,7 @@ import org.moonwave.jpa.bo.ScheduleBO;
 import org.moonwave.jpa.bo.UserBO;
 import org.moonwave.jpa.model.Schedule;
 import org.moonwave.jpa.model.User;
+import org.moonwave.util.AppProperties;
 import org.moonwave.util.DateUtil;
 import org.moonwave.util.StringUtil;
 import org.moonwave.view.BaseView;
@@ -33,8 +34,8 @@ import org.slf4j.LoggerFactory;
 @ViewScoped
 public class TutorScheduleView extends BaseView {
 
-	private static final long serialVersionUID = -7360800471124663579L;
-	static final Logger LOG = LoggerFactory.getLogger(TutorScheduleView.class);
+    private static final long serialVersionUID = -7360800471124663579L;
+    static final Logger LOG = LoggerFactory.getLogger(TutorScheduleView.class);
 
     private ScheduleModel eventModel;
     private ScheduleEvent event = new DefaultScheduleEvent();
@@ -47,25 +48,25 @@ public class TutorScheduleView extends BaseView {
     private boolean edit = false;
     private boolean remove = false;
 
+    private int allDayStartHour = Integer.valueOf(AppProperties.getInstance().getProperty(AppProperties.KEY_all_day_start));
+    private int allDayEndHour = Integer.valueOf(AppProperties.getInstance().getProperty(AppProperties.KEY_all_day_end));
+
     @PostConstruct
     public void init() {
         Map<String, String> rqm = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        tutorSetup = (rqm.get("tutorSetup") != null && rqm.get("tutorSetup").equals("true"));
+        tutorSetup = true;
+        tutorId = super.getLoggedInUser().getId().toString();
         edit = (rqm.get("edit") != null && rqm.get("edit").equals("true"));
 
         tutors = new UserBO().findAllTutors();
         students = new UserBO().findAllStudents();
 
         eventModel = new DefaultScheduleModel();
-        
+
         List<Schedule> schedules = new ScheduleBO().getAllRoles();
         for (Schedule s : schedules) {
             eventModel.addEvent(scheduleToEvent(s));
         }
-//        eventModel.addEvent(new DefaultScheduleEvent("Champions - today", previousDay8Pm(), previousDay11Pm(), "fc-foday"));
-//        eventModel.addEvent(new DefaultScheduleEvent("Birthday - filled", today1Pm(), today6Pm(), "filled"));
-//        eventModel.addEvent(new DefaultScheduleEvent("Breakfast - available", nextDay9Am(), nextDay11Am(), "available"));
-//        eventModel.addEvent(new DefaultScheduleEvent("Plant the new garden stuff", theDayAfter3Pm(), fourDaysLater3pm()));
 
     }
 
@@ -189,6 +190,8 @@ public class TutorScheduleView extends BaseView {
         Object obj = selectEvent.getObject();
     }
 
+    // ========================================================= Action Listener
+
     /**
      * Add a new event or update existing event
      *
@@ -198,14 +201,22 @@ public class TutorScheduleView extends BaseView {
         if (!validate(event)) {
             return;
         }
+        if (this.event.isAllDay()) {
+            DefaultScheduleEvent ev = (DefaultScheduleEvent) event;
+            Date startDate = DateUtil.setHour(ev.getStartDate(), allDayStartHour);
+            Date endDate = DateUtil.setHour(ev.getEndDate(), allDayEndHour);
+            ev.setStartDate(startDate);
+            ev.setEndDate(endDate);
+            ev.setAllDay(false); // this allows data be displayed in the hours section
+        }
         if (event.getId() == null) {
             // date range validation
-            eventModel.addEvent(event);
             Schedule s = this.packageData(null, event);
+            eventModel.addEvent(scheduleToEvent(s));
+            s.setTutorEvent(true);
             super.getBasebo().persist(s);
             super.info("Data saved successfully");
-        }
-        else {
+        } else {
             // date range validation
             eventModel.updateEvent(event);
             Object data = ((DefaultScheduleEvent)event).getData();
@@ -222,9 +233,15 @@ public class TutorScheduleView extends BaseView {
      * @param actionEvent
      */
     public void removeEvent(ActionEvent actionEvent) {
+        // check whether an event can be removed
+        // tutor cannot remove another tutor's event
         if (event.getId() != null) {
-            Object data = ((DefaultScheduleEvent)event).getData();
-            super.getBasebo().remove((Schedule) data);
+            Schedule schedule = (Schedule) ((DefaultScheduleEvent)event).getData();
+            if (!getLoggedInUser().getId().equals(schedule.getTutorId())) {
+                error("You can not delete another tutor's event");
+                return;
+            }
+            super.getBasebo().remove(schedule);
             eventModel.deleteEvent(event);
             super.info("Data remove successfully");
             resetFields();

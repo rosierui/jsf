@@ -277,7 +277,13 @@ public class DateUtil {
         calendar.set(Calendar.MILLISECOND, 999);
         return calendar.getTime();
     }
-    
+
+    public static Date setHour(Date date, int hour) {
+        Calendar calendar = DateUtil.toCalendar(date);
+        calendar.set(Calendar.HOUR, hour);
+        return calendar.getTime();
+    }
+
     /**
      * Adds days or minus days from specified date.
      * 

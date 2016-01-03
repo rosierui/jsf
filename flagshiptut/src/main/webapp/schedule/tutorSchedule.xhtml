@@ -44,15 +44,7 @@
                     <p:selectOneMenu id="tutor" value="#{tutorScheduleView.tutorId}" required="true"
                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
                         <f:selectItem itemValue="" itemLabel="Select One"/>
-                        <f:selectItems value="#{tutorScheduleView.tutors}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
-                        <p:ajax event="change" partialSubmit="true" process="@this" />
-                    </p:selectOneMenu>
-
-                    <p:outputLabel for="student" value="Student:" />
-                    <p:selectOneMenu id="student" value="#{tutorScheduleView.studentId}" required="#{! tutorScheduleView.tutorSetup}"
-                                     filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                        <f:selectItem itemValue="" itemLabel="Select One"/>
-                        <f:selectItems value="#{tutorScheduleView.students}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
+                        <f:selectItems value="#{tutorScheduleView.tutors}" var="user" itemLabel="#{user.name}" itemValue="#{user.id}" />
                         <p:ajax event="change" partialSubmit="true" process="@this" />
                     </p:selectOneMenu>
 
@@ -66,14 +58,14 @@
                     <p:calendar id="to" value="#{tutorScheduleView.event.endDate}" timeZone="America/Phoenix" pattern="MM/dd/yyyy HH:mm a"/>
 
                     <p:outputLabel for="allDay" value="All Day:" />
-                    <h:selectBooleanCheckbox id="allDay" value="#{tutorScheduleView.event.allDay}" />
+                    <h:selectBooleanCheckbox id="allDay" class="allDay" value="#{tutorScheduleView.event.allDay}"  />
 
                     <p:outputLabel value="" />
                     <h:panelGroup>
-	                    <p:commandButton type="reset" value="Reset" />
-	                    <p:commandButton id="saveButton" value="Save" ajax="true" actionListener="#{tutorScheduleView.saveEvent}"
-	                       update="messages" disabled="#{!tutorScheduleView.edit and tutorScheduleView.remove}"
-	                       oncomplete="PF('myschedule').update(); PF('eventDialog').hide();" />
+                        <p:commandButton type="reset" value="Reset" />
+                        <p:commandButton id="saveButton" value="Save" ajax="true" actionListener="#{tutorScheduleView.saveEvent}"
+                           update="messages"
+                           oncomplete="PF('myschedule').update(); PF('eventDialog').hide();" />
                     </h:panelGroup>
                     <p:outputLabel value="" />
                     <h:panelGroup>
@@ -85,6 +77,18 @@
                 </h:panelGrid>
             </p:dialog>
         </h:form>
+        <script type="text/javascript">
+            //<![CDATA[
+            var expand = true;
+            function allDayEvent(){
+            }
+            $(document).ready(function(){
+                $(".allDay").click(function(){
+                    alert("allDay checkbox clicked");
+                });
+            });
+            //]]>
+        </script>
         
     </ui:define>
 

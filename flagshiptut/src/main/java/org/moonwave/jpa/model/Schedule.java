@@ -46,6 +46,9 @@ public class Schedule implements Serializable {
     @Column(name="all_day_event")
     private Boolean allDayEvent;
 
+    @Column(name="tutor_event")
+    private Boolean tutorEvent;
+
     @Column(name="update_time")
     private Timestamp updateTime;
 
@@ -111,6 +114,14 @@ public class Schedule implements Serializable {
         this.allDayEvent = allDayEvent;
     }
 
+    public Boolean getTutorEvent() {
+        return tutorEvent;
+    }
+
+    public void setTutorEvent(Boolean tutorEvent) {
+        this.tutorEvent = tutorEvent;
+    }
+
     public Timestamp getUpdateTime() {
         return updateTime;
     }
@@ -148,7 +159,12 @@ public class Schedule implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("id= ").append(id);
+        sb.append(",user_id= ").append(userId);
+        sb.append(",tutor_id= ").append(tutorId);
         sb.append(",event= ").append(event);
+        sb.append(",startTime= ").append(startTime);
+        sb.append(",endTime= ").append(endTime);
+        sb.append(",tutorEvent= ").append(tutorEvent);
         return sb.toString();
     }
 }

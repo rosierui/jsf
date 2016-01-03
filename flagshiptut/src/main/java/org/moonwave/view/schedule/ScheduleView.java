@@ -223,6 +223,8 @@ public class ScheduleView extends BaseView {
      * @param actionEvent
      */
     public void removeEvent(ActionEvent actionEvent) {
+        // check whether an event can be removed
+        // student cannot remove tutor's event
         if (event.getId() != null) {
             Object data = ((DefaultScheduleEvent)event).getData();
             super.getBasebo().remove((Schedule) data);
