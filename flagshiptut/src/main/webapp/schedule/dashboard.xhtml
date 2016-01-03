@@ -31,7 +31,6 @@ Modified from schedule.xhtml
                 <h3 style="margin-top: 0"><h:outputText value="#{label.dashboard}" /></h3>
                 <p:schedule id="schedule" value="#{dashboardView.eventModel}" widgetVar="myschedule" timeZone="America/Phoenix">
 
-                    <p:ajax event="dateSelect" listener="#{dashboardView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                     <p:ajax event="eventSelect" listener="#{dashboardView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                     <p:ajax event="eventMove" listener="#{dashboardView.onEventMove}" update="messages" />
                     <p:ajax event="eventResize" listener="#{dashboardView.onEventResize}" update="messages" />
@@ -59,8 +58,8 @@ Modified from schedule.xhtml
                         <p:ajax event="change" partialSubmit="true" process="@this" />
                     </p:selectOneMenu>
 
-                    <p:outputLabel for="event" value="Event:" />
-                    <p:inputText id="event" value="#{dashboardView.event.title}" required="true" />
+                    <p:outputLabel value="Event:" />
+                    <h:outputText value="#{dashboardView.event.title}" />
 
                     <p:outputLabel for="from" value="From:" />
                     <p:calendar id="from" value="#{dashboardView.event.startDate}" timeZone="America/Phoenix" pattern="MM/dd/yyyy HH:mm a"/>
@@ -68,21 +67,8 @@ Modified from schedule.xhtml
                     <p:outputLabel for="to" value="To:" />
                     <p:calendar id="to" value="#{dashboardView.event.endDate}" timeZone="America/Phoenix" pattern="MM/dd/yyyy HH:mm a"/>
 
-                    <p:outputLabel for="allDay" value="All Day:" />
-                    <h:selectBooleanCheckbox id="allDay" value="#{dashboardView.event.allDay}" />
-
                     <p:outputLabel value="" />
                     <h:panelGroup>
-	                    <p:commandButton type="reset" value="Reset" />
-	                    <p:commandButton id="saveButton" value="Save" ajax="true" actionListener="#{dashboardView.saveEvent}"
-	                       update="messages" disabled="#{!dashboardView.edit and dashboardView.remove}"
-	                       oncomplete="PF('myschedule').update(); PF('eventDialog').hide();" />
-                    </h:panelGroup>
-                    <p:outputLabel value="" />
-                    <h:panelGroup>
-                        <p:commandButton id="removeButton" value="Remove" ajax="true" actionListener="#{dashboardView.removeEvent}" 
-                           update="messages" disabled="#{!dashboardView.edit and !dashboardView.remove}"
-                           oncomplete="PF('myschedule').update(); PF('eventDialog').hide();" />
                         <p:commandButton id="closeButton" value="Close" onclick="PF('eventDialog').hide();return false;" />
                     </h:panelGroup>
                 </h:panelGrid>
