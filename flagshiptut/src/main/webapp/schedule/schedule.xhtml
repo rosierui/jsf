@@ -72,13 +72,13 @@
                     <h:panelGroup>
 	                    <p:commandButton type="reset" value="Reset" />
 	                    <p:commandButton id="saveButton" value="Save" ajax="true" actionListener="#{scheduleView.saveEvent}"
-	                       update="messages" disabled="#{!scheduleView.edit and scheduleView.remove}"
+	                       update="messages" disabled="#{!scheduleView.edit}"
 	                       oncomplete="PF('myschedule').update(); PF('eventDialog').hide();" />
                     </h:panelGroup>
                     <p:outputLabel value="" />
                     <h:panelGroup>
                         <p:commandButton id="removeButton" value="Remove" ajax="true" actionListener="#{scheduleView.removeEvent}" 
-                           update="messages" disabled="#{!scheduleView.edit and !scheduleView.remove}"
+                           update="messages" disabled="#{!scheduleView.remove}"
                            oncomplete="PF('myschedule').update(); PF('eventDialog').hide();" />
                         <p:commandButton id="closeButton" value="Close" onclick="PF('eventDialog').hide();return false;" />
                     </h:panelGroup>

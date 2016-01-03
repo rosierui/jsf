@@ -30,6 +30,12 @@ import org.primefaces.model.ScheduleModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Tutor event scheduler 
+ * 
+ * @author moonwave
+ *
+ */
 @ManagedBean
 @ViewScoped
 public class TutorScheduleView extends BaseView {
@@ -161,8 +167,8 @@ public class TutorScheduleView extends BaseView {
         LOG.info("onEventSelect called");
         event = (ScheduleEvent) selectEvent.getObject();
         Schedule data = (Schedule)((DefaultScheduleEvent)event).getData();
-        this.studentId = String.valueOf(data.getUserId());
-        this.tutorId = String.valueOf(data.getTutorId());
+        this.studentId = (data.getUserId() != null) ? String.valueOf(data.getUserId()) : null;
+        this.tutorId = (data.getTutorId() != null) ? String.valueOf(data.getTutorId()) : null;
         this.remove = true;
     }
 
@@ -277,12 +283,17 @@ public class TutorScheduleView extends BaseView {
         DefaultScheduleEvent e = new DefaultScheduleEvent();
         e.setData(s);
         e.setAllDay(s.getAllDayEvent());
-        e.setEditable(false);
+        e.setEditable(true);
         e.setTitle(s.getEvent());
         e.setStartDate(s.getStartTime());
         e.setEndDate(s.getEndTime());
-        if ((s.getUserId() != null) && (s.getTutorId() != null)) {
-            e.setStyleClass("filled");
+        if (s.getTutorEvent()) {
+            if (!super.getLoggedInUser().getId().equals(s.getTutorId())) {
+                e.setEditable(false); // cannot edit another tutor's event
+                e.setStyleClass("filled");
+            } else {
+                e.setStyleClass("available");
+            }
         }
         return e;
     }

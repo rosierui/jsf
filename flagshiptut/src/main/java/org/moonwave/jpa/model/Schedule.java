@@ -52,6 +52,9 @@ public class Schedule implements Serializable {
     @Column(name="tutor_event")
     private Boolean tutorEvent;
 
+    @Column(name="parent_event_id")
+    private Integer parentEventId;
+
     @Column(name="update_time")
     private Timestamp updateTime;
 
@@ -66,6 +69,22 @@ public class Schedule implements Serializable {
     private User tutor;
 
     public Schedule() {
+    }
+
+    public Schedule(Schedule s) {
+        this.id = s.id;
+        this.userId = s.userId;
+        this.tutorId = s.tutorId;
+        this.event = s.event;
+        this.startTime = s.startTime;
+        this.endTime = s.endTime;
+        this.allDayEvent = s.allDayEvent;
+        this.tutorEvent = s.tutorEvent;
+        this.parentEventId = s.parentEventId;
+        this.updateTime = s.updateTime;
+        this.createTime = s.createTime;
+        this.user = s.user;
+        this.tutor = s.tutor;
     }
 
     public Integer getId() {
@@ -125,11 +144,19 @@ public class Schedule implements Serializable {
     }
 
     public Boolean getTutorEvent() {
-        return tutorEvent;
+        return (tutorEvent != null) ? tutorEvent : false;
     }
 
     public void setTutorEvent(Boolean tutorEvent) {
         this.tutorEvent = tutorEvent;
+    }
+
+    public Integer getParentEventId() {
+        return parentEventId;
+    }
+
+    public void setParentEventId(Integer parentEventId) {
+        this.parentEventId = parentEventId;
     }
 
     public Timestamp getUpdateTime() {
@@ -175,6 +202,7 @@ public class Schedule implements Serializable {
         sb.append(",startTime= ").append(startTime);
         sb.append(",endTime= ").append(endTime);
         sb.append(",tutorEvent= ").append(tutorEvent);
+        sb.append(",parentEventId= ").append(parentEventId);
         return sb.toString();
     }
 

@@ -193,6 +193,7 @@ CREATE TABLE schedule (
     end_time                DATETIME NOT NULL,
     all_day_event           BOOLEAN, -- True: all day event
     tutor_event             BOOLEAN, -- True: tutor event
+    parent_event_id         INTEGER REFERENCES schedule (id),
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP,
     UNIQUE (user_id, tutor_id, start_time, end_time)
@@ -202,6 +203,7 @@ CREATE INDEX schedule_idx1 ON schedule (user_id, start_time, end_time);
 CREATE INDEX schedule_idx2 ON schedule (tutor_id, start_time, end_time);
 CREATE INDEX schedule_idx3 ON schedule (user_id, tutor_id, start_time, end_time);
 CREATE INDEX schedule_idx4 ON schedule (tutor_event);
+CREATE INDEX schedule_idx5 ON schedule (parent_event_id);
 
 -- -----------------------------------------------------------------------------
 -- Create table announcement
