@@ -61,12 +61,14 @@ Modified from schedule.xhtml
                     <p:outputLabel value="Event:" />
                     <h:outputText value="#{dashboardView.event.title}" />
 
-                    <p:outputLabel for="from" value="From:" />
-                    <p:calendar id="from" value="#{dashboardView.event.startDate}" timeZone="America/Phoenix" pattern="MM/dd/yyyy HH:mm a"/>
+                    <p:outputLabel value="From:" />
+                    <h:outputText value="#{dashboardView.getLocaleDateTimeStr(dashboardView.event.startDate)}" />
 
-                    <p:outputLabel for="to" value="To:" />
-                    <p:calendar id="to" value="#{dashboardView.event.endDate}" timeZone="America/Phoenix" pattern="MM/dd/yyyy HH:mm a"/>
+                    <p:outputLabel value="To:" />
+                    <h:outputText value="#{dashboardView.getLocaleDateTimeStr(dashboardView.event.endDate)}" />
 
+                    <p:outputLabel value="" />
+                    <p:outputLabel value="" />
                     <p:outputLabel value="" />
                     <h:panelGroup>
                         <p:commandButton id="closeButton" value="Close" onclick="PF('eventDialog').hide();return false;" />

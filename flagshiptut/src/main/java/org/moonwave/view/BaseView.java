@@ -122,6 +122,22 @@ public class BaseView implements Serializable {
         return ret;
     }
 
+    public String getLocaleDateTimeStr(java.util.Date date) {
+        String ret = null;
+        if (date == null) {
+            return ret;
+        }
+        String langCountry = getLocale().toLanguageTag();
+        if (Locale_en_US.equals(langCountry)) {
+            if (date != null) {
+                ret = DateUtil.toDisplayFormat(date);
+            }
+        } else {
+            ret = DateUtil.toDisplayFormat(date);
+        }
+        return ret;
+    }
+
     public void redirectTo(String pageUrl) throws IOException {
         FacesContext fContext = FacesContext.getCurrentInstance();
         ExternalContext extContext = fContext.getExternalContext();
