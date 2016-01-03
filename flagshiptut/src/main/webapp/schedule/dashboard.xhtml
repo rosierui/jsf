@@ -42,21 +42,11 @@ Modified from schedule.xhtml
 
             <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
                 <h:panelGrid id="eventDetails" columns="2">
-                    <p:outputLabel for="tutor" value="Tutor:" />
-                    <p:selectOneMenu id="tutor" value="#{dashboardView.tutorId}" required="true"
-                                     filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                        <f:selectItem itemValue="" itemLabel="Select One"/>
-                        <f:selectItems value="#{dashboardView.tutors}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
-                        <p:ajax event="change" partialSubmit="true" process="@this" />
-                    </p:selectOneMenu>
+                    <p:outputLabel value="Tutor:" />
+                    <h:outputText value="#{dashboardView.event.data.tutor.name}" />
 
-                    <p:outputLabel for="student" value="Student:" />
-                    <p:selectOneMenu id="student" value="#{dashboardView.studentId}" required="#{! dashboardView.tutorSetup}"
-                                     filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                        <f:selectItem itemValue="" itemLabel="Select One"/>
-                        <f:selectItems value="#{dashboardView.students}" var="user" itemLabel="#{user.firstName} #{user.lastName}" itemValue="#{user.id}" />
-                        <p:ajax event="change" partialSubmit="true" process="@this" />
-                    </p:selectOneMenu>
+                    <p:outputLabel value="Student:" />
+                    <h:outputText value="#{dashboardView.event.data.user.name}" />
 
                     <p:outputLabel value="Event:" />
                     <h:outputText value="#{dashboardView.event.title}" />

@@ -2,6 +2,9 @@ package org.moonwave.jpa.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.moonwave.jpa.bo.GenericBO;
+
 import java.util.Date;
 import java.sql.Timestamp;
 
@@ -54,6 +57,13 @@ public class Schedule implements Serializable {
 
     @Column(name="create_time")
     private Timestamp createTime;
+
+    // helper fields
+    @Transient
+    private User user;
+
+    @Transient
+    private User tutor;
 
     public Schedule() {
     }
@@ -167,4 +177,29 @@ public class Schedule implements Serializable {
         sb.append(",tutorEvent= ").append(tutorEvent);
         return sb.toString();
     }
+
+    // =================================================== Public helper methods
+
+    public User getUser() {
+        if ((user == null) && (userId != null)) {
+            user = new GenericBO<User>(User.class).findById(userId);
+        }
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getTutor() {
+        if ((tutor == null) && (tutorId != null)) {
+            tutor = new GenericBO<User>(User.class).findById(tutorId);
+        }
+        return tutor;
+    }
+
+    public void setTutor(User tutor) {
+        this.tutor = tutor;
+    }
+
 }
