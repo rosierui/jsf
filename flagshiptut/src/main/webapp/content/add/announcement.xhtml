@@ -18,13 +18,15 @@
         <c:if test="#{!accessController.isEditor()}">
             #{accessController.redirectTo401()}
         </c:if>
+
         <p:growl id="messages" showDetail="true" />
-        <h:form id="jsfForm">
+
+        <h:form id="jsfUploadForm" enctype="multipart/form-data">
         <!-- 
             <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         -->
-            <p:commandButton value="#{label.cancel}" ajax="true" actionListener="#{announcementView.cancel}">
-            </p:commandButton>
+            <p:commandButton value="#{label.save}" update="messages @([id$=jsfForm]) @([id$=uploadForm])" action="#{announcementView.save}" />
+            <p:commandButton value="#{label.cancel}" ajax="true" actionListener="#{announcementView.cancel}"/>
             <br/>
             <br/>
 
@@ -38,11 +40,9 @@
                 <p:selectBooleanCheckbox value="#{announcementView.current.published}" style="margin-left:10px" />
             </h:panelGrid>
             <br/>
-            <p:commandButton value="#{label.submit}" update="messages @([id$=jsfForm]) @([id$=uploadForm])" action="#{announcementView.save}" />
+
+            <ui:include src="/file/upload-inc.xhtml" />
 
         </h:form>
-
-        <ui:include src="/file/upload-inc.xhtml" />
-
     </ui:define>
 </ui:composition>
