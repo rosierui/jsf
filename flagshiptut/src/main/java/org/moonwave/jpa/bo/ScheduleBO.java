@@ -45,7 +45,7 @@ public class ScheduleBO extends BaseBO {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Schedule> findByRole(Integer userId) {
+    public List<Schedule> findByUserId(Integer userId) {
         Query query = super.getEntityManager().createNamedQuery("Schedule.findByUserId", Schedule.class);
         query.setParameter("userId", userId);
         List<Schedule> list = query.getResultList();
@@ -54,7 +54,7 @@ public class ScheduleBO extends BaseBO {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Schedule>  findByRoleUser(Integer tutorId) {
+    public List<Schedule>  findByTutorId(Integer tutorId) {
         Query query = super.getEntityManager().createNamedQuery("Schedule.findByTutorId", Schedule.class);
         query.setParameter("tutorId", tutorId);
         List<Schedule> list = query.getResultList();

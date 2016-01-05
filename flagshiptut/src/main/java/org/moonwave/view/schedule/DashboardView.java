@@ -2,12 +2,17 @@ package org.moonwave.view.schedule;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -18,6 +23,7 @@ import org.moonwave.jpa.model.Schedule;
 import org.moonwave.jpa.model.User;
 import org.moonwave.util.DateUtil;
 import org.moonwave.util.StringUtil;
+import org.moonwave.view.AccessController;
 import org.moonwave.view.BaseView;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
@@ -36,6 +42,9 @@ public class DashboardView extends BaseView {
     private static final long serialVersionUID = -8417089268399596277L;
     static final Logger LOG = LoggerFactory.getLogger(DashboardView.class);
 
+    @ManagedProperty("#{accessController}")
+    private AccessController accessController;
+
     private ScheduleModel eventModel;
     private ScheduleEvent event = new DefaultScheduleEvent();
 
@@ -47,6 +56,7 @@ public class DashboardView extends BaseView {
     private boolean edit = false;
     private boolean remove = false;
 
+
     @PostConstruct
     public void init() {
         Map<String, String> rqm = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -57,16 +67,45 @@ public class DashboardView extends BaseView {
         students = new UserBO().findAllStudents();
 
         eventModel = new DefaultScheduleModel();
-        
-        List<Schedule> schedules = new ScheduleBO().findByRole(super.getLoggedInUser().getId());
-        for (Schedule s : schedules) {
-            eventModel.addEvent(scheduleToEvent(s));
-        }
+
+        if (accessController.isTutor()) {
+            // for tutor, show all schedules created by the tutor onward +
+            // all student schedules associated with the tutor 
+            List<Schedule> schedules = new ScheduleBO().findByUserId(super.getLoggedInUser().getId());
+            List<Schedule> tutorSchedules = new ScheduleBO().findByTutorId(super.getLoggedInUser().getId());
+            for (int i = tutorSchedules.size() -1; i >= 0; i--) {
+                if (tutorSchedules.get(i).getTutorEvent()) {
+                    tutorSchedules.remove(tutorSchedules.get(i));
+                }
+            }
+            Set<Schedule> set = new HashSet<Schedule>();
+            set.addAll(schedules);
+            set.addAll(tutorSchedules);
+            Iterator<Schedule> it = set.iterator();
+            while (it.hasNext()) {
+                eventModel.addEvent(scheduleToEvent(it.next()));
+            }
+        } else if (accessController.isStudent()) {
+            // for student, only show schedules created by the student onward
+            // or back to one year or one semester
+            List<Schedule> schedules = new ScheduleBO().findByUserId(super.getLoggedInUser().getId());
+            for (Schedule s : schedules) {
+                eventModel.addEvent(scheduleToEvent(s));
+            }
+        } 
 //        eventModel.addEvent(new DefaultScheduleEvent("Champions - today", previousDay8Pm(), previousDay11Pm(), "fc-foday"));
 //        eventModel.addEvent(new DefaultScheduleEvent("Birthday - filled", today1Pm(), today6Pm(), "filled"));
 //        eventModel.addEvent(new DefaultScheduleEvent("Breakfast - available", nextDay9Am(), nextDay11Am(), "available"));
 //        eventModel.addEvent(new DefaultScheduleEvent("Plant the new garden stuff", theDayAfter3Pm(), fourDaysLater3pm()));
 
+    }
+
+    public AccessController getAccessController() {
+        return accessController;
+    }
+
+    public void setAccessController(AccessController accessController) {
+        this.accessController = accessController;
     }
 
     public String getTutorId() {
