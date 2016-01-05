@@ -250,8 +250,7 @@ CREATE TABLE upload (
     announcement_id         INTEGER REFERENCES announcement(id),
     group_post_id           INTEGER REFERENCES group_post(id),
     description             VARCHAR(255),
-    filetype                VARCHAR(50),
-    filepath                VARCHAR(255), -- filepath after upload folder
+    filepath                VARCHAR(255), -- full filepath
     create_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 

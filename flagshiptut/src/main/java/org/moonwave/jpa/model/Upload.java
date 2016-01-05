@@ -41,8 +41,6 @@ public class Upload implements Serializable {
 
     private String description;
 
-    private String filetype;
-
     private String filepath;
 
     @Column(name="create_time")
@@ -102,14 +100,6 @@ public class Upload implements Serializable {
         this.description = description;
     }
 
-    public String getFiletype() {
-        return filetype;
-    }
-
-    public void setFiletype(String filetype) {
-        this.filetype = filetype;
-    }
-
     public String getFilepath() {
         return filepath;
     }
@@ -156,7 +146,7 @@ public class Upload implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("id= ").append(id);
         sb.append(",userId= ").append(userId);
-        sb.append(",fileType= ").append(filetype);
+        sb.append(",description= ").append(description);
         sb.append(",filepath= ").append(filepath);
         return sb.toString();
     }

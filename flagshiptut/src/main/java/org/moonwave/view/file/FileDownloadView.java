@@ -43,15 +43,8 @@ public class FileDownloadView extends BaseView {
     private List<Upload> downloads = new ArrayList<>();
     private String filepath = null;
 
-    public FileDownloadView() {
-    	int test = 0;
-    	int ii = test;
-    }
-
     @PostConstruct
     public void init() {
-    	int test = 0;
-    	int ii = test;
     }
 
     public List<Upload> getDownloads() {

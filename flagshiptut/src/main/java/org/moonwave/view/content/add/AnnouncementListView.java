@@ -10,10 +10,12 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.bo.GenericBO;
+import org.moonwave.jpa.bo.UploadBO;
 import org.moonwave.jpa.model.Announcement;
 import org.moonwave.util.StringUtil;
 import org.moonwave.view.AccessController;
 import org.moonwave.view.BaseView;
+import org.moonwave.view.file.FileDownloadView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,9 @@ public class AnnouncementListView extends BaseView {
 
     @ManagedProperty("#{accessController}")
     private AccessController accessController;
+
+    @ManagedProperty("#{fileDownloadView}")
+    private FileDownloadView fileDownloadView;
 
     @PostConstruct
     public void init() {
@@ -69,6 +74,7 @@ public class AnnouncementListView extends BaseView {
         if ((this.selectedId != null) && !this.selectedId.isEmpty()) {
             GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
             this.current = bo.findById(Integer.parseInt(selectedId));
+            fileDownloadView.setDownloads(new UploadBO().findByUserAnnouncement(current.getUser().getId(), current.getId()));
         }
     }
 
@@ -80,8 +86,15 @@ public class AnnouncementListView extends BaseView {
         this.accessController = accessController;
     }
 
-    // ========================================================== ActionListener
+    public FileDownloadView getFileDownloadView() {
+        return fileDownloadView;
+    }
 
+    public void setFileDownloadView(FileDownloadView fileDownloadView) {
+        this.fileDownloadView = fileDownloadView;
+    }
+
+    // ========================================================== ActionListener
     /**
      *
      * @param selectedId

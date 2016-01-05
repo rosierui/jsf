@@ -43,7 +43,6 @@ public class AnnouncementsView extends BaseView {
     @PostConstruct
     public void init() {
         data = loadAndFilterData();
-        fileDownloadView.setDownloads(new UploadBO().findAllUploads());
     }
 
     public List<Announcement> getData() {
@@ -71,6 +70,7 @@ public class AnnouncementsView extends BaseView {
         if ((this.selectedId != null) && !this.selectedId.isEmpty()) {
             GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
             this.current = bo.findById(Integer.parseInt(selectedId));
+            fileDownloadView.setDownloads(new UploadBO().findByUserAnnouncement(current.getUser().getId(), current.getId()));
         }
     }
 
