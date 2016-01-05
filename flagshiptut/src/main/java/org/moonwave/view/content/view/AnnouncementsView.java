@@ -9,9 +9,11 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.bo.GenericBO;
+import org.moonwave.jpa.bo.UploadBO;
 import org.moonwave.jpa.model.Announcement;
 import org.moonwave.view.AccessController;
 import org.moonwave.view.BaseView;
+import org.moonwave.view.file.FileDownloadView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,9 +37,13 @@ public class AnnouncementsView extends BaseView {
     @ManagedProperty("#{accessController}")
     private AccessController accessController;
 
+    @ManagedProperty("#{fileDownloadView}")
+    private FileDownloadView fileDownloadView;
+
     @PostConstruct
     public void init() {
         data = loadAndFilterData();
+        fileDownloadView.setDownloads(new UploadBO().findAllUploads());
     }
 
     public List<Announcement> getData() {
@@ -74,6 +80,14 @@ public class AnnouncementsView extends BaseView {
 
     public void setAccessController(AccessController accessController) {
         this.accessController = accessController;
+    }
+
+    public FileDownloadView getFileDownloadView() {
+        return fileDownloadView;
+    }
+
+    public void setFileDownloadView(FileDownloadView fileDownloadView) {
+        this.fileDownloadView = fileDownloadView;
     }
 
     // ========================================================= Private methods

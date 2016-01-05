@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 
 import org.moonwave.util.AppProperties;
 import org.moonwave.util.MailProperties;
+import org.moonwave.util.MimeProperties;
+import org.moonwave.util.StackTrace;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,9 +58,9 @@ public class InitServlet extends HttpServlet {
                 System.out.println(e);
             }
 
-            LOG.info("mail.properties initialization succeeded");
+            LOG.info("MailProperties initialization succeeded");
         } catch (Throwable e) {
-            LOG.error("mail.properties initialization error: " + e);
+            LOG.error("MailProperties initialization error: " + e);
         }
 
         try {
@@ -70,9 +73,24 @@ public class InitServlet extends HttpServlet {
                 System.out.println(e);
             }
 
-            LOG.info("application.properties initialization succeeded");
+            LOG.info("AppProperties initialization succeeded");
         } catch (Throwable e) {
-            LOG.error("application.properties initialization error: " + e);
+            LOG.error("AppProperties initialization error: " + StackTrace.toString(e));
+        }
+
+        try {
+            Properties properties = MimeProperties.getInstance().getProperties();
+            try {
+                InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("mime-types.properties");
+                properties.load(input);
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            LOG.info("MimeProperties initialization succeeded");
+        } catch (Throwable e) {
+            LOG.error("MimeProperties initialization error: " + StackTrace.toString(e));
         }
     }
 

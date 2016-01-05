@@ -58,7 +58,7 @@ public class DashboardView extends BaseView {
 
         eventModel = new DefaultScheduleModel();
         
-        List<Schedule> schedules = new ScheduleBO().getAllRoles();
+        List<Schedule> schedules = new ScheduleBO().findByRole(super.getLoggedInUser().getId());
         for (Schedule s : schedules) {
             eventModel.addEvent(scheduleToEvent(s));
         }

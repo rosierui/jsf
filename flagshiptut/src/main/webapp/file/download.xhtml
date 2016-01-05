@@ -48,11 +48,54 @@
             <p:commandButton value="Download 2 - Static" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
                 <p:fileDownload value="#{fileDownloadView.file2}" />
             </p:commandButton>
+            <!-- ========================================================== -->
+            <br/>
+            <hr/>
             <br/>
             <p:commandButton value="Download 3 - Dynamic" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
-                <f:setPropertyActionListener value="/home/moonwave/Pictures/icon-1.png" target="#{fileDownloadView.filepath}" />
-                <p:fileDownload value="#{fileDownloadView.file3}" />
+                <f:setPropertyActionListener value="/home/moonwave/Pictures/Icon-1.png" target="#{fileDownloadView.filepath}" />
+                <p:fileDownload value="#{fileDownloadView.downloadFile}" />
             </p:commandButton>
+            <br/>
+            
+            <br/>
+            <p:commandButton value="Download 3 - Dynamic" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                <f:setPropertyActionListener value="/home/moonwave/Pictures/hopeschool.pdf" target="#{fileDownloadView.filepath}" />
+                <p:fileDownload value="#{fileDownloadView.downloadFile}" />
+            </p:commandButton>
+            <br/>
+
+            <br/>
+            <p:commandButton value="Download 3 - Dynamic" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                <f:setPropertyActionListener value="/home/moonwave/Pictures/image-1.jpeg" target="#{fileDownloadView.filepath}" />
+                <p:fileDownload value="#{fileDownloadView.downloadFile}" />
+            </p:commandButton>
+            <br/>
+
+
+            <br/>
+            <p:commandButton value="Download 3 - Dynamic" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                <f:setPropertyActionListener value="/home/moonwave/Pictures/download-1.xml" target="#{fileDownloadView.filepath}" />
+                <p:fileDownload value="#{fileDownloadView.downloadFile}" />
+            </p:commandButton>
+            <br/>
+
+            <br/>
+            <p:commandButton value="Download - Dynamic" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                <f:setPropertyActionListener value="/home/moonwave/Pictures/download-1.pdf" target="#{fileDownloadView.filepath}" />
+                <p:fileDownload value="#{fileDownloadView.downloadFile}" />
+            </p:commandButton>
+            <br/>
+
+            <br/>
+            <p:commandButton value="Download 3 - Dynamic" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                <f:setPropertyActionListener value="/home/moonwave/Pictures/hopeschool-1.mypdf" target="#{fileDownloadView.filepath}" />
+                <p:fileDownload value="#{fileDownloadView.downloadFile}" />
+            </p:commandButton>
+            <br/>
+            <hr/>
+            <!-- ========================================================== -->
+
             <br/>
             <p:commandButton value="Download 4 - Dynamic -Ajax - not working" ajax="true" 
                     oncomplete="PrimeFaces.monitorDownload(start, stop);" 
