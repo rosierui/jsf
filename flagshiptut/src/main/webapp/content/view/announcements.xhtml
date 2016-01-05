@@ -28,10 +28,10 @@
                     <h:outputText value="#{item.bodyFirst60}" />
                 </p:column>
                 <p:column headerText="${label.date}" style="width:90px;">
-                    <h:outputText value="#{announcementsView.getLocaleDateString(item.createTime)}" />
+                    <div align="middle"><h:outputText value="#{announcementsView.getLocaleDateString(item.createTime)}" /></div>
                 </p:column>
                 <p:column headerText="${label.author}" style="width:140px;">
-                    <h:outputText value="#{item.user.name}" />
+                    <div align="middle"><h:outputText value="#{item.user.name}" /></div>
                 </p:column>
                 <p:column headerText="${label.attachments}" style="width:96px;">
                     <div align="middle"><h:outputText value="#{announcementsView.hasAttachments(item)}" /></div>
@@ -50,7 +50,7 @@
                     <h:outputLabel value="${label.date}:" />
                     <h:outputText value="#{announcementsView.getLocaleDateString(announcementsView.current.createTime)}" />
                     <h:outputLabel value="${label.author}:" />
-                    <h:outputText value="#{announcementsView.current.user.firstName} #{announcementsView.current.user.lastName}" />
+                    <h:outputText value="#{announcementsView.current.user.name}" />
                     <h:outputLabel value="${label.subject}:" />
                     <h:outputText value="#{announcementsView.current.subject}" />
                     <h:outputLabel value="" />

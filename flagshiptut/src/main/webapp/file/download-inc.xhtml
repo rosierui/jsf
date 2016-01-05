@@ -23,8 +23,8 @@
         <p:graphicImage name="/demo/images/ajaxloadingbar.gif" />
     </p:dialog>
 
-    <h:outputLabel value="#{label.attachments}" />
-    <p:dataTable id="downloads" var="dn" value="#{fileDownloadView.downloads}">
+    <h:outputLabel value="#{label.attachments}" rendered="#{not fileDownloadView.downloads.isEmpty()}"/>
+    <p:dataTable id="downloads" var="dn" value="#{fileDownloadView.downloads}" rendered="#{not fileDownloadView.downloads.isEmpty()}">
         <p:column headerText="${label.description}">
             <h:outputText value="#{dn.description}" />
         </p:column>

@@ -40,7 +40,7 @@ public class FileDownloadView extends BaseView {
     static final String DefaultMimeType = "application/octet-stream";
 
     private StreamedContent file;
-    private List<Upload> downloads = new ArrayList<>();
+    private List<Upload> downloads;;
     private String filepath = null;
 
     @PostConstruct
@@ -48,7 +48,7 @@ public class FileDownloadView extends BaseView {
     }
 
     public List<Upload> getDownloads() {
-        return downloads;
+        return (downloads != null) ? downloads : new ArrayList<Upload>();
     }
 
     public void setDownloads(List<Upload> downloads) {
