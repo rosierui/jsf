@@ -12,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 import org.moonwave.jpa.bo.GenericBO;
 import org.moonwave.jpa.bo.UploadBO;
 import org.moonwave.jpa.model.Announcement;
+import org.moonwave.jpa.model.Upload;
 import org.moonwave.util.StringUtil;
 import org.moonwave.view.AccessController;
 import org.moonwave.view.BaseView;
@@ -92,6 +93,11 @@ public class AnnouncementListView extends BaseView {
 
     public void setFileDownloadView(FileDownloadView fileDownloadView) {
         this.fileDownloadView = fileDownloadView;
+    }
+
+    public String hasAttachments(Announcement a) {
+        List<Upload> list = new UploadBO().findByUserAnnouncement(a.getUser().getId(), a.getId());
+        return list.isEmpty() ? "No" : "Yes";
     }
 
     // ========================================================== ActionListener
