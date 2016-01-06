@@ -1,5 +1,6 @@
 package org.moonwave.view.content.add;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -7,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import org.moonwave.jpa.bo.GenericBO;
 import org.moonwave.jpa.bo.TutorGroupBO;
 import org.moonwave.jpa.model.GroupPost;
 import org.moonwave.jpa.model.TutorGroup;
@@ -32,9 +34,7 @@ public class GroupPostView extends BaseView {
     private String[] selectedTutorGroups; 
     private List<TutorGroup> tutorGroups;
 
-    private String subject;
-    private String body;
-    private Boolean published;
+    GroupPost current;
 
     @ManagedProperty("#{fileUploadView}")
     private FileUploadView fileUploadView;
@@ -42,6 +42,21 @@ public class GroupPostView extends BaseView {
     @PostConstruct
     public void init() {
         tutorGroups = new TutorGroupBO().findAllGroups();
+        String selectedId = super.getParameter("selectedId");
+        if (selectedId != null) { // edit
+            GenericBO<GroupPost> bo = new GenericBO<>(GroupPost.class);
+            current = bo.findById(Integer.valueOf(selectedId));
+            List<TutorGroup> tgs = current.getTutorGroups(); 
+            if (tgs.size() > 0) {
+                selectedTutorGroups = new String[tgs.size()];
+                for (int i = 0; i < tgs.size(); i++) {
+                    selectedTutorGroups[i] = String.valueOf(tgs.get(i).getId());
+                }
+            }
+            fileUploadView.loadUploads4GroupPost(current.getUser().getId(), current.getId());
+        } else {
+            current = new GroupPost();
+        }
     }
 
     public String[] getSelectedTutorGroups() {
@@ -56,28 +71,12 @@ public class GroupPostView extends BaseView {
         return tutorGroups;
     }
 
-    public String getSubject() {
-        return subject;
+    public GroupPost getCurrent() {
+        return current;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public Boolean getPublished() {
-        return published;
-    }
-
-    public void setPublished(Boolean published) {
-        this.published = published;
+    public void setCurrent(GroupPost current) {
+        this.current = current;
     }
 
     public FileUploadView getFileUploadView() {
@@ -88,39 +87,51 @@ public class GroupPostView extends BaseView {
         this.fileUploadView = fileUploadView;
     }
 
+    // ========================================================== ActionListener
+
+    public void cancel() throws IOException {
+        redirectToListView();
+    }
+
+    public void redirectToListView() throws IOException {
+        super.redirectTo("/content/add/grouppostList.xhtml");
+    }
+
     public void save() {
-        if (StringUtil.nullOrEmpty(subject)) {
+        if (StringUtil.nullOrEmpty(current.getSubject())) {
             super.error("Subject is empty");
             return;
         }
         try {
-            GroupPost gp = new GroupPost();
-            gp.setSubject(subject);
-            gp.setBody(body);
-            gp.setPublished(published);
-            gp.setUser(super.getLoggedInUser());
-            super.getBasebo().persist(gp);
+            if (current.getId() == null) {
+                current.setUser(super.getLoggedInUser());
+                super.getBasebo().persist(current);
 
+                this.fileUploadView.update(super.getLoggedInUser().getId(), null, null, current.getId());
+                this.fileUploadView.save(true);
+            } else {
+                super.getBasebo().update(current);
+                this.fileUploadView.update(super.getLoggedInUser().getId(), null, null, current.getId());
+                this.fileUploadView.save(false);
+            }
             // save many-to-many relationship
-            gp.setTutorGroups(new ArrayList<TutorGroup>());
-            List<TutorGroup> tgs = gp.getTutorGroups();
+            current.setTutorGroups(new ArrayList<TutorGroup>());
+            List<TutorGroup> tgs = current.getTutorGroups();
             for (String tgid : selectedTutorGroups) {
                 Short id = Short.parseShort(tgid);
                 TutorGroup tg = new TutorGroupBO().findById(id);
                 List<GroupPost> gps = new ArrayList<GroupPost>();
-                gps.add(gp);
+                gps.add(current); // only one entry, but need List format
                 tg.setGroupPosts(gps);
                 tgs.add(tg);
             }
-            super.getBasebo().update(gp);
-
-            this.fileUploadView.update(super.getLoggedInUser().getId(), null, null, gp.getId());
-            this.fileUploadView.save(true);
+            super.getBasebo().update(current);
 
             // show successful message and reset fields
             super.info("Data save successful");
             this.clearFields();
             this.fileUploadView.clearFields();
+            redirectToListView();
 
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");
@@ -128,12 +139,9 @@ public class GroupPostView extends BaseView {
         }
     }
 
-    public void clearFields() {
-        selectedTutorGroups = null; 
-        tutorGroups = null;
+    // ========================================================= Private methods
 
-        this.subject = null;
-        this.body = null;
-        this.published = false;
+    private void clearFields() {
+        selectedTutorGroups = null; 
     }
 }

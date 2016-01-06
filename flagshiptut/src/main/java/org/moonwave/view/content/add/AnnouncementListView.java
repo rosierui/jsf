@@ -66,19 +66,6 @@ public class AnnouncementListView extends BaseView {
         this.current = current;
     }
 
-    public String getSelectedId() {
-        return selectedId;
-    }
-
-    public void setSelectedId(String selectedId) {
-        this.selectedId = selectedId;
-        if ((this.selectedId != null) && !this.selectedId.isEmpty()) {
-            GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
-            this.current = bo.findById(Integer.parseInt(selectedId));
-            fileDownloadView.setDownloads(new UploadBO().findByUserAnnouncement(current.getUser().getId(), current.getId()));
-        }
-    }
-
     public AccessController getAccessController() {
         return accessController;
     }
@@ -100,10 +87,30 @@ public class AnnouncementListView extends BaseView {
         return list.isEmpty() ? "No" : "Yes";
     }
 
+    // ======================================================= Property Listener
+
+    public String getSelectedId() {
+        return selectedId;
+    }
+
+    public void setSelectedId(String selectedId) {
+        this.selectedId = selectedId;
+        if ((this.selectedId != null) && !this.selectedId.isEmpty()) {
+            GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
+            this.current = bo.findById(Integer.parseInt(selectedId));
+            fileDownloadView.setDownloads(new UploadBO().findByUserAnnouncement(current.getUser().getId(), current.getId()));
+        }
+    }
+
     // ========================================================== ActionListener
+
+    public void newAnnouncement() throws IOException {
+        super.redirectTo("/content/add/announcement.xhtml");
+    }
+
     /**
      *
-     * @param selectedId
+    * @param selectedId selected Announcement id
      */
     public void togglePublish(String selectedId) {
         if (!StringUtil.nullOrEmpty(selectedId)) {
@@ -118,14 +125,16 @@ public class AnnouncementListView extends BaseView {
 
     /**
     *
-    * @param selectedId
+    * @param selectedId selected Announcement id
     */
-   public void edit(String selectedId) throws IOException {
-       super.redirectTo("/content/add/announcement.xhtml?selectedId=" + selectedId);
-   }
+    public void edit(String selectedId) throws IOException {
+        super.redirectTo("/content/add/announcement.xhtml?selectedId=" + selectedId);
+    }
 
-   public void newAnnouncement() throws IOException {
-        super.redirectTo("/content/add/announcement.xhtml");
+
+    public void delete(String selectedId) throws IOException {
+        // perform deletion
+        super.redirectTo("/content/add/announcementList.xhtml");
     }
 
     // ========================================================= Private methods

@@ -70,7 +70,7 @@ public class FileUploadView extends BaseView {
     }
 
     public void loadUploads4GroupPost(Integer userId, Integer groupPostId) {
-        this.uploads = new UploadBO().findByUserAnnouncement(userId, groupPostId);
+        this.uploads = new UploadBO().findByUserGroupPost(userId, groupPostId);
     }
 
     /**

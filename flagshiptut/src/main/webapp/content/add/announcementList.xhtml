@@ -13,8 +13,11 @@
         <h:outputText value="#{label.announcement}" />
     </ui:define>
     <ui:define name="implementation">
-        <c:if test="#{!loginController.isUserLoggedIn()}">
+        <c:if test="${!loginController.isUserLoggedIn()}">
             #{loginController.redirectToLogin()}
+        </c:if>
+        <c:if test="${!accessController.isEditor()}">
+            #{accessController.redirectTo401()}
         </c:if>
         <h:panelGroup id="msgPanel">
             <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
@@ -34,30 +37,30 @@
                     <h:outputText value="#{item.bodyFirst60}" />
                 </p:column>
                 <p:column headerText="${label.date}" style="width:90px;">
-                    <div align="middle"><h:outputText value="#{announcementListView.getLocaleDateString(item.createTime)}" /></div>
+                    <div align="center"><h:outputText value="${announcementListView.getLocaleDateString(item.createTime)}" /></div>
                 </p:column>
-                <p:column headerText="${label.published}" rendered="#{accessController.isEditor()}" style="width:140px;">
+                <p:column headerText="${label.published}" rendered="${accessController.isEditor()}" style="width:140px;">
                     <h:outputText value="#{item.published ? 'Yes' : 'No'}" />
                     <p:commandButton value="#{item.published ? 'Unpublish' : 'Publish'}" ajax="true" update="@([id$=jsfForm])"
-                        actionListener="#{announcementListView.togglePublish(item.id)}"
-                        rendered="#{accessController.isSelf(item.user)}" > 
+                        actionListener="${announcementListView.togglePublish(item.id)}"
+                        rendered="${accessController.isSelf(item.user)}" > 
                     </p:commandButton>
                 </p:column>
                 <p:column headerText="${label.author}" style="width:140px;">
-                    <div align="middle"><h:outputText value="#{item.user.name}" /></div>
+                    <div align="center"><h:outputText value="#{item.user.name}" /></div>
                 </p:column>
                 <p:column headerText="${label.attachments}" style="width:96px;">
-                    <div align="middle"><h:outputText value="#{announcementsView.hasAttachments(item)}" /></div>
+                    <div align="center"><h:outputText value="${announcementsView.hasAttachments(item)}" /></div>
                 </p:column>
                 <p:column headerText="${label.action}">
                     <p:commandButton value="View Details" ajax="true" update="@([id$=dlgDetails])" oncomplete="PF('dlgDetails').show();" > 
                         <f:setPropertyActionListener target="#{announcementListView.selectedId}" value="#{item.id}" />
                     </p:commandButton>
                     <p:commandButton value="#{label.edit}" ajax="true" update="@([id$=jsfForm])"
-                        actionListener="#{announcementListView.edit(item.id)}"> 
+                        actionListener="${announcementListView.edit(item.id)}"> 
                     </p:commandButton>
                     <p:commandButton value="#{label.delete}" ajax="true" update="@([id$=jsfForm])" rendered="false"
-                        actionListener="#{announcementListView.delete(item.id)}">
+                        actionListener="${announcementListView.delete(item.id)}">
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
@@ -67,7 +70,7 @@
                       showEffect="clip" hideEffect="clip" width="800" height="400">
                 <h:panelGrid columns="2" cellpadding="5" id="divPost">
                     <h:outputLabel value="${label.date}:" />
-                    <h:outputText value="#{announcementListView.getLocaleDateString(announcementListView.current.createTime)}" />
+                    <h:outputText value="${announcementListView.getLocaleDateString(announcementListView.current.createTime)}" />
                     <h:outputLabel value="${label.author}:" />
                     <h:outputText value="#{announcementListView.current.user.name}" />
                     <h:outputLabel value="${label.published}:" />

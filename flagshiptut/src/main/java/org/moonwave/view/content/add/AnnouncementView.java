@@ -65,6 +65,10 @@ public class AnnouncementView extends BaseView {
     // ========================================================== ActionListener
 
     public void cancel() throws IOException {
+        redirectToListView();
+    }
+
+    public void redirectToListView() throws IOException {
         super.redirectTo("/content/add/announcementList.xhtml");
     }
 
@@ -89,7 +93,7 @@ public class AnnouncementView extends BaseView {
             // show successful message and reset fields
             super.info("Data save successful");
             this.fileUploadView.clearFields();
-            super.redirectTo("/content/add/announcementList.xhtml");
+            redirectToListView();
 
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");

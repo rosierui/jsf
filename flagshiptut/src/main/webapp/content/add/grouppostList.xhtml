@@ -13,13 +13,18 @@
         <h:outputText value="#{label.grouppost}" />
     </ui:define>
     <ui:define name="implementation">
-        <c:if test="#{!loginController.isUserLoggedIn()}">
+        <c:if test="${!loginController.isUserLoggedIn()}">
             #{loginController.redirectToLogin()}
+        </c:if>
+        <c:if test="${!accessController.isEditor()}">
+            #{accessController.redirectTo401()}
         </c:if>
         <h:panelGroup id="msgPanel">
             <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         </h:panelGroup>
         <h:form id="jsfForm">
+            <p:commandButton value="#{label.newGroupPost}" ajax="true" actionListener="#{groupPostListView.newGroupPost}">
+            </p:commandButton>
 
             <p:dataTable var="item" value="#{groupPostListView.data}">
                 <p:column headerText="${label.subject}">
@@ -28,32 +33,54 @@
                 <p:column headerText="${label.body}">
                     <h:outputText value="#{item.bodyFirst60}" />
                 </p:column>
-                <p:column headerText="${label.date}">
-                    <h:outputText value="#{item.createTime}" />
+                <p:column headerText="${label.date}" style="width:90px;">
+                    <div align="center"><h:outputText value="${groupPostListView.getLocaleDateString(item.createTime)}" /></div>
                 </p:column>
-                <p:column headerText="${label.published}">
-                    <h:outputText value="#{item.published}" />
+                <p:column headerText="${label.published}" rendered="${accessController.isEditor()}" style="width:140px;">
+                    <h:outputText value="#{item.published ? 'Yes' : 'No'}" />
+                    <p:commandButton value="#{item.published ? 'Unpublish' : 'Publish'}" ajax="true" update="@([id$=jsfForm])"
+                        actionListener="${groupPostListView.togglePublish(item.id)}"
+                        rendered="${accessController.isSelf(item.user)}" > 
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="${label.author}" style="width:140px;">
+                    <div align="center"><h:outputText value="#{item.user.name}" /></div>
+                </p:column>
+                <p:column headerText="${label.attachments}" style="width:96px;">
+                    <div align="center"><h:outputText value="${groupPostListView.hasAttachments(item)}" /></div>
                 </p:column>
                 <p:column headerText="${label.action}">
                     <p:commandButton value="View Details" ajax="true" update="@([id$=dlgDetails])" oncomplete="PF('dlgDetails').show();" > 
                         <f:setPropertyActionListener target="#{groupPostListView.selectedId}" value="#{item.id}" />
+                    </p:commandButton>
+                    <p:commandButton value="#{label.edit}" ajax="true" update="@([id$=jsfForm])"
+                        actionListener="${groupPostListView.edit(item.id)}"> 
+                    </p:commandButton>
+                    <p:commandButton value="#{label.delete}" ajax="true" update="@([id$=jsfForm])" rendered="false"
+                        actionListener="${groupPostListView.delete(item.id)}">
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
 
             <p:dialog header="${label.grouppostDetails}" id="dlgDetails" widgetVar="dlgDetails" modal="true"
                       position="center" closable="true" closeOnEscape="true" resizable="true"
-                      showEffect="clip" hideEffect="clip" width="600" height="400">
-                <h:panelGrid columns="2" cellpadding="5" id="divPost">
+                      showEffect="clip" hideEffect="clip" width="800" height="400">
+                <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel value="${label.date}:" />
-                    <h:outputText value="#{groupPostListView.current.createTime}" />
+                    <h:outputText value="${groupPostListView.getLocaleDateString(groupPostListView.current.createTime)}" />
+                    <h:outputLabel value="${label.author}:" />
+                    <h:outputText value="#{groupPostListView.current.user.name}" />
+                    <h:outputLabel value="${label.postedTo}:" />
+                    <h:outputText value="${groupPostListView.visibleTo()}" />
                     <h:outputLabel value="${label.published}:" />
-                    <h:outputText value="#{groupPostListView.current.published}" />
+                    <h:outputText value="#{groupPostListView.current.published ? 'Yes' : 'No'}" />
                     <h:outputLabel value="${label.subject}:" />
                     <h:outputText value="#{groupPostListView.current.subject}" />
                     <h:outputLabel value="" />
                     <h:outputText value="#{groupPostListView.current.body}" escape="false"/>
                 </h:panelGrid>
+
+                <ui:include src="/file/download-inc.xhtml" />
             </p:dialog>
         </h:form>
     </ui:define>

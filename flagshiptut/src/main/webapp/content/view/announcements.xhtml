@@ -12,7 +12,7 @@
         <h:outputText value="#{label.announcement}" />
     </ui:define>
     <ui:define name="implementation">
-        <c:if test="#{!loginController.isUserLoggedIn()}">
+        <c:if test="${!loginController.isUserLoggedIn()}">
             #{loginController.redirectToLogin()}
         </c:if>
         <h:panelGroup id="msgPanel">
@@ -28,13 +28,13 @@
                     <h:outputText value="#{item.bodyFirst60}" />
                 </p:column>
                 <p:column headerText="${label.date}" style="width:90px;">
-                    <div align="middle"><h:outputText value="#{announcementsView.getLocaleDateString(item.createTime)}" /></div>
+                    <div align="center"><h:outputText value="${announcementsView.getLocaleDateString(item.createTime)}" /></div>
                 </p:column>
                 <p:column headerText="${label.author}" style="width:140px;">
-                    <div align="middle"><h:outputText value="#{item.user.name}" /></div>
+                    <div align="center"><h:outputText value="#{item.user.name}" /></div>
                 </p:column>
                 <p:column headerText="${label.attachments}" style="width:96px;">
-                    <div align="middle"><h:outputText value="#{announcementsView.hasAttachments(item)}" /></div>
+                    <div align="center"><h:outputText value="${announcementsView.hasAttachments(item)}" /></div>
                 </p:column>
                 <p:column headerText="${label.action}">
                     <p:commandButton value="View Details" ajax="true" update="@([id$=dlgDetails])" oncomplete="PF('dlgDetails').show();" > 
@@ -46,9 +46,9 @@
             <p:dialog header="${label.announcementDetails}" id="dlgDetails" widgetVar="dlgDetails" modal="true"
                       position="center" closable="true" closeOnEscape="true" resizable="true"
                       showEffect="clip" hideEffect="clip" width="800" height="400">
-                <h:panelGrid columns="2" cellpadding="5" id="divPost">
+                <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel value="${label.date}:" />
-                    <h:outputText value="#{announcementsView.getLocaleDateString(announcementsView.current.createTime)}" />
+                    <h:outputText value="${announcementsView.getLocaleDateString(announcementsView.current.createTime)}" />
                     <h:outputLabel value="${label.author}:" />
                     <h:outputText value="#{announcementsView.current.user.name}" />
                     <h:outputLabel value="${label.subject}:" />

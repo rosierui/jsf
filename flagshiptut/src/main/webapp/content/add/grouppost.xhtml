@@ -12,16 +12,26 @@
         <h:outputLabel value="${label.grouppost}" />
     </ui:define>
     <ui:define name="implementation">
-        <c:if test="#{!loginController.isUserLoggedIn()}">
+        <c:if test="${!loginController.isUserLoggedIn()}">
             #{loginController.redirectToLogin()}
         </c:if>
-        <c:if test="#{!accessController.isEditor()}">
+        <c:if test="${!accessController.isEditor()}">
             #{accessController.redirectTo401()}
         </c:if>
-        <h:form id="jsfForm">
+
+        <p:growl id="messages" showDetail="true" />
+
+        <h:form id="jsfUploadForm" enctype="multipart/form-data">
+        <!-- 
             <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
+        -->
+            <p:commandButton value="#{label.save}" update="messages @([id$=jsfUploadForm])" action="#{groupPostView.save}" />
+            <p:commandButton value="#{label.cancel}" ajax="true" actionListener="#{groupPostView.cancel}"/>
+            <br/>
+            <br/>
+
             <h:panelGrid columns="2">
-                <h:outputLabel value="${label.visibleTo}" />
+                <h:outputLabel value="${label.postedTo}" />
                 <p:selectCheckboxMenu id="menu2" value="#{groupPostView.selectedTutorGroups}" label="Tutor Groups" style="margin-left:20px"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
                     <f:selectItems value="#{groupPostView.tutorGroups}" var="tutorGrp" itemLabel="#{tutorGrp.alias}" itemValue="#{tutorGrp.id}" />
@@ -30,20 +40,19 @@
             <br/>
             <h:panelGrid columns="2">
                 <h:outputLabel value="${label.subject}" />
-                <p:inputText id="subject" value="#{groupPostView.subject}" style="margin-left:20px" size="50"/>
+                <p:inputText id="subject" value="#{groupPostView.current.subject}" style="margin-left:20px" size="50"/>
             </h:panelGrid>
             <br/>
-            <p:editor id="editor" widgetVar="editorWidget" value="#{groupPostView.body}" width="600" />
+            <p:editor id="editor" widgetVar="editorWidget" value="#{groupPostView.current.body}" width="600" />
             <h:panelGrid columns="2">
                 <h:outputText value="${label.publish}" />
-                <p:selectBooleanCheckbox value="#{groupPostView.published}" style="margin-left:10px" />
+                <p:selectBooleanCheckbox value="#{groupPostView.current.published}" style="margin-left:10px" />
             </h:panelGrid>
             <br/>
-            <p:commandButton value="Submit" update="messages @([id$=jsfForm]) @([id$=uploadForm])" actionListener="#{groupPostView.save}" />
+
+            <ui:include src="/file/upload-inc.xhtml" />
 
         </h:form>
-
-        <ui:include src="/file/upload-inc.xhtml" />
 
     </ui:define>
 </ui:composition>

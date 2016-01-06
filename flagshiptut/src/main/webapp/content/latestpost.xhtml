@@ -12,13 +12,13 @@
         <h:outputLabel value="${label.grouppost}" />
     </ui:define>
     <ui:define name="implementation">
-        <c:if test="#{!loginController.isUserLoggedIn()}">
+        <c:if test="${!loginController.isUserLoggedIn()}">
             #{loginController.redirectToLogin()}
         </c:if>
         <h:form id="jsfForm">
             <p:messages id="messages" autoUpdate="false" />
             <h:panelGrid columns="2">
-                <h:outputLabel value="${label.visibleTo}" />
+                <h:outputLabel value="${label.postedTo}" />
                 <p:selectCheckboxMenu id="menu2" value="#{grouppostView.selectedCities}" label="Cities" style="margin-left:20px"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
                     <f:selectItems value="#{userroleView.cities}" />

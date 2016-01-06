@@ -12,10 +12,10 @@
         <h:outputLabel value="${label.announcement}" />
     </ui:define>
     <ui:define name="implementation">
-        <c:if test="#{!loginController.isUserLoggedIn()}">
+        <c:if test="${!loginController.isUserLoggedIn()}">
             #{loginController.redirectToLogin()}
         </c:if>
-        <c:if test="#{!accessController.isEditor()}">
+        <c:if test="${!accessController.isEditor()}">
             #{accessController.redirectTo401()}
         </c:if>
 
@@ -25,7 +25,7 @@
         <!-- 
             <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         -->
-            <p:commandButton value="#{label.save}" update="messages @([id$=jsfForm]) @([id$=uploadForm])" action="#{announcementView.save}" />
+            <p:commandButton value="#{label.save}" update="messages @([id$=jsfUploadForm])" action="#{announcementView.save}" />
             <p:commandButton value="#{label.cancel}" ajax="true" actionListener="#{announcementView.cancel}"/>
             <br/>
             <br/>
