@@ -43,7 +43,9 @@ public class Md5Util {
 
     /**
      * Gets md5 sum for a given message string.
-     * 
+     *
+     * MD5 ⇒ 32 digit hexadecimal number
+     *
      * @param message message string.
      * @return
      */

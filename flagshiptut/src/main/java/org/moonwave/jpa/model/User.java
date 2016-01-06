@@ -56,6 +56,7 @@ public class User implements Serializable, Comparable<User> {
     private String answer;
     private String timezone;
     private String tag;
+    private String actionCode;
 
     @Column(name="login_attempt")
     private short loginAttempt;
@@ -237,6 +238,14 @@ public class User implements Serializable, Comparable<User> {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public String getActionCode() {
+        return actionCode;
+    }
+
+    public void setActionCode(String actionCode) {
+        this.actionCode = actionCode;
     }
 
     public short getLoginAttempt() {

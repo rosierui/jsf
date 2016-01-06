@@ -53,6 +53,10 @@ public class SHAUtil {
 
     }
 
+    /**
+     * SHA-1 ⇒ 40 digit hexadecimal number
+     *
+     */
     public static String sha1(String input) {
         try {
             MessageDigest mDigest = MessageDigest.getInstance("SHA1");
@@ -70,7 +74,8 @@ public class SHAUtil {
 
     /**
      * http://stackoverflow.com/questions/6840206/sha2-password-hashing-in-java
-     *
+     * SHA-2 ⇒ 64 digit hexadecimal number
+     * 
      * @param password
      * @return
      */
