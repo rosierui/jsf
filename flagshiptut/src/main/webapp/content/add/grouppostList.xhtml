@@ -23,8 +23,9 @@
             <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         </h:panelGroup>
         <h:form id="jsfForm">
-            <p:commandButton value="#{label.newGroupPost}" ajax="true" actionListener="#{groupPostListView.newGroupPost}">
-            </p:commandButton>
+            <p:commandButton value="#{label.newGroupPost}" ajax="true" actionListener="#{groupPostListView.newGroupPost}"/>
+            <br/>
+            <br/>
 
             <p:dataTable var="item" value="#{groupPostListView.data}">
                 <p:column headerText="${label.subject}">
@@ -55,8 +56,9 @@
                     <p:commandButton value="#{label.edit}" ajax="true" update="@([id$=jsfForm])"
                         actionListener="${groupPostListView.edit(item.id)}"> 
                     </p:commandButton>
-                    <p:commandButton value="#{label.delete}" ajax="true" update="@([id$=jsfForm])" rendered="false"
-                        actionListener="${groupPostListView.delete(item.id)}">
+                    <p:commandButton value="#{label.delete}" ajax="true" update="@([id$=jsfForm])" rendered="#{!item.published}"
+                            actionListener="${groupPostListView.delete(item.id)}">
+                        <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
@@ -81,6 +83,12 @@
 
                 <ui:include src="/file/download-inc.xhtml" />
             </p:dialog>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+
         </h:form>
     </ui:define>
 </ui:composition>
