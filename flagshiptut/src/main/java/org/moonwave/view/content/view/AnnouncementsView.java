@@ -71,7 +71,7 @@ public class AnnouncementsView extends BaseView {
         if ((this.selectedId != null) && !this.selectedId.isEmpty()) {
             GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
             this.current = bo.findById(Integer.parseInt(selectedId));
-            fileDownloadView.setDownloads(new UploadBO().findByUserAnnouncement(current.getUser().getId(), current.getId()));
+            fileDownloadView.loadDownloads4Announcement(current.getUser().getId(), current.getId());
         }
     }
 

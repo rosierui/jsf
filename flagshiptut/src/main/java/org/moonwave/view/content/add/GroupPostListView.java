@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.bo.GenericBO;
+import org.moonwave.jpa.bo.TutorGroupBO;
 import org.moonwave.jpa.bo.UploadBO;
 import org.moonwave.jpa.model.GroupPost;
 import org.moonwave.jpa.model.TutorGroup;
@@ -18,6 +19,7 @@ import org.moonwave.util.StringUtil;
 import org.moonwave.view.AccessController;
 import org.moonwave.view.BaseView;
 import org.moonwave.view.file.FileDownloadView;
+import org.moonwave.view.file.FileUploadView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +47,9 @@ public class GroupPostListView extends BaseView {
 
     @ManagedProperty("#{fileDownloadView}")
     private FileDownloadView fileDownloadView;
+
+    @ManagedProperty("#{fileUploadView}")
+    private FileUploadView fileUploadView;
 
     @PostConstruct
     public void init() {
@@ -81,6 +86,14 @@ public class GroupPostListView extends BaseView {
 
     public void setFileDownloadView(FileDownloadView fileDownloadView) {
         this.fileDownloadView = fileDownloadView;
+    }
+
+    public FileUploadView getFileUploadView() {
+        return fileUploadView;
+    }
+
+    public void setFileUploadView(FileUploadView fileUploadView) {
+        this.fileUploadView = fileUploadView;
     }
 
     public String hasAttachments(GroupPost a) {
@@ -133,8 +146,38 @@ public class GroupPostListView extends BaseView {
     }
 
 
+    /**
+     * Delete 
+     * @param selectedId
+     * @throws IOException
+     */
     public void delete(String selectedId) throws IOException {
-        // perform deletion
+        try {
+            GenericBO<GroupPost> bo = new GenericBO<>(GroupPost.class);
+            this.current = bo.findById(Integer.parseInt(selectedId));
+            fileUploadView.loadUploads4GroupPost(current.getUser().getId(), current.getId());
+            fileUploadView.deleteAllFromDB();
+
+            // save many-to-many relationship
+//            List<TutorGroup> tgs = current.getTutorGroups();
+//            for (String tgid : selectedTutorGroups) {
+//                Short id = Short.parseShort(tgid);
+//                TutorGroup tg = new TutorGroupBO().findById(id);
+//                List<GroupPost> gps = new ArrayList<GroupPost>();
+//                gps.add(current); // only one entry, but need List format
+//                tg.setGroupPosts(gps);
+//                tgs.add(tg);
+//            }
+            this.fileUploadView.clearFields();
+            super.getBasebo().remove(current);
+
+            // show successful message and reset fields
+            super.info("Data deletion successful");
+
+        } catch (Exception e) {
+            super.error("Sorry, an error occurred, please contact your administrator");
+            LOG.error("", e);
+        }
         super.redirectTo("/content/add/grouppostList.xhtml");
     }
 

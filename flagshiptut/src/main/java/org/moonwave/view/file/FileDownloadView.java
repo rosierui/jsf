@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.io.FilenameUtils;
+import org.moonwave.jpa.bo.UploadBO;
 import org.moonwave.jpa.model.Upload;
 import org.moonwave.util.MimeProperties;
 import org.moonwave.util.StackTrace;
@@ -89,6 +90,14 @@ public class FileDownloadView extends BaseView {
             LOG.error(StackTrace.toString(e));
         }
         return file;
+    }
+
+    public void loadDownloads4Announcement(Integer userId, Integer announcementId) {
+        this.downloads = new UploadBO().findByUserAnnouncement(userId, announcementId);
+    }
+
+    public void loadDownloads4GroupPost(Integer userId, Integer groupPostId) {
+        this.downloads = new UploadBO().findByUserGroupPost(userId, groupPostId);
     }
 
     // ======================================== The following code are test code

@@ -74,8 +74,9 @@ public class FileUploadView extends BaseView {
     }
 
     /**
-     * Handle basic single file upload
-     * 
+     * Handle basic single file upload, but not commit to database
+     * Keep file in hard drive, and in memory, generate 32 digits MD5 tag for
+     * possible deletion request
      */
     public void upload() {
         if (file != null) {
@@ -118,8 +119,9 @@ public class FileUploadView extends BaseView {
     }
 
     /**
-     * Handle uploaded file deletionVer
-     * 
+     * Handle deletion of single selected uploaded file (identified by 
+     * selectedTag) in hard drive and memory
+     *
      */
     public void delete() {
         if (this.selectedTag != null) {
@@ -169,6 +171,16 @@ public class FileUploadView extends BaseView {
             super.getBasebo().update(uploads);
         }
         readyToSave = false;
+    }
+
+    /**
+     * Delete all uploads from hard drive, memory and database
+     */
+    public void deleteAllFromDB() {
+        for (int i = 0; i < uploads.size(); i++) {
+            FileUtil.deleteFile(uploads.get(i).getFilepath());
+        }
+        super.getBasebo().remove(uploads);
     }
 
     public void clearFields() {

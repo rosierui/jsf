@@ -74,7 +74,7 @@ public class GroupPostsView extends BaseView {
         if ((this.selectedId != null) && !this.selectedId.isEmpty()) {
             GenericBO<GroupPost> bo = new GenericBO<>(GroupPost.class);
             this.current = bo.findById(Integer.parseInt(selectedPostId));
-            fileDownloadView.setDownloads(new UploadBO().findByUserGroupPost(current.getUser().getId(), current.getId()));
+            fileDownloadView.loadDownloads4GroupPost(current.getUser().getId(), current.getId());
         }
     }
 
