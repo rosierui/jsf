@@ -1,7 +1,9 @@
 package org.moonwave.view.content.view;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -117,17 +119,29 @@ public class GroupPostsView extends BaseView {
 
     /**
      * only show published GroupPosts in default date range, ordered by latest
-     * to oldest
+     * to oldest; filtered by posted tutor group
      */
     private List <GroupPost> loadAndFilterData() {
         List<TutorGroup> userGroups = super.getLoggedInUser().getTutorGroups();
-        // create GroupPostBO for veried query
+        Set<Short> userGroupsSet = new HashSet<>();
+        for (TutorGroup tg : userGroups) {
+            userGroupsSet.add(tg.getId());
+        }
         GenericBO<GroupPost> bo = new GenericBO<>(GroupPost.class);
         List <GroupPost> list = bo.findAllInDateRange(); 
         List <GroupPost> ret = new ArrayList<GroupPost>();
-        for (GroupPost a : list) {
-            if (a.getPublished()) {
-                ret.add(a);
+        for (GroupPost gp : list) {
+            if (gp.getPublished()) {
+                List<TutorGroup> tgs = gp.getTutorGroups();
+                if ((tgs == null) || tgs.isEmpty()) {
+                    continue;
+                }
+                for (TutorGroup tg : tgs) {
+                    if (userGroupsSet.contains(tg.getId())) {
+                        ret.add(gp);
+                        break;
+                    }
+                }
             }
         }
         return ret;
