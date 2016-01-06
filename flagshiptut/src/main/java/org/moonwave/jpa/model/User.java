@@ -56,6 +56,8 @@ public class User implements Serializable, Comparable<User> {
     private String answer;
     private String timezone;
     private String tag;
+
+    @Column(name="action_code")
     private String actionCode;
 
     @Column(name="login_attempt")
