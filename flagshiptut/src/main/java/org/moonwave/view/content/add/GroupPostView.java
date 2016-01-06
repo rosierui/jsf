@@ -13,6 +13,7 @@ import org.moonwave.jpa.bo.TutorGroupBO;
 import org.moonwave.jpa.model.GroupPost;
 import org.moonwave.jpa.model.TutorGroup;
 import org.moonwave.util.StringUtil;
+import org.moonwave.view.AccessController;
 import org.moonwave.view.BaseView;
 import org.moonwave.view.file.FileUploadView;
 import org.slf4j.Logger;
@@ -36,12 +37,19 @@ public class GroupPostView extends BaseView {
 
     GroupPost current;
 
+    @ManagedProperty("#{accessController}")
+    private AccessController accessController;
+
     @ManagedProperty("#{fileUploadView}")
     private FileUploadView fileUploadView;
 
     @PostConstruct
     public void init() {
-        tutorGroups = new TutorGroupBO().findAllGroups();
+        if (accessController.isTeacher() || accessController.isSupervisor()) {
+            tutorGroups = new TutorGroupBO().findAllGroups();
+        } else if (accessController.isTutor()) {
+            tutorGroups = super.getLoggedInUser().getTutorGroups();
+        }
         String selectedId = super.getParameter("selectedId");
         if (selectedId != null) { // edit
             GenericBO<GroupPost> bo = new GenericBO<>(GroupPost.class);
@@ -77,6 +85,14 @@ public class GroupPostView extends BaseView {
 
     public void setCurrent(GroupPost current) {
         this.current = current;
+    }
+
+    public AccessController getAccessController() {
+        return accessController;
+    }
+
+    public void setAccessController(AccessController accessController) {
+        this.accessController = accessController;
     }
 
     public FileUploadView getFileUploadView() {
