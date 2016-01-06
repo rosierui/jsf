@@ -20,8 +20,8 @@ Modified from schedule.xhtml
     </ui:define>
 
     <ui:define name="implementation">
-        <c:if test="#{!loginController.isUserLoggedIn()}">
-            #{loginController.redirectToLogin()}
+        <c:if test="${!loginController.isUserLoggedIn()}">
+            ${loginController.redirectToLogin()}
         </c:if>
 
         <h:form>
@@ -46,16 +46,16 @@ Modified from schedule.xhtml
                     <h:outputText value="#{dashboardView.event.data.tutor.name}" />
 
                     <p:outputLabel value="Student:" />
-                    <h:outputText value="#{dashboardView.event.data.user.name}" />
+                    <h:outputText value="${dashboardView.event.data.user.name}" />
 
                     <p:outputLabel value="Event:" />
-                    <h:outputText value="#{dashboardView.event.title}" />
+                    <h:outputText value="${dashboardView.event.title}" />
 
                     <p:outputLabel value="From:" />
-                    <h:outputText value="#{dashboardView.getLocaleDateTimeStr(dashboardView.event.startDate)}" />
+                    <h:outputText value="${dashboardView.getLocaleDateTimeStr(dashboardView.event.startDate)}" />
 
                     <p:outputLabel value="To:" />
-                    <h:outputText value="#{dashboardView.getLocaleDateTimeStr(dashboardView.event.endDate)}" />
+                    <h:outputText value="${dashboardView.getLocaleDateTimeStr(dashboardView.event.endDate)}" />
 
                     <p:outputLabel value="" />
                     <p:outputLabel value="" />

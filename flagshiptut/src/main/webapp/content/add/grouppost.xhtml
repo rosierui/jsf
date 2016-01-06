@@ -13,10 +13,10 @@
     </ui:define>
     <ui:define name="implementation">
         <c:if test="${!loginController.isUserLoggedIn()}">
-            #{loginController.redirectToLogin()}
+            ${loginController.redirectToLogin()}
         </c:if>
         <c:if test="${!accessController.isEditor()}">
-            #{accessController.redirectTo401()}
+            ${accessController.redirectTo401()}
         </c:if>
 
         <p:growl id="messages" showDetail="true" />

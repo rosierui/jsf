@@ -140,17 +140,22 @@ public class AnnouncementListView extends BaseView {
     // ========================================================= Private methods
 
     /**
-     * For student, only show published announcements
-     * For others, show unpublished announcements only if the person is the 
-     * author
+     * For tutor, teacher, only show their own announcements
+     * For supervisor, show all announcements
      */
     private List <Announcement> loadAndFilterData() {
         GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
-        List <Announcement> list = bo.findAll(); 
+        List <Announcement> list = bo.findAllInDateRange(); 
         List <Announcement> ret = new ArrayList<Announcement>();
+        boolean isSupervisor = accessController.isSupervisor();
+        boolean isTutorOrTeacher = accessController.isTutor() || accessController.isTeacher();
         for (Announcement a : list) {
-            if (accessController.isSelf(a.getUser())) {
+            if (isSupervisor) {
                 ret.add(a);
+            } else if (isTutorOrTeacher) {
+                if (accessController.isSelf(a.getUser())) {
+                    ret.add(a);
+                }
             }
         }
         return ret;

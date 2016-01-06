@@ -99,11 +99,12 @@ public class AnnouncementsView extends BaseView {
     // ========================================================= Private methods
 
     /**
-     * only show published announcements
+     * only show published announcements in default date range, ordered by latest
+     * to oldest
      */
     private List <Announcement> loadAndFilterData() {
         GenericBO<Announcement> bo = new GenericBO<>(Announcement.class);
-        List <Announcement> list = bo.findAll(); 
+        List <Announcement> list = bo.findAllInDateRange(); 
         List <Announcement> ret = new ArrayList<Announcement>();
         for (Announcement a : list) {
             if (a.getPublished()) {

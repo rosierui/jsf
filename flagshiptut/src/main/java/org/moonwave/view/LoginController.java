@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpSession;
@@ -74,7 +75,7 @@ public class LoginController extends BaseView {
      * http://www.coderanch.com/t/541659/JSF/java/JSF-redirect-page
      * @throws IOException
      */
-    public void redirect() throws IOException {
+    public void redirect(ComponentSystemEvent e) throws IOException {
         if (this.isUserLoggedIn()) {
             super.redirectTo("/schedule/dashboard.xhtml");
         } else {
@@ -86,7 +87,7 @@ public class LoginController extends BaseView {
         super.redirectTo("/login.xhtml");
     }
 
-    public void logout() throws IOException {
+    public void logout(ComponentSystemEvent e) throws IOException {
         FacesContext fContext = FacesContext.getCurrentInstance();
         ExternalContext extContext = fContext.getExternalContext();
         extContext.getSessionMap().put("loggedInUser", null);

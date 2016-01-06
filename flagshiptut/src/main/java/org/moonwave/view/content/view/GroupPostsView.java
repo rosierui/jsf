@@ -1,5 +1,6 @@
 package org.moonwave.view.content.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -43,13 +44,7 @@ public class GroupPostsView extends BaseView {
 
     @PostConstruct
     public void init() {
-
-        // get a list of group posts
-        GenericBO<GroupPost> bo = new GenericBO<>(GroupPost.class);
-        // find published group pots and those belong to the user's group
-        List<TutorGroup> userGroups = super.getLoggedInUser().getTutorGroups();
-        // create GroupPostBO for veried query
-        data = bo.findAll();
+        data = loadAndFilterData();
     }
 
     public GroupPost getCurrent() {
@@ -116,5 +111,25 @@ public class GroupPostsView extends BaseView {
             }
         }
         return sb.toString();
+    }
+
+    // ========================================================= Private methods
+
+    /**
+     * only show published GroupPosts in default date range, ordered by latest
+     * to oldest
+     */
+    private List <GroupPost> loadAndFilterData() {
+        List<TutorGroup> userGroups = super.getLoggedInUser().getTutorGroups();
+        // create GroupPostBO for veried query
+        GenericBO<GroupPost> bo = new GenericBO<>(GroupPost.class);
+        List <GroupPost> list = bo.findAllInDateRange(); 
+        List <GroupPost> ret = new ArrayList<GroupPost>();
+        for (GroupPost a : list) {
+            if (a.getPublished()) {
+                ret.add(a);
+            }
+        }
+        return ret;
     }
 }

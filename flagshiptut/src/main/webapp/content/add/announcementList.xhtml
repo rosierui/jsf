@@ -14,10 +14,10 @@
     </ui:define>
     <ui:define name="implementation">
         <c:if test="${!loginController.isUserLoggedIn()}">
-            #{loginController.redirectToLogin()}
+            ${loginController.redirectToLogin()}
         </c:if>
         <c:if test="${!accessController.isEditor()}">
-            #{accessController.redirectTo401()}
+            ${accessController.redirectTo401()}
         </c:if>
         <h:panelGroup id="msgPanel">
             <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
@@ -42,8 +42,7 @@
                 <p:column headerText="${label.published}" rendered="${accessController.isEditor()}" style="width:140px;">
                     <h:outputText value="#{item.published ? 'Yes' : 'No'}" />
                     <p:commandButton value="#{item.published ? 'Unpublish' : 'Publish'}" ajax="true" update="@([id$=jsfForm])"
-                        actionListener="${announcementListView.togglePublish(item.id)}"
-                        rendered="${accessController.isSelf(item.user)}" > 
+                        actionListener="${announcementListView.togglePublish(item.id)}">
                     </p:commandButton>
                 </p:column>
                 <p:column headerText="${label.author}" style="width:140px;">

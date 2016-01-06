@@ -11,7 +11,7 @@ and open the template in the editor.
     <h:form id="navForm">
         <div id="nav-menu-global">
 
-            <p:menubar id="navBar" styleClass="navbar-nav" rendered="#{loginController.isUserLoggedIn()}" width="100%">
+            <p:menubar id="navBar" styleClass="navbar-nav" rendered="${loginController.isUserLoggedIn()}" width="100%">
                 <p:submenu label="#{label.dashboard}" id="dashboard" styleClass="navHeader" rendered="true">
                     <p:menuitem value="#{label.dashboard}" url="/schedule/dashboard/List.xhtml" rendered="true"
                                 onclick="blockUI()" oncomplete="unBlockUI()"/>

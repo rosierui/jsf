@@ -17,8 +17,8 @@
     </ui:define>
 
     <ui:define name="implementation">
-        <c:if test="#{!loginController.isUserLoggedIn()}">
-            #{loginController.redirectToLogin()}
+        <c:if test="${!loginController.isUserLoggedIn()}">
+            ${loginController.redirectToLogin()}
         </c:if>
 
         <h:form>

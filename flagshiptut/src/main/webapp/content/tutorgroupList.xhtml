@@ -14,7 +14,7 @@
     <ui:define name="implementation">
         <h:form id="jsfForm">
             <c:if test="${!loginController.isUserLoggedIn()}">
-                #{loginController.redirectToLogin()}
+                ${loginController.redirectToLogin()}
             </c:if>
             <p:messages id="messages" autoUpdate="false" />
             <h:panelGrid columns="2">

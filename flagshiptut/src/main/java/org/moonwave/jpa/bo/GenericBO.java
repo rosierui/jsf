@@ -46,6 +46,15 @@ public class GenericBO<T> extends BaseBO {
         return list;
     }
 
+    public List<T> findAllInDateRange() {
+        // TODO - find All in default date range, back up one year / one semeter
+        Query query = super.getEntityManager().createNamedQuery(clazz.getSimpleName() + ".findAll");
+        @SuppressWarnings("unchecked")
+        List<T> list = query.getResultList();
+        super.release();
+        return list;
+    }
+
     @SuppressWarnings("unchecked")
 	public T findById(Integer id) {
         Query query = super.getEntityManager().createNamedQuery(clazz.getSimpleName() + ".findById");

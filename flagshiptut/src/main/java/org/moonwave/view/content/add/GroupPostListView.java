@@ -48,10 +48,7 @@ public class GroupPostListView extends BaseView {
 
     @PostConstruct
     public void init() {
-
-        // get a list of group posts
-        GenericBO<GroupPost> bo = new GenericBO<>(GroupPost.class);
-        data = bo.findAll();
+        data = loadAndFilterData();
     }
 
     public GroupPost getCurrent() {
@@ -162,17 +159,23 @@ public class GroupPostListView extends BaseView {
     // ========================================================= Private methods
 
     /**
-     * For student, only show published GroupPosts
-     * For others, show unpublished GroupPosts only if the person is the 
-     * author
+     * For tutor, teacher, only show their own posts
+     * For supervisor, show all posts 
+     *
      */
     private List <GroupPost> loadAndFilterData() {
         GenericBO<GroupPost> bo = new GenericBO<>(GroupPost.class);
-        List <GroupPost> list = bo.findAll(); 
+        List <GroupPost> list = bo.findAllInDateRange(); 
         List <GroupPost> ret = new ArrayList<GroupPost>();
+        boolean isSupervisor = accessController.isSupervisor();
+        boolean isTutorOrTeacher = accessController.isTutor() || accessController.isTeacher();
         for (GroupPost a : list) {
-            if (accessController.isSelf(a.getUser())) {
+            if (isSupervisor) {
                 ret.add(a);
+            } else if (isTutorOrTeacher) {
+                if (accessController.isSelf(a.getUser())) {
+                    ret.add(a);
+                }
             }
         }
         return ret;
