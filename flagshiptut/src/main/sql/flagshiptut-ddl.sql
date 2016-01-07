@@ -95,6 +95,7 @@ CREATE TABLE user (
 
 CREATE INDEX user_idx1 ON user (first_name, last_name);
 CREATE INDEX user_idx2 ON user (last_name, first_name);
+CREATE INDEX user_idx3 ON user (action_code);
 
 -- -----------------------------------------------------------------------------
 -- Create table user_role

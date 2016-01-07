@@ -194,7 +194,7 @@
                 <div class="SubMenuLinkContainer">
                     <a class="SubMenuLink" href="#{request.contextPath}/login.xhtml">&bull; <h:outputText value="#{label.login}" /></a>
                     <a class="SubMenuLink" href="#{request.contextPath}/admin/newUser.xhtml">&bull; <h:outputText value="#{label.newAccount}" /></a>
-                    <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=Forgot Password">&bull; <h:outputText value="#{label.forgotPassword}" /></a>
+                    <a class="SubMenuLink" href="#{request.contextPath}/admin/forgotPassword.xhtml">&bull; <h:outputText value="#{label.forgotPassword}" /></a>
                     <h:panelGroup rendered="${loginController.isUserLoggedIn()}">
                       <a class="SubMenuLink" href="#{request.contextPath}/logout.xhtml">&bull; <h:outputText value="#{label.logout}" /></a>
                     </h:panelGroup>

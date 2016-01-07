@@ -4,17 +4,16 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import org.moonwave.jpa.bo.BaseBO;
 import org.moonwave.jpa.model.User;
 import org.moonwave.util.AppProperties;
 import org.moonwave.util.DateUtil;
+import org.moonwave.util.JSFUtil;
 
 /**
  * BaseView
@@ -38,10 +37,7 @@ public class BaseView implements Serializable {
     }
 
     public String getParameter(String key) {
-        Map<String, String> params =FacesContext.getCurrentInstance().
-                getExternalContext().getRequestParameterMap();
-        String parameter = params.get(key);
-        return parameter;
+        return JSFUtil.getRequestParameterMap().get(key);
     }
 
     public java.sql.Timestamp getSqlTimestamp() {
@@ -69,12 +65,12 @@ public class BaseView implements Serializable {
     }
 
     public Boolean isUserLoggedIn() {
-        Object user = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
+        Object user = JSFUtil.getSessionMap().get("loggedInUser");
         return (user != null) ? true : false; 
     }
 
     public User getLoggedInUser() {
-        Object user = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
+        Object user = JSFUtil.getSessionMap().get("loggedInUser");
         return (user != null) ? (User) user  : null; 
     }
 
@@ -92,7 +88,7 @@ public class BaseView implements Serializable {
     }
 
     public Locale getLocale() {
-        Locale browserLocale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+        Locale browserLocale = JSFUtil.getExternalContext().getRequestLocale();
         return browserLocale;
     }
 
@@ -139,8 +135,6 @@ public class BaseView implements Serializable {
     }
 
     public void redirectTo(String pageUrl) throws IOException {
-        FacesContext fContext = FacesContext.getCurrentInstance();
-        ExternalContext extContext = fContext.getExternalContext();
-        extContext.redirect(extContext.getRequestContextPath() + pageUrl);
+        JSFUtil.redirectTo(pageUrl);
     }
 }

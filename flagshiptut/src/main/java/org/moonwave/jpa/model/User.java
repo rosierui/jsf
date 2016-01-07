@@ -22,6 +22,7 @@ import java.util.List;
     @NamedQuery(name="User.findById",  query="SELECT u FROM User u WHERE u.id = :id"),
     @NamedQuery(name="User.findByLoginId",  query="SELECT u FROM User u WHERE u.loginId = :loginId"),
     @NamedQuery(name="User.findByEmail",  query="SELECT u FROM User u WHERE u.email = :email"),
+    @NamedQuery(name="User.findByActionCode",  query="SELECT u FROM User u WHERE u.actionCode = :actionCode"),
     @NamedQuery(name="User.findInIds", query="SELECT u FROM User u WHERE u.id in (:ids)")
 })
 

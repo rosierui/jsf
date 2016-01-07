@@ -4,14 +4,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/WEB-INF/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{request.getParameter('title')}" ></h:outputText>
+            <h:outputText value="#{flash['title']}" />
         </ui:define>
         <ui:define name="implementation">
-            <h2>This page is under construction, visit back soon</h2>
+            <h2><h:outputText value="#{flash['msg']}" /></h2>
             <p:messages/>
         </ui:define>
     </ui:composition>

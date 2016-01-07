@@ -7,6 +7,7 @@ import javax.persistence.Query;
 
 import org.moonwave.jpa.model.Role;
 import org.moonwave.jpa.model.User;
+import org.moonwave.util.StackTrace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +55,7 @@ public class UserBO extends BaseBO {
         } catch (NoResultException e) {
 
         } catch (Exception e) {
-            LOG.error("", e);
+            LOG.error(StackTrace.toString(e));
         } finally {
             super.release();
         }
@@ -70,7 +71,7 @@ public class UserBO extends BaseBO {
         } catch (NoResultException e) {
 
         } catch (Exception e) {
-            LOG.error("", e);
+            LOG.error(StackTrace.toString(e));
         } finally {
             super.release();
         }
@@ -86,7 +87,22 @@ public class UserBO extends BaseBO {
         } catch (NoResultException e) {
 
         } catch (Exception e) {
-            LOG.error("", e);
+            LOG.error(StackTrace.toString(e));
+        } finally {
+            super.release();
+        }
+        return ret;
+    }
+    public User findByActionCode(String actionCode) {
+        Query query = super.getEntityManager().createNamedQuery("User.findByActionCode", User.class);
+        query.setParameter("actionCode", actionCode);
+        User ret = null;
+        try {
+            ret = (User) query.getSingleResult();
+        } catch (NoResultException e) {
+
+        } catch (Exception e) {
+            LOG.error(StackTrace.toString(e));
         } finally {
             super.release();
         }
