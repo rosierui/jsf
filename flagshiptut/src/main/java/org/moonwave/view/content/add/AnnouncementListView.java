@@ -152,16 +152,6 @@ public class AnnouncementListView extends BaseView {
             fileUploadView.loadUploads4Announcement(current.getUser().getId(), current.getId());
             fileUploadView.deleteAllFromDB();
 
-            // save many-to-many relationship
-//            List<TutorGroup> tgs = current.getTutorGroups();
-//            for (String tgid : selectedTutorGroups) {
-//                Short id = Short.parseShort(tgid);
-//                TutorGroup tg = new TutorGroupBO().findById(id);
-//                List<GroupPost> gps = new ArrayList<GroupPost>();
-//                gps.add(current); // only one entry, but need List format
-//                tg.setGroupPosts(gps);
-//                tgs.add(tg);
-//            }
             this.fileUploadView.clearFields();
             super.getBasebo().remove(current);
 
