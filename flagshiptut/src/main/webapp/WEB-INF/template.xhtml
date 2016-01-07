@@ -196,6 +196,7 @@
                     <a class="SubMenuLink" href="#{request.contextPath}/admin/newUser.xhtml">&bull; <h:outputText value="#{label.newAccount}" /></a>
                     <a class="SubMenuLink" href="#{request.contextPath}/admin/forgotPassword.xhtml">&bull; <h:outputText value="#{label.forgotPassword}" /></a>
                     <h:panelGroup rendered="${loginController.isUserLoggedIn()}">
+                      <a class="SubMenuLink" href="#{request.contextPath}/admin/changePassword.xhtml">&bull; <h:outputText value="#{label.changePassword}" /></a>
                       <a class="SubMenuLink" href="#{request.contextPath}/logout.xhtml">&bull; <h:outputText value="#{label.logout}" /></a>
                     </h:panelGroup>
                 </div>
