@@ -2,15 +2,14 @@ package org.moonwave.view.admin;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.bo.UserBO;
 import org.moonwave.jpa.model.User;
 import org.moonwave.util.JSFUtil;
 import org.moonwave.util.SHAUtil;
+import org.moonwave.util.StackTrace;
 import org.moonwave.util.StringUtil;
 import org.moonwave.view.BaseView;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 @ManagedBean
-@ViewScoped
+//@ViewScoped
 public class ResetPasswordView extends BaseView {
 
     private static final long serialVersionUID = 1317717701493291877L;
@@ -35,33 +34,24 @@ public class ResetPasswordView extends BaseView {
     @PostConstruct
     public void init() {
         // search user by action_code
-        String actionCode = super.getParameter("actioncode");
+        String actionCode = super.getParameter("actionCode");
         try {
             if (StringUtil.nullOrEmpty(actionCode)) {
                 JSFUtil.getFlash().put("title", "Action code");
                 JSFUtil.getFlash().put("msg", "Your action code was invalid");
-                JSFUtil.navigation("/error/error.xhtml?faces-redirect=true");
-//              JSFUtil.redirectTo("/error/error.xhtml");
+                JSFUtil.navigation("/error/error.xhtml?faces-redirect=true&msgCode=101");
                 return;
             }
             user = new UserBO().findByActionCode(actionCode);
             if (user == null) {
                 JSFUtil.getFlash().put("title", "Action code");
                 JSFUtil.getFlash().put("msg", "Your action code was invalid");
-//              JSFUtil.redirectTo("/error/error.xhtml");
+                JSFUtil.redirectTo("/error/error.xhtml?faces-redirect=true&msgCode=101");
                 return;
             }
         } catch (Exception e) {
-            
+            LOG.error(StackTrace.toString(e));
         }
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getPassword() {
@@ -90,14 +80,11 @@ public class ResetPasswordView extends BaseView {
             return "";
         }
         try {
-            user.setPassword(SHAUtil.encryptPassword(user.getPassword()));
-            user.setCreateTime(super.getSqlTimestamp());
-            user.setGenericUser(true);
-//            super.getBasebo().persist(user);
-            super.info("New record was succesfully created");
-            LOG.info("New record was succesfully created");
+            user.setPassword(SHAUtil.encryptPassword(password));
+            super.getBasebo().update(user);
+            super.info("Password was successfully changed");
 
-            user = new User();
+            this.password  = null;
             this.password2 = null;
         } catch (Exception e) {
             LOG.error(e.getLocalizedMessage());

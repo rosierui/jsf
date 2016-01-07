@@ -52,6 +52,16 @@ public class JSFUtil {
     }
 
     /**
+     * Sample - JSFUtil.forward("/error/error.xhtml")
+     *
+     * @param path Context relative path to the specified resource,
+     *  which must start with a slash ("/") character
+     */
+    public static void forward(String path) throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().dispatch(path);
+    }
+
+    /**
      * Sample - JSFUtil.navigation("/error/error.xhtml?faces-redirect=true")
      *
      * @param url
