@@ -20,7 +20,7 @@
             ${loginController.redirectToLogin()}
         </c:if>
 
-        <h:form id="form">
+        <h:form id="jsfForm">
             <p:growl id="messages" showDetail="true"/>
  
             <p:commandButton value="#{label.newSelfEvaluation}" ajax="true" actionListener="${evaluationListView.newSelfEvaluation()}"
@@ -37,8 +37,14 @@
                 <p:column headerText="${label.week}">
                     <h:outputText value="#{item.week}" />
                 </p:column>
-                <p:column headerText="${label.date}">
-                    <h:outputText value="${evaluationListView.getLocaleDateString(item.createTime)}" />
+                <p:column headerText="${label.date}" style="width:90px;">
+                    <div align="center"><h:outputText value="${evaluationListView.getLocaleDateString(item.createTime)}" /></div>
+                </p:column>
+                <p:column headerText="${label.published}" rendered="${accessController.isEditor()}" style="width:140px;">
+                    <h:outputText value="#{item.published ? 'Yes' : 'No'}" />
+                    <p:commandButton value="#{item.published ? 'Unpublish' : 'Publish'}" ajax="true" update="@([id$=jsfForm])"
+                        actionListener="${evaluationListView.togglePublish(item.id)}">
+                    </p:commandButton>
                 </p:column>
                 <p:column headerText="${label.evaluatedBy}" >
                     <h:outputText value="#{item.studentEvaluation ? item.user.name : item.tutor.name}" />

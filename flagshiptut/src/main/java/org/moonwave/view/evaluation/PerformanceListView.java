@@ -10,8 +10,8 @@ import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.bo.EvaluationPerformanceBO;
 import org.moonwave.jpa.bo.GenericBO;
-import org.moonwave.jpa.model.Announcement;
 import org.moonwave.jpa.model.EvaluationPerformance;
+import org.moonwave.util.StringUtil;
 import org.moonwave.view.AccessController;
 import org.moonwave.view.BaseView;
 import org.slf4j.Logger;
@@ -88,6 +88,20 @@ public class PerformanceListView extends BaseView {
         super.redirectTo("/evaluation/performance.xhtml?selectedId=" + selectedId);
     }
 
+    /**
+    *
+    * @param selectedId selected Announcement id
+    */
+    public void togglePublish(String selectedId) {
+       if (!StringUtil.nullOrEmpty(selectedId)) {
+           GenericBO<EvaluationPerformance> bo = new GenericBO<>(EvaluationPerformance.class);
+           this.current = bo.findById(Integer.parseInt(selectedId));
+           this.current.setPublished(!this.current.getPublished());
+           super.getBasebo().update(current);
+
+           data = new EvaluationPerformanceBO().findByTutorId(super.getLoggedInUser().getId());
+       }
+    }
 
     public void delete(String selectedId) throws IOException {
         try {

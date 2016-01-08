@@ -86,7 +86,7 @@ public class GroupPost implements Serializable {
     }
 
     public Boolean getPublished() {
-        return this.published;
+        return (published != null) ? published : false;
     }
 
     public void setPublished(Boolean published) {

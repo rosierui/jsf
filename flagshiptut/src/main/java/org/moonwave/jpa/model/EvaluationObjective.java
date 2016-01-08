@@ -240,7 +240,7 @@ public class EvaluationObjective implements Serializable {
     }
 
     public Boolean getPublished() {
-        return published;
+        return (published != null) ? published : false;
     }
 
     public void setPublished(Boolean published) {

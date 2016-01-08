@@ -110,6 +110,25 @@ public class EvaluationListView extends BaseView {
 
     /**
     *
+    * @param selectedId selected Announcement id
+    */
+    public void togglePublish(String selectedId) {
+       if (!StringUtil.nullOrEmpty(selectedId)) {
+           GenericBO<EvaluationObjective> bo = new GenericBO<>(EvaluationObjective.class);
+           this.current = bo.findById(Integer.parseInt(selectedId));
+           this.current.setPublished(!this.current.getPublished());
+           super.getBasebo().update(current);
+
+           if (studentAccess) {
+               data = new EvaluationObjectiveBO().findByUserId(super.getLoggedInUser().getId());
+           } else {
+               data = new EvaluationObjectiveBO().findByTutorId(super.getLoggedInUser().getId());
+           }
+       }
+    }
+
+    /**
+    *
     * @param selectedId selected EvaluationObjective id
     */
     public void edit(String selectedId) throws IOException {
