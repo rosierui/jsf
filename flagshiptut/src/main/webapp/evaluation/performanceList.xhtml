@@ -31,6 +31,9 @@
             <br/>
 
             <p:dataTable var="item" value="#{performanceListView.data}">
+                <p:column headerText="${label.student}" >
+                    <h:outputText value="#{item.user.name}" />
+                </p:column>
                 <p:column headerText="${label.semester}">
                     <h:outputText value="#{item.semester}" />
                 </p:column>
@@ -75,8 +78,10 @@
                 <h:panelGrid columns="2" cellpadding="5" id="divPost">
                     <h:outputLabel value="${label.date}:" />
                     <h:outputText value="${performanceListView.getLocaleDateString(performanceListView.current.createTime)}" />
+                    <h:outputLabel value="${label.student}:" />
+                    <h:outputText value="#{performanceListView.current.user.name}" />
                     <h:outputLabel value="${label.tutor}:" />
-                    <h:outputText value="#{performanceListView.current.user.name} " />
+                    <h:outputText value="#{performanceListView.current.tutor.name} " />
                     <h:outputLabel value="${label.semester}:" />
                     <h:outputText value="#{performanceListView.current.semester}" />
                     <h:outputLabel value="${label.week}:" />

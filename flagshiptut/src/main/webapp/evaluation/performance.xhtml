@@ -20,7 +20,7 @@
         </c:if>
         <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         <h:form id="jsfForm">
-            <p:commandButton value="#{label.save}" update="messages @([id$=jsfForm])" action="#{performanceView.save}" />
+            <p:commandButton value="#{label.save}" update=":messages jsfForm" action="#{performanceView.save}" />
             <p:commandButton value="#{label.cancel}" ajax="true" actionListener="#{performanceView.cancel}"/>
             <br/>
             <br/>

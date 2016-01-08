@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import org.moonwave.util.StackTrace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +57,7 @@ public class GenericBO<T> extends BaseBO {
     }
 
     @SuppressWarnings("unchecked")
-	public T findById(Integer id) {
+    public T findById(Integer id) {
         Query query = super.getEntityManager().createNamedQuery(clazz.getSimpleName() + ".findById");
         query.setParameter("id", id);
         T ret = null;
@@ -65,7 +66,7 @@ public class GenericBO<T> extends BaseBO {
         } catch (NoResultException e) {
 
         } catch (Exception e) {
-            LOG.error("", e);
+            LOG.error(StackTrace.toString(e));
         } finally {
             super.release();
         }
@@ -82,7 +83,24 @@ public class GenericBO<T> extends BaseBO {
         } catch (NoResultException e) {
 
         } catch (Exception e) {
-            LOG.error("", e);
+            LOG.error(StackTrace.toString(e));
+        } finally {
+            super.release();
+        }
+        return ret;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<T> findByUserId(Integer userId) {
+        Query query = super.getEntityManager().createNamedQuery(clazz.getSimpleName() + ".findByUserId");
+        query.setParameter("userId", userId);
+        List<T> ret = null;
+        try {
+            ret = query.getResultList();
+        } catch (NoResultException e) {
+
+        } catch (Exception e) {
+            LOG.error(StackTrace.toString(e));
         } finally {
             super.release();
         }

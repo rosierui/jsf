@@ -12,7 +12,6 @@ import javax.faces.bean.ViewScoped;
 import org.moonwave.jpa.bo.GenericBO;
 import org.moonwave.jpa.bo.UploadBO;
 import org.moonwave.jpa.model.Announcement;
-import org.moonwave.jpa.model.GroupPost;
 import org.moonwave.jpa.model.Upload;
 import org.moonwave.util.StringUtil;
 import org.moonwave.view.AccessController;

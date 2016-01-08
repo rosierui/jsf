@@ -14,8 +14,10 @@ import java.util.List;
 @Table(name="group_post")
 
 @NamedQueries({
-    @NamedQuery(name="GroupPost.findAll", query="SELECT g FROM GroupPost g order by g.createTime desc"),
-    @NamedQuery(name="GroupPost.findById", query="SELECT g FROM GroupPost g WHERE g.id = :id")
+    @NamedQuery(name="GroupPost.findAll", query="SELECT g FROM GroupPost g order by g.createTime DESC"),
+    @NamedQuery(name="GroupPost.findById", query="SELECT g FROM GroupPost g WHERE g.id = :id"),
+    @NamedQuery(name="GroupPost.findByUserId", query="SELECT g FROM GroupPost g WHERE g.user.id = :userId order by g.createTime DESC"),
+    @NamedQuery(name="GroupPost.findByUserIdInDateRange", query="SELECT g FROM GroupPost g WHERE g.user.id = :userId order by g.createTime DESC")
 })
 
 public class GroupPost implements Serializable {

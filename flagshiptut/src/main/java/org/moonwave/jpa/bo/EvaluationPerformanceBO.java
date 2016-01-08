@@ -53,4 +53,12 @@ public class EvaluationPerformanceBO extends BaseBO {
         return list;
     }
 
+    @SuppressWarnings("unchecked")
+    public List<EvaluationPerformance> findByTutorId(Integer tutorId) {
+        Query query = super.getEntityManager().createNamedQuery("EvaluationPerformance.findByTutorId", EvaluationPerformance.class);
+        query.setParameter("tutorId", tutorId);
+        List<EvaluationPerformance> list = query.getResultList();
+        super.release();
+        return list;
+    }
 }

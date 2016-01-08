@@ -138,7 +138,4 @@ public class PerformanceView extends BaseView {
         }
         return null;
     }
-
-    // ========================================================= Private methods
-
 }

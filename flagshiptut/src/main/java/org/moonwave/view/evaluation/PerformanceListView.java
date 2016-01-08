@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.bo.EvaluationPerformanceBO;
 import org.moonwave.jpa.bo.GenericBO;
+import org.moonwave.jpa.model.Announcement;
 import org.moonwave.jpa.model.EvaluationPerformance;
 import org.moonwave.view.AccessController;
 import org.moonwave.view.BaseView;
@@ -38,7 +39,7 @@ public class PerformanceListView extends BaseView {
 
     @PostConstruct
     public void init() {
-        data = new EvaluationPerformanceBO().findByUserId(super.getLoggedInUser().getId());
+        data = new EvaluationPerformanceBO().findByTutorId(super.getLoggedInUser().getId());
     }
 
     public List<EvaluationPerformance> getData() {
@@ -83,5 +84,24 @@ public class PerformanceListView extends BaseView {
         super.redirectTo("/evaluation/performance.xhtml");
     }
 
-    // ========================================================= Private methods
+    public void edit(String selectedId) throws IOException {
+        super.redirectTo("/evaluation/performance.xhtml?selectedId=" + selectedId);
+    }
+
+
+    public void delete(String selectedId) throws IOException {
+        try {
+            GenericBO<EvaluationPerformance> bo = new GenericBO<>(EvaluationPerformance.class);
+            this.current = bo.findById(Integer.parseInt(selectedId));
+            super.getBasebo().remove(current);
+
+            // show successful message and reset fields
+            super.info("Data deletion successful");
+
+        } catch (Exception e) {
+            super.error("Sorry, an error occurred, please contact your administrator");
+            LOG.error("", e);
+        }
+        super.redirectTo("/evaluation/performanceList.xhtml");
+    }
 }

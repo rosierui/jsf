@@ -13,8 +13,10 @@ import java.sql.Timestamp;
 @Table(name="announcement")
 
 @NamedQueries({
-    @NamedQuery(name="Announcement.findAll",  query="SELECT a FROM Announcement a order by a.createTime desc"),
-    @NamedQuery(name="Announcement.findById", query="SELECT a FROM Announcement a WHERE a.id = :id")
+    @NamedQuery(name="Announcement.findAll",  query="SELECT a FROM Announcement a order by a.createTime DESC"),
+    @NamedQuery(name="Announcement.findById", query="SELECT a FROM Announcement a WHERE a.id = :id"),
+    @NamedQuery(name="Announcement.findByUserId", query="SELECT a FROM Announcement a WHERE a.user.id = :userId order by a.createTime DESC"),
+    @NamedQuery(name="Announcement.findByUserIdInDateRange", query="SELECT a FROM Announcement a WHERE a.user.id = :userId order by a.createTime DESC")
 })
 
 public class Announcement implements Serializable {

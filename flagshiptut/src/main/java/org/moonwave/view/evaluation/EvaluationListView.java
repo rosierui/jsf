@@ -128,14 +128,16 @@ public class EvaluationListView extends BaseView {
             this.current = bo.findById(Integer.parseInt(selectedId));
             super.getBasebo().remove(current);
 
-            // show successful message and reset fields
             super.info("Data deletion successful");
-
+            if (current.getStudentEvaluation()) {
+                super.redirectTo("/evaluation/evaluationList.xhtml?student=true");
+            } else {
+                super.redirectTo("/evaluation/evaluationList.xhtml?tutor=true");
+            }
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");
             LOG.error("", e);
         }
-        super.redirectTo("/evaluation/evaluationList.xhtml");
     }
 
     // ========================================================= Private methods

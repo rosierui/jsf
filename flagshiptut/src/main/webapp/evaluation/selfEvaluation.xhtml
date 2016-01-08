@@ -27,7 +27,9 @@
 
         <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         <h:form id="jsfForm">
-            <p:commandButton value="#{label.save}" update="messages @([id$=jsfForm])" action="#{selfEvaluationView.save}" />
+            <!--  p:commandButton value="#{label.save}" update=":messages jsfForm" action="#{selfEvaluationView.save}" /-->
+            <p:commandButton value="#{label.save}" update=":messages jsfForm" actionListener="#{selfEvaluationView.save}" />
+            
             <p:commandButton value="#{label.cancel}" ajax="true" actionListener="#{selfEvaluationView.cancel}"/>
             <br/>
             <br/>
