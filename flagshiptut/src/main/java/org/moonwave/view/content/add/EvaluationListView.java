@@ -1,4 +1,4 @@
-package org.moonwave.view.evaluation;
+package org.moonwave.view.content.add;
 
 import java.io.IOException;
 import java.util.List;
@@ -101,11 +101,11 @@ public class EvaluationListView extends BaseView {
     // ========================================================== ActionListener
 
     public void newSelfEvaluation() throws IOException {
-        super.redirectTo("/evaluation/selfEvaluation.xhtml?student=true");
+        super.redirectTo("/content/add/selfEvaluation.xhtml?student=true");
     }
 
     public void newTutorEvaluation() throws IOException {
-        super.redirectTo("/evaluation/selfEvaluation.xhtml?tutor=true");
+        super.redirectTo("/content/add/selfEvaluation.xhtml?tutor=true");
     }
 
     /**
@@ -135,9 +135,9 @@ public class EvaluationListView extends BaseView {
         GenericBO<EvaluationObjective> bo = new GenericBO<>(EvaluationObjective.class);
         this.current = bo.findById(Integer.parseInt(selectedId));
         if (current.getStudentEvaluation()) {
-            super.redirectTo("/evaluation/selfEvaluation.xhtml?student=true&selectedId=" + selectedId);
+            super.redirectTo("/content/add/selfEvaluation.xhtml?student=true&selectedId=" + selectedId);
         } else {
-            super.redirectTo("/evaluation/selfEvaluation.xhtml?tutor=true&selectedId=" + selectedId);
+            super.redirectTo("/content/add/selfEvaluation.xhtml?tutor=true&selectedId=" + selectedId);
         }
     }
 
@@ -149,9 +149,9 @@ public class EvaluationListView extends BaseView {
 
             super.info("Data deletion successful");
             if (current.getStudentEvaluation()) {
-                super.redirectTo("/evaluation/evaluationList.xhtml?student=true");
+                super.redirectTo("/content/add/evaluationList.xhtml?student=true");
             } else {
-                super.redirectTo("/evaluation/evaluationList.xhtml?tutor=true");
+                super.redirectTo("/content/add/evaluationList.xhtml?tutor=true");
             }
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");

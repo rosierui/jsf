@@ -1,4 +1,4 @@
-package org.moonwave.view.evaluation;
+package org.moonwave.view.content.add;
 
 import java.io.IOException;
 import java.util.List;
@@ -81,11 +81,11 @@ public class PerformanceListView extends BaseView {
     // ========================================================== ActionListener
 
     public void newPerformance() throws IOException {
-        super.redirectTo("/evaluation/performance.xhtml");
+        super.redirectTo("/content/add/performance.xhtml");
     }
 
     public void edit(String selectedId) throws IOException {
-        super.redirectTo("/evaluation/performance.xhtml?selectedId=" + selectedId);
+        super.redirectTo("/content/add/performance.xhtml?selectedId=" + selectedId);
     }
 
     /**
@@ -116,6 +116,6 @@ public class PerformanceListView extends BaseView {
             super.error("Sorry, an error occurred, please contact your administrator");
             LOG.error("", e);
         }
-        super.redirectTo("/evaluation/performanceList.xhtml");
+        super.redirectTo("/content/add/performanceList.xhtml");
     }
 }

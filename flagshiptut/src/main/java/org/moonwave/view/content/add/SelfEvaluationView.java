@@ -1,4 +1,4 @@
-package org.moonwave.view.evaluation;
+package org.moonwave.view.content.add;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -10,7 +10,7 @@ import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.bo.GenericBO;
 import org.moonwave.jpa.bo.UserBO;
-import org.moonwave.jpa.model.EvaluationPerformance;
+import org.moonwave.jpa.model.EvaluationObjective;
 import org.moonwave.jpa.model.Semester;
 import org.moonwave.jpa.model.User;
 import org.moonwave.jpa.model.Week;
@@ -27,30 +27,42 @@ import org.slf4j.LoggerFactory;
  */
 @ManagedBean
 @ViewScoped
-public class PerformanceView extends BaseView {
+public class SelfEvaluationView extends BaseView {
 
     private static final long serialVersionUID = 1L;
-    static final Logger LOG = LoggerFactory.getLogger(PerformanceView.class);
+    static final Logger LOG = LoggerFactory.getLogger(SelfEvaluationView.class);
 
-    EvaluationPerformance current;
+    EvaluationObjective current;
     List<User> students;
     List<User> tutors;
     List<Semester> semesters;
     List<Week> weeks;
 
+
+    boolean byStudent = false; // evaluation by student 
+    boolean byTutor = false;   // evaluation by tutor
+
     @PostConstruct
     public void init() {
+
+        byStudent = (super.getParameter("student") != null) ? true : false;
+        byTutor = (super.getParameter("tutor") != null) ? true : false;
+
         String selectedId = super.getParameter("selectedId");
         if (selectedId != null) { // edit
-            GenericBO<EvaluationPerformance> bo = new GenericBO<>(EvaluationPerformance.class);
+            GenericBO<EvaluationObjective> bo = new GenericBO<>(EvaluationObjective.class);
             current = bo.findById(Integer.valueOf(selectedId));
         } else {
-            current = new EvaluationPerformance();
+            current = new EvaluationObjective();
             current.setPublished(true);
-            current.setTutor(super.getLoggedInUser());
+            if (byStudent) {
+                current.setUser(super.getLoggedInUser());
+            }
+            if (byTutor) {
+                current.setTutor(super.getLoggedInUser());
+            }
         }
-
-        // get a list of students under the tutor
+        // get a list of students
         students = new UserBO().findAllStudents();
         Collections.sort(students);
 
@@ -66,12 +78,12 @@ public class PerformanceView extends BaseView {
 
     }
 
-    public EvaluationPerformance getCurrent() {
+    public EvaluationObjective getCurrent() {
         return current;
     }
 
-    public void setCurrent(EvaluationPerformance current) {
-        this.current = current;
+    public void setCurrent(EvaluationObjective Current) {
+        this.current = Current;
     }
 
     public List<User> getStudents() {
@@ -106,6 +118,22 @@ public class PerformanceView extends BaseView {
         this.weeks = weeks;
     }
 
+    public boolean isByStudent() {
+        return byStudent;
+    }
+
+    public void setByStudent(boolean byStudent) {
+        this.byStudent = byStudent;
+    }
+
+    public boolean isByTutor() {
+        return byTutor;
+    }
+
+    public void setByTutor(boolean byTutor) {
+        this.byTutor = byTutor;
+    }
+
     // ========================================================== ActionListener
 
     public void cancel() throws IOException {
@@ -113,7 +141,11 @@ public class PerformanceView extends BaseView {
     }
 
     public void redirectToListView() throws IOException {
-        super.redirectTo("/evaluation/performanceList.xhtml");
+        if (byStudent) {
+            super.redirectTo("/content/add/evaluationList.xhtml?student=true");
+        } else {
+            super.redirectTo("/content/add/evaluationList.xhtml?tutor=ture");
+        }
     }
 
     public String save() {
@@ -124,6 +156,11 @@ public class PerformanceView extends BaseView {
 //        }
         try {
             if (current.getId() == null) {
+                if (this.byStudent) {
+                    current.setStudentEvaluation(true);
+                } else if (this.byTutor) {
+                    current.setStudentEvaluation(false);
+                }
                 current.setCreateTime(super.getSqlTimestamp());
                 super.getBasebo().persist(current);
             } else {
@@ -138,4 +175,6 @@ public class PerformanceView extends BaseView {
         }
         return null;
     }
+
+    // ========================================================= Private methods
 }
