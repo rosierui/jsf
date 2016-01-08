@@ -62,7 +62,7 @@
                     <p:commandButton value="#{label.edit}" ajax="true" update="@([id$=jsfForm])"
                         actionListener="${performanceListView.edit(item.id)}"> 
                     </p:commandButton>
-                    <p:commandButton value="#{label.delete}" ajax="true" update="@([id$=jsfForm])"
+                    <p:commandButton value="#{label.delete}" ajax="true" update="@([id$=jsfForm])" rendered="#{!item.published}"
                             actionListener="${performanceListView.delete(item.id)}">
                         <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
                     </p:commandButton>

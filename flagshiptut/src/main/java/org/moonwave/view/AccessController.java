@@ -57,7 +57,7 @@ public class AccessController implements Serializable {
     }
 
     /**
-     * Editor can add new announcement, group post, assignment, etc. 
+     * Editor can add contents like announcement, group post, assignment, etc. 
      * @return
      */
     public boolean isEditor() {

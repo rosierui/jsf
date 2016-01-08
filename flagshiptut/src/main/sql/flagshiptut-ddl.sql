@@ -273,6 +273,7 @@ CREATE TABLE evaluation_performance (
     performance             SMALLINT,
     total                   SMALLINT,
     note                    VARCHAR(255) CHARACTER SET utf8,
+    published               BOOLEAN,
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP
 );
@@ -306,6 +307,7 @@ CREATE TABLE evaluation_objective (
     eval_part3_comments     VARCHAR(255) CHARACTER SET utf8, -- Other comments
 
     student_evaluation      BOOLEAN, -- true student evaluation, false tutor evaluation
+    published               BOOLEAN,
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP
 );

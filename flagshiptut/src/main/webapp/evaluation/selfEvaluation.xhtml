@@ -27,6 +27,10 @@
 
         <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         <h:form id="jsfForm">
+            <p:commandButton value="#{label.save}" update="messages @([id$=jsfForm])" action="#{selfEvaluationView.save}" />
+            <p:commandButton value="#{label.cancel}" ajax="true" actionListener="#{selfEvaluationView.cancel}"/>
+            <br/>
+            <br/>
             <h:panelGrid columns="4" cellpadding="5" >
                 <h:outputLabel value="Student Name:" />
                 <p:selectOneMenu id="student" converter="javax.faces.Integer" value="#{selfEvaluationView.current.user.id}" label="#{label.student}"
@@ -113,8 +117,12 @@
                 </h:panelGroup>
                 <h:outputText value="" />
             </p:panelGrid>
-
-            <p:commandButton value="Submit" update=":messages jsfForm" actionListener="#{selfEvaluationView.save}" />
+            <br/>
+            <h:panelGrid columns="2">
+                <h:outputText value="${label.publish}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.current.published}" style="margin-left:10px" />
+            </h:panelGrid>
+            <br/>
 
         </h:form>
     </ui:define>

@@ -20,25 +20,29 @@
         </c:if>
         <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         <h:form id="jsfForm">
+            <p:commandButton value="#{label.save}" update="messages @([id$=jsfForm])" action="#{performanceView.save}" />
+            <p:commandButton value="#{label.cancel}" ajax="true" actionListener="#{performanceView.cancel}"/>
+            <br/>
+            <br/>
             <h:panelGrid columns="4" cellpadding="5" >
                 <h:outputLabel value="Student Name:" />
-                <p:selectOneMenu id="student" converter="javax.faces.Integer" value="#{performanceView.evaluation.user.id}" label="#{label.student}"
+                <p:selectOneMenu id="student" converter="javax.faces.Integer" value="#{performanceView.current.user.id}" label="#{label.student}"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
                     <f:selectItems value="#{performanceView.students}" var="s" itemLabel="#{s.name}" itemValue="#{s.id}" />
                 </p:selectOneMenu>
                 <h:outputLabel value="Semester:" style="margin-left:150px"/>
-                <p:selectOneMenu id="Semester" value="#{performanceView.evaluation.semester}" label="Semesters"
+                <p:selectOneMenu id="Semester" value="#{performanceView.current.semester}" label="Semesters"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" >
                     <f:selectItems value="#{performanceView.semesters}" var="s" itemLabel="#{s.name}" itemValue="#{s.alias}" />
                 </p:selectOneMenu>
 
                 <h:outputLabel value="Tutor Name:" />
-                <p:selectOneMenu id="tutor" converter="javax.faces.Integer" value="#{performanceView.evaluation.tutor.id}" label="#{label.tutor}"
+                <p:selectOneMenu id="tutor" converter="javax.faces.Integer" value="#{performanceView.current.tutor.id}" label="#{label.tutor}"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" disabled="true">
                     <f:selectItems value="#{performanceView.tutors}" var="t" itemLabel="#{t.name}" itemValue="#{t.id}" />
                 </p:selectOneMenu>
                 <h:outputLabel value="Week:" style="margin-left:150px"/>
-                <p:selectOneMenu id="week" value="#{performanceView.evaluation.week}" label="Weeks"
+                <p:selectOneMenu id="week" value="#{performanceView.current.week}" label="Weeks"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" >
                     <f:selectItems value="#{performanceView.weeks}" var="w" itemLabel="#{w.week}" itemValue="#{w.week}" />
                 </p:selectOneMenu>
@@ -49,17 +53,21 @@
                 <h:outputLabel for="participation" value="Prticipation (3)" />
                 <h:outputLabel for="performance" value="Performance (3)" />
                 <h:outputLabel for="total" value="Total (10)" />
-                <p:inputText id="attendance" value="#{performanceView.evaluation.attendance}" size="5" />
-                <p:inputText id="participation" value="#{performanceView.evaluation.participation}" size="5" />
-                <p:inputText id="performance" value="#{performanceView.evaluation.performance}" size="5" />
-                <p:inputText id="total" value="#{performanceView.evaluation.total}" size="5" />
+                <p:inputText id="attendance" value="#{performanceView.current.attendance}" size="5" />
+                <p:inputText id="participation" value="#{performanceView.current.participation}" size="5" />
+                <p:inputText id="performance" value="#{performanceView.current.performance}" size="5" />
+                <p:inputText id="total" value="#{performanceView.current.total}" size="5" />
             </p:panelGrid>
 
             <br/>
             <h:outputLabel for="note" value="Note" /><br/>
-            <p:inputTextarea id="note" value="#{performanceView.evaluation.note}" rows="6" cols="55" autoResize="false" maxlength="255"/>
+            <p:inputTextarea id="note" value="#{performanceView.current.note}" rows="6" cols="55" autoResize="false" maxlength="255"/>
             <br/>
-            <p:commandButton value="Submit" update="messages jsfForm" actionListener="#{performanceView.save}" />
+            <h:panelGrid columns="2">
+                <h:outputText value="${label.publish}" />
+                <p:selectBooleanCheckbox value="#{performanceView.current.published}" style="margin-left:10px" />
+            </h:panelGrid>
+            <br/>
 
         </h:form>
     </ui:define>

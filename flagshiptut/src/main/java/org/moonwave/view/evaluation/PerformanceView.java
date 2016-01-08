@@ -1,5 +1,6 @@
 package org.moonwave.view.evaluation;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class PerformanceView extends BaseView {
     private static final long serialVersionUID = 1L;
     static final Logger LOG = LoggerFactory.getLogger(PerformanceView.class);
 
-    EvaluationPerformance evaluation;
+    EvaluationPerformance current;
     List<User> students;
     List<User> tutors;
     List<Semester> semesters;
@@ -39,7 +40,17 @@ public class PerformanceView extends BaseView {
 
     @PostConstruct
     public void init() {
-        // get a list of students
+        String selectedId = super.getParameter("selectedId");
+        if (selectedId != null) { // edit
+            GenericBO<EvaluationPerformance> bo = new GenericBO<>(EvaluationPerformance.class);
+            current = bo.findById(Integer.valueOf(selectedId));
+        } else {
+            current = new EvaluationPerformance();
+            current.setPublished(true);
+            current.setTutor(super.getLoggedInUser());
+        }
+
+        // get a list of students under the tutor
         students = new UserBO().findAllStudents();
         Collections.sort(students);
 
@@ -53,15 +64,14 @@ public class PerformanceView extends BaseView {
         GenericBO<Week> weekbo = new GenericBO<>(Week.class);
         weeks = weekbo.findAll();
 
-        resetfields();
     }
 
-    public EvaluationPerformance getEvaluation() {
-        return evaluation;
+    public EvaluationPerformance getCurrent() {
+        return current;
     }
 
-    public void setEvaluation(EvaluationPerformance evaluation) {
-        this.evaluation = evaluation;
+    public void setCurrent(EvaluationPerformance current) {
+        this.current = current;
     }
 
     public List<User> getStudents() {
@@ -96,6 +106,16 @@ public class PerformanceView extends BaseView {
         this.weeks = weeks;
     }
 
+    // ========================================================== ActionListener
+
+    public void cancel() throws IOException {
+        redirectToListView();
+    }
+
+    public void redirectToListView() throws IOException {
+        super.redirectTo("/evaluation/performanceList.xhtml");
+    }
+
     public String save() {
         // validation
 //        if (StringUtil.nullOrEmpty(subject)) {
@@ -103,11 +123,15 @@ public class PerformanceView extends BaseView {
 //            return null;
 //        }
         try {
-            evaluation.setCreateTime(super.getSqlTimestamp());
-            super.getBasebo().persist(evaluation);
+            if (current.getId() == null) {
+                current.setCreateTime(super.getSqlTimestamp());
+                super.getBasebo().persist(current);
+            } else {
+                super.getBasebo().update(current);
+            }
 
-            resetfields();
             super.info("Data was saved successfully");
+            redirectToListView();
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");
             LOG.error(StackTrace.toString(e));
@@ -117,8 +141,4 @@ public class PerformanceView extends BaseView {
 
     // ========================================================= Private methods
 
-    private void resetfields() {
-        evaluation =  new EvaluationPerformance();
-        evaluation.setTutor(super.getLoggedInUser());
-    }
 }

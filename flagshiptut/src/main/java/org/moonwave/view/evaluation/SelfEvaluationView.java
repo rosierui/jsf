@@ -45,17 +45,23 @@ public class SelfEvaluationView extends BaseView {
     @PostConstruct
     public void init() {
 
+        byStudent = (super.getParameter("student") != null) ? true : false;
+        byTutor = (super.getParameter("tutor") != null) ? true : false;
+
         String selectedId = super.getParameter("selectedId");
         if (selectedId != null) { // edit
             GenericBO<EvaluationObjective> bo = new GenericBO<>(EvaluationObjective.class);
             current = bo.findById(Integer.valueOf(selectedId));
         } else {
             current = new EvaluationObjective();
+            current.setPublished(true);
+            if (byStudent) {
+                current.setUser(super.getLoggedInUser());
+            }
+            if (byTutor) {
+                current.setTutor(super.getLoggedInUser());
+            }
         }
-
-        byStudent = (super.getParameter("student") != null) ? true : false;
-        byTutor = (super.getParameter("tutor") != null) ? true : false;
-
         // get a list of students
         students = new UserBO().findAllStudents();
         Collections.sort(students);
@@ -70,7 +76,6 @@ public class SelfEvaluationView extends BaseView {
         GenericBO<Week> weekbo = new GenericBO<>(Week.class);
         weeks = weekbo.findAll();
 
-        resetfields();
     }
 
     public EvaluationObjective getCurrent() {
@@ -150,15 +155,18 @@ public class SelfEvaluationView extends BaseView {
 //            return null;
 //        }
         try {
-            if (this.byStudent) {
-                current.setStudentEvaluation(true);
-            } else if (this.byTutor) {
-                current.setStudentEvaluation(false);
+            if (current.getId() == null) {
+                if (this.byStudent) {
+                    current.setStudentEvaluation(true);
+                } else if (this.byTutor) {
+                    current.setStudentEvaluation(false);
+                }
+                current.setCreateTime(super.getSqlTimestamp());
+                super.getBasebo().persist(current);
+            } else {
+                super.getBasebo().update(current);
             }
-            current.setCreateTime(super.getSqlTimestamp());
-            super.getBasebo().persist(current);
 
-            resetfields();
             super.info("Data was saved successfully");
             redirectToListView();
         } catch (Exception e) {
@@ -169,14 +177,4 @@ public class SelfEvaluationView extends BaseView {
     }
 
     // ========================================================= Private methods
-
-    private void resetfields() {
-        current =  new EvaluationObjective();
-        if (byStudent) {
-            current.setUser(super.getLoggedInUser());
-        }
-        if (byTutor) {
-            current.setTutor(super.getLoggedInUser());
-        }
-    }
 }

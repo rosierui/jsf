@@ -49,6 +49,8 @@ public class EvaluationPerformance implements Serializable {
 
     private String note;
 
+    private Boolean published;
+
     @Column(name="update_time")
     private Timestamp updateTime;
 
@@ -142,6 +144,14 @@ public class EvaluationPerformance implements Serializable {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Boolean getPublished() {
+        return published;
+    }
+
+    public void setPublished(Boolean published) {
+        this.published = published;
     }
 
     public Timestamp getCreateTime() {

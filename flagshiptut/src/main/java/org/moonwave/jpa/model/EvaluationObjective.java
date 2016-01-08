@@ -78,6 +78,8 @@ public class EvaluationObjective implements Serializable {
     @Column(name="student_evaluation")
     private Boolean studentEvaluation;
 
+    private Boolean published;
+
     @Column(name="update_time")
     private Timestamp updateTime;
 
@@ -235,6 +237,14 @@ public class EvaluationObjective implements Serializable {
 
     public void setStudentEvaluation(Boolean studentEvaluation) {
         this.studentEvaluation = studentEvaluation;
+    }
+
+    public Boolean getPublished() {
+        return published;
+    }
+
+    public void setPublished(Boolean published) {
+        this.published = published;
     }
 
     public Timestamp getUpdateTime() {
