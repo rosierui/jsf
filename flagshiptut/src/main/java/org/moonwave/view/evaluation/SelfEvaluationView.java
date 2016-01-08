@@ -1,5 +1,6 @@
 package org.moonwave.view.evaluation;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class SelfEvaluationView extends BaseView {
     private static final long serialVersionUID = 1L;
     static final Logger LOG = LoggerFactory.getLogger(SelfEvaluationView.class);
 
-    EvaluationObjective evaluation;
+    EvaluationObjective current;
     List<User> students;
     List<User> tutors;
     List<Semester> semesters;
@@ -43,6 +44,14 @@ public class SelfEvaluationView extends BaseView {
 
     @PostConstruct
     public void init() {
+
+        String selectedId = super.getParameter("selectedId");
+        if (selectedId != null) { // edit
+            GenericBO<EvaluationObjective> bo = new GenericBO<>(EvaluationObjective.class);
+            current = bo.findById(Integer.valueOf(selectedId));
+        } else {
+            current = new EvaluationObjective();
+        }
 
         byStudent = (super.getParameter("student") != null) ? true : false;
         byTutor = (super.getParameter("tutor") != null) ? true : false;
@@ -64,12 +73,12 @@ public class SelfEvaluationView extends BaseView {
         resetfields();
     }
 
-    public EvaluationObjective getEvaluation() {
-        return evaluation;
+    public EvaluationObjective getCurrent() {
+        return current;
     }
 
-    public void setEvaluation(EvaluationObjective evaluation) {
-        this.evaluation = evaluation;
+    public void setCurrent(EvaluationObjective Current) {
+        this.current = Current;
     }
 
     public List<User> getStudents() {
@@ -120,6 +129,20 @@ public class SelfEvaluationView extends BaseView {
         this.byTutor = byTutor;
     }
 
+    // ========================================================== ActionListener
+
+    public void cancel() throws IOException {
+        redirectToListView();
+    }
+
+    public void redirectToListView() throws IOException {
+        if (byStudent) {
+            super.redirectTo("/evaluation/evaluationList.xhtml?student=true");
+        } else {
+            super.redirectTo("/evaluation/evaluationList.xhtml?tutor=ture");
+        }
+    }
+
     public String save() {
         // validation
 //        if (StringUtil.nullOrEmpty(subject)) {
@@ -128,15 +151,16 @@ public class SelfEvaluationView extends BaseView {
 //        }
         try {
             if (this.byStudent) {
-                evaluation.setStudentEvaluation(true);
+                current.setStudentEvaluation(true);
             } else if (this.byTutor) {
-                evaluation.setStudentEvaluation(false);
+                current.setStudentEvaluation(false);
             }
-            evaluation.setCreateTime(super.getSqlTimestamp());
-            super.getBasebo().persist(evaluation);
+            current.setCreateTime(super.getSqlTimestamp());
+            super.getBasebo().persist(current);
 
             resetfields();
             super.info("Data was saved successfully");
+            redirectToListView();
         } catch (Exception e) {
             super.error("Sorry, an error occurred, please contact your administrator");
             LOG.error(StackTrace.toString(e));
@@ -147,12 +171,12 @@ public class SelfEvaluationView extends BaseView {
     // ========================================================= Private methods
 
     private void resetfields() {
-        evaluation =  new EvaluationObjective();
+        current =  new EvaluationObjective();
         if (byStudent) {
-            evaluation.setUser(super.getLoggedInUser());
+            current.setUser(super.getLoggedInUser());
         }
         if (byTutor) {
-            evaluation.setTutor(super.getLoggedInUser());
+            current.setTutor(super.getLoggedInUser());
         }
     }
 }

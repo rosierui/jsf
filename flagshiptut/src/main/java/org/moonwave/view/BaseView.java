@@ -137,4 +137,8 @@ public class BaseView implements Serializable {
     public void redirectTo(String pageUrl) throws IOException {
         JSFUtil.redirectTo(pageUrl);
     }
+
+    public void accessDenied() throws IOException {
+        JSFUtil.redirectTo("/error/403.xhtml");
+    }
 }

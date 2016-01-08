@@ -14,7 +14,8 @@ import java.sql.Timestamp;
 @NamedQueries({
     @NamedQuery(name="EvaluationObjective.findAll",  query="SELECT e FROM EvaluationObjective e"),
     @NamedQuery(name="EvaluationObjective.findById", query="SELECT e FROM EvaluationObjective e WHERE e.id = :id"),
-    @NamedQuery(name="EvaluationObjective.findByUserId", query="SELECT e FROM EvaluationObjective e WHERE e.user.id = :userId")
+    @NamedQuery(name="EvaluationObjective.findByUserId", query="SELECT e FROM EvaluationObjective e WHERE e.user.id = :userId"),
+    @NamedQuery(name="EvaluationObjective.findByTutorId", query="SELECT e FROM EvaluationObjective e WHERE e.tutor.id = :tutorId")
 })
 
 public class EvaluationObjective implements Serializable {

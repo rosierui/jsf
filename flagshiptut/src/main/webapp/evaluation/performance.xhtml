@@ -15,6 +15,9 @@
         <c:if test="${!loginController.isUserLoggedIn()}">
             ${loginController.redirectToLogin()}
         </c:if>
+        <c:if test="${!accessController.isEditor()}">
+            ${baseView.accessDenied()}
+        </c:if>
         <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         <h:form id="jsfForm">
             <h:panelGrid columns="4" cellpadding="5" >

@@ -9,33 +9,43 @@
     template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
-        <h:outputLabel value="${label.evaluation}" />
+        <c:if test="#{param['student'] == 'true'}">
+            <h:outputLabel value="${label.selfEvaluation}" />
+        </c:if>
+        <c:if test="${request.getParameter('tutor') == 'true'}">
+            <h:outputLabel value="${label.tutorEvaluation}" />
+        </c:if>
+            
     </ui:define>
     <ui:define name="implementation">
         <c:if test="${!loginController.isUserLoggedIn()}">
             ${loginController.redirectToLogin()}
         </c:if>
+        <c:if test="${param['tutor'] == 'true' and !accessController.isEditor()}">
+            ${baseView.accessDenied()}
+        </c:if>
+
         <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         <h:form id="jsfForm">
             <h:panelGrid columns="4" cellpadding="5" >
                 <h:outputLabel value="Student Name:" />
-                <p:selectOneMenu id="student" converter="javax.faces.Integer" value="#{selfEvaluationView.evaluation.user.id}" label="#{label.student}"
+                <p:selectOneMenu id="student" converter="javax.faces.Integer" value="#{selfEvaluationView.current.user.id}" label="#{label.student}"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" disabled="#{selfEvaluationView.byStudent}">
                     <f:selectItems value="#{selfEvaluationView.students}" var="s" itemLabel="#{s.name}" itemValue="#{s.id}" />
                 </p:selectOneMenu>
                 <h:outputLabel value="Semester:" style="margin-left:150px"/>
-                <p:selectOneMenu id="Semester" value="#{selfEvaluationView.evaluation.semester}" label="Semesters"
+                <p:selectOneMenu id="Semester" value="#{selfEvaluationView.current.semester}" label="Semesters"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" >
                     <f:selectItems value="#{selfEvaluationView.semesters}" var="s" itemLabel="#{s.name}" itemValue="#{s.alias}" />
                 </p:selectOneMenu>
 
                 <h:outputLabel value="Tutor Name:" />
-                <p:selectOneMenu id="tutor" converter="javax.faces.Integer" value="#{selfEvaluationView.evaluation.tutor.id}" label="#{label.tutor}"
+                <p:selectOneMenu id="tutor" converter="javax.faces.Integer" value="#{selfEvaluationView.current.tutor.id}" label="#{label.tutor}"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" disabled="#{selfEvaluationView.byTutor}">
                     <f:selectItems value="#{selfEvaluationView.tutors}" var="t" itemLabel="#{t.name}" itemValue="#{t.id}" />
                 </p:selectOneMenu>
                 <h:outputLabel value="Week:" style="margin-left:150px"/>
-                <p:selectOneMenu id="week" value="#{selfEvaluationView.evaluation.week}" label="Weeks"
+                <p:selectOneMenu id="week" value="#{selfEvaluationView.current.week}" label="Weeks"
                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" >
                     <f:selectItems value="#{selfEvaluationView.weeks}" var="w" itemLabel="#{w.week}" itemValue="#{w.week}" />
                 </p:selectOneMenu>
@@ -48,16 +58,16 @@
                 <h:outputLabel value="#{selfEvaluationView.byStudent ? 'Student' : 'Tutor'}" />
 
                 <h:outputText value="${message.eval_part1_1}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart11}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.current.evalPart11}" />
 
                 <h:outputText value="${message.eval_part1_2}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart12}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.current.evalPart12}" />
 
                 <h:outputText value="${message.eval_part1_3}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart13}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.current.evalPart13}" />
                 <h:panelGroup>
                     <h:outputText value="${message.other_comments}" /><br/>
-                    <p:inputTextarea value="#{selfEvaluationView.evaluation.evalPart1Comments}" rows="5" cols="60" maxlength="255"/>
+                    <p:inputTextarea value="#{selfEvaluationView.current.evalPart1Comments}" rows="5" cols="60" maxlength="255"/>
                 </h:panelGroup>
                 <h:outputText value="" />
             </p:panelGrid>
@@ -69,16 +79,16 @@
                 <h:outputLabel value="#{selfEvaluationView.byStudent ? 'Student' : 'Tutor'}" />
 
                 <h:outputText value="${message.eval_part2_1}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart21}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.current.evalPart21}" />
 
                 <h:outputText value="${message.eval_part2_2}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart22}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.current.evalPart22}" />
 
                 <h:outputText value="${message.eval_part2_3}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart23}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.current.evalPart23}" />
                 <h:panelGroup>
                     <h:outputText value="${message.other_comments}" /><br/>
-                    <p:inputTextarea value="#{selfEvaluationView.evaluation.evalPart2Comments}" rows="5" cols="60" maxlength="255"/>
+                    <p:inputTextarea value="#{selfEvaluationView.current.evalPart2Comments}" rows="5" cols="60" maxlength="255"/>
                 </h:panelGroup>
                 <h:outputText value="" />
             </p:panelGrid>
@@ -90,16 +100,16 @@
                 <h:outputLabel value="#{selfEvaluationView.byStudent ? 'Student' : 'Tutor'}" />
 
                 <h:outputText value="${message.eval_part3_1}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart31}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.current.evalPart31}" />
 
                 <h:outputText value="${message.eval_part3_2}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart32}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.current.evalPart32}" />
 
                 <h:outputText value="${message.eval_part3_3}" />
-                <p:selectBooleanCheckbox value="#{selfEvaluationView.evaluation.evalPart33}" />
+                <p:selectBooleanCheckbox value="#{selfEvaluationView.current.evalPart33}" />
                 <h:panelGroup>
                     <h:outputText value="${message.other_comments}" /><br/>
-                    <p:inputTextarea value="#{selfEvaluationView.evaluation.evalPart3Comments}" rows="5" cols="60" maxlength="255"/>
+                    <p:inputTextarea value="#{selfEvaluationView.current.evalPart3Comments}" rows="5" cols="60" maxlength="255"/>
                 </h:panelGroup>
                 <h:outputText value="" />
             </p:panelGrid>

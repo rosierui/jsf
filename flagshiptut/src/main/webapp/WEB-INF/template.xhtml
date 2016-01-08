@@ -60,12 +60,12 @@
                 <span class="PFTopLinks floatRight boldFont cursorPointer" id="pushContent">
                     <h:graphicImage name="main/images/content-128.png" /><span class="PFGrayText"></span><span class="PFDarkText"><h:outputText value="#{label.content}" /></span>
                         <div id="pushContentMenu" class="navOverlay">
+                            <a href="#{request.contextPath}/schedule/dashboard.xhtml"><h:outputText value="#{label.schedules}" /></a>
                             <a href="#{request.contextPath}/content/view/announcements.xhtml"><h:outputText value="#{label.announcements}" /></a>
                             <a href="#{request.contextPath}/content/view/groupposts.xhtml"><h:outputText value="#{label.groupposts}" /></a>
                             <a href="#{request.contextPath}/content/view/myGroups.xhtml"><h:outputText value="#{label.myGroups}" /></a>
                             <h:panelGroup rendered="${accessController.isStudent()}">
                               <a href="#{request.contextPath}/content/view/myGrades.xhtml"><h:outputText value="#{label.myGrades}" /></a>
-                              <a href="#{request.contextPath}/schedule/dashboard.xhtml"><h:outputText value="#{label.mySchedules}" /></a>
                             </h:panelGroup>
                         </div>
                 </span>
@@ -76,7 +76,7 @@
                     <h:graphicImage name="main/images/new-content-128.png" /><span class="PFGrayText"></span><span class="PFDarkText"><h:outputText value="#{label.content}" /></span>
                         <div id="pushNewContentMenu" class="navOverlay">
                             <h:panelGroup rendered="${accessController.isStudent()}">
-                              <a href="#{request.contextPath}/evaluation/selfEvaluation.xhtml?student=true"><h:outputText value="#{label.selfEvaluation}" /></a>
+                              <a href="#{request.contextPath}/evaluation/evaluationList.xhtml?student=true"><h:outputText value="#{label.selfEvaluation}" /></a>
                               <a href="#{request.contextPath}/schedule/schedule.xhtml"><h:outputText value="#{label.schedule}" /></a>
                             </h:panelGroup>
                             <h:panelGroup rendered="${accessController.isEditor()}">
@@ -85,8 +85,8 @@
                               <a href="#{request.contextPath}/error/tbd.xhtml?title=Assignment"><h:outputText value="#{label.assignment}" /></a>
                             </h:panelGroup>
                             <h:panelGroup rendered="${accessController.isTutor()}">
-                              <a href="#{request.contextPath}/evaluation/selfEvaluation.xhtml?tutor=true"><h:outputText value="#{label.tutorEvaluation}" /></a>
-                              <a href="#{request.contextPath}/evaluation/performance.xhtml"><h:outputText value="#{label.performanceEvaluation}" /></a>
+                              <a href="#{request.contextPath}/evaluation/evaluationList.xhtml?tutor=true"><h:outputText value="#{label.tutorEvaluation}" /></a>
+                              <a href="#{request.contextPath}/evaluation/performanceList.xhtml"><h:outputText value="#{label.performanceEvaluation}" /></a>
                               <a href="#{request.contextPath}/schedule/tutorSchedule.xhtml"><h:outputText value="#{label.tutorSchedule}" /></a>
                             </h:panelGroup>
                         </div>
@@ -145,12 +145,12 @@
                 <h:panelGroup rendered="${loginController.isUserLoggedIn()}">
                     <span id="divContent" class="MenuSideMainLink bordersOfMenuSide" onclick="Showcase.openSubMenu(this);"><h:graphicImage name="main/images/mono/ajaxCore.svg" /><h:graphicImage styleClass="hiddenIcons" name="main/images/mono/ajaxCoreBlue.svg" /><span class="MainLinkText"><h:outputText value="#{label.content}" /></span></span>
                     <div class="SubMenuLinkContainer">
+                        <a class="SubMenuLink" href="#{request.contextPath}/schedule/dashboard.xhtml">&bull; <h:outputText value="#{label.schedules}" /></a>
                         <a class="SubMenuLink" href="#{request.contextPath}/content/view/announcements.xhtml">&bull; <h:outputText value="#{label.announcements}" /></a>
                         <a class="SubMenuLink" href="#{request.contextPath}/content/view/groupposts.xhtml">&bull; <h:outputText value="#{label.groupposts}" /></a>
                         <a class="SubMenuLink" href="#{request.contextPath}/content/view/myGroups.xhtml">&bull; <h:outputText value="#{label.myGroups}" /></a>
                         <h:panelGroup rendered="${accessController.isStudent()}">
                           <a class="SubMenuLink" href="#{request.contextPath}/content/view/myGrades.xhtml">&bull; <h:outputText value="#{label.myGrades}" /></a>
-                          <a class="SubMenuLink" href="#{request.contextPath}/schedule/dashboard.xhtml">&bull; <h:outputText value="#{label.mySchedules}" /></a>
                         </h:panelGroup>
                     </div>
                 </h:panelGroup>
@@ -169,12 +169,12 @@
                           <a class="SubMenuLink" href="#{request.contextPath}/error/tbd.xhtml?title=Assignment">&bull; <h:outputText value="#{label.assignment}" /></a>
                         </h:panelGroup>
                         <h:panelGroup rendered="${accessController.isStudent()}">
-                          <a class="SubMenuLink" href="#{request.contextPath}/evaluation/selfEvaluation.xhtml?student=true">&bull; <h:outputText value="#{label.selfEvaluation}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/evaluation/evaluationList.xhtml?student=true">&bull; <h:outputText value="#{label.selfEvaluation}" /></a>
                           <a class="SubMenuLink" href="#{request.contextPath}/schedule/schedule.xhtml">&bull; <h:outputText value="#{label.schedule}" /></a>
                         </h:panelGroup>
                         <h:panelGroup rendered="${accessController.isTutor()}">
-                          <a class="SubMenuLink" href="#{request.contextPath}/evaluation/selfEvaluation.xhtml?tutor=true">&bull; <h:outputText value="#{label.tutorEvaluation}" /></a>
-                          <a class="SubMenuLink" href="#{request.contextPath}/evaluation/performance.xhtml">&bull; <h:outputText value="#{label.performanceEvaluation}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/evaluation/evaluationList.xhtml?tutor=true">&bull; <h:outputText value="#{label.tutorEvaluation}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/evaluation/performanceList.xhtml">&bull; <h:outputText value="#{label.performanceEvaluation}" /></a>
                           <a class="SubMenuLink" href="#{request.contextPath}/schedule/tutorSchedule.xhtml">&bull; <h:outputText value="#{label.tutorSchedule}" /></a>
                         </h:panelGroup>
                     </div>
