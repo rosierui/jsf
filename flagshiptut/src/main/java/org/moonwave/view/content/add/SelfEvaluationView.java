@@ -159,7 +159,7 @@ public class SelfEvaluationView extends BaseView {
         if (studentAccess) {
             super.redirectTo("/content/add/evaluationList.xhtml?student=true");
         } else {
-            super.redirectTo("/content/add/evaluationList.xhtml?tutor=ture");
+            super.redirectTo("/content/add/evaluationList.xhtml?tutor=true");
         }
     }
 
