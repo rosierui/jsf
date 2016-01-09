@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -105,6 +106,22 @@ public class BaseView implements Serializable {
         return ret;
     }
 
+    /**
+     * Sample call
+     * String title = super.getLocaleLabels().getString("selfEvaluation");
+     */
+    public ResourceBundle getLocaleLabels() {
+        return ResourceBundle.getBundle("org.moonwave.locale.Labels", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+    }
+
+    /**
+     * Sample call
+     * String eval_part2_1 = super.getLocaleMessages().getString("eval_part2_1");
+     */
+    public ResourceBundle getLocaleMessages() {
+        return ResourceBundle.getBundle("org.moonwave.locale.Messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+    }
+
     public String getLocaleDateTimeString(java.sql.Timestamp date) {
         String ret = null;
         String langCountry = getLocale().toLanguageTag();
@@ -138,7 +155,17 @@ public class BaseView implements Serializable {
         JSFUtil.redirectTo(pageUrl);
     }
 
-    public void accessDenied() throws IOException {
-        JSFUtil.redirectTo("/error/403.xhtml");
+    public void redirectToLogin() {
+        try {
+        	JSFUtil.redirectTo("/login.xhtml");
+        } catch (IOException e) {
+        }
+    }
+
+    public void accessDenied() {
+        try {
+            JSFUtil.redirectTo("/error/403.xhtml");
+        } catch (IOException e) {
+        }
     }
 }

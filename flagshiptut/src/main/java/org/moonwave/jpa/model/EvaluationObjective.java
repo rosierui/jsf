@@ -15,7 +15,8 @@ import java.sql.Timestamp;
     @NamedQuery(name="EvaluationObjective.findAll",  query="SELECT e FROM EvaluationObjective e"),
     @NamedQuery(name="EvaluationObjective.findById", query="SELECT e FROM EvaluationObjective e WHERE e.id = :id"),
     @NamedQuery(name="EvaluationObjective.findByUserId", query="SELECT e FROM EvaluationObjective e WHERE e.user.id = :userId order by e.createTime desc"),
-    @NamedQuery(name="EvaluationObjective.findByTutorId", query="SELECT e FROM EvaluationObjective e WHERE e.tutor.id = :tutorId order by e.createTime desc")
+    @NamedQuery(name="EvaluationObjective.findByTutorId", query="SELECT e FROM EvaluationObjective e WHERE e.tutor.id = :tutorId order by e.createTime desc"),
+    @NamedQuery(name="EvaluationObjective.findByParentEvaluationId", query="SELECT e FROM EvaluationObjective e WHERE e.parentEvaluationId = :parentEvaluationId")
 })
 
 public class EvaluationObjective implements Serializable {
@@ -80,11 +81,22 @@ public class EvaluationObjective implements Serializable {
 
     private Boolean published;
 
+    // self evaluation is the parent of a tutor evaluation
+    @Column(name="parent_evaluation_id")
+    private Integer parentEvaluationId;
+
     @Column(name="update_time")
     private Timestamp updateTime;
 
     @Column(name="create_time")
     private Timestamp createTime;
+
+    // helper fields
+    @Transient
+    EvaluationObjective selfEvaluation;
+
+    @Transient
+    EvaluationObjective tutorEvaluation;
 
     public EvaluationObjective() {
     }
@@ -233,9 +245,11 @@ public class EvaluationObjective implements Serializable {
 
     public Boolean getStudentEvaluation() {
         return this.studentEvaluation;
+//        return (parentEvaluationId != null) ? true : false;
     }
 
     public void setStudentEvaluation(Boolean studentEvaluation) {
+        // ignore for now
         this.studentEvaluation = studentEvaluation;
     }
 
@@ -245,6 +259,14 @@ public class EvaluationObjective implements Serializable {
 
     public void setPublished(Boolean published) {
         this.published = published;
+    }
+
+    public Integer getParentEvaluationId() {
+        return parentEvaluationId;
+    }
+
+    public void setParentEvaluationId(Integer parentEvaluationId) {
+        this.parentEvaluationId = parentEvaluationId;
     }
 
     public Timestamp getUpdateTime() {
@@ -291,4 +313,23 @@ public class EvaluationObjective implements Serializable {
         sb.append(",studentEvaluation= ").append(studentEvaluation);
         return sb.toString();
     }
+
+    // ========================================================== Helper methods
+
+    public EvaluationObjective getSelfEvaluation() {
+        return selfEvaluation;
+    }
+
+    public void setSelfEvaluation(EvaluationObjective selfEvaluation) {
+        this.selfEvaluation = selfEvaluation;
+    }
+
+    public EvaluationObjective getTutorEvaluation() {
+        return tutorEvaluation;
+    }
+
+    public void setTutorEvaluation(EvaluationObjective tutorEvaluation) {
+        this.tutorEvaluation = tutorEvaluation;
+    }
+
 }

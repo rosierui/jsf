@@ -308,12 +308,14 @@ CREATE TABLE evaluation_objective (
 
     student_evaluation      BOOLEAN, -- true student evaluation, false tutor evaluation
     published               BOOLEAN,
+    parent_evaluation_id    INTEGER REFERENCES evaluation_objective (id), -- self evaluation is the parent of a tutor evaluation
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP
 );
 
 CREATE INDEX eva_objective_idx1 ON evaluation_objective (user_id, semester, week);
 CREATE INDEX eva_objective_idx2 ON evaluation_objective (create_time);
+CREATE INDEX eva_objective_idx3 ON evaluation_objective (parent_evaluation_id);
 
 -- -----------------------------------------------------------------------------
 -- Create table course

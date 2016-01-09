@@ -83,8 +83,11 @@ public class LoginController extends BaseView {
         }
     }
 
-    public void redirectToLogin() throws IOException {
-        super.redirectTo("/login.xhtml");
+    public void redirectToLogin() {
+        try {
+            super.redirectTo("/login.xhtml");
+        } catch (IOException e) {
+        }
     }
 
     public void logout(ComponentSystemEvent e) throws IOException {

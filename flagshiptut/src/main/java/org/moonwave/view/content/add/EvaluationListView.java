@@ -42,14 +42,20 @@ public class EvaluationListView extends BaseView {
     boolean studentAccess;
     boolean tutorAccess;
 
+    // helper fields
+    String title;
+
     @PostConstruct
     public void init() {
         Map<String, String> map = JSFUtil.getRequestParameterMap();
         studentAccess = !StringUtil.nullOrEmpty(map.get("student")) && map.get("student").equals("true") ? true : false;
         tutorAccess = !StringUtil.nullOrEmpty(map.get("tutor")) && map.get("tutor").equals("true") ? true : false;
+
         if (studentAccess) {
+            title = super.getLocaleLabels().getString("selfEvaluation");
             data = new EvaluationObjectiveBO().findByUserId(super.getLoggedInUser().getId());
         } else {
+            title = super.getLocaleLabels().getString("tutorEvaluation");
             data = new EvaluationObjectiveBO().findByTutorId(super.getLoggedInUser().getId());
         }
     }
@@ -96,6 +102,10 @@ public class EvaluationListView extends BaseView {
 
     public boolean isTutorAccess() {
         return tutorAccess;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     // ========================================================== ActionListener

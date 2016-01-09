@@ -17,30 +17,13 @@
         </resource-bundle>
         <resource-bundle>
             <base-name>org.moonwave.locale.Messages</base-name>
-            <var>message</var>
+            <var>msgs</var>
         </resource-bundle>
         <locale-config>
             <default-locale>en</default-locale>
             <supported-locale>zh</supported-locale>
             <supported-locale>es</supported-locale>
         </locale-config>
-        <resource-bundle>
-            <base-name>/Bundle</base-name>
-            <var>bundle</var>
-        </resource-bundle>
-        <resource-bundle>
-            <base-name>/Bundle</base-name>
-            <var>bundle</var>
-        </resource-bundle>
-        <message-bundle>
-            org.moonwave.locale.Messages
-        </message-bundle>
     </application>
-
-        <!-- 
-    <lifecycle>
-        <phase-listener>org.moonwave.util.IECompatibilityFilter</phase-listener>
-    </lifecycle>
-         -->
 
 </faces-config>

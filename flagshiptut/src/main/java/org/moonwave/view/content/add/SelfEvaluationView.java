@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.bo.GenericBO;
@@ -15,6 +16,7 @@ import org.moonwave.jpa.model.Semester;
 import org.moonwave.jpa.model.User;
 import org.moonwave.jpa.model.Week;
 import org.moonwave.util.StackTrace;
+import org.moonwave.view.AccessController;
 import org.moonwave.view.BaseView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,16 +40,26 @@ public class SelfEvaluationView extends BaseView {
     List<Semester> semesters;
     List<Week> weeks;
 
+    boolean studentAccess = false; // evaluation by student 
+    boolean tutorAccess = false;   // evaluation by tutor
 
-    boolean byStudent = false; // evaluation by student 
-    boolean byTutor = false;   // evaluation by tutor
+    @ManagedProperty("#{accessController}")
+    private AccessController accessController;
+
+    // helper fields
+    String title;
 
     @PostConstruct
     public void init() {
 
-        byStudent = (super.getParameter("student") != null) ? true : false;
-        byTutor = (super.getParameter("tutor") != null) ? true : false;
+        studentAccess = (super.getParameter("student") != null) ? true : false;
+        tutorAccess = (super.getParameter("tutor") != null) ? true : false;
 
+        if (studentAccess) {
+            title = super.getLocaleLabels().getString("selfEvaluation");
+        } else {
+            title = super.getLocaleLabels().getString("tutorEvaluation");
+        }
         String selectedId = super.getParameter("selectedId");
         if (selectedId != null) { // edit
             GenericBO<EvaluationObjective> bo = new GenericBO<>(EvaluationObjective.class);
@@ -55,10 +67,10 @@ public class SelfEvaluationView extends BaseView {
         } else {
             current = new EvaluationObjective();
             current.setPublished(true);
-            if (byStudent) {
+            if (studentAccess) {
                 current.setUser(super.getLoggedInUser());
             }
-            if (byTutor) {
+            if (tutorAccess) {
                 current.setTutor(super.getLoggedInUser());
             }
         }
@@ -76,6 +88,9 @@ public class SelfEvaluationView extends BaseView {
         GenericBO<Week> weekbo = new GenericBO<>(Week.class);
         weeks = weekbo.findAll();
 
+        if (tutorAccess && !accessController.isEditor()) {
+            super.accessDenied();
+        }
     }
 
     public EvaluationObjective getCurrent() {
@@ -118,20 +133,20 @@ public class SelfEvaluationView extends BaseView {
         this.weeks = weeks;
     }
 
-    public boolean isByStudent() {
-        return byStudent;
+    public AccessController getAccessController() {
+        return accessController;
     }
 
-    public void setByStudent(boolean byStudent) {
-        this.byStudent = byStudent;
+    public void setAccessController(AccessController accessController) {
+        this.accessController = accessController;
     }
 
-    public boolean isByTutor() {
-        return byTutor;
+    public boolean isStudentAccess() {
+        return studentAccess;
     }
 
-    public void setByTutor(boolean byTutor) {
-        this.byTutor = byTutor;
+    public boolean isTutorAccess() {
+        return tutorAccess;
     }
 
     // ========================================================== ActionListener
@@ -141,7 +156,7 @@ public class SelfEvaluationView extends BaseView {
     }
 
     public void redirectToListView() throws IOException {
-        if (byStudent) {
+        if (studentAccess) {
             super.redirectTo("/content/add/evaluationList.xhtml?student=true");
         } else {
             super.redirectTo("/content/add/evaluationList.xhtml?tutor=ture");
@@ -150,15 +165,11 @@ public class SelfEvaluationView extends BaseView {
 
     public String save() {
         // validation
-//        if (StringUtil.nullOrEmpty(subject)) {
-//            super.error("Subject is empty");
-//            return null;
-//        }
         try {
             if (current.getId() == null) {
-                if (this.byStudent) {
+                if (this.studentAccess) {
                     current.setStudentEvaluation(true);
-                } else if (this.byTutor) {
+                } else if (this.tutorAccess) {
                     current.setStudentEvaluation(false);
                 }
                 current.setCreateTime(super.getSqlTimestamp());
@@ -176,5 +187,10 @@ public class SelfEvaluationView extends BaseView {
         return null;
     }
 
-    // ========================================================= Private methods
+    // ========================================================= Helper methods
+
+    public String getTitle() {
+        return title;
+    }
+
 }

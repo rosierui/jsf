@@ -64,10 +64,10 @@
             <p:ajaxStatus onstart="PF('ajaxMessageDialogWidgetVar').show()" oncomplete="PF('ajaxMessageDialogWidgetVar').hide()" />
             <p:dialog id="ajaxMessageDialog" widgetVar="ajaxMessageDialogWidgetVar" position="right top" closable="false" showHeader="false" draggable="false"
                       resizable="true" showEffect="fade" hideEffect="fade" styleClass="ajaxMessageDialog">
-                <center><h:outputText id="AjaxPleaseWaitText" styleClass="whiteLabel" value="#{message.pleaseWait}"/></center>
+                <center><h:outputText id="AjaxPleaseWaitText" styleClass="whiteLabel" value="#{msgs.pleaseWait}"/></center>
             </p:dialog>
             <p:blockUI id="PleaseWaitPopup" block=":bodyId" widgetVar="uiBlocker">
-                <h:outputLabel id="PleaseWaitText" value="#{message.pleaseWait}"/>
+                <h:outputLabel id="PleaseWaitText" value="#{msgs.pleaseWait}"/>
                 <p:graphicImage   name="img/loading_wheel.gif" styleClass="loadingSpinner"/>
             </p:blockUI>
         </div>
