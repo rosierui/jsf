@@ -263,6 +263,11 @@ public class DateUtil {
         return Calendar.getInstance();
     }
 
+    public static Date getTime() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.getTime();
+    }
+
     public static Date toDayStart(Date date) {
         Calendar calendar = DateUtil.toCalendar(date);
         clearHHMMSSmm(calendar);
