@@ -29,7 +29,7 @@ import java.security.NoSuchAlgorithmException;
  * SHA1Util
  * http://www.sha1-online.com/sha1-java/
  * 
- * @author Jonathan Luo
+ * @author moonwave
  */
 public class SHAUtil {
 

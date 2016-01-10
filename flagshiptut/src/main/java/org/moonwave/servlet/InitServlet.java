@@ -21,8 +21,8 @@ import org.slf4j.LoggerFactory;
 @WebServlet("/InitServlet")
 public class InitServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
-	static final Logger LOG = LoggerFactory.getLogger(InitServlet.class);
+    private static final long serialVersionUID = 1L;
+    static final Logger LOG = LoggerFactory.getLogger(InitServlet.class);
 
     /**
      * @see HttpServlet#HttpServlet()

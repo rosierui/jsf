@@ -23,26 +23,15 @@
 package org.moonwave.util;
 
 /**
- * Converts a Throwable object's stack trace information to a printable string. 
- * Works with JDK1.4 or later.
- * 
+ * ThreadUtil
+ *
  * @author moonwave
  */
-public class StackTrace {
-    public static String toString(Throwable cause) {
-        StringBuffer sb = new StringBuffer(1024);
-        if (cause != null) {
-            sb.append(cause.getMessage());
-            sb.append(Constants.NEW_LINE);
-            StackTraceElement[] items = cause.getStackTrace();
-            if (items != null) {
-                for (int i = 0;  i < items.length; i++) {
-                    StackTraceElement item = items[i];
-                    sb.append(item.toString());
-                    sb.append(Constants.NEW_LINE);
-                }
-            }
-        }
+public class ThreadUtil {
+    
+    public static String getThreadId() {
+        StringBuffer sb = new StringBuffer(30);
+        sb.append("[thread Id: ").append(Thread.currentThread().getId()).append("] ");
         return sb.toString();
     }
 }

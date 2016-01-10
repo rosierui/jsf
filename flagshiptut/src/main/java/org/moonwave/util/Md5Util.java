@@ -29,7 +29,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Md5Util
  * 
- * @author Jonathan Luo
+ * @author moonwave
  */
 public class Md5Util {
 
