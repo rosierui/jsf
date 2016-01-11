@@ -228,6 +228,8 @@ CREATE TABLE group_post (-- base group post
     subject                 VARCHAR(255) CHARACTER SET utf8 NOT NULL,
     body                    TEXT CHARACTER SET utf8, -- 64K
     published               BOOLEAN,
+    group_post_type         CHAR(1) NOT NULL DEFAULT '1', -- '1' regular post, '5' - assignment
+    due_date                DATETIME,
     user_id                 INTEGER NOT NULL REFERENCES user(id),
     update_time             TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     create_time             TIMESTAMP

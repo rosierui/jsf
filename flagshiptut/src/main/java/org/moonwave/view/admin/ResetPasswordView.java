@@ -2,6 +2,7 @@ package org.moonwave.view.admin;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.bo.UserBO;
 import org.moonwave.jpa.model.User;
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 @ManagedBean
-//@ViewScoped
+@ViewScoped
 public class ResetPasswordView extends BaseView {
 
     private static final long serialVersionUID = 1317717701493291877L;

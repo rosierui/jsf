@@ -3,6 +3,7 @@ package org.moonwave.jpa.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 
@@ -23,6 +24,9 @@ import java.util.List;
 public class GroupPost implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    public static final String REGULAR_POST = "1";
+    public static final String ASSIGNMENT = "5";
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
@@ -33,6 +37,13 @@ public class GroupPost implements Serializable {
     private String body;
 
     private Boolean published;
+
+    @Column(name="group_post_type")
+    private String groupPostType; // '1' regular post, '5' - assignment
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="due_date")
+    private Date dueDate;
 
     //bi-directional one-to-one association to User
     @OneToOne(fetch = FetchType.EAGER)
@@ -91,6 +102,25 @@ public class GroupPost implements Serializable {
 
     public void setPublished(Boolean published) {
         this.published = published;
+    }
+
+    public String getGroupPostType() {
+        return groupPostType;
+    }
+
+    public void setGroupPostType(String groupPostType) {
+        this.groupPostType = groupPostType;
+        if (groupPostType == null) {
+            this.groupPostType = REGULAR_POST;
+        }
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
     public User getUser() {
@@ -160,5 +190,15 @@ public class GroupPost implements Serializable {
         sb.append(",subject= ").append(subject);
         sb.append(",published= ").append(published);
         return sb.toString();
+    }
+
+    // ========================================================== Helper methods
+    
+    public boolean isRegularPost() {
+        return REGULAR_POST.equals(this.groupPostType);
+    }
+
+    public boolean isAssignment() {
+        return ASSIGNMENT.equals(this.groupPostType);
     }
 }
