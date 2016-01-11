@@ -10,7 +10,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.moonwave.jpa.bo.GenericBO;
-import org.moonwave.jpa.bo.TutorGroupBO;
 import org.moonwave.jpa.bo.UploadBO;
 import org.moonwave.jpa.model.GroupPost;
 import org.moonwave.jpa.model.TutorGroup;
@@ -51,8 +50,19 @@ public class GroupPostListView extends BaseView {
     @ManagedProperty("#{fileUploadView}")
     private FileUploadView fileUploadView;
 
+    // helper fields
+    String title;
+    boolean assignment = false;
+
     @PostConstruct
     public void init() {
+        String groupPostType = (getParameter("groupPostType") != null) ? getParameter("groupPostType") : "1";
+        assignment = GroupPost.ASSIGNMENT.equals(groupPostType);
+        if (assignment) {
+            title = super.getLocaleLabels().getString("assignment");
+        } else {
+            title = super.getLocaleLabels().getString("groupPost");
+        }
         data = loadAndFilterData();
     }
 
@@ -187,6 +197,12 @@ public class GroupPostListView extends BaseView {
             }
         }
         return sb.toString();
+    }
+
+    // ========================================================== Helper methods
+
+    public String getTitle() {
+        return title;
     }
 
     // ========================================================= Private methods

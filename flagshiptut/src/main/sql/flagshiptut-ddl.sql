@@ -93,9 +93,10 @@ CREATE TABLE user (
     UNIQUE (email)
 );
 
-CREATE INDEX user_idx1 ON user (first_name, last_name);
-CREATE INDEX user_idx2 ON user (last_name, first_name);
-CREATE INDEX user_idx3 ON user (action_code);
+CREATE INDEX user_idx1 ON `user` (first_name, last_name);
+CREATE INDEX user_idx2 ON `user` (last_name, first_name);
+CREATE INDEX user_idx3 ON `user` (action_code);
+CREATE INDEX user_idx4 ON `user` (email);
 
 -- -----------------------------------------------------------------------------
 -- Create table user_role

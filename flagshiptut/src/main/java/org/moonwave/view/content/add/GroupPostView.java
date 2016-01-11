@@ -36,6 +36,8 @@ public class GroupPostView extends BaseView {
     private List<TutorGroup> tutorGroups;
 
     GroupPost current;
+    String groupPostType;
+    boolean assignment = false;
 
     @ManagedProperty("#{accessController}")
     private AccessController accessController;
@@ -45,6 +47,7 @@ public class GroupPostView extends BaseView {
 
     @PostConstruct
     public void init() {
+        groupPostType = (getParameter("groupPostType") != null) ? getParameter("groupPostType") : "1";
         if (accessController.isTeacher() || accessController.isSupervisor()) {
             tutorGroups = new TutorGroupBO().findAllGroups();
         } else if (accessController.isTutor()) {
@@ -64,6 +67,10 @@ public class GroupPostView extends BaseView {
             fileUploadView.loadUploads4GroupPost(current.getUser().getId(), current.getId());
         } else {
             current = new GroupPost();
+        }
+        assignment = GroupPost.ASSIGNMENT.equals(groupPostType);
+        if (assignment && !accessController.isTeacher()) {
+            super.accessDenied();
         }
     }
 

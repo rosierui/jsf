@@ -104,10 +104,6 @@ public class EvaluationListView extends BaseView {
         return tutorAccess;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     // ========================================================== ActionListener
 
     public void newSelfEvaluation() throws IOException {
@@ -169,5 +165,9 @@ public class EvaluationListView extends BaseView {
         }
     }
 
-    // ========================================================= Private methods
+    // ========================================================== Helper methods
+
+    public String getTitle() {
+        return title;
+    }
 }

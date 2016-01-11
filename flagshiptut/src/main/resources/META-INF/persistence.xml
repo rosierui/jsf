@@ -4,6 +4,7 @@
         http://stackoverflow.com/questions/1780341/do-i-need-class-elements-in-persistence-xml
         http://stackoverflow.com/questions/18163328/jpa-utf-8-characters-not-persisted
         http://stackoverflow.com/questions/18307579/jpa-weaving-not-enabled-while-running-test-cases
+        https://wiki.eclipse.org/EclipseLink/Examples/JPA/Logging
      -->
     <persistence-unit name="jpa-mysql" transaction-type="RESOURCE_LOCAL">
 
@@ -38,6 +39,10 @@
             <property name="eclipselink.cache.shared.default" value="false"/>
             <property name="eclipselink.allow-zero-id" value="true"/>
             <property name="eclipselink.weaving" value="static"/>
+
+            <property name="eclipselink.logging.level.sql" value="FINE"/>
+            <property name="eclipselink.logging.parameters" value="true"/>
+            <property name="eclipselink.logging.logger" value="ServerLogger"/>
 
             <!-- EclipseLink should create the database schema automatically -->
             <!--

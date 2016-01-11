@@ -85,7 +85,7 @@ public class UserBO extends BaseBO {
         try {
             ret = (User) query.getSingleResult();
         } catch (NoResultException e) {
-
+            LOG.error(StackTrace.toString(e));
         } catch (Exception e) {
             LOG.error(StackTrace.toString(e));
         } finally {
