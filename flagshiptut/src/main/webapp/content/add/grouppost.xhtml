@@ -9,7 +9,7 @@
     template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
-        <h:outputLabel value="${label.grouppost}" />
+        ${groupPostView.title}
     </ui:define>
     <ui:define name="implementation">
         <c:if test="${!loginController.isUserLoggedIn()}">
@@ -44,6 +44,12 @@
             </h:panelGrid>
             <br/>
             <p:editor id="editor" widgetVar="editorWidget" value="#{groupPostView.current.body}" width="600" />
+
+            <h:panelGrid columns="2" rendered="${groupPostView.assignment}">
+                <p:outputLabel for="dueDate" value="${label.dueDate}" />
+                <p:calendar id="dueDate" value="#{groupPostView.current.dueDate}" timeZone="America/Phoenix" pattern="MM/dd/yyyy HH:mm a"/>
+            </h:panelGrid>
+
             <h:panelGrid columns="2">
                 <h:outputText value="${label.publish}" />
                 <p:selectBooleanCheckbox value="#{groupPostView.current.published}" style="margin-left:10px" />

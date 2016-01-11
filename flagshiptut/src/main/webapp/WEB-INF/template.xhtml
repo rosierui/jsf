@@ -84,7 +84,7 @@
                               <a href="#{request.contextPath}/content/add/grouppostList.xhtml"><h:outputText value="#{label.grouppost}" /></a>
                             </h:panelGroup>
                             <h:panelGroup rendered="${accessController.isTeacher()}">
-                              <a href="#{request.contextPath}/content/add/grouppostList.xhtml?groupPostType=5"><h:outputText value="#{label.assignment}" /></a>
+                              <a href="#{request.contextPath}/content/add/grouppostList.xhtml?grouppostType=5"><h:outputText value="#{label.assignment}" /></a>
                             </h:panelGroup>
                             <h:panelGroup rendered="${accessController.isTutor()}">
                               <a href="#{request.contextPath}/content/add/evaluationList.xhtml?tutor=true"><h:outputText value="#{label.tutorEvaluation}" /></a>
@@ -168,7 +168,7 @@
                           <a class="SubMenuLink" href="#{request.contextPath}/content/add/grouppostList.xhtml">&bull; <h:outputText value="#{label.grouppost}" /></a>
                         </h:panelGroup>
                         <h:panelGroup rendered="${accessController.isTeacher()}">
-                          <a class="SubMenuLink" href="#{request.contextPath}/content/add/grouppostList.xhtml?groupPostType=5">&bull; <h:outputText value="#{label.assignment}" /></a>
+                          <a class="SubMenuLink" href="#{request.contextPath}/content/add/grouppostList.xhtml?grouppostType=5">&bull; <h:outputText value="#{label.assignment}" /></a>
                         </h:panelGroup>
                         <h:panelGroup rendered="${accessController.isStudent()}">
                           <a class="SubMenuLink" href="#{request.contextPath}/content/add/evaluationList.xhtml?student=true">&bull; <h:outputText value="#{label.selfEvaluation}" /></a>

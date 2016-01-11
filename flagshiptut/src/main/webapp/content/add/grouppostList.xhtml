@@ -10,7 +10,7 @@
     template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
-        ${label.title}
+        ${groupPostListView.title}
     </ui:define>
     <ui:define name="implementation">
         <c:if test="${!loginController.isUserLoggedIn()}">
@@ -23,7 +23,7 @@
             <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
         </h:panelGroup>
         <h:form id="jsfForm">
-            <p:commandButton value="#{label.newGroupPost}" ajax="true" actionListener="#{groupPostListView.newGroupPost}"/>
+            <p:commandButton value="${groupPostListView.actionButtonText}" ajax="true" actionListener="#{groupPostListView.newGroupPost}"/>
             <br/>
             <br/>
 

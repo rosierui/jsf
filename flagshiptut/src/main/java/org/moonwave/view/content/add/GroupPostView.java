@@ -37,7 +37,6 @@ public class GroupPostView extends BaseView {
 
     GroupPost current;
     String groupPostType;
-    boolean assignment = false;
 
     @ManagedProperty("#{accessController}")
     private AccessController accessController;
@@ -45,9 +44,21 @@ public class GroupPostView extends BaseView {
     @ManagedProperty("#{fileUploadView}")
     private FileUploadView fileUploadView;
 
+    // helper fields
+    boolean assignment = false;
+    String title;
+    String actionButtonText;
+
     @PostConstruct
     public void init() {
-        groupPostType = (getParameter("groupPostType") != null) ? getParameter("groupPostType") : "1";
+        String groupPostType = (getParameter("grouppostType") != null) ? getParameter("grouppostType") : "1";
+        assignment = GroupPost.ASSIGNMENT.equals(groupPostType);
+        if (assignment) {
+            title = super.getLocaleLabels().getString("assignment");
+        } else {
+            title = super.getLocaleLabels().getString("grouppost");
+        }
+
         if (accessController.isTeacher() || accessController.isSupervisor()) {
             tutorGroups = new TutorGroupBO().findAllGroups();
         } else if (accessController.isTutor()) {
@@ -117,7 +128,11 @@ public class GroupPostView extends BaseView {
     }
 
     public void redirectToListView() throws IOException {
-        super.redirectTo("/content/add/grouppostList.xhtml");
+        if (this.assignment) {
+            super.redirectTo("/content/add/grouppostList.xhtml?grouppostType=" + GroupPost.ASSIGNMENT);
+        } else {
+            super.redirectTo("/content/add/grouppostList.xhtml?grouppostType=" + GroupPost.REGULAR_POST);
+        }
     }
 
     public void save() {
@@ -126,6 +141,7 @@ public class GroupPostView extends BaseView {
             return;
         }
         try {
+            current.setGroupPostType(assignment ? GroupPost.ASSIGNMENT : GroupPost.REGULAR_POST);
             if (current.getId() == null) {
                 current.setUser(super.getLoggedInUser());
                 super.getBasebo().persist(current);
@@ -160,6 +176,24 @@ public class GroupPostView extends BaseView {
             super.error("Sorry, an error occurred, please contact your administrator");
             LOG.error("", e);
         }
+    }
+
+    // ========================================================== Helper methods
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getActionButtonText() {
+        return actionButtonText;
+    }
+
+    public boolean isAssignment() {
+        return assignment;
+    }
+
+    public void setAssignment(boolean assignment) {
+        this.assignment = assignment;
     }
 
     // ========================================================= Private methods

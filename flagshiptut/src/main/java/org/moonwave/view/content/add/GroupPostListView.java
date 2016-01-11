@@ -51,17 +51,20 @@ public class GroupPostListView extends BaseView {
     private FileUploadView fileUploadView;
 
     // helper fields
-    String title;
     boolean assignment = false;
+    String title;
+    String actionButtonText;
 
     @PostConstruct
     public void init() {
-        String groupPostType = (getParameter("groupPostType") != null) ? getParameter("groupPostType") : "1";
+        String groupPostType = (getParameter("grouppostType") != null) ? getParameter("grouppostType") : "1";
         assignment = GroupPost.ASSIGNMENT.equals(groupPostType);
         if (assignment) {
             title = super.getLocaleLabels().getString("assignment");
+            actionButtonText = super.getLocaleLabels().getString("newAssignment");
         } else {
-            title = super.getLocaleLabels().getString("groupPost");
+            title = super.getLocaleLabels().getString("grouppost");
+            actionButtonText = super.getLocaleLabels().getString("newGroupPost");
         }
         data = loadAndFilterData();
     }
@@ -133,7 +136,11 @@ public class GroupPostListView extends BaseView {
     // ========================================================== ActionListener
 
     public void newGroupPost() throws IOException {
-        super.redirectTo("/content/add/grouppost.xhtml");
+        if (this.assignment) {
+            super.redirectTo("/content/add/grouppost.xhtml?grouppostType=" + GroupPost.ASSIGNMENT);
+        } else {
+            super.redirectTo("/content/add/grouppost.xhtml?grouppostType=" + GroupPost.REGULAR_POST);
+        }
     }
 
     /**
@@ -199,10 +206,12 @@ public class GroupPostListView extends BaseView {
         return sb.toString();
     }
 
-    // ========================================================== Helper methods
-
     public String getTitle() {
         return title;
+    }
+
+    public String getActionButtonText() {
+        return actionButtonText;
     }
 
     // ========================================================= Private methods
