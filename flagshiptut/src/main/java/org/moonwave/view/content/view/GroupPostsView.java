@@ -44,8 +44,19 @@ public class GroupPostsView extends BaseView {
     @ManagedProperty("#{fileDownloadView}")
     private FileDownloadView fileDownloadView;
 
+    // helper fields
+    boolean assignment = false;
+    String title;
+
     @PostConstruct
     public void init() {
+        String groupPostType = (getParameter("grouppostType") != null) ? getParameter("grouppostType") : "1";
+        assignment = GroupPost.ASSIGNMENT.equals(groupPostType);
+        if (assignment) {
+            title = super.getLocaleLabels().getString("assignment");
+        } else {
+            title = super.getLocaleLabels().getString("grouppost");
+        }
         data = loadAndFilterData();
     }
 
@@ -115,6 +126,16 @@ public class GroupPostsView extends BaseView {
         return sb.toString();
     }
 
+    // ========================================================== Helper methods
+
+    public boolean isAssignment() {
+        return assignment;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
     // ========================================================= Private methods
 
     /**
@@ -131,6 +152,12 @@ public class GroupPostsView extends BaseView {
         List <GroupPost> list = bo.findAllInDateRange(); 
         List <GroupPost> ret = new ArrayList<GroupPost>();
         for (GroupPost gp : list) {
+            if (assignment && !gp.isAssignment()) {
+                continue;
+            }
+            if (!assignment && !gp.isRegularPost()) {
+                continue;
+            }
             if (gp.getPublished()) {
                 List<TutorGroup> tgs = gp.getTutorGroups();
                 if ((tgs == null) || tgs.isEmpty()) {

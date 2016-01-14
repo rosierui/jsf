@@ -62,7 +62,8 @@
                         <div id="pushContentMenu" class="navOverlay">
                             <a href="#{request.contextPath}/schedule/dashboard.xhtml"><h:outputText value="#{label.schedules}" /></a>
                             <a href="#{request.contextPath}/content/view/announcements.xhtml"><h:outputText value="#{label.announcements}" /></a>
-                            <a href="#{request.contextPath}/content/view/groupposts.xhtml"><h:outputText value="#{label.groupposts}" /></a>
+                            <a href="#{request.contextPath}/content/view/groupposts.xhtml?grouppostType=1"><h:outputText value="#{label.groupposts}" /></a>
+                            <a href="#{request.contextPath}/content/view/groupposts.xhtml?grouppostType=5"><h:outputText value="#{label.assignments}" /></a>
                             <a href="#{request.contextPath}/content/view/myGroups.xhtml"><h:outputText value="#{label.myGroups}" /></a>
                             <h:panelGroup rendered="${accessController.isStudent()}">
                               <a href="#{request.contextPath}/content/view/myGrades.xhtml"><h:outputText value="#{label.myGrades}" /></a>
@@ -149,7 +150,8 @@
                     <div class="SubMenuLinkContainer">
                         <a class="SubMenuLink" href="#{request.contextPath}/schedule/dashboard.xhtml">&bull; <h:outputText value="#{label.schedules}" /></a>
                         <a class="SubMenuLink" href="#{request.contextPath}/content/view/announcements.xhtml">&bull; <h:outputText value="#{label.announcements}" /></a>
-                        <a class="SubMenuLink" href="#{request.contextPath}/content/view/groupposts.xhtml">&bull; <h:outputText value="#{label.groupposts}" /></a>
+                        <a class="SubMenuLink" href="#{request.contextPath}/content/view/groupposts.xhtml?grouppostType=1">&bull; <h:outputText value="#{label.groupposts}" /></a>
+                        <a class="SubMenuLink" href="#{request.contextPath}/content/view/groupposts.xhtml?grouppostType=5">&bull; <h:outputText value="#{label.assignments}" /></a>
                         <a class="SubMenuLink" href="#{request.contextPath}/content/view/myGroups.xhtml">&bull; <h:outputText value="#{label.myGroups}" /></a>
                         <h:panelGroup rendered="${accessController.isStudent()}">
                           <a class="SubMenuLink" href="#{request.contextPath}/content/view/myGrades.xhtml">&bull; <h:outputText value="#{label.myGrades}" /></a>

@@ -76,8 +76,8 @@
                     <h:outputLabel value="${label.published}:" />
                     <h:outputText value="#{groupPostListView.current.published ? 'Yes' : 'No'}" />
                     <h:outputLabel value="${label.dueDate}:" rendered="${groupPostListView.current.isAssignment()}" />
-                    <h:outputText value="${groupPostListView.getLocaleDateStr(groupPostListView.current.dueDate)}" />
-                    <h:outputLabel value="${label.subject}:" rendered="${groupPostListView.current.isAssignment()}" />
+                    <h:outputText value="${groupPostListView.getLocaleDateStr(groupPostListView.current.dueDate)}" rendered="${groupPostListView.current.isAssignment()}"/>
+                    <h:outputLabel value="${label.subject}:" />
                     <h:outputText value="#{groupPostListView.current.subject}" />
                     <h:outputLabel value="" />
                     <h:outputText value="#{groupPostListView.current.body}" escape="false"/>

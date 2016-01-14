@@ -9,7 +9,7 @@
     template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
-        <h:outputText value="#{label.grouppost}" />
+        <h:outputText value="#{groupPostsView.title}" />
     </ui:define>
     <ui:define name="implementation">
         <c:if test="${!loginController.isUserLoggedIn()}">
@@ -27,8 +27,11 @@
                 <p:column headerText="${label.body}">
                     <h:outputText value="#{item.bodyFirst60}" />
                 </p:column>
-                <p:column headerText="${label.date}" style="width:90px;">
-                    <div align="center"><h:outputText value="${groupPostsView.getLocaleDateString(item.createTime)}" /></div>
+                <p:column headerText="${label.date}" style="width:90px;" rendered="${!groupPostsView.isAssignment()}">
+                    <div align="center"><h:outputText value="${groupPostsView.getLocaleDateString(item.createTime)}" rendered="${!groupPostsView.isAssignment()}"/></div>
+                </p:column>
+                <p:column headerText="${label.dueDate}" style="width:90px;" rendered="${groupPostsView.isAssignment()}" >
+                    <div align="center"><h:outputText value="${groupPostsView.getLocaleDateString(item.createTime)}" rendered="${groupPostsView.isAssignment()}" /></div>
                 </p:column>
                 <p:column headerText="${label.author}" style="width:140px;">
                     <div align="center"><h:outputText value="#{item.user.name}" /></div>
@@ -43,7 +46,7 @@
                 </p:column>
             </p:dataTable>
 
-            <p:dialog header="${label.grouppostDetails}" id="dlgDetails" widgetVar="dlgDetails" modal="true"
+            <p:dialog header="${groupPostsView.title}" id="dlgDetails" widgetVar="dlgDetails" modal="true"
                       position="center" closable="true" closeOnEscape="true" resizable="true"
                       showEffect="clip" hideEffect="clip" width="800" height="400">
                 <h:panelGrid columns="2" cellpadding="5">
@@ -53,6 +56,8 @@
                     <h:outputText value="#{groupPostsView.current.user.name}" />
                     <h:outputLabel value="${label.postedTo}:" style="display:block;width:82px;"/>
                     <h:outputText value="${groupPostsView.visibleTo()}" />
+                    <h:outputLabel value="${label.dueDate}:" rendered="${groupPostsView.current.isAssignment()}" />
+                    <h:outputText value="${groupPostsView.getLocaleDateStr(groupPostsView.current.dueDate)}" rendered="${groupPostsView.current.isAssignment()}"/>
                     <h:outputLabel value="${label.subject}:" />
                     <h:outputText value="#{groupPostsView.current.subject}" />
                     <h:outputLabel value="" />
