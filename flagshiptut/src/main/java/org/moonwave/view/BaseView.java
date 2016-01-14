@@ -96,12 +96,25 @@ public class BaseView implements Serializable {
     public String getLocaleDateString(java.sql.Timestamp date) {
         String ret = null;
         String langCountry = getLocale().toLanguageTag();
-        if (Locale_en_US.equals(langCountry)) {
-            if (date != null) {
+        if (date != null) {
+            if (Locale_en_US.equals(langCountry)) {
+                ret = DateUtil.toMMDDYYYY(date);
+            } else {
                 ret = DateUtil.toMMDDYYYY(date);
             }
-        } else {
-            ret = DateUtil.toMMDDYYYY(date);
+        }
+        return ret;
+    }
+
+    public String getLocaleDateStr(java.util.Date date) {
+        String ret = null;
+        String langCountry = getLocale().toLanguageTag();
+        if (date != null) {
+            if (Locale_en_US.equals(langCountry)) {
+                ret = DateUtil.toMMDDYYYY(date);
+            } else {
+                ret = DateUtil.toMMDDYYYY(date);
+            }
         }
         return ret;
     }
@@ -157,7 +170,7 @@ public class BaseView implements Serializable {
 
     public void redirectToLogin() {
         try {
-        	JSFUtil.redirectTo("/login.xhtml");
+            JSFUtil.redirectTo("/login.xhtml");
         } catch (IOException e) {
         }
     }

@@ -159,7 +159,11 @@ public class GroupPostListView extends BaseView {
     }
 
     public void edit(String selectedId) throws IOException {
-        super.redirectTo("/content/add/grouppost.xhtml?selectedId=" + selectedId);
+        if (this.assignment) {
+            super.redirectTo("/content/add/grouppost.xhtml?grouppostType=" + GroupPost.ASSIGNMENT + "&selectedId=" + selectedId);
+        } else {
+            super.redirectTo("/content/add/grouppost.xhtml?grouppostType=" + GroupPost.REGULAR_POST + "&selectedId=" + selectedId);
+        }
     }
 
 
@@ -228,6 +232,12 @@ public class GroupPostListView extends BaseView {
         boolean isSupervisor = accessController.isSupervisor();
         boolean isTutorOrTeacher = accessController.isTutor() || accessController.isTeacher();
         for (GroupPost a : list) {
+            if (assignment && !a.isAssignment()) {
+                continue;
+            }
+            if (!assignment && !a.isRegularPost()) {
+                continue;
+            }
             if (isSupervisor) {
                 ret.add(a);
             } else if (isTutorOrTeacher) {
