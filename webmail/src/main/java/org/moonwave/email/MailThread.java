@@ -72,7 +72,7 @@ public class MailThread extends Thread {
             log.error(e, e);
         } finally {
             if (log.isInfoEnabled())
-                log.info(MessageUtil.info("Done MailThread run " + timer.toString()));
+                log.info("Done MailThread run " + timer.toString());
         }
     }
 

@@ -45,6 +45,7 @@ import org.moonwave.util.AppProperties;
 import org.moonwave.util.EmailAddressUtil;
 import org.moonwave.util.FileUtil;
 import org.moonwave.util.MailProperties;
+import org.moonwave.util.StringUtil;
 import org.moonwave.util.mail.SimpleMail;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -265,7 +266,7 @@ public class EmailView {
         List<SimpleMail> list = new ArrayList<SimpleMail>();
         // convert existing To email addresses first
         String toAddress = model.getTo();
-        if (toAddress != null) {
+        if (!StringUtil.nullOrEmpty(toAddress)) {
             String[] addressList = toAddress.split(",");
             for (String address: addressList) {
                 SimpleMail sm = model.toSimpleMail();
@@ -276,7 +277,7 @@ public class EmailView {
             }
         }
         String ccAddress = model.getCc();
-        if (ccAddress != null) {
+        if (!StringUtil.nullOrEmpty(ccAddress)) {
             String[] addressList = ccAddress.split(",");
             for (String address: addressList) {
                 SimpleMail sm = model.toSimpleMail();
@@ -287,8 +288,7 @@ public class EmailView {
             }
         }
         String bccAddress = model.getBcc();
-
-        if (bccAddress != null) {
+        if (!StringUtil.nullOrEmpty(bccAddress)) {
             String[] addressList = bccAddress.split(",");
             for (String address: addressList) {
                 SimpleMail sm = model.toSimpleMail();
