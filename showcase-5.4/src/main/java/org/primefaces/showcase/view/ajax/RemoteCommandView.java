@@ -35,31 +35,26 @@ public class RemoteCommandView {
     // Pass parameter to p:remoteCommand from JavaScript
     // added the following
 
-    public void execute2() {
+    public void beanMethod() {
+        // retrieve values inside beanMethod
+        String model1 = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("model");
+        String year1 = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("year");
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Executed", 
-            "Using RemoteCommand with parameter x := " + x + ", y := " + y));
+            "Using RemoteCommand with parameters model := " + model + ", year := " + year));
     }
 
-    @ManagedProperty("#{param.x}")
-    private int x;
+    @ManagedProperty("#{param.model}")
+    private String model;
 
-    @ManagedProperty("#{param.y}")
-    private int y;
+    @ManagedProperty("#{param.year}")
+    private int year;
 
-    public int getX() {
-        return x;
+    public void setModel(String model) {
+        this.model = model;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void setYear(int year) {
+        this.year = year;
     }
 
 }

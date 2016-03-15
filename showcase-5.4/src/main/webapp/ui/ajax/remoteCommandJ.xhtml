@@ -17,51 +17,22 @@
     </ui:define>
 
     <ui:define name="implementation">
-        
         <h:form>
-            <p:remoteCommand name="rc" update="msgs" actionListener="#{remoteCommandView.execute}" />
-            <p:remoteCommand name="increment" update="msgs" actionListener="#{remoteCommandView.execute2}" />
-
+            <p:remoteCommand name="rcName" update="msgs" actionListener="#{remoteCommandView.beanMethod}" />
             <p:growl id="msgs" showDetail="true" />
-            <p:commandButton type="button" onclick="rc()" value="Execute" icon="ui-icon-refresh" /> <br/>
 
-            <p:commandButton type="button" onclick="increment([{name:'x', value:10}, {name:'y', value:20}]);" value="Pass Parameters" icon="ui-icon-refresh" />
+            <p:commandButton type="button" onclick="rcName([{name:'model', value:'Buick Encore'}, {name:'year', value:2015}]);" value="Pass Parameters 1" /><br/>
+            <p:commandButton type="button" onclick="clicked();" value="Pass Parameters 2" /><br/>
         </h:form>
     
+        <script type="text/javascript">
+            //<![CDATA[
+            function clicked(){
+                rcName([{name:'model', value: 'Chevy Volt'}, {name:'year', value:2016}]);
+            }
+            //]]>
+        </script>
     </ui:define>
 
-    <ui:define name="source">
-        <p:tabView>
-            <p:tab title="remoteCommand.xhtml">
-                <pre name="code" class="brush:xml">
-&lt;h:form&gt;
-    &lt;p:remoteCommand name="rc" update="msgs" actionListener="\#{remoteCommandView.execute}" /&gt;
-
-    &lt;p:growl id="msgs" showDetail="true" /&gt;
-    &lt;p:commandButton type="button" onclick="rc()" value="Execute" icon="ui-icon-refresh" /&gt;
-&lt;/h:form&gt;
-                </pre>
-            </p:tab>
-
-            <p:tab title="RemoteCommandView.java">
-                <pre name="code" class="brush:java">
-package org.primefaces.showcase.view.ajax;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
-
-@ManagedBean
-public class RemoteCommandView {
-
-    public void execute() {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Executed", "Using RemoteCommand."));
-    }
-}
-                </pre>
-            </p:tab>
-        </p:tabView>
-
-    </ui:define>
 
 </ui:composition>
