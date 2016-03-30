@@ -27,6 +27,9 @@ else
     echo ""
 fi;
 
+echo "clean tomcat logs..."
+rm $TOMCAT/logs/*.*
+
 rm $TOMCAT/webapps/$app.war
 rm -rf $TOMCAT/webapps/$app
 

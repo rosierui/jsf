@@ -70,6 +70,12 @@ public class UserLoginView {
         // http://stackoverflow.com/questions/5505328/how-can-i-create-a-new-session-with-a-new-user-login-on-the-application
         User user = new User();
         user.setFirstname(username);
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
+//        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
+    }
+
+    /**
+     * Dummy method to keep current session live
+     */
+    public void keepSessionAlive() {
     }
 }
