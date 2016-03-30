@@ -21,7 +21,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.showcase.domain.User;
 
+/**
+ * http://localhost/showcase-5.4/ui/overlay/dialog/loginDemo.xhtml
+ *
+ */
 @ManagedBean
 public class UserLoginView {
     
@@ -44,7 +49,7 @@ public class UserLoginView {
     public void setPassword(String password) {
         this.password = password;
     }
-  
+
     public void login(ActionEvent event) {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = null;
@@ -60,5 +65,11 @@ public class UserLoginView {
         
         FacesContext.getCurrentInstance().addMessage(null, message);
         context.addCallbackParam("loggedIn", loggedIn);
-    }   
+
+        // enable session
+        // http://stackoverflow.com/questions/5505328/how-can-i-create-a-new-session-with-a-new-user-login-on-the-application
+        User user = new User();
+        user.setFirstname(username);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
+    }
 }
