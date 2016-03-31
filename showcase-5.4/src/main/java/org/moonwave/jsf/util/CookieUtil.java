@@ -50,8 +50,20 @@ public class CookieUtil implements Serializable {
         for (Cookie c : cookies) {
             Map<String, Object> properties = new HashMap<String, Object>();
             properties.put("Max-Age", 0);
-            ec.addResponseCookie(c.getName(), c.getValue(), null);
+            ec.addResponseCookie(c.getName(), c.getValue(), properties);
         }
+    }
+
+    /**
+     * Remove a cookie
+     *
+     * @param name the name of a cookie to be removed
+     */
+    public static void removeCookie(String name) {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, Object> properties = new HashMap<String, Object>();
+        properties.put("Max-Age", 0);
+        ec.addResponseCookie(name, "", properties);
     }
 
     private static Map<String, Object> getSecureProperties(ExternalContext externalContext) {
