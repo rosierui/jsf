@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- 300000 milliseconds ==> 5 minutes -->
-<!-- 60000  milliseconds ==> 1 minutes 
+<!-- 60000  milliseconds ==> 1 minutes
+ 
+    http://localhost/showcase-5.4/ui/misc/idleMonitor.xhtml
+
+    http://stackoverflow.com/questions/19097565/alert-when-the-session-expires-with-primefaces
+      <p:idleMonitor
+         timeout="60000" // should be the difference of session timeout - 10 minutes 
+                         // Time to wait in milliseconds until deciding if the user is idle. Default is 5 minutes.
+                         // How to detect inactive in a page for certain period time? 
+                         // How to get the remaining session timeout time 
+
       p:dialog id="timeoutSession"
          header="#{msg['session.expire']}"
 -->
@@ -23,7 +33,7 @@
          width="400"
          height="110"
          closable="true"
-         draggable="false"
+         draggable="true"
          resizable="false"
          appendToBody="true"
          onHide="stopCount()"
@@ -44,11 +54,11 @@
    </h:form>
 
    <script type="text/javascript">
-      var TIME = 120; // in seconds - 2 minutes
+      var TIME = 10; // in seconds - 2 minutes - count down timer, time left for session 
       var countTimer = TIME;
       var processTimer;
       var timer_is_on = 0;
-      var redirectPage = "#{request.contextPath}/auth/j_verinice_timeout";
+      var redirectPage = "#{request.contextPath}/ui/overlay/dialog/logout.xhtml";
  
       var countDownDiv = "dialog-countdown";
       var txtCountDown = null;
@@ -68,7 +78,7 @@
             return;
         }
         countTimer = countTimer - 1;
-        processTimer = setTimeout("timedCount()", 1000);
+        processTimer = setTimeout("timedCount()", 1000); // count down every second
       }
       function doTimer() {
         if (!timer_is_on) {

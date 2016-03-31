@@ -1,0 +1,46 @@
+<!-- http://localhost/showcase-5.4/ui/overlay/dialog/loginDemo.xhtml -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template.xhtml">
+    
+    <ui:define name="head">
+    <script type="text/javascript">
+    
+    </script>
+
+    </ui:define>
+
+    <ui:define name="title">
+        <span class="subitem">Logout</span>
+    </ui:define>
+
+    <ui:define name="description">
+        You have been logged out due to session timeout<br/><br/>
+        click <a href="#{request.contextPath}/ui/overlay/dialog/loginDemo.xhtml">here</a> to login.
+    </ui:define>
+
+    <ui:define name="implementation">
+    </ui:define>
+
+    <ui:define name="source">
+        <p:tabView>
+            <p:tab title="logout.xhtml">
+                <pre name="code" class="brush:xml">
+                </pre>
+            </p:tab>
+
+            <p:tab title="UserLoginView.java">
+                <pre name="code" class="brush:java">
+                </pre>
+            </p:tab>
+            
+            <p:tab title="Documentation" titleStyleClass="tab-doc docslide-182" />
+        </p:tabView>
+
+    </ui:define>
+
+</ui:composition>
