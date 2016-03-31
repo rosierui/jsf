@@ -1,8 +1,10 @@
 package org.moonwave.jsf.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
@@ -34,13 +36,21 @@ public class CookieUtil implements Serializable {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> cookieMap = ec.getRequestCookieMap();
         Iterator<Object> it = cookieMap.values().iterator();
+
+        List<Cookie> cookies= new ArrayList<Cookie>();
         while (it.hasNext()) {
             Object obj = it.next();
             if (obj instanceof Cookie) {
-                Cookie cookie = (Cookie) obj;
-                cookie.setValue("");
+                Cookie cookieObj = (Cookie) obj;
+                Cookie cookie = new Cookie(cookieObj.getName(), "");
                 cookie.setMaxAge(0);
+                cookies.add(cookie);
             }
+        }
+        for (Cookie c : cookies) {
+            Map<String, Object> properties = new HashMap<String, Object>();
+            properties.put("Max-Age", 0);
+            ec.addResponseCookie(c.getName(), c.getValue(), null);
         }
     }
 

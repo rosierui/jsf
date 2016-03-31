@@ -17,11 +17,11 @@ package org.primefaces.showcase.view.misc;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-import org.moonwave.jsf.util.CookieUtil;
-
+/**
+ * See also UserLoginView 
+ */
 @ManagedBean
 public class IdleMonitorView {
     
@@ -34,7 +34,7 @@ public class IdleMonitorView {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
                                         "Welcome Back", "Well, that's a long coffee break!"));
     }
-    
+
     public void welcomeListener() {
         FacesContext.getCurrentInstance().addMessage(
         null,
@@ -42,23 +42,4 @@ public class IdleMonitorView {
             "Continue your works."));
     }
 
-    public void logoutListener() throws Exception {
-        FacesContext.getCurrentInstance().addMessage(
-        null,
-        new FacesMessage(FacesMessage.SEVERITY_WARN,
-            "You Have Logged Out!",
-            "Thank you for using abc Online Financial Services"));
-
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-
-        // invalidate session
-        ec.invalidateSession();
-
-        // remove cookies
-        CookieUtil.removeCookies();
-
-        // redirect to logout page
-//        ec.redirect(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");
-//      ec.dispatch(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");
-    }
 }

@@ -53,12 +53,13 @@
 
          <p:commandButton id="Logout" value="LogOut" update="msg"
              oncomplete="PF('idleDialog').hide()"
-             actionListener="#{idleMonitorView.logoutListener}" />
+             actionListener="#{userLoginView.logout}" />
 
          <br />
          <p style="font-weight: bold;">#{msg['move.cursor']}</p>
       </p:dialog>
       <p:remoteCommand name="keepAlive" actionListener="#{userLoginView.keepSessionAlive}"/>
+      <p:remoteCommand name="logout"    actionListener="#{userLoginView.logout}"/>
    </h:form>
 
    <script type="text/javascript">
@@ -66,7 +67,7 @@
       var countTimer = TIME;
       var processTimer;
       var timer_is_on = 0;
-      var redirectPage = "#{request.contextPath}/ui/overlay/dialog/logout.xhtml";
+//    var redirectPage = "#{request.contextPath}/ui/overlay/dialog/logout.xhtml";
  
       var countDownDiv = "dialog-countdown";
       var txtCountDown = null;
@@ -82,7 +83,8 @@
         txtCountDown.innerHTML = countTimer;
         if (countTimer == 0) {
             stopCount();
-            window.location.href = redirectPage;
+            logout();
+//            window.location.href = redirectPage;
             return;
         }
         countTimer = countTimer - 1;

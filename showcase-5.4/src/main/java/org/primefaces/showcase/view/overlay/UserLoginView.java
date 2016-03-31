@@ -17,6 +17,7 @@ package org.primefaces.showcase.view.overlay;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -27,6 +28,8 @@ import org.primefaces.showcase.domain.User;
 /**
  * http://localhost/showcase-5.4/ui/overlay/dialog/loginDemo.xhtml
  *
+ * See also IdleMonitorView
+ *  
  */
 @ManagedBean
 public class UserLoginView {
@@ -81,5 +84,25 @@ public class UserLoginView {
      * Dummy method to keep current session live
      */
     public void keepSessionAlive() {
+    }
+
+    public void logout() throws Exception {
+        FacesContext.getCurrentInstance().addMessage(
+        null,
+        new FacesMessage(FacesMessage.SEVERITY_WARN,
+            "You Have Logged Out!",
+            "Thank you for using abc Online Financial Services"));
+
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+
+        // invalidate session
+        ec.invalidateSession();
+
+        // remove cookies
+        CookieUtil.removeCookies();
+
+        // redirect to logout page
+        ec.redirect(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");
+//      ec.dispatch(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");
     }
 }
