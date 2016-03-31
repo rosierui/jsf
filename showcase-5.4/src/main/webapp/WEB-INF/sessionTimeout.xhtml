@@ -20,7 +20,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
    <h:form prependId="false">
-      <p:idleMonitor
+      <p:idleMonitor id="sessionIdleMonitor"
          timeout="60000"
          onidle="startIdleMonitor()"
          onactive="PF('timeoutDialog').hide();" />

@@ -1,4 +1,4 @@
-<!-- http://localhost/showcase-5.4/ui/misc/idleMonitor.xhtml -->
+<!-- http://localhost/showcase-5.4/ui/misc/idleMonitorJ.xhtml -->
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -20,53 +20,29 @@
         
         <h:form>
             Stay idle on this page for 5 seconds to view the demo.
-            
+
             <p:growl id="messages" showDetail="true" sticky="true" />
 
-            <p:idleMonitor timeout="5000">
-                <p:ajax event="idle" listener="#{idleMonitorView.onIdle}" update="messages" />
-                <p:ajax event="active" listener="#{idleMonitorView.onActive}" update="messages" />
-            </p:idleMonitor>
+            <p:idleMonitor id="idleMonitorJ" 
+                timeout="5000" 
+                onidle="idle()"
+                onactive="active();"
+            />
+            <p:remoteCommand name="idle" actionListener="#{idleMonitorView.onIdle}" update="messages"/>
+            <p:remoteCommand name="active" actionListener="#{idleMonitorView.onActive}" update="messages"/>
         </h:form>
-        
+
     </ui:define>
 
     <ui:define name="source">
         <p:tabView>
             <p:tab title="idleMonitor.xhtml">
                 <pre name="code" class="brush:xml">
-&lt;h:form&gt;
-    &lt;p:growl id="messages" showDetail="true" sticky="true" /&gt;
-
-    &lt;p:idleMonitor timeout="5000"&gt;
-        &lt;p:ajax event="idle" listener="\#{idleMonitorView.onIdle}" update="messages" /&gt;
-        &lt;p:ajax event="active" listener="\#{idleMonitorView.onActive}" update="messages" /&gt;
-    &lt;/p:idleMonitor&gt;
-&lt;/h:form&gt;
                 </pre>
             </p:tab>
 
             <p:tab title="IdleMonitorView.java">
                 <pre name="code" class="brush:java">
-package org.primefaces.showcase.view.misc;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
-
-@ManagedBean
-public class IdleMonitorView {
-    
-    public void onIdle() {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-										"No activity.", "What are you doing over there?"));
-	}
-
-    public void onActive() {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-										"Welcome Back", "Well, that's a long coffee break!"));
-	}
-}
                 </pre>
             </p:tab>
             
