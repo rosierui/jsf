@@ -1,10 +1,8 @@
 package org.moonwave.jsf.util;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
@@ -32,30 +30,8 @@ public class CookieUtil implements Serializable {
         ec.addResponseCookie(name, value, getSecureProperties(ec));
     }
 
-    public static void removeCookies() {
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        Map<String, Object> cookieMap = ec.getRequestCookieMap();
-        Iterator<Object> it = cookieMap.values().iterator();
-
-        List<Cookie> cookies= new ArrayList<Cookie>();
-        while (it.hasNext()) {
-            Object obj = it.next();
-            if (obj instanceof Cookie) {
-                Cookie cookieObj = (Cookie) obj;
-                Cookie cookie = new Cookie(cookieObj.getName(), "");
-                cookie.setMaxAge(0);
-                cookies.add(cookie);
-            }
-        }
-        for (Cookie c : cookies) {
-            Map<String, Object> properties = new HashMap<String, Object>();
-            properties.put("Max-Age", 0);
-            ec.addResponseCookie(c.getName(), c.getValue(), properties);
-        }
-    }
-
     /**
-     * Remove a cookie
+     * Remove a cookie by name
      *
      * @param name the name of a cookie to be removed
      */
@@ -64,6 +40,23 @@ public class CookieUtil implements Serializable {
         Map<String, Object> properties = new HashMap<String, Object>();
         properties.put("Max-Age", 0);
         ec.addResponseCookie(name, "", properties);
+    }
+
+    /**
+     * Remove all cookies
+     */
+    public static void removeCookies() {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, Object> cookieMap = ec.getRequestCookieMap();
+        Iterator<Object> it = cookieMap.values().iterator();
+
+        while (it.hasNext()) {
+            Object obj = it.next();
+            if (obj instanceof Cookie) {
+                Cookie cookieObj = (Cookie) obj;
+                removeCookie(cookieObj.getName());
+            }
+        }
     }
 
     private static Map<String, Object> getSecureProperties(ExternalContext externalContext) {
