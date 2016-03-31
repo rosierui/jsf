@@ -20,6 +20,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import org.moonwave.jsf.util.CookieUtil;
 import org.primefaces.context.RequestContext;
 import org.primefaces.showcase.domain.User;
 
@@ -70,6 +71,9 @@ public class UserLoginView {
         // http://stackoverflow.com/questions/5505328/how-can-i-create-a-new-session-with-a-new-user-login-on-the-application
         User user = new User();
         user.setFirstname(username);
+        CookieUtil.addResponseCookie("test_1", "abc_012");
+        CookieUtil.addResponseCookie("test_11", "asi es el amor");
+        CookieUtil.addSecureResponseCookie("test_11_sec", "Mantiene su estado de gracia");
 //        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
     }
 

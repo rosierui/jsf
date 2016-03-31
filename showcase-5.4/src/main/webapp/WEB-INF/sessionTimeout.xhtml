@@ -8,8 +8,6 @@
       <p:idleMonitor
          timeout="60000" // should be the difference of session timeout - 10 minutes 
                          // Time to wait in milliseconds until deciding if the user is idle. Default is 5 minutes.
-                         // How to detect inactive in a page for certain period time? 
-                         // How to get the remaining session timeout time 
 
       p:dialog id="timeoutSession"
          header="#{msg['session.expire']}"
@@ -20,10 +18,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
    <h:form prependId="false">
+      <p:growl id="msg" showDetail="true" sticky="true" />
+
       <p:idleMonitor id="sessionIdleMonitor"
-         timeout="60000"
+         timeout="5000"
          onidle="startIdleMonitor()"
-         onactive="PF('timeoutDialog').hide();" />
+          />
  
       <p:dialog id="timeoutSession"
          header="Session about to Expire"
@@ -47,6 +47,14 @@
                #{msg['logoff.soon.2']}
             </p:panel>
          </p>
+         <p:commandButton id="confirm" value="Ok" update="msg"
+             oncomplete="PF('idleDialog').hide()"
+             actionListener="#{idleMonitorView.welcomeListener}" />
+
+         <p:commandButton id="Logout" value="LogOut" update="msg"
+             oncomplete="PF('idleDialog').hide()"
+             actionListener="#{idleMonitorView.logoutListener}" />
+
          <br />
          <p style="font-weight: bold;">#{msg['move.cursor']}</p>
       </p:dialog>

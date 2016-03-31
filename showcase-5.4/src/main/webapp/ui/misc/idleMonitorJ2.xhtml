@@ -1,0 +1,65 @@
+<!-- http://localhost/showcase-5.4/ui/misc/idleMonitorJ2.xhtml -->
+<!-- http://www.mkyong.com/jsf2/primefaces/primefaces-idlemonitor-example/ -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        IdleMonitor
+    </ui:define>
+
+    <ui:define name="description">
+        IdleMonitor tracks user actions and invokes corresponding events when user goes idle after a specified time and becomes active again. 
+    </ui:define>
+
+    <ui:define name="implementation">
+        
+        <h:form>
+            Stay idle on this page for 5 seconds to view the demo.
+
+            <p:growl id="msg" showDetail="true" sticky="true" />
+
+            <!-- If idle 10 seconds, run 'idleDialog' -->
+            <p:idleMonitor timeout="5000" onidle="PF('idleDialog').show()" />
+
+            <p:confirmDialog id="confirmDialog"
+                message="You have been idle for at least 10 seconds, 
+                                    Please click ok to continue."
+                header="Are you there?" severity="alert" widgetVar="idleDialog">
+
+                <p:commandButton id="confirm" value="Ok" update="msg"
+                    oncomplete="PF('idleDialog').hide()"
+                    actionListener="#{idleMonitorView.welcomeListener}" />
+
+                <p:commandButton id="Logout" value="LogMeOut" update="msg"
+                    oncomplete="PF('idleDialog').hide()"
+                    actionListener="#{idleMonitorView.logoutListener}" />
+
+            </p:confirmDialog>
+
+        </h:form>
+
+    </ui:define>
+
+    <ui:define name="source">
+        <p:tabView>
+            <p:tab title="idleMonitorJ2.xhtml">
+                <pre name="code" class="brush:xml">
+                </pre>
+            </p:tab>
+
+            <p:tab title="IdleMonitorView.java">
+                <pre name="code" class="brush:java">
+                </pre>
+            </p:tab>
+
+            <p:tab title="Documentation" titleStyleClass="tab-doc docslide-251" />
+        </p:tabView>
+
+    </ui:define>
+
+</ui:composition>
