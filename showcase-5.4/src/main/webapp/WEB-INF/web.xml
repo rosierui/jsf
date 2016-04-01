@@ -121,13 +121,14 @@
         <servlet-name>Push Servlet</servlet-name>
         <url-pattern>/primepush/*</url-pattern>
     </servlet-mapping>
-    
+
+    <!-- Session -->
     <session-config>
-        <session-timeout>
-            5
-        </session-timeout>
+        <session-timeout>5</session-timeout>
         <cookie-config>
-            <secure>true</secure>
+            <path>/</path>
+            <http-only>true</http-only>
+            <secure>false</secure>
         </cookie-config>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>

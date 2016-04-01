@@ -26,12 +26,12 @@
           />
  
       <p:dialog id="timeoutSession"
-         header="#{userLoginView.pagename}"
+         header="#{label.warning}"
          widgetVar="timeoutDialog"
          showEffect="fade" hideEffect="fade"
          modal="true"
          width="400"
-         height="110"
+         height="200"
          closable="false"
          draggable="true"
          resizable="false"
@@ -42,9 +42,14 @@
          <p>
             <span class="ui-icon ui-icon-alert" style="float: left; margin: 8px 8px 0;"/>
             <p:panel>
-               #{msg['logoff.soon.1']}
-               <span id="dialog-countdown" style="font-weight: bold"></span>
-               #{msg['logoff.soon.2']}
+               #{label.session_timeout_1}<br/>
+               #{label.session_timeout_2a} <span id="dialog-countdown" style="font-weight: bold"></span> #{label.session_timeout_2b}<br/>
+               #{label.session_timeout_3}<br/>
+
+               <br/>
+               <br/>
+               #{msg.loggedOut}
+
             </p:panel>
          </p>
          <p:commandButton id="confirm" value="Ok" update="msg"
@@ -55,8 +60,6 @@
              oncomplete="PF('idleDialog').hide()"
              actionListener="#{userLoginView.logout}" />
 
-         <br />
-         <p style="font-weight: bold;">#{msg['move.cursor']}</p>
       </p:dialog>
       <p:remoteCommand name="keepAlive" actionListener="#{userLoginView.keepSessionAlive}"/>
       <p:remoteCommand name="logout"    actionListener="#{userLoginView.logout}"/>

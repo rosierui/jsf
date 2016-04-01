@@ -1,4 +1,4 @@
-package org.moonwave.jsf.util;
+package org.moonwave.util;
 
 import java.io.Serializable;
 import java.util.HashMap;

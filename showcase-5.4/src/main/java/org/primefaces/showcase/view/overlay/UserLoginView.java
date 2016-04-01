@@ -15,14 +15,17 @@
  */
 package org.primefaces.showcase.view.overlay;
 
+import java.util.Map;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpSession;
 
-import org.moonwave.jsf.util.CookieUtil;
+import org.moonwave.util.CookieUtil;
 import org.primefaces.context.RequestContext;
 import org.primefaces.showcase.domain.User;
 
@@ -37,8 +40,6 @@ import org.primefaces.showcase.domain.User;
 @SessionScoped
 public class UserLoginView {
 
-    static boolean signin = false; 
-    
     private String username;
     
     private String password;
@@ -80,20 +81,34 @@ public class UserLoginView {
 
         // enable session
         // http://stackoverflow.com/questions/5505328/how-can-i-create-a-new-session-with-a-new-user-login-on-the-application
+        Object session = FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        Map<String, Object> map = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+
         User user = new User();
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
-        signin = true;
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", user);
+
+        session = FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        session = FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 
         user.setFirstname(username);
         CookieUtil.addResponseCookie("test_1", "abc_012");
         CookieUtil.addResponseCookie("test_11", "asi es el amor");
         CookieUtil.addSecureResponseCookie("test_11_sec", "Mantiene su estado de gracia");
+
+        // redirect to a page
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath() + "/ui/file/upload/basic.xhtml");
+        } catch (Exception e) {
+        }
     }
 
     public boolean isLogin() {
-        Object obj = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-//        return (obj != null);
-        return signin;
+        Map<String, Object> map = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        Object obj1 = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
+        Object obj = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+        Object session = FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        return (obj != null);
     }
 
     /**
@@ -110,10 +125,13 @@ public class UserLoginView {
             "Thank you for using abc Online Financial Services"));
 
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        
-        
-        // invalidate session
+        ec.getSessionMap().put("loggedInUser", null);
         ec.invalidateSession();
+        // or
+        HttpSession session = (HttpSession) ec.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
 
         // remove cookies
         CookieUtil.removeCookies();
