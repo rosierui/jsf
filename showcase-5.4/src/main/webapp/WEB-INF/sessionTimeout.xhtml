@@ -52,16 +52,16 @@
 
             </p:panel>
          </p>
-         <p:commandButton id="confirm" value="Ok" update="msg"
-             oncomplete="PF('idleDialog').hide()"
-             actionListener="#{idleMonitorView.welcomeListener}" />
+         <p:commandButton id="confirm" value="#{label.yes}" update="msg"
+             oncomplete="PF('timeoutDialog').hide()"
+             actionListener="#{idleMonitorView.keepSessionAlive}" />
 
-         <p:commandButton id="Logout" value="LogOut" update="msg"
-             oncomplete="PF('idleDialog').hide()"
+         <p:commandButton id="logout" value="#{label.no}" update="msg"
+             oncomplete="PF('timeoutDialog').hide()"
              actionListener="#{userLoginView.logout}" />
 
       </p:dialog>
-      <p:remoteCommand name="keepAlive" actionListener="#{userLoginView.keepSessionAlive}"/>
+      <p:remoteCommand name="keepAlive" actionListener="#{idleMonitorView.keepSessionAlive}"/>
       <p:remoteCommand name="logout"    actionListener="#{userLoginView.logout}"/>
    </h:form>
 

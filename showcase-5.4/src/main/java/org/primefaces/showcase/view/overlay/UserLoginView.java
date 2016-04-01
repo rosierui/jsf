@@ -111,12 +111,6 @@ public class UserLoginView {
         return (obj != null);
     }
 
-    /**
-     * Dummy method to keep current session live
-     */
-    public void keepSessionAlive() {
-    }
-
     public void logout() throws Exception {
         FacesContext.getCurrentInstance().addMessage(
         null,

@@ -42,4 +42,10 @@ public class IdleMonitorView {
             "Continue your works."));
     }
 
+    /**
+     * Dummy method to keep current session live
+     */
+    public void keepSessionAlive() {
+        welcomeListener();
+    }
 }
