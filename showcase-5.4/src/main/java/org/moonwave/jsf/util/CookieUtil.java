@@ -10,6 +10,16 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * com.sun.faces.context.ExternalContextImpl 
+ *     private enum ALLOWABLE_COOKIE_PROPERTIES {
+ *         domain,
+ *         maxAge,
+ *         path,
+ *         secure,
+ *         httpOnly
+ *    }
+ */
 public class CookieUtil implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,7 +48,7 @@ public class CookieUtil implements Serializable {
     public static void removeCookie(String name) {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> properties = new HashMap<String, Object>();
-        properties.put("Max-Age", 0);
+        properties.put("maxAge", 0);
         ec.addResponseCookie(name, "", properties);
     }
 

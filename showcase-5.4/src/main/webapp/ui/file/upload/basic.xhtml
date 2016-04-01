@@ -7,6 +7,12 @@
 
     <ui:define name="title">
         FileUpload - <span class="subitem">Basic</span>
+        <h:form>
+            <p:remoteCommand name="setPagename" actionListener="#{userLoginView.setPagename('upload/basic.xhtml')}"/>
+            <script type="text/javascript">
+                setPagename();
+            </script>
+        </h:form>
     </ui:define>
 
     <ui:define name="description">

@@ -17,6 +17,7 @@ package org.primefaces.showcase.view.overlay;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -25,6 +26,7 @@ import org.moonwave.jsf.util.CookieUtil;
 import org.primefaces.context.RequestContext;
 import org.primefaces.showcase.domain.User;
 
+
 /**
  * http://localhost/showcase-5.4/ui/overlay/dialog/loginDemo.xhtml
  *
@@ -32,11 +34,17 @@ import org.primefaces.showcase.domain.User;
  *  
  */
 @ManagedBean
+@SessionScoped
 public class UserLoginView {
+
+    static boolean signin = false; 
     
     private String username;
     
     private String password;
+
+    // helper fields
+    private String pagename;
 
     public String getUsername() {
         return username;
@@ -58,7 +66,7 @@ public class UserLoginView {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = null;
         boolean loggedIn = false;
-        
+
         if(username != null && username.equals("admin") && password != null && password.equals("admin")) {
             loggedIn = true;
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
@@ -66,18 +74,26 @@ public class UserLoginView {
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
         }
-        
+
         FacesContext.getCurrentInstance().addMessage(null, message);
         context.addCallbackParam("loggedIn", loggedIn);
 
         // enable session
         // http://stackoverflow.com/questions/5505328/how-can-i-create-a-new-session-with-a-new-user-login-on-the-application
         User user = new User();
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
+        signin = true;
+
         user.setFirstname(username);
         CookieUtil.addResponseCookie("test_1", "abc_012");
         CookieUtil.addResponseCookie("test_11", "asi es el amor");
         CookieUtil.addSecureResponseCookie("test_11_sec", "Mantiene su estado de gracia");
-//        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
+    }
+
+    public boolean isLogin() {
+        Object obj = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+//        return (obj != null);
+        return signin;
     }
 
     /**
@@ -94,7 +110,8 @@ public class UserLoginView {
             "Thank you for using abc Online Financial Services"));
 
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-
+        
+        
         // invalidate session
         ec.invalidateSession();
 
@@ -105,4 +122,15 @@ public class UserLoginView {
         ec.redirect(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");
 //      ec.dispatch(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");
     }
+
+    // ========================================================== helper methods
+
+    public String getPagename() {
+        return pagename;
+    }
+
+    public void setPagename(String pagename) {
+        this.pagename = pagename;
+    }
+
 }
