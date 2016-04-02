@@ -42,8 +42,11 @@
 
 <h:body>
 
+
     <div class="sessionMangement">
+        <ui:fragment rendered="#{userLoginView.isUserLoggedIn()}">
             <ui:include src="sessionTimeout.xhtml" />
+        </ui:fragment>
     </div>
 
     <!-- PC CONTENT STARTS HERE-->

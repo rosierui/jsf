@@ -26,6 +26,7 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 
 import org.moonwave.util.CookieUtil;
+import org.moonwave.util.JSFUtil;
 import org.primefaces.context.RequestContext;
 import org.primefaces.showcase.domain.User;
 
@@ -36,7 +37,7 @@ import org.primefaces.showcase.domain.User;
  * See also IdleMonitorView
  *  
  */
-@ManagedBean
+@ManagedBean(name = "userLoginView")
 @SessionScoped
 public class UserLoginView {
 
@@ -84,13 +85,14 @@ public class UserLoginView {
         Object session = FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         Map<String, Object> map = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
-        User user = new User();
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", user);
+        User loggedInUser = new User();
+        loggedInUser.setFirstname(username);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", loggedInUser);
 
         session = FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         session = FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 
-        user.setFirstname(username);
+        // test code here - to remove
         CookieUtil.addResponseCookie("test_1", "abc_012");
         CookieUtil.addResponseCookie("test_11", "asi es el amor");
         CookieUtil.addSecureResponseCookie("test_11_sec", "Mantiene su estado de gracia");
@@ -103,12 +105,20 @@ public class UserLoginView {
         }
     }
 
-    public boolean isLogin() {
+    private boolean isLogin() {
         Map<String, Object> map = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         Object obj1 = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
         Object obj = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
         Object session = FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         return (obj != null);
+    }
+
+    public Boolean isUserLoggedIn() {
+    	//test code below
+    	isLogin();
+
+        Object user = JSFUtil.getSessionMap().get("loggedInUser");
+        return (user != null) ? true : false; 
     }
 
     public void logout() throws Exception {
