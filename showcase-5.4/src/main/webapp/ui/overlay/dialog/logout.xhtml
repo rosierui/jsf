@@ -19,11 +19,13 @@
     </ui:define>
 
     <ui:define name="description">
-        ${msg.loggedOut}<br/><br/>
-        click <a href="#{request.contextPath}/ui/overlay/dialog/loginDemo.xhtml">${label.loginAgain}</a> to login.
     </ui:define>
 
     <ui:define name="implementation">
+        <h:form>
+            ${msg.loggedOut}<br/><br/>
+            <h:commandButton action="loginDemo.xhtml" value="${label.loginAgain}" />
+        </h:form>
     </ui:define>
 
     <ui:define name="source">
