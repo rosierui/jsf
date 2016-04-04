@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- 300000 milliseconds ==> 5 minutes -->
-<!-- 60000  milliseconds ==> 1 minutes
- 
+<!-- 
+    timeout
+    "300000" milliseconds ==> 5 minutes
+    "60000"  milliseconds ==> 60 seconds
+    "50000"  milliseconds ==> 50 seconds
+    "5000"   milliseconds ==> 5 seconds
+    "1000"   milliseconds ==> 1 seconds
+
     http://localhost/showcase-5.4/ui/misc/idleMonitor.xhtml
 
     http://stackoverflow.com/questions/19097565/alert-when-the-session-expires-with-primefaces
@@ -21,7 +26,7 @@
       <p:growl id="msg" showDetail="true" sticky="true" />
 
       <p:idleMonitor id="sessionIdleMonitor"
-         timeout="5000"
+         timeout="30000"
          onidle="startIdleMonitor()"
           />
  
@@ -45,11 +50,7 @@
                #{label.session_timeout_1}<br/>
                #{label.session_timeout_2a} <span id="dialog-countdown" style="font-weight: bold"></span> #{label.session_timeout_2b}<br/>
                #{label.session_timeout_3}<br/>
-
                <br/>
-               <br/>
-               #{msg.loggedOut}
-
             </p:panel>
          </p>
          <p:commandButton id="confirm" value="#{label.yes}" update="msg"
@@ -70,7 +71,6 @@
       var countTimer = TIME;
       var processTimer;
       var timer_is_on = 0;
-//    var redirectPage = "#{request.contextPath}/ui/overlay/dialog/logout.xhtml";
  
       var countDownDiv = "dialog-countdown";
       var txtCountDown = null;
@@ -87,11 +87,10 @@
         if (countTimer == 0) {
             stopCount();
             logout();
-//            window.location.href = redirectPage;
             return;
         }
         countTimer = countTimer - 1;
-        processTimer = setTimeout("timedCount()", 1000); // count down every second
+        processTimer = setTimeout("timedCount()", 1000); // count down every second, 600000 - one minute 
       }
       function doTimer() {
         if (!timer_is_on) {
@@ -102,7 +101,6 @@
       function stopCount() {
         clearTimeout(processTimer);
         timer_is_on = 0;
-        keepAlive();
       }
       </script>
 </ui:composition>
