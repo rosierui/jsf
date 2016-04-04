@@ -19,8 +19,8 @@
     </ui:define>
 
     <ui:define name="description">
-        You have been logged out due to session timeout<br/><br/>
-        click <a href="#{request.contextPath}/ui/overlay/dialog/loginDemo.xhtml">here</a> to login.
+        ${msg.loggedOut}<br/><br/>
+        click <a href="#{request.contextPath}/ui/overlay/dialog/loginDemo.xhtml">${label.loginAgain}</a> to login.
     </ui:define>
 
     <ui:define name="implementation">
