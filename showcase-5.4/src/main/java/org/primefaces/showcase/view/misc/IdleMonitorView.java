@@ -47,5 +47,9 @@ public class IdleMonitorView {
      */
     public void keepSessionAlive() {
         welcomeListener();
+        FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        int maxInactiveInterval = FacesContext.getCurrentInstance().getExternalContext().getSessionMaxInactiveInterval();
+        System.out.println("IdleMonitorView::keepSessionAlive called");
+        System.out.println("maxInactiveInterval: " + maxInactiveInterval);
     }
 }

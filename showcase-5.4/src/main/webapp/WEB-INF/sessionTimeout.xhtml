@@ -51,6 +51,7 @@
                #{label.session_timeout_2a} <span id="dialog-countdown" style="font-weight: bold"></span> #{label.session_timeout_2b}<br/>
                #{label.session_timeout_3}<br/>
                <br/>
+               maxInactiveInterval: ${pageContext.session.maxInactiveInterval}<br/>
             </p:panel>
          </p>
          <p:commandButton id="confirm" value="#{label.yes}" update="msg"
@@ -84,8 +85,12 @@
       }
       function timedCount() {
         txtCountDown.innerHTML = countTimer;
+        if (countTimer == 1) { // make sure logout works when countTimer == 0
+            keepAlive();
+        }
         if (countTimer == 0) {
             stopCount();
+            PF('timeoutDialog').hide();
             logout();
             return;
         }
