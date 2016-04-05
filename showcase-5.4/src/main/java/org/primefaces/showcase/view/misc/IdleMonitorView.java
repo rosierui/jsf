@@ -26,38 +26,32 @@ import org.moonwave.util.CookieUtil;
 @ManagedBean
 public class IdleMonitorView {
 
+    static int MAX_INACTIVE_INTERVAL = 0;
+
     public void onIdle() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                                        "No activity.", "What are you doing over there?"));
+                "No activity.", "You're in idle mode"));
     }
 
     public void onActive() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-                                        "Welcome Back", "Well, that's a long coffee break!"));
+                "Welcome Back", "Back to where you were"));
     }
 
     public void welcomeListener() {
-        FacesContext.getCurrentInstance().addMessage(
-        null,
-        new FacesMessage(FacesMessage.SEVERITY_WARN, "Welcome Back",
-            "Continue your works."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                "Welcome Back",  "Continue your works."));
     }
 
     /**
      * Get session max inactive interval in seconds
      */
     public int getSessionMaxInactiveInterval() {
-        int maxInactiveInterval = FacesContext.getCurrentInstance().getExternalContext().getSessionMaxInactiveInterval();
-        System.out.println("IdleMonitorView::getSessionMaxInactiveInterval: " + maxInactiveInterval); // always return 1800
-
-        // test code below
-        HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        if (session != null) {
-            maxInactiveInterval = session.getMaxInactiveInterval(); // always return 1800
-            System.out.println("IdleMonitorView::getSessionMaxInactiveInterval(2): " + maxInactiveInterval);
+        if (MAX_INACTIVE_INTERVAL == 0) {
+            MAX_INACTIVE_INTERVAL = FacesContext.getCurrentInstance().getExternalContext().getSessionMaxInactiveInterval();
         }
-
-        return maxInactiveInterval;
+        System.out.println("IdleMonitorView::getSessionMaxInactiveInterval: " + MAX_INACTIVE_INTERVAL);
+        return MAX_INACTIVE_INTERVAL;
     }
 
     /**
@@ -66,31 +60,26 @@ public class IdleMonitorView {
     public void keepSessionAlive() {
         welcomeListener();
         FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        int maxInactiveInterval = FacesContext.getCurrentInstance().getExternalContext().getSessionMaxInactiveInterval();
         System.out.println("IdleMonitorView::keepSessionAlive called");
-        System.out.println("maxInactiveInterval: " + maxInactiveInterval);
     }
 
     public void logout() throws Exception {
-        System.out.println("UserLoginView::logout called");
+        System.out.println("logout() called");
 
         FacesContext.getCurrentInstance().addMessage(
         null,
         new FacesMessage(FacesMessage.SEVERITY_WARN,
             "You Have Logged Out!",
-            "Thank you for using abc Online Financial Services"));
-
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        ec.getSessionMap().put("loggedInUser", null);
-        ec.invalidateSession();
-        // or
-        HttpSession session = (HttpSession) ec.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+            "Thank you for Moonwave Services"));
 
         // remove cookies
         CookieUtil.removeCookies();
+        System.out.println("remove cookies");
+
+        // invalidate session
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.getSessionMap().put("loggedInUser", null);
+        ec.invalidateSession();
 
         // redirect to logout page
         ec.redirect(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");

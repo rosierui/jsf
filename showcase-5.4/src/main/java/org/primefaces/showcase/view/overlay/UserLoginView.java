@@ -23,6 +23,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
 
 import org.moonwave.util.CookieUtil;
 import org.moonwave.util.JSFUtil;
@@ -81,7 +82,17 @@ public class UserLoginView {
 
         // enable session
         // http://stackoverflow.com/questions/5505328/how-can-i-create-a-new-session-with-a-new-user-login-on-the-application
-        Object session = FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        Object session = ec.getSession(false);
+
+        // http://stackoverflow.com/questions/11206817/how-to-detect-session-has-been-invalidated-in-jsf-2
+        boolean valid = true;
+        HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+        if (request.getRequestedSessionId() != null && !request.isRequestedSessionIdValid()) {
+            valid = false;
+            // Session has been invalidated during the previous request.
+        }
+
         Map<String, Object> map = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
         User loggedInUser = new User();
@@ -97,7 +108,6 @@ public class UserLoginView {
         CookieUtil.addSecureResponseCookie("test_11_sec", "Mantiene su estado de gracia");
 
         // redirect to a page
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {
             ec.redirect(ec.getRequestContextPath() + "/ui/file/upload/basic.xhtml");
         } catch (Exception e) {
