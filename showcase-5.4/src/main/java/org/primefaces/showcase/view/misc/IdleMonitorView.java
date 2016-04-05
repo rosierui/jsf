@@ -17,14 +17,15 @@ package org.primefaces.showcase.view.misc;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
-/**
- * See also UserLoginView 
- */
+import org.moonwave.util.CookieUtil;
+
 @ManagedBean
 public class IdleMonitorView {
-    
+
     public void onIdle() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
                                         "No activity.", "What are you doing over there?"));
@@ -47,7 +48,15 @@ public class IdleMonitorView {
      */
     public int getSessionMaxInactiveInterval() {
         int maxInactiveInterval = FacesContext.getCurrentInstance().getExternalContext().getSessionMaxInactiveInterval();
-        System.out.println("IdleMonitorView::getSessionMaxInactiveInterval: " + maxInactiveInterval);
+        System.out.println("IdleMonitorView::getSessionMaxInactiveInterval: " + maxInactiveInterval); // always return 1800
+
+        // test code below
+        HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if (session != null) {
+            maxInactiveInterval = session.getMaxInactiveInterval(); // always return 1800
+            System.out.println("IdleMonitorView::getSessionMaxInactiveInterval(2): " + maxInactiveInterval);
+        }
+
         return maxInactiveInterval;
     }
 
@@ -61,4 +70,31 @@ public class IdleMonitorView {
         System.out.println("IdleMonitorView::keepSessionAlive called");
         System.out.println("maxInactiveInterval: " + maxInactiveInterval);
     }
+
+    public void logout() throws Exception {
+        System.out.println("UserLoginView::logout called");
+
+        FacesContext.getCurrentInstance().addMessage(
+        null,
+        new FacesMessage(FacesMessage.SEVERITY_WARN,
+            "You Have Logged Out!",
+            "Thank you for using abc Online Financial Services"));
+
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.getSessionMap().put("loggedInUser", null);
+        ec.invalidateSession();
+        // or
+        HttpSession session = (HttpSession) ec.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+
+        // remove cookies
+        CookieUtil.removeCookies();
+
+        // redirect to logout page
+        ec.redirect(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");
+//      ec.dispatch(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");
+    }
+
 }

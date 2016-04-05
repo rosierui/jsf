@@ -23,7 +23,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpSession;
 
 import org.moonwave.util.CookieUtil;
 import org.moonwave.util.JSFUtil;
@@ -119,32 +118,6 @@ public class UserLoginView {
 
         Object user = JSFUtil.getSessionMap().get("loggedInUser");
         return (user != null) ? true : false; 
-    }
-
-    public void logout() throws Exception {
-        System.out.println("UserLoginView::logout called");
-
-        FacesContext.getCurrentInstance().addMessage(
-        null,
-        new FacesMessage(FacesMessage.SEVERITY_WARN,
-            "You Have Logged Out!",
-            "Thank you for using abc Online Financial Services"));
-
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        ec.getSessionMap().put("loggedInUser", null);
-        ec.invalidateSession();
-        // or
-        HttpSession session = (HttpSession) ec.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-
-        // remove cookies
-        CookieUtil.removeCookies();
-
-        // redirect to logout page
-        ec.redirect(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");
-//      ec.dispatch(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");
     }
 
     // ========================================================== helper methods

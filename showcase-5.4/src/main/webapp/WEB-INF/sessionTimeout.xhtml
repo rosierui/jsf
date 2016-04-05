@@ -15,8 +15,7 @@
          timeout="60000" // should be the difference of session timeout - 10 minutes 
                          // Time to wait in milliseconds until deciding if the user is idle. Default is 5 minutes.
 
-      p:dialog id="timeoutSession"
-         header="#{msg['session.expire']}"
+
 -->
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
@@ -49,10 +48,8 @@
             <span class="ui-icon ui-icon-alert" style="float: left; margin: 8px 8px 0;"/>
             <p:panel>
                #{label.session_timeout_1}<br/>
-               #{label.session_timeout_2a} <span id="dialog-countdown" style="font-weight: bold"></span> #{label.session_timeout_2b}<br/>
+               #{label.session_timeout_2a} <span id="lblCountdown" style="font-weight: bold"></span> #{label.session_timeout_2b}<br/>
                #{label.session_timeout_3}<br/>
-               <br/>
-               maxInactiveInterval: ${pageContext.session.maxInactiveInterval}<br/>
             </p:panel>
          </p>
          <p:commandButton id="confirm" value="#{label.yes}" update="msg"
@@ -61,26 +58,27 @@
 
          <p:commandButton id="logout" value="#{label.no}" update="msg"
              oncomplete="PF('timeoutDialog').hide()"
-             actionListener="#{userLoginView.logout}" />   <!-- onclick="logout()" not stable, reverted to actionListener -->
+             actionListener="#{idleMonitorView.logout}" />   <!-- onclick="logout()" not stable, reverted to actionListener -->
 
       </p:dialog>
       <p:remoteCommand name="keepSessionAlive" actionListener="#{idleMonitorView.keepSessionAlive}"/>
-      <p:remoteCommand name="logout"    actionListener="#{userLoginView.logout}"/>
+      <p:remoteCommand name="logout"    actionListener="#{idleMonitorView.logout}"/>
    </h:form>
 
    <script type="text/javascript">
-      var TIME = 10; // in seconds or minutes depends on unit in processTimer = setTimeout("timedCount()", 1000); 
-      var countTimer = TIME;
-      var processTimer;
-      var timer_is_on = 0;
+      var countDownInterval = 60; // seconds (one minute)
+      var timerUnit = 10; // minutes 
+      var countTimer = timerUnit;
+      var timerId;
+      var isTimerStarted = false;
  
-      var countDownDiv = "dialog-countdown";
       var txtCountDown = null;
-      if (!txtCountDown)
-        txtCountDown = document.getElementById(countDownDiv);
+      if (!txtCountDown) {
+        txtCountDown = document.getElementById("lblCountdown");
+      }
  
       function startIdleMonitor() {
-        countTimer = TIME;
+        countTimer = timerUnit;
         txtCountDown.innerHTML = countTimer;
         PF('timeoutDialog').show();
       }
@@ -96,17 +94,17 @@
             return;
         }
         countTimer = countTimer - 1;
-        processTimer = setTimeout("timedCount()", 60000); // count down every second, 60000 - one minute 
+        timerId = setTimeout("timedCount()", countDownInterval * 1000);
       }
       function doTimer() {
-        if (!timer_is_on) {
-            timer_is_on = 1;
+        if (!isTimerStarted) {
+            isTimerStarted = true;
             timedCount();
         }
       }
       function stopCount() {
-        clearTimeout(processTimer);
-        timer_is_on = 0;
+        clearTimeout(timerId);
+        isTimerStarted = false;
       }
       </script>
 </ui:composition>

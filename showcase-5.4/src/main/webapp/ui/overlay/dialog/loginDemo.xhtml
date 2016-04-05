@@ -49,9 +49,14 @@
                     <f:facet name="footer">
                         <p:commandButton value="Login" update="growl" actionListener="#{userLoginView.login}" 
                                          oncomplete="handleLoginRequest(xhr, status, args)" />
-                    </f:facet>  
+                    </f:facet>
                 </h:panelGrid>
-            </p:dialog>    
+            </p:dialog>
+
+            <br/>
+            $ { session.maxInactiveInterval } : ${session.maxInactiveInterval} seconds<br/>
+            idleMonitorView.getSessionMaxInactiveInterval() : ${idleMonitorView.getSessionMaxInactiveInterval()} seconds<br/>
+
         </h:form>
         
     </ui:define>

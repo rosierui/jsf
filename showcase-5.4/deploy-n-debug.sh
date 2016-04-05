@@ -30,6 +30,14 @@ fi;
 echo "clean tomcat logs..."
 rm $TOMCAT/logs/*.*
 
+echo "remove tomcat temporary or cached data"
+rm -rf $TOMCAT/temp
+mkdir $TOMCAT/temp
+
+rm -rf $TOMCAT/work
+mkdir $TOMCAT/work
+
+
 rm $TOMCAT/webapps/$app.war
 rm -rf $TOMCAT/webapps/$app
 
