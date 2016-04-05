@@ -26,7 +26,7 @@
       <p:growl id="msg" showDetail="true" sticky="true" />
 
       <p:idleMonitor id="sessionIdleMonitor"
-         timeout="${idleMonitorView.getSessionMaxInactiveInterval() * 1000 - 600000}"
+         timeout="${session.maxInactiveInterval * 1000 - 600000}"
          onidle="startIdleMonitor()"
           />
  
