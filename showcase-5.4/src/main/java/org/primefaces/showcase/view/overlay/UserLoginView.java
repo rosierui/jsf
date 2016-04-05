@@ -37,7 +37,7 @@ import org.primefaces.showcase.domain.User;
  * See also IdleMonitorView
  *  
  */
-@ManagedBean(name = "userLoginView")
+@ManagedBean
 @SessionScoped
 public class UserLoginView {
 
@@ -122,6 +122,8 @@ public class UserLoginView {
     }
 
     public void logout() throws Exception {
+        System.out.println("UserLoginView::logout called");
+
         FacesContext.getCurrentInstance().addMessage(
         null,
         new FacesMessage(FacesMessage.SEVERITY_WARN,

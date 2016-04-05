@@ -56,11 +56,11 @@
          </p>
          <p:commandButton id="confirm" value="#{label.yes}" update="msg"
              oncomplete="PF('timeoutDialog').hide()"
-             onclick="keepSessionAlive()" />
+             actionListener="#{idleMonitorView.keepSessionAlive}" />
 
          <p:commandButton id="logout" value="#{label.no}" update="msg"
              oncomplete="PF('timeoutDialog').hide()"
-             onclick="logout()" />
+             actionListener="#{userLoginView.logout}" />   <!-- onclick="logout()" not stable, reverted to actionListener -->
 
       </p:dialog>
       <p:remoteCommand name="keepSessionAlive" actionListener="#{idleMonitorView.keepSessionAlive}"/>
@@ -68,7 +68,7 @@
    </h:form>
 
    <script type="text/javascript">
-      var TIME = 10; // in seconds - 2 minutes - count down timer, time left for session 
+      var TIME = 10; // in seconds - 10 minutes ==> 600 
       var countTimer = TIME;
       var processTimer;
       var timer_is_on = 0;
@@ -85,7 +85,7 @@
       }
       function timedCount() {
         txtCountDown.innerHTML = countTimer;
-        if (countTimer == 1) { // make sure logout works when countTimer == 0
+        if (countTimer == 5) { // make sure logout works when countTimer == 0
             keepSessionAlive();
         }
         if (countTimer == 0) {
