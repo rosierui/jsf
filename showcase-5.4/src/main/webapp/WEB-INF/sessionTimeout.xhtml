@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- 
     timeout
+    "600000" milliseconds ==> 10 minutes
     "300000" milliseconds ==> 5 minutes
     "60000"  milliseconds ==> 60 seconds
     "50000"  milliseconds ==> 50 seconds
@@ -26,7 +27,7 @@
       <p:growl id="msg" showDetail="true" sticky="true" />
 
       <p:idleMonitor id="sessionIdleMonitor"
-         timeout="30000"
+         timeout="${idleMonitorView.getSessionMaxInactiveInterval() * 1000 - 600000}"
          onidle="startIdleMonitor()"
           />
  
@@ -68,7 +69,7 @@
    </h:form>
 
    <script type="text/javascript">
-      var TIME = 10; // in seconds - 10 minutes ==> 600 
+      var TIME = 10; // in seconds or minutes depends on unit in processTimer = setTimeout("timedCount()", 1000); 
       var countTimer = TIME;
       var processTimer;
       var timer_is_on = 0;
@@ -95,7 +96,7 @@
             return;
         }
         countTimer = countTimer - 1;
-        processTimer = setTimeout("timedCount()", 1000); // count down every second, 600000 - one minute 
+        processTimer = setTimeout("timedCount()", 600000); // count down every second, 600000 - one minute 
       }
       function doTimer() {
         if (!timer_is_on) {

@@ -43,6 +43,15 @@ public class IdleMonitorView {
     }
 
     /**
+     * Get session max inactive interval in seconds
+     */
+    public int getSessionMaxInactiveInterval() {
+        int maxInactiveInterval = FacesContext.getCurrentInstance().getExternalContext().getSessionMaxInactiveInterval();
+        System.out.println("IdleMonitorView::getSessionMaxInactiveInterval: " + maxInactiveInterval);
+        return maxInactiveInterval;
+    }
+
+    /**
      * Dummy method to keep current session live
      */
     public void keepSessionAlive() {
