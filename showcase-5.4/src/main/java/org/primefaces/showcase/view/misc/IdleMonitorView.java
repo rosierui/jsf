@@ -63,6 +63,11 @@ public class IdleMonitorView {
         System.out.println("IdleMonitorView::keepSessionAlive called");
     }
 
+    public void login() throws Exception {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(ec.getRequestContextPath() + "/ui/overlay/dialog/loginDemo.xhtml");
+    }
+
     public void logout() throws Exception {
         System.out.println("logout() called");
 

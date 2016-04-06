@@ -24,7 +24,7 @@
     <ui:define name="implementation">
         <h:form>
             ${msg.loggedOut}<br/><br/>
-            <h:commandButton action="loginDemo.xhtml" value="${label.loginAgain}" />
+            <p:commandButton id="login" value="${label.loginAgain}" actionListener="#{idleMonitorView.login}" />
         </h:form>
     </ui:define>
 
