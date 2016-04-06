@@ -8,9 +8,22 @@
                 template="./template.xhtml">
     
     <ui:define name="head">
-    <script type="text/javascript">
-    
-    </script>
+        <script type="text/javascript">
+
+        </script>
+        <style type="text/css">
+            .primaryButton {
+                background-color: #0067aa;
+                border: 1px solid #0067aa;
+                color: #fff;
+            }
+
+            .primaryButton:hover {
+                background-color: #00538b;
+                color: #fff;
+                border: 1px solid #00538b;
+            }
+        </style>
 
     </ui:define>
 
@@ -22,10 +35,12 @@
     </ui:define>
 
     <ui:define name="implementation">
-        <h:form>
-            ${msg.loggedOut}<br/><br/>
-            <p:commandButton id="login" value="${label.loginAgain}" actionListener="#{idleMonitorView.login}" />
-        </h:form>
+       <h:panelGroup style="display:block; text-align:center">
+            <h:form>
+                ${msg.loggedOut}<br/><br/>
+                <p:commandButton id="login" styleClass="primaryButton" value="${label.loginAgain}" actionListener="#{idleMonitorView.login}" />
+            </h:form>
+       </h:panelGroup>
     </ui:define>
 
     <ui:define name="source">
