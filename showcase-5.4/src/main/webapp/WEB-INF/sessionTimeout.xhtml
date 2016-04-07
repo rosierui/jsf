@@ -22,6 +22,26 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
+    <ui:define name="head">
+        <script type="text/javascript">
+
+        </script>
+        <style type="text/css">
+            .primaryButton {
+                background-color: #9FC5F8;
+                border: 1px solid #000000;
+                color: #222222;
+            }
+
+            .primaryButton:hover {
+                background-color: #00538b;
+                color: #ffffff;
+                border: 1px solid #000000;
+            }
+        </style>
+
+    </ui:define>
+                
    <h:form prependId="false">
       <p:growl id="msg" showDetail="true" sticky="true" />
 
@@ -44,22 +64,26 @@
          onHide="stopCount()"
          onShow="startTimer()">
          <br />
-         <p>
-            <span class="ui-icon ui-icon-alert" style="float: left; margin: 8px 8px 0;"/>
-            <p:panel>
-               #{label.session_timeout_1}<br/>
-               #{label.session_timeout_2a} <span id="lblCountdown" style="font-weight: bold"></span> #{label.session_timeout_2b}<br/>
-               #{label.session_timeout_3}<br/>
-            </p:panel>
-         </p>
-         <p:commandButton id="confirm" value="#{label.yes}" update="msg"
-             oncomplete="PF('timeoutDialog').hide()"
-             actionListener="#{idleMonitorView.keepSessionAlive}" />
+         <h:panelGroup style="display:block; text-align:center">
+             <p>
+                <span class="ui-icon ui-icon-alert" style="float: left; margin: 8px 8px 0;"/>
+                <p:panel>
+                   #{label.session_timeout_1}<br/>
+                   #{label.session_timeout_2a} <span id="lblCountdown" style="font-weight: bold"></span> #{label.session_timeout_2b}<br/>
+                   #{label.session_timeout_3}<br/>
+                </p:panel>
+             </p>
+             <p:commandButton id="confirm" value="#{label.yes}" update="msg"
+                 styleClass="primaryButton"
+                 oncomplete="PF('timeoutDialog').hide()"
+                 actionListener="#{idleMonitorView.keepSessionAlive}" />
+    
+             <p:commandButton id="logout" value="#{label.no}" update="msg"
+                 styleClass="primaryButton"
+                 oncomplete="PF('timeoutDialog').hide()"
+                 actionListener="#{idleMonitorView.logout}" />   <!-- onclick="logout()" not stable, reverted to actionListener -->
 
-         <p:commandButton id="logout" value="#{label.no}" update="msg"
-             oncomplete="PF('timeoutDialog').hide()"
-             actionListener="#{idleMonitorView.logout}" />   <!-- onclick="logout()" not stable, reverted to actionListener -->
-
+        </h:panelGroup>
       </p:dialog>
       <p:remoteCommand name="keepSessionAlive" actionListener="#{idleMonitorView.keepSessionAlive}"/>
       <p:remoteCommand name="logout"    actionListener="#{idleMonitorView.logout}"/>
