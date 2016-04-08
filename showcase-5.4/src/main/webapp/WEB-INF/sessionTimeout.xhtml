@@ -27,13 +27,13 @@
 
         </script>
         <style type="text/css">
-            .primaryButton {
+            .sessionTimeoutButton {
                 background-color: #9FC5F8;
                 border: 1px solid #000000;
                 color: #222222;
             }
 
-            .primaryButton:hover {
+            .sessionTimeoutButton:hover {
                 background-color: #00538b;
                 color: #ffffff;
                 border: 1px solid #000000;
@@ -65,21 +65,19 @@
          onShow="startTimer()">
          <br />
          <h:panelGroup style="display:block; text-align:center">
-             <p>
-                <span class="ui-icon ui-icon-alert" style="float: left; margin: 8px 8px 0;"/>
-                <p:panel>
-                   #{label.session_timeout_1}<br/>
-                   #{label.session_timeout_2a} <span id="lblCountdown" style="font-weight: bold"></span> #{label.session_timeout_2b}<br/>
-                   #{label.session_timeout_3}<br/>
-                </p:panel>
-             </p>
+             <p:graphicImage name="main/images/warning_icon.png" style="float: left; margin: 8px 8px 0;" />
+             <p:panel>
+                #{label.session_timeout_1}<br/>
+                #{label.session_timeout_2a} <span id="lblCountdown" style="font-weight: bold"></span> #{label.session_timeout_2b}<br/>
+                #{label.session_timeout_3}<br/>
+             </p:panel>
              <p:commandButton id="confirm" value="#{label.yes}" update="msg"
-                 styleClass="primaryButton"
+                 styleClass="sessionTimeoutButton"
                  oncomplete="PF('timeoutDialog').hide()"
                  actionListener="#{idleMonitorView.keepSessionAlive}" />
     
              <p:commandButton id="logout" value="#{label.no}" update="msg"
-                 styleClass="primaryButton"
+                 styleClass="sessionTimeoutButton"
                  oncomplete="PF('timeoutDialog').hide()"
                  actionListener="#{idleMonitorView.logout}" />   <!-- onclick="logout()" not stable, reverted to actionListener -->
 
@@ -90,7 +88,7 @@
    </h:form>
 
    <script type="text/javascript">
-      var countDownInterval = 1; // deafult - 60 seconds (one minute), 1 - one second for testing
+      var countDownInterval = 10; // deafult - 60 seconds (one minute), 1 - one second for testing
       var timerUnit = 10; // initial count down value in minutes
       var timerCount = timerUnit;
       var isTimerStarted = false;
