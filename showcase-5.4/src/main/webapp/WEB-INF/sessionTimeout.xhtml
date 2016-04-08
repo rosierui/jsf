@@ -28,12 +28,13 @@
         </script>
         <style type="text/css">
             .sessionTimeoutButton {
+                margin-top: 0px;
                 background-color: #9FC5F8;
                 border: 1px solid #000000;
                 color: #222222;
             }
-
             .sessionTimeoutButton:hover {
+                margin-top: 0px;
                 background-color: #00538b;
                 color: #ffffff;
                 border: 1px solid #000000;
@@ -56,7 +57,7 @@
          showEffect="fade" hideEffect="fade"
          modal="true"
          width="400"
-         height="200"
+         height="140"
          closable="false"
          draggable="true"
          resizable="false"
@@ -66,21 +67,24 @@
          <br />
          <h:panelGroup style="display:block; text-align:center">
              <p:graphicImage name="main/images/warning_icon.png" style="float: left; margin: 8px 8px 0;" />
-             <p:panel>
                 #{label.session_timeout_1}<br/>
                 #{label.session_timeout_2a} <span id="lblCountdown" style="font-weight: bold"></span> #{label.session_timeout_2b}<br/>
                 #{label.session_timeout_3}<br/>
-             </p:panel>
-             <p:commandButton id="confirm" value="#{label.yes}" update="msg"
-                 styleClass="sessionTimeoutButton"
-                 oncomplete="PF('timeoutDialog').hide()"
-                 actionListener="#{idleMonitorView.keepSessionAlive}" />
-    
-             <p:commandButton id="logout" value="#{label.no}" update="msg"
-                 styleClass="sessionTimeoutButton"
-                 oncomplete="PF('timeoutDialog').hide()"
-                 actionListener="#{idleMonitorView.logout}" />   <!-- onclick="logout()" not stable, reverted to actionListener -->
-
+             <br/><br/>
+             <h:panelGrid columns="5" cellpadding="0" cellspacing="2">
+                <h:panelGroup />
+                <p:commandButton id="confirm" value="#{label.yes}" update="msg"
+                     styleClass="sessionTimeoutButton"
+                     oncomplete="PF('timeoutDialog').hide()"
+                     actionListener="#{idleMonitorView.keepSessionAlive}" />
+        
+                <h:panelGroup />
+                <p:commandButton id="logout" value="#{label.no}" update="msg"
+                     styleClass="sessionTimeoutButton"
+                     oncomplete="PF('timeoutDialog').hide()"
+                     actionListener="#{idleMonitorView.logout}" />   <!-- onclick="logout()" not stable, reverted to actionListener -->
+                <h:panelGroup />
+             </h:panelGrid>
         </h:panelGroup>
       </p:dialog>
       <p:remoteCommand name="keepSessionAlive" actionListener="#{idleMonitorView.keepSessionAlive}"/>
