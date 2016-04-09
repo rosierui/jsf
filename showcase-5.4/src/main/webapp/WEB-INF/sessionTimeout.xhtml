@@ -71,20 +71,15 @@
                 #{label.session_timeout_2a} <span id="lblCountdown" style="font-weight: bold"></span> #{label.session_timeout_2b}<br/>
                 #{label.session_timeout_3}<br/>
              <br/><br/>
-             <h:panelGrid columns="5" cellpadding="0" cellspacing="2">
-                <h:panelGroup />
-                <p:commandButton id="confirm" value="#{label.yes}" update="msg"
-                     styleClass="sessionTimeoutButton"
-                     oncomplete="PF('timeoutDialog').hide()"
-                     actionListener="#{idleMonitorView.keepSessionAlive}" />
-        
-                <h:panelGroup />
-                <p:commandButton id="logout" value="#{label.no}" update="msg"
-                     styleClass="sessionTimeoutButton"
-                     oncomplete="PF('timeoutDialog').hide()"
-                     actionListener="#{idleMonitorView.logout}" />   <!-- onclick="logout()" not stable, reverted to actionListener -->
-                <h:panelGroup />
-             </h:panelGrid>
+             <p:commandButton id="confirm" value="#{label.yes}" update="msg"
+                  styleClass="sessionTimeoutButton"
+                  oncomplete="PF('timeoutDialog').hide()"
+                  actionListener="#{idleMonitorView.keepSessionAlive}" />
+
+             <p:commandButton id="logout" value="#{label.no}" update="msg"
+                  styleClass="sessionTimeoutButton"
+                  oncomplete="PF('timeoutDialog').hide()"
+                  actionListener="#{idleMonitorView.logout}" />
         </h:panelGroup>
       </p:dialog>
       <p:remoteCommand name="keepSessionAlive" actionListener="#{idleMonitorView.keepSessionAlive}"/>
