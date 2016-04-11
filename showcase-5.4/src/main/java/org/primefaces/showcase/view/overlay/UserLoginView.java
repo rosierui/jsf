@@ -107,14 +107,15 @@ public class UserLoginView {
         session = FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 
         // test code here - to remove
-        CookieUtil.addResponseCookie("test_1", "abc_012");
-        CookieUtil.addResponseCookie("test_11", "asi es el amor");
-        CookieUtil.addSecureResponseCookie("test_11_sec", "Mantiene su estado de gracia");
+        CookieUtil.addResponseCookie("cancion-1", "Chino y Nacho - Regalame Un Muack", "/");
+        CookieUtil.addResponseCookie("cancion-2", "Mana - Labios Compartidos", "/");
+        CookieUtil.addSecureResponseCookie("cancion-3", "Thalia - Te Perdiste Mi Amor", "/");
 
         // redirect to a page
         try {
             ec.redirect(ec.getRequestContextPath() + "/ui/overlay/dialog/basic.xhtml"); // /ui/file/upload/basic.xhtml
 //            ec.dispatch(ec.getRequestContextPath() + "/ui/overlay/dialog/basic.xhtml"); // java.lang.IllegalStateException: Component ID j_idt102 has already been found in the view.
+//          ec.dispatch("/ui/overlay/dialog/basic.xhtml");
         } catch (Exception e) {
         }
     }
@@ -162,13 +163,15 @@ public class UserLoginView {
         session = FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 
         // test code here - to remove
-        CookieUtil.addResponseCookie("abc_1", "abc_012"); // default path /showcase-5.4/ui/overlay/dialog 
-        CookieUtil.addResponseCookie("abc_11", "asi es el amor");
-        CookieUtil.addSecureResponseCookie("abc_11_sec", "Mantiene su estado de gracia");
+        // default path /showcase-5.4/ui/overlay/dialog, but the path is null 
+        // when sessionTimeout is activated since sessionTimeout.xml does not locate at the same path
+        CookieUtil.addResponseCookie("abc_1", "abc_012", "/");
+        CookieUtil.addResponseCookie("abc_11", "asi es el amor", "/");
+        CookieUtil.addSecureResponseCookie("abc_11_sec", "Mantiene su estado de gracia", "/");
 
         // forward to a page
-//        return "/ui/file/upload/basic.xhtml";
-        return "basic.xhtml";
+//        return "basic.xhtml"; // not working
+        return "/ui/overlay/dialog/basic.xhtml"; // /ui/file/upload/basic.xhtml
     }
 
     private boolean isLogin() {

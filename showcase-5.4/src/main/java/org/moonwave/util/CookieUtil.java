@@ -51,6 +51,14 @@ public class CookieUtil implements Serializable {
         ec.addResponseCookie(name, value, getSecureProperties(ec));
     }
 
+    public static void addSecureResponseCookie(String name, String value, String path) {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+
+        Map<String, Object> properties = getSecureProperties(ec);
+        properties.put("path", path);
+        ec.addResponseCookie(name, value, properties);
+    }
+
     /**
      * Remove all cookies
      *
