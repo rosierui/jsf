@@ -24,9 +24,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.moonwave.util.CookieUtil;
-import org.moonwave.util.JSFUtil;
 import org.primefaces.context.RequestContext;
 import org.primefaces.showcase.domain.User;
 
@@ -183,8 +183,18 @@ public class UserLoginView {
     }
 
     public Boolean isUserLoggedIn() {
-        Object user = JSFUtil.getSessionMap().get("loggedInUser");
-        return (user != null) ? true : false; 
+        Object session = FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if ((session != null) && session instanceof HttpSession) {
+            HttpSession httpSession = (HttpSession) session;
+            boolean isNew = httpSession.isNew();
+            if (isNew) {
+                return false;
+            }
+            Object user = httpSession.getAttribute("loggedInUser"); // or JSFUtil.getSessionMap().get("loggedInUser");
+            return (user != null) ? true : false; 
+        } else {
+            return false;
+        }
     }
 
     // ========================================================== helper methods
