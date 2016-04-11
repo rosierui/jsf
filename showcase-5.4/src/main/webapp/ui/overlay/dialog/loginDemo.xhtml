@@ -31,7 +31,7 @@
 
     <ui:define name="implementation">
 
-        <h:form>        
+        <h:form>
             <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
                 <p:graphicImage name="/demo/images/login.png" />
             </h:outputLink>
@@ -42,12 +42,17 @@
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel for="username" value="Username:" />
                     <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
-                    
+
                     <h:outputLabel for="password" value="Password:" />
                     <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
-                    
+
                     <f:facet name="footer">
-                        <p:commandButton value="Login" update="growl" actionListener="#{userLoginView.login}" 
+                        <p:commandButton value="actionListener: Login-Redirect" update="growl" actionListener="#{userLoginView.login}" 
+                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+                    </f:facet>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="action: Login-Forward" update="growl" action="#{userLoginView.loginAndForward}" 
                                          oncomplete="handleLoginRequest(xhr, status, args)" />
                     </f:facet>
                 </h:panelGrid>

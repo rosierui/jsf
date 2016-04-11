@@ -76,10 +76,24 @@
                   oncomplete="PF('timeoutDialog').hide()"
                   actionListener="#{idleMonitorView.keepSessionAlive}" />
 
-             <p:commandButton id="logout" value="#{label.no}" update="msg"
+             <p:commandButton id="logout1" value="#{label.no}" update="msg"
                   styleClass="sessionTimeoutButton"
                   oncomplete="PF('timeoutDialog').hide()"
                   actionListener="#{idleMonitorView.logout}" />
+             <br/>
+             <p:commandButton id="logout2" value="actionListener: logout-redirect" update="msg"
+                  styleClass="sessionTimeoutButton"
+                  oncomplete="PF('timeoutDialog').hide()"
+                  actionListener="#{idleMonitorView.logout}" />
+
+             <p:commandButton id="logout3" value="action:logout-forward" update="msg"
+                  styleClass="sessionTimeoutButton"
+                  action="#{idleMonitorView.logoutAndForward}" />
+
+             <p:commandButton id="logout4" value="action:logout-redirect" update="msg"
+                  styleClass="sessionTimeoutButton"
+                  action="#{idleMonitorView.logoutAndForward}" />
+
         </h:panelGroup>
       </p:dialog>
       <p:remoteCommand name="keepSessionAlive" actionListener="#{idleMonitorView.keepSessionAlive}"/>

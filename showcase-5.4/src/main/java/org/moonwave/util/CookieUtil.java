@@ -2,13 +2,13 @@ package org.moonwave.util;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * com.sun.faces.context.ExternalContextImpl 
@@ -24,8 +24,19 @@ public class CookieUtil implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public static void addResponseCookie(String name, String value, String path) {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        HttpServletResponse response = (HttpServletResponse) ec.getResponse();
+
+        Cookie cookie = new Cookie(name, value);
+        cookie.setPath(path);
+
+        response.addCookie(cookie);
+    }
+
     public static void addResponseCookie(String name, String value) {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+
         ec.addResponseCookie(name, value, null);
     }
 
@@ -41,32 +52,40 @@ public class CookieUtil implements Serializable {
     }
 
     /**
+     * Remove all cookies
+     *
+     * http://stackoverflow.com/questions/890935/how-do-you-remove-a-cookie-in-a-java-servlet
+     */
+    public static void removeCookies() {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+        HttpServletResponse response = (HttpServletResponse) ec.getResponse();
+        response.setContentType("text/html");
+        Cookie[] cookies = request.getCookies();
+        Cookie cookie = null;
+        for (int i = 0; i < cookies.length; i++) {
+            cookie = new Cookie(cookies[i].getName(), cookies[i].getValue());
+            cookie.setMaxAge(0);
+            cookie.setValue("");
+            cookie.setPath((cookies[i].getPath() != null) ? cookies[i].getPath() : "/");
+
+            if (cookies[i].getDomain() != null) {
+                cookie.setDomain(cookies[i].getDomain());
+            }
+            response.addCookie(cookie);
+        }
+    }
+
+    /**
      * Remove a cookie by name
      *
      * @param name the name of a cookie to be removed
      */
-    public static void removeCookie(String name) {
+    private static void removeCookie(String name) {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> properties = new HashMap<String, Object>();
         properties.put("maxAge", 0);
         ec.addResponseCookie(name, "", properties);
-    }
-
-    /**
-     * Remove all cookies
-     */
-    public static void removeCookies() {
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        Map<String, Object> cookieMap = ec.getRequestCookieMap();
-        Iterator<Object> it = cookieMap.values().iterator();
-
-        while (it.hasNext()) {
-            Object obj = it.next();
-            if (obj instanceof Cookie) {
-                Cookie cookieObj = (Cookie) obj;
-                removeCookie(cookieObj.getName());
-            }
-        }
     }
 
     private static Map<String, Object> getSecureProperties(ExternalContext externalContext) {

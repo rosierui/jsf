@@ -38,6 +38,7 @@
        <h:panelGroup style="display:block; text-align:center">
             <h:form>
                 ${msg.loggedOut}<br/><br/>
+                ${logoutView.message}
                 <p:commandButton id="login" styleClass="primaryButton" value="${label.loginAgain}" actionListener="#{idleMonitorView.login}" />
             </h:form>
        </h:panelGroup>

@@ -19,6 +19,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.moonwave.util.CookieUtil;
@@ -67,7 +68,17 @@ public class IdleMonitorView {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(ec.getRequestContextPath() + "/ui/overlay/dialog/loginDemo.xhtml");
     }
+    
+    
 
+    /**
+     * Logout using redirect
+     *
+     * stackoverflow.com/questions/11277366/what-is-the-difference-between-redirect-and-navigation-forward-and-when-to-use-w
+     *
+     * @return
+     * @throws Exception
+     */
     public void logout() throws Exception {
         System.out.println("logout() called");
 
@@ -88,7 +99,60 @@ public class IdleMonitorView {
 
         // redirect to logout page
         ec.redirect(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");
-//      ec.dispatch(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");
+//        ec.dispatch(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml"); // forward
     }
 
+    /**
+     * Logout using forward
+     *
+     * @return
+     * @throws Exception
+     */
+    public String logoutAndForward() throws Exception {
+        System.out.println("logout() called");
+
+        FacesContext.getCurrentInstance().addMessage(
+        null,
+        new FacesMessage(FacesMessage.SEVERITY_WARN,
+            "You Have Logged Out!",
+            "Thank you for Moonwave Services"));
+
+        // remove cookies
+        CookieUtil.removeCookies();
+        System.out.println("remove cookies");
+
+        // invalidate session
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.getSessionMap().put("loggedInUser", null);
+        ec.invalidateSession();
+
+        return "/ui/overlay/dialog/logout.xhtml";
+    }
+
+    /**
+     * Logout using forward
+     *
+     * @return
+     * @throws Exception
+     */
+    public String logoutAndRedirect() throws Exception {
+        System.out.println("logout() called");
+
+        FacesContext.getCurrentInstance().addMessage(
+        null,
+        new FacesMessage(FacesMessage.SEVERITY_WARN,
+            "You Have Logged Out!",
+            "Thank you for Moonwave Services"));
+
+        // remove cookies
+        CookieUtil.removeCookies();
+        System.out.println("remove cookies");
+
+        // invalidate session
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.getSessionMap().put("loggedInUser", null);
+        ec.invalidateSession();
+
+        return "/ui/overlay/dialog/logout.xhtml?faces-redirect=true";
+    }
 }

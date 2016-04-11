@@ -64,6 +64,10 @@ public class UserLoginView {
         this.password = password;
     }
 
+    /**
+     * Login and redirect to a different page
+     *
+     */
     public void login(ActionEvent event) {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = null;
@@ -109,9 +113,62 @@ public class UserLoginView {
 
         // redirect to a page
         try {
-            ec.redirect(ec.getRequestContextPath() + "/ui/file/upload/basic.xhtml");
+            ec.redirect(ec.getRequestContextPath() + "/ui/overlay/dialog/basic.xhtml"); // /ui/file/upload/basic.xhtml
+//            ec.dispatch(ec.getRequestContextPath() + "/ui/overlay/dialog/basic.xhtml"); // java.lang.IllegalStateException: Component ID j_idt102 has already been found in the view.
         } catch (Exception e) {
         }
+    }
+
+    /**
+     * Login and forward to a different page
+     * 
+     */
+    public String loginAndForward() {
+        RequestContext context = RequestContext.getCurrentInstance();
+        FacesMessage message = null;
+        boolean loggedIn = false;
+
+        if(username != null && username.equals("admin") && password != null && password.equals("admin")) {
+            loggedIn = true;
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
+        } else {
+            loggedIn = false;
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
+        }
+
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        context.addCallbackParam("loggedIn", loggedIn);
+
+        // enable session
+        // http://stackoverflow.com/questions/5505328/how-can-i-create-a-new-session-with-a-new-user-login-on-the-application
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        Object session = ec.getSession(false);
+
+        // http://stackoverflow.com/questions/11206817/how-to-detect-session-has-been-invalidated-in-jsf-2
+        boolean valid = true;
+        HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+        if (request.getRequestedSessionId() != null && !request.isRequestedSessionIdValid()) {
+            valid = false;
+            // Session has been invalidated during the previous request.
+        }
+
+        Map<String, Object> map = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+
+        User loggedInUser = new User();
+        loggedInUser.setFirstname(username);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", loggedInUser);
+
+        session = FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        session = FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+
+        // test code here - to remove
+        CookieUtil.addResponseCookie("abc_1", "abc_012"); // default path /showcase-5.4/ui/overlay/dialog 
+        CookieUtil.addResponseCookie("abc_11", "asi es el amor");
+        CookieUtil.addSecureResponseCookie("abc_11_sec", "Mantiene su estado de gracia");
+
+        // forward to a page
+//        return "/ui/file/upload/basic.xhtml";
+        return "basic.xhtml";
     }
 
     private boolean isLogin() {
@@ -123,9 +180,6 @@ public class UserLoginView {
     }
 
     public Boolean isUserLoggedIn() {
-    	//test code below
-    	isLogin();
-
         Object user = JSFUtil.getSessionMap().get("loggedInUser");
         return (user != null) ? true : false; 
     }
