@@ -1,8 +1,10 @@
 package org.moonwave.util;
 
 import java.io.Serializable;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -101,12 +103,23 @@ public class CookieUtil implements Serializable {
     }
 
     /**
-     * Remove all cookies that not being sent back to server side
-     * This can be done in a property file
+     * Remove additional cookies, defined in cookies.properties, that not being sent 
+     * back to server side during a request action
      */
     private static void removeOtherCookies() {
-        removeCookie("JSESSIONID", "/");
-//      removeCookie("cookie2", "/path");
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        Properties props = new Properties();
+        try {
+            props.load(ec.getResourceAsStream("/WEB-INF/cookies.properties"));
+            Enumeration<?> e = props.propertyNames();
+            while (e.hasMoreElements()) {
+              String name = (String) e.nextElement();
+              String path = props.getProperty(name);
+              removeCookie(name, path);
+            }
+        } catch (Exception e) {
+
+        }
     }
 
     /**
