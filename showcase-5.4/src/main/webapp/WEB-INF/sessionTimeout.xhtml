@@ -75,11 +75,13 @@
                   style="height:30px;background-color: #9FC5F8;border: 1px solid #000000;color:#222222;"
                   oncomplete="PF('timeoutDialog').hide()"
                   actionListener="#{idleMonitorView.keepSessionAlive}" />
-
+             <p:spacer width="50" />
              <p:commandButton id="logout1" value="#{label.no}" update="msg"
                   style="height:30px;background-color: #FFFFFF;border: 1px solid #000000;color:#222222;"
                   oncomplete="PF('timeoutDialog').hide()"
                   actionListener="#{idleMonitorView.logout}" />
+
+             <br/>
              <br/>
              <p:commandButton id="logout2" value="actionListener: logout-redirect" update="msg"
                   styleClass="sessionTimeoutButton"
@@ -101,7 +103,7 @@
    </h:form>
 
    <script type="text/javascript">
-      var countDownInterval = 10; // deafult - 60 seconds (one minute), 1 - one second for testing
+      var countDownInterval = 60; // deafult - 60 seconds (one minute), 1 - one second for testing
       var timerUnit = 10; // initial count down value in minutes
       var timerCount = timerUnit;
       var isTimerStarted = false;
