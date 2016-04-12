@@ -72,12 +72,12 @@
                 #{label.session_timeout_3}<br/>
              <br/><br/>
              <p:commandButton id="confirm" value="#{label.yes}" update="msg"
-                  styleClass="sessionTimeoutButton"
+                  style="height:30px;background-color: #9FC5F8;border: 1px solid #000000;color:#222222;"
                   oncomplete="PF('timeoutDialog').hide()"
                   actionListener="#{idleMonitorView.keepSessionAlive}" />
 
              <p:commandButton id="logout1" value="#{label.no}" update="msg"
-                  styleClass="sessionTimeoutButton"
+                  style="height:30px;background-color: #FFFFFF;border: 1px solid #000000;color:#222222;"
                   oncomplete="PF('timeoutDialog').hide()"
                   actionListener="#{idleMonitorView.logout}" />
              <br/>

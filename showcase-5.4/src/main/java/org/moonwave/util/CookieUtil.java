@@ -82,6 +82,31 @@ public class CookieUtil implements Serializable {
             }
             response.addCookie(cookie);
         }
+
+        removeOtherCookies();
+    }
+
+    /**
+     * Remove a cookie by name and path
+     *
+     * @param name the name of a cookie to be removed
+     * @param path cookie path
+     */
+    public static void removeCookie(String name, String path) {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, Object> properties = new HashMap<String, Object>();
+        properties.put("maxAge", 0);
+        properties.put("path", path);
+        ec.addResponseCookie(name, "", properties);
+    }
+
+    /**
+     * Remove all cookies that not being sent back to server side
+     * This can be done in a property file
+     */
+    private static void removeOtherCookies() {
+//      removeCookie("cookie1", "/");
+//      removeCookie("cookie2", "/path");
     }
 
     /**
@@ -95,6 +120,7 @@ public class CookieUtil implements Serializable {
         properties.put("maxAge", 0);
         ec.addResponseCookie(name, "", properties);
     }
+
 
     private static Map<String, Object> getSecureProperties(ExternalContext externalContext) {
         Map<String, Object> properties = new HashMap<String, Object>();
