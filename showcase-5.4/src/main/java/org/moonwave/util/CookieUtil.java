@@ -105,7 +105,7 @@ public class CookieUtil implements Serializable {
      * This can be done in a property file
      */
     private static void removeOtherCookies() {
-//      removeCookie("cookie1", "/");
+        removeCookie("JSESSIONID", "/");
 //      removeCookie("cookie2", "/path");
     }
 

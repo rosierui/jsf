@@ -128,7 +128,7 @@
 
     <!-- Session -->
     <session-config>
-        <session-timeout>30</session-timeout>
+        <session-timeout>11</session-timeout>
         <cookie-config>
             <path>/</path>
             <http-only>true</http-only>
