@@ -19,8 +19,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.moonwave.util.CookieUtil;
 
@@ -126,7 +124,8 @@ public class IdleMonitorView {
         ec.getSessionMap().put("loggedInUser", null);
         ec.invalidateSession();
 
-        return "/ui/overlay/dialog/logout.xhtml";
+//        return "/ui/overlay/dialog/logout.xhtml";
+        return "/noauth/logout.xhtml";
     }
 
     /**

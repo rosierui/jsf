@@ -92,14 +92,10 @@
                   styleClass="sessionTimeoutButton"
                   action="#{idleMonitorView.logoutAndForward}" />
 
-             <p:commandButton id="logout4" value="action:logout-redirect" update="msg"
-                  styleClass="sessionTimeoutButton"
-                  action="#{idleMonitorView.logoutAndForward}" />
-
         </h:panelGroup>
       </p:dialog>
       <p:remoteCommand name="keepSessionAlive" actionListener="#{idleMonitorView.keepSessionAlive}"/>
-      <p:remoteCommand name="logout"    actionListener="#{idleMonitorView.logout}"/>
+      <p:remoteCommand name="logout"    actionListener="#{idleMonitorView.logoutAndForward}"/>
    </h:form>
 
    <script type="text/javascript">
