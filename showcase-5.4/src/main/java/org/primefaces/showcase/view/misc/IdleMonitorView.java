@@ -19,9 +19,16 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 import org.moonwave.util.CookieUtil;
 
+/**
+ * Test URLs
+ *    /ui/overlay/dialog/basic.xhtml 
+ *    /sessionTimeout.xhtml
+ *
+ */
 @ManagedBean
 public class IdleMonitorView {
 
@@ -54,9 +61,9 @@ public class IdleMonitorView {
     }
 
     /**
-     * Dummy method to keep current session live
+     * Dummy action listener to keep current session live
      */
-    public void keepSessionAlive() {
+    public void keepSessionAlive(ActionEvent event) {
         welcomeListener();
         FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         System.out.println("IdleMonitorView::keepSessionAlive called");
@@ -66,19 +73,18 @@ public class IdleMonitorView {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(ec.getRequestContextPath() + "/ui/overlay/dialog/loginDemo.xhtml");
     }
-    
-    
 
     /**
-     * Logout using redirect
+     * Logout action listener using redirect
      *
      * stackoverflow.com/questions/11277366/what-is-the-difference-between-redirect-and-navigation-forward-and-when-to-use-w
+     * stackoverflow.com/questions/3909267/differences-between-action-and-actionlistener
      *
      * @return
      * @throws Exception
      */
-    public void logout() throws Exception {
-        System.out.println("logout() called");
+    public void logout(ActionEvent event) {
+        System.out.println("listener - logout() called");
 
         FacesContext.getCurrentInstance().addMessage(
         null,
@@ -96,18 +102,22 @@ public class IdleMonitorView {
         ec.invalidateSession();
 
         // redirect to logout page
-        ec.redirect(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");
-//        ec.dispatch(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml"); // forward
+        try {
+	        ec.redirect(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml");
+	//      ec.dispatch(ec.getRequestContextPath() + "/ui/overlay/dialog/logout.xhtml"); // forward
+        } catch (Exception e) {
+        	
+        }
     }
 
     /**
-     * Logout using forward
+     * Logout action using forward
      *
      * @return
      * @throws Exception
      */
-    public String logoutAndForward() throws Exception {
-        System.out.println("logout() called");
+    public String logoutAndForward() {
+        System.out.println("Action - logoutAndForward() called");
 
         FacesContext.getCurrentInstance().addMessage(
         null,
@@ -124,18 +134,17 @@ public class IdleMonitorView {
         ec.getSessionMap().put("loggedInUser", null);
         ec.invalidateSession();
 
-//        return "/ui/overlay/dialog/logout.xhtml";
-        return "/noauth/logout.xhtml";
+        return "/noauth/logout.xhtml"; // or "/ui/overlay/dialog/logout.xhtml"
     }
 
     /**
-     * Logout using forward
+     * Logout action using Redirect
      *
      * @return
      * @throws Exception
      */
-    public String logoutAndRedirect() throws Exception {
-        System.out.println("logout() called");
+    public String logoutAndRedirect() {
+        System.out.println("Action - logoutAndRedirect() called");
 
         FacesContext.getCurrentInstance().addMessage(
         null,
@@ -152,6 +161,7 @@ public class IdleMonitorView {
         ec.getSessionMap().put("loggedInUser", null);
         ec.invalidateSession();
 
+//      return "/noauth/logout.xhtml?faces-redirect=true";
         return "/ui/overlay/dialog/logout.xhtml?faces-redirect=true";
     }
 }

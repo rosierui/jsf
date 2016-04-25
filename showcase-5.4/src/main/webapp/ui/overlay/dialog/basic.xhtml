@@ -24,11 +24,14 @@
         </h:panelGrid>
 
         <h:panelGrid columns="1" cellpadding="5">
-            <p:commandButton id="logout22" value="actionListener: logout-redirect"
+            <p:commandButton value="actionListener: logout-redirect"
                  actionListener="#{idleMonitorView.logout}" />
 
-            <p:commandButton id="logout23" value="action:logout-forward"
+            <p:commandButton value="action:logout-forward"
                  action="#{idleMonitorView.logoutAndForward}" />
+
+            <p:commandButton value="action:logout-redirect"
+                 action="#{idleMonitorView.logoutAndRedirect}" />
 
         </h:panelGrid>
 
