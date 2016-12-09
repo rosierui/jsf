@@ -31,11 +31,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
+
+import javax.faces.context.FacesContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -419,4 +423,31 @@ public class FileUtil {
         }
         return ret;
     }
+
+    /**
+     * Read a file from /webapp and return as a string
+     * e.g. FileUtil.readFile("/xmldata.txt");
+     *
+     * @param filename
+     * @return
+     */
+    @SuppressWarnings("resource")
+    public static String readFile(String filename) {
+        InputStream inputStream = null;
+        String result = null;
+        Scanner s = null;
+        try {
+            inputStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(filename);
+            s = new Scanner(inputStream).useDelimiter("\\A");
+            result = s.hasNext() ? s.next() : "";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (s != null) {
+                s.close();
+            }
+        }
+        return result;
+    }
+
 }
