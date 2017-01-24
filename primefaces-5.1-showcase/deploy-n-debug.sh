@@ -1,7 +1,7 @@
 . ./deploy.properties
 
 WORKDIR=`pwd` #BASEDIR=$PWD
-TOMCAT=/g01/srv/$tomcat
+TOMCAT=/j01/srv/$tomcat
 
 TASK_RUNNING=`ps -eaf | grep "sync-source" | grep -v grep | wc -l`
 if [ $TASK_RUNNING -gt 0 ]; then
@@ -49,4 +49,9 @@ echo "cd $WORKDIR"
 echo "starting up tomcat source sync"
 ./sync-source &
 echo ""
+echo "http://localhost:8080/showcase-5.1/"
+echo "http://localhost:8080/showcase-5.1/ui/data/datatable/filter.xhtml"
+echo "http://localhost:8080/showcase-5.1/ui/data/datatable/lazy.xhtml"
+echo
+echo
 

@@ -2,7 +2,7 @@
 
 . ./deploy.properties
 
-TOMCAT=/g01/srv/$tomcat
+TOMCAT=/j01/srv/$tomcat
 
 
 SRC_DIR=$PWD/src/main/webapp/

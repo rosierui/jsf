@@ -13,6 +13,9 @@ Debug
 
     2) eclipse
          Run >> Debug Configurations... >> Remote Java Application >> showcase-5.1
+         JPDA default debug port: 8000
 
     3) http://localhost:8080/showcase-5.1/
-
+       http://localhost:8080/showcase-5.1/ui/data/datatable/filter.xhtml
+       http://localhost:8080/showcase-5.1/ui/data/datatable/lazy.xhtml
+       
