@@ -20,6 +20,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.primefaces.showcase.domain.Car;
@@ -28,9 +31,11 @@ import org.primefaces.showcase.domain.Car;
  * Dummy implementation of LazyDataModel that uses a list to mimic a real datasource like a database.
  */
 public class LazyCarDataModel extends LazyDataModel<Car> {
-    
+
+    private static final Logger LOGGER = Logger.getLogger(LazyCarDataModel.class.getName());
+
     private List<Car> datasource;
-    
+
     public LazyCarDataModel(List<Car> datasource) {
         this.datasource = datasource;
     }
@@ -54,6 +59,12 @@ public class LazyCarDataModel extends LazyDataModel<Car> {
     public List<Car> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {
         List<Car> data = new ArrayList<Car>();
 
+        
+        List<String> filterCols = new ArrayList();
+        for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+            filterCols.add(it.next()); // year
+        }
+
         //filter
         for(Car car : datasource) {
             boolean match = true;
@@ -63,6 +74,7 @@ public class LazyCarDataModel extends LazyDataModel<Car> {
                     try {
                         String filterProperty = it.next();
                         Object filterValue = filters.get(filterProperty);
+                        // use reflection to get value for a given property
                         String fieldValue = String.valueOf(car.getClass().getField(filterProperty).get(car));
 
                         if(filterValue == null || fieldValue.startsWith(filterValue.toString())) {
@@ -85,7 +97,13 @@ public class LazyCarDataModel extends LazyDataModel<Car> {
 
         //sort
         if(sortField != null) {
-            Collections.sort(data, new LazySorter(sortField, sortOrder));
+            try {
+                if (Car.class.getField(sortField) != null) {
+                    Collections.sort(data, new LazySorter(sortField, sortOrder));
+                }
+            } catch (Exception e) {
+                LOGGER.log(Level.WARNING, e.getMessage(), e);
+            }
         }
 
         //rowCount

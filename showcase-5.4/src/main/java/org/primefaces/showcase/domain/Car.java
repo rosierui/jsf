@@ -72,6 +72,22 @@ public class Car implements Serializable {
         this.color = color;
     }
 
+    // begin ==> test properties in lazy_j.xhtml
+    public int getYearNEW() {
+        return this.getYear();
+    }
+    public void setYearNEW(int year) {
+        this.setYear(year);
+    }
+
+    public String getColorT() {
+        return this.getColor();
+    }
+    public void setColorT(String color) {
+        this.setColor(color);
+    }
+    // end   <== test properties in lazy_j.xhtml
+
     public int getPrice() {
         return price;
     }

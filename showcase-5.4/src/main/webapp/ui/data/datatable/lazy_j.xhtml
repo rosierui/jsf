@@ -21,6 +21,9 @@
             <p:dataTable var="car" value="#{dtLazyView.lazyModel}" paginator="true" rows="10"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                          rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{dtLazyView.selectedCar}" id="carTable" lazy="true">
+                <f:facet name="header">
+                    DataTable with Filters
+                </f:facet>
                 <p:ajax event="rowSelect" listener="#{dtLazyView.onRowSelect}" update=":form:carDetail" oncomplete="PF('carDialog').show()" />
                 <p:column headerText="Id" sortBy="#{car.id}" filterBy="#{car.id}">
                     <h:outputText value="#{car.id}" />
@@ -29,13 +32,34 @@
                 <p:column headerText="Year" sortBy="#{car.year}" filterBy="#{car.year}">
                     <h:outputText value="#{car.year}" />
                 </p:column>
+                <p:column headerText="Year-1" sortBy="#{car.yearNEW}" filterBy="#{car.yearNEW}">
+                    <h:outputText value="#{car.year}" />
+                </p:column>
+                <!-- below: it appears that car.yearT2, car.yearTe evaluation is ignored, it returns string right after "car."
+                            as sort/filter name inside LazyCarDataModel#load method. Both fields yearT2 and yearTe don't exist
+                            in Car.java, nor their property methods exist.
+                -->
+                <p:column headerText="Year-T2" sortBy="#{car.yearT2}" filterBy="#{car.yearTe}">
+                    <h:outputText value="#{car.year}" />
+                </p:column>
+                <p:column headerText="Year-2" sortBy="#{yearT}" filterBy="#{yearT1}">
+                      <h:outputText value="#{car.year}" />
+                </p:column>
+                <p:column headerText="Year-3" sortBy="yearNEW" filterBy="yearNEW">
+                     <h:outputText value="#{car.year}" />
+                </p:column>
                 <p:column headerText="Brand" sortBy="#{car.brand}" filterBy="#{car.brand}">
                     <h:outputText value="#{car.brand}" />
                 </p:column>
                 <p:column headerText="Color" sortBy="#{car.color}" filterBy="#{car.color}">
                     <h:outputText value="#{car.color}" />
                 </p:column>
+                <p:column headerText="Color(T)" sortBy="#{car.colorT}" filterBy="#{car.colorT}">
+                    <h:outputText value="#{car.color}" />
+                </p:column>
             </p:dataTable>
+            <br/>
+            <br/>
 
             <p:dialog header="Car Detail" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                 <p:outputPanel id="carDetail" style="text-align:center;">
