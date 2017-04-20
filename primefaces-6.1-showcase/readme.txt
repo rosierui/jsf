@@ -6,9 +6,6 @@ Primefaces-6.1 showcase feature explore project
 This is a project derived from original primefaces-6.1 showcase
 to explore primefaces 6.1 features 
 
-Install maven libs primefaces-lib.tar.gz first
-read lib/readme.txt on how to install
-
 Debug
     1) shutdown tomcat, build, deploy, and startup tomcat
          $ cd /path-to/primefaces-6.1-showcase
