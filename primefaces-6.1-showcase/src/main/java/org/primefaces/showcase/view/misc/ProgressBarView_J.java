@@ -69,7 +69,23 @@ public class ProgressBarView_J implements Serializable {
 
     // ========================================================================
     // new methods added below
-	public void onStart() {
+    /**
+	   <p:commandButton value="Start1" actionListener="#{progressBarView_J.start}" 
+	       onclick="PF('pbAjax').start();PF('startButton1').disable();" widgetVar="startButton1" >
+	   </p:commandButton>
+	   this calls progressBarView_J.start method
+
+	   The following two with type="button" does not call progressBarView_J.onStart method (w/ or w/o <p:ajax/>)
+       <p:commandButton value="Start" type="button" actionListener="#{progressBarView_J.onStart}" 
+        		onclick="PF('pbAjax').start();PF('startButton2').disable();" widgetVar="startButton2" >
+       </p:commandButton>
+
+       <p:commandButton value="Start" type="button" actionListener="#{progressBarView_J.onStart}" 
+        		onclick="PF('pbAjax').start();PF('startButton2').disable();" widgetVar="startButton2" >
+			<p:ajax event="click" update="pbar calcMessage " listener="#{progressBarView_J.calculate()}" />
+       </p:commandButton>
+     */
+	public void start() {
 		message = "Calculation started..."; 
 	}
 
