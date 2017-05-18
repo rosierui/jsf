@@ -28,7 +28,11 @@ public class ProgressBarView_J implements Serializable {
     private Integer progress;
     private String  message;
 
-	public Integer getProgress() {
+    /**
+     * <p:progressBar widgetVar="pbAjax" ajax="true" interval="300" value="#{progressBarView_J.progress}" />
+     * @return
+     */
+	public Integer getProgress() { // automatically called by p:progressBar for a given interval
 		message = null; 
 		if(progress == null) {
 			progress = 0;
@@ -46,18 +50,24 @@ public class ProgressBarView_J implements Serializable {
 	public void setProgress(Integer progress) {
 		this.progress = progress;
 	}
-	
-//	actionListener="#{progressBarView_J.onStart}"
+
+	/**
+	 * <p:progressBar listener="#{progressBarView_J.onComplete}" />
+	 */
 	public void onComplete() {
 		progress = null;
 		message = "Calculation complete!"; 
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Progress Completed"));
 	}
     
+	/**
+	 * <p:commandButton value="Cancel" actionListener="#{progressBarView_J.cancel}" /> 
+	 */
     public void cancel() {
         progress = null;
     }
 
+    // ========================================================================
     // new methods added below
 	public void onStart() {
 		message = "Calculation started..."; 
@@ -73,5 +83,14 @@ public class ProgressBarView_J implements Serializable {
 
     public String getMessage() {
         return message;
+    }
+
+    /**
+     * <p:commandButton value="Start" type="button" actionListener="#{progressBarView_J.onStart()}" widgetVar="startButton2" >
+     *   <p:ajax event="click" update="pbar calcMessage " listener="#{progressBarView_J.calculate()}" />
+     * </p:commandButton>
+     */
+    public void calculate() {
+		message = "enter calculate()..."; 
     }
 }

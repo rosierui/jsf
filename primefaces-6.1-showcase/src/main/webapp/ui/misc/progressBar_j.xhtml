@@ -53,24 +53,29 @@ function cancel() {
         
         <h:form>   
             <p:growl id="growl" />
-            <div >
-                <p:messages styleClass="pfmsg" id="messages" autoUpdate="false"/>
-            </div>
 
-            <div >
-				<h:outputText id="calcMessage" value="#{progressBarView_J.message}" />
-            </div>
-
-            <h3>Ajax ProgressBar</h3>
-            <p:commandButton value="Start" type="button" actionListener="#{progressBarView_J.onStart}" onclick="PF('pbAjax').start();PF('startButton2').disable();" widgetVar="startButton2" />
-            <p:commandButton value="Cancel" actionListener="#{progressBarView_J.cancel}" oncomplete="PF('pbAjax').cancel();PF('startButton2').enable();" />
-            <br /><br />
-            <p:progressBar id="calcPB" widgetVar="pbAjax" ajax="true" interval="600" value="#{progressBarView_J.progress}" 
-            	labelTemplate="{value}%" styleClass="#{progressBarView_J.getStyleClass()}" global="false">
-                <p:ajax event="complete" listener="#{progressBarView_J.onComplete}" 
-                update="growl messages calcPB calcMessage" oncomplete="PF('startButton2').enable()"/>
-            </p:progressBar>
-
+            <p:panelGrid columns="1" id="pbar" rendered="true" style="width:700px">
+	            <div >
+	                <p:messages styleClass="pfmsg" id="messages" autoUpdate="false"/>
+	            </div>
+	
+	            <div >
+					<h:outputText id="calcMessage" value="#{progressBarView_J.message}" />
+	            </div>
+	
+	            <h3>Ajax ProgressBar</h3>
+	            <p:commandButton value="Start" type="button" actionListener="#{progressBarView_J.onStart}" 
+	            		onclick="PF('pbAjax').start();PF('startButton2').disable();" widgetVar="startButton2" >
+	    			<p:ajax event="click" update="pbar calcMessage " listener="#{progressBarView_J.calculate()}" />
+	            </p:commandButton>
+	            <p:commandButton value="Cancel" actionListener="#{progressBarView_J.cancel}" oncomplete="PF('pbAjax').cancel();PF('startButton2').enable();" />
+	            <br /><br />
+	            <p:progressBar id="calcPB" widgetVar="pbAjax" ajax="true" interval="600" value="#{progressBarView_J.progress}" 
+	            	labelTemplate="{value}%" styleClass="#{progressBarView_J.getStyleClass()}" global="false">
+	                <p:ajax event="complete" listener="#{progressBarView_J.onComplete}" 
+	                update="growl messages calcPB calcMessage" oncomplete="PF('startButton2').enable()"/>
+	            </p:progressBar>
+			</p:panelGrid>
         </h:form>
         
     </ui:define>
