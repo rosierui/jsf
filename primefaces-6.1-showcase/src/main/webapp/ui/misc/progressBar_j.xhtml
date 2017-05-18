@@ -41,13 +41,13 @@
 	            <h3>Ajax ProgressBar</h3>
 
 	            <p:commandButton value="Start1" actionListener="#{progressBarView_J.onStart}" 
-	            		onclick="PF('pbAjax').start();PF('startButton1').disable();" widgetVar="startButton1" >
+	            		onclick="PF('startButton1').disable();PF('pbAjax').start();" widgetVar="startButton1" >
 	            </p:commandButton>
 	            <p:commandButton value="Cancel1" actionListener="#{progressBarView_J.cancel}" oncomplete="PF('pbAjax').cancel();PF('startButton1').enable();" />
 	            <br /><br />
 
-	            <p:commandButton value="Start" type="button" actionListener="#{progressBarView_J.onStart}" 
-	            		onclick="PF('pbAjax').start();PF('startButton2').disable();" widgetVar="startButton2" >
+	            <p:commandButton value="Start" type="button"  
+	            		onclick="PF('startButton2').disable(); PF('pbAjax').start();" widgetVar="startButton2" >
 	    			<p:ajax event="click" update="pbar calcMessage " listener="#{progressBarView_J.calculate()}" />
 	            </p:commandButton>
 	            <p:commandButton value="Cancel" actionListener="#{progressBarView_J.cancel}" oncomplete="PF('pbAjax').cancel();PF('startButton2').enable();" />
@@ -56,7 +56,7 @@
 	            <p:progressBar id="calcPB" widgetVar="pbAjax" ajax="true" interval="600" value="#{progressBarView_J.progress}" 
 	            	labelTemplate="{value}%" styleClass="#{progressBarView_J.getStyleClass()}" global="false">
 	                <p:ajax event="complete" listener="#{progressBarView_J.onComplete}" 
-	                update="growl messages calcPB calcMessage" oncomplete="PF('startButton2').enable()"/>
+	                update="growl messages calcPB calcMessage" oncomplete="PF('startButton1').enable();PF('startButton2').enable()"/>
 	            </p:progressBar>
 			</p:panelGrid>
         </h:form>
