@@ -13,31 +13,6 @@
         </style>
         
         <script type="text/javascript">
-            //<![CDATA[
-function start() {
-    PF('startButton1').disable();
-    
-    window['progress'] = setInterval(function() {
-        var pbClient = PF('pbClient'),
-        oldValue = pbClient.getValue(),
-        newValue = oldValue + 10;
-                
-        pbClient.setValue(pbClient.getValue() + 10);
-    
-        if(newValue === 100) {
-            clearInterval(window['progress']);
-        }
-        
-        
-    }, 1000);
-}
-
-function cancel() {
-    clearInterval(window['progress']);
-    PF('pbClient').setValue(0);
-    PF('startButton1').enable();
-}
-            //]]>
         </script>
     </ui:define>
 
@@ -65,7 +40,7 @@ function cancel() {
 	
 	            <h3>Ajax ProgressBar</h3>
 
-	            <p:commandButton value="Start1" actionListener="#{progressBarView_J.start}" 
+	            <p:commandButton value="Start1" actionListener="#{progressBarView_J.onStart}" 
 	            		onclick="PF('pbAjax').start();PF('startButton1').disable();" widgetVar="startButton1" >
 	            </p:commandButton>
 	            <p:commandButton value="Cancel1" actionListener="#{progressBarView_J.cancel}" oncomplete="PF('pbAjax').cancel();PF('startButton1').enable();" />

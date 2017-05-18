@@ -55,7 +55,6 @@ public class ProgressBarView_J implements Serializable {
 	 * <p:progressBar listener="#{progressBarView_J.onComplete}" />
 	 */
 	public void onComplete() {
-		progress = null;
 		message = "Calculation complete!"; 
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Progress Completed"));
 	}
@@ -70,10 +69,10 @@ public class ProgressBarView_J implements Serializable {
     // ========================================================================
     // new methods added below
     /**
-	   <p:commandButton value="Start1" actionListener="#{progressBarView_J.start}" 
+	   The following calls progressBarView_J.start method (w/o type="button")
+	   <p:commandButton value="Start1" actionListener="#{progressBarView_J.onStart}" 
 	       onclick="PF('pbAjax').start();PF('startButton1').disable();" widgetVar="startButton1" >
 	   </p:commandButton>
-	   this calls progressBarView_J.start method
 
 	   The following two with type="button" does not call progressBarView_J.onStart method (w/ or w/o <p:ajax/>)
        <p:commandButton value="Start" type="button" actionListener="#{progressBarView_J.onStart}" 
@@ -85,11 +84,22 @@ public class ProgressBarView_J implements Serializable {
 			<p:ajax event="click" update="pbar calcMessage " listener="#{progressBarView_J.calculate()}" />
        </p:commandButton>
      */
-	public void start() {
+	public void onStart() {
+		progress = null;
 		message = "Calculation started..."; 
 	}
 
-	public String getStyleClass() {
+    /**
+     * <p:commandButton value="Start" type="button" actionListener="#{progressBarView_J.onStart()}" widgetVar="startButton2" >
+     *   <p:ajax event="click" update="pbar calcMessage " listener="#{progressBarView_J.calculate()}" />
+     * </p:commandButton>
+     */
+    public void calculate() {
+		progress = null;
+		message = "start calculate()..."; 
+    }
+
+    public String getStyleClass() {
         if (progress < 100) {
             return "animated";
         } else {
@@ -101,12 +111,4 @@ public class ProgressBarView_J implements Serializable {
         return message;
     }
 
-    /**
-     * <p:commandButton value="Start" type="button" actionListener="#{progressBarView_J.onStart()}" widgetVar="startButton2" >
-     *   <p:ajax event="click" update="pbar calcMessage " listener="#{progressBarView_J.calculate()}" />
-     * </p:commandButton>
-     */
-    public void calculate() {
-		message = "enter calculate()..."; 
-    }
 }
