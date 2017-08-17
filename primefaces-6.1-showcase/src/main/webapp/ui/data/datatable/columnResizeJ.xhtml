@@ -1,0 +1,99 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template.xhtml">
+
+    <ui:define name="title">
+        DataTable - <span class="subitem">Column Resize</span>
+    </ui:define>
+
+    <ui:define name="description">
+        Columns can be resized in two ways, with a helper or live.
+    </ui:define>
+
+    <ui:define name="implementation">
+        
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true" />
+            <!-- Check p:columnGroup type="footer" border -->
+            <h3>Expand Mode with Grouping</h3>
+            <p:dataTable var="sale" value="#{dtGroupView.sales}" resizableColumns="true" resizeMode="expand">
+                <f:facet name="header">
+                    
+                </f:facet>
+
+                <p:columnGroup type="header">
+                    <p:row>
+                        <p:column rowspan="3" headerText="Manufacturer" />
+                        <p:column colspan="4" headerText="Sale Rate" />
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="2" headerText="Sales" />
+                        <p:column colspan="2" headerText="Profit" />
+                    </p:row>
+                    <p:row>
+                        <p:column headerText="Last Year" />
+                        <p:column headerText="This Year" />
+                        <p:column headerText="Last Year" />
+                        <p:column headerText="This Year" />
+                    </p:row>
+                </p:columnGroup>
+
+                <p:column>
+                    <h:outputText value="#{sale.manufacturer}" />
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{sale.lastYearProfit}%" />
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{sale.thisYearProfit}%" />
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{sale.lastYearSale}">
+                        <f:convertNumber type="currency" currencySymbol="$" />
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{sale.thisYearSale}">
+                        <f:convertNumber type="currency" currencySymbol="$" />
+                    </h:outputText>
+                </p:column>
+
+                <p:columnGroup type="footer">
+                    <p:row>
+                        <p:column colspan="2" style="text-align:right" footerText="Totals:" />
+                        <p:column footerText="\$#{dtGroupView.lastYearTotal}" />
+
+                        <p:column footerText="\$#{dtGroupView.thisYearTotal}" />
+                        <p:column  />
+                    </p:row>
+                </p:columnGroup>
+            </p:dataTable>
+        </h:form>
+        
+    </ui:define>
+
+    <ui:define name="source">
+        <p:tabView>
+            <p:tab title="columnResize.xhtml">
+                <pre name="code" class="brush:xml">
+                </pre>
+            </p:tab>
+
+            <p:tab title="ResizableColumnsView.java">
+                <pre name="code" class="brush:java">
+                </pre>
+            </p:tab>
+            
+            <p:tab title="CarService.java">
+                <pre name="code" class="brush:java">
+                </pre>
+            </p:tab>
+            
+        </p:tabView>
+
+    </ui:define>
+
+</ui:composition>
