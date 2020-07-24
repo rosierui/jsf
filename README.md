@@ -1,9 +1,6 @@
 jsf
 ===
-<pre>
-Last Update: 11/03/2015
-By: Jonathan Luo
-
+```text
 primefaces-showcase-1.0 and richfaces debuggable projects for Eclipse
 These projects may be useful to try primefaces and richfaces futures
 in a debuggable environment. Those projects can be imported into Netbeans 
@@ -31,4 +28,4 @@ as well
 
     3.2 The RichFaces project is licensed under the GNU LESSER GENERAL PUBLIC LICENSE
         see https://community.jboss.org/wiki/RichFacesLicensingAndCopyright for details
-</pre>
+```
