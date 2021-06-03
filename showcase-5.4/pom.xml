@@ -222,7 +222,7 @@
                 <dependency>
                     <groupId>org.primefaces</groupId>
                     <artifactId>primefaces</artifactId>
-                    <version>5.3.RC2</version>
+                    <version>6.0</version>
                 </dependency>
                 <dependency>
                     <groupId>org.glassfish</groupId>
@@ -246,7 +246,7 @@
                 <dependency>
                     <groupId>org.primefaces</groupId>
                     <artifactId>primefaces</artifactId>
-                    <version>5.3</version>
+                    <version>6.0</version>
                 </dependency>
                 <dependency>
                     <groupId>org.glassfish</groupId>
@@ -270,7 +270,7 @@
                 <dependency>
                     <groupId>org.primefaces</groupId>
                     <artifactId>primefaces</artifactId>
-                    <version>5.3.1-SNAPSHOT</version>
+                    <version>6.0</version>
                 </dependency>
                 <dependency>
                     <groupId>org.glassfish</groupId>
@@ -294,7 +294,7 @@
                 <dependency>
                     <groupId>org.primefaces</groupId>
                     <artifactId>primefaces</artifactId>
-                    <version>5.2.15-SNAPSHOT</version>
+                    <version>6.0</version>
                 </dependency>
                 <dependency>
                     <groupId>org.glassfish</groupId>
