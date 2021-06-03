@@ -47,7 +47,7 @@
         <dependency>
              <groupId>org.primefaces</groupId>
              <artifactId>primefaces</artifactId>
-             <version>5.1-SNAPSHOT</version>
+             <version>6.0</version>
         </dependency>
         
          <!-- Data Exporter -->
@@ -218,7 +218,7 @@
                 <dependency>
                     <groupId>org.primefaces</groupId>
                     <artifactId>primefaces</artifactId>
-                    <version>5.1-SNAPSHOT</version>
+                    <version>6.0</version>
                 </dependency>
                 <dependency>
                     <groupId>org.glassfish</groupId>
@@ -237,7 +237,7 @@
                 <dependency>
                     <groupId>org.primefaces</groupId>
                     <artifactId>primefaces</artifactId>
-                    <version>5.0</version>
+                    <version>6.0</version>
                 </dependency>
                 <dependency>
                     <groupId>org.glassfish</groupId>
@@ -256,7 +256,7 @@
                 <dependency>
                     <groupId>org.primefaces</groupId>
                     <artifactId>primefaces</artifactId>
-                    <version>5.0.3</version>
+                    <version>6.0</version>
                 </dependency>
                 <dependency>
                     <groupId>org.glassfish</groupId>
