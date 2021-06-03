@@ -53,7 +53,7 @@
         <dependency>
              <groupId>org.primefaces</groupId>
              <artifactId>primefaces</artifactId>
-             <version>5.2</version>
+             <version>6.0</version>
         </dependency>
 
          <!-- Data Exporter -->
@@ -286,7 +286,7 @@
                 <dependency>
                     <groupId>org.primefaces</groupId>
                     <artifactId>primefaces</artifactId>
-                    <version>5.2</version>
+                    <version>6.0</version>
                 </dependency>
 
                 <dependency>
@@ -308,7 +308,7 @@
                 <dependency>
                     <groupId>org.primefaces</groupId>
                     <artifactId>primefaces</artifactId>
-                    <version>5.2</version>
+                    <version>6.0</version>
                 </dependency>
 
                 <dependency>
@@ -331,7 +331,7 @@
                 <dependency>
                     <groupId>org.primefaces</groupId>
                     <artifactId>primefaces</artifactId>
-                    <version>5.2.1</version>
+                    <version>6.0</version>
                 </dependency>
 
                 <dependency>
